@@ -26,5 +26,5 @@ interface DispatcherInterface extends MiddlewareInterface
      * @param  \Slytherium\Http\Server\MiddlewareInterface $middleware
      * @return self
      */
-    public function pipe(MiddlewareInterface $item);
+    public function pipe(MiddlewareInterface $middleware);
 }

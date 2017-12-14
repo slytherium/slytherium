@@ -15,14 +15,14 @@ use Slytherium\Routing\Dispatcher;
 class Router extends \Slytherium\Routing\Router implements ApplicationInterface
 {
     /**
-     * @var \Application
+     * @var \Slytherium\Application
      */
     protected $application;
 
     /**
      * Initializes the decorator instance.
      *
-     * @param \Application|null $application
+     * @param \Slytherium\Application|null $application
      */
     public function __construct(Application $application = null)
     {

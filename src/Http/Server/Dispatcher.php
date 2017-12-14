@@ -81,8 +81,6 @@ class Dispatcher implements DispatcherInterface
      */
     protected function resolve($index)
     {
-        $arguments = array();
-
         if (isset($this->stack[$index]) === true) {
             $next = $this->resolve($index + 1);
 

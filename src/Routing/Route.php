@@ -92,7 +92,7 @@ class Route
      *
      * @link https://stackoverflow.com/q/30130913
      *
-     * @param  string $pattern
+     * @param  string $uri
      * @return string
      */
     protected function parse($uri)

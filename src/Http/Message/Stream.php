@@ -130,15 +130,13 @@ class Stream implements StreamInterface
      */
     public function getContents()
     {
-        $contents = stream_get_contents($this->stream);
-
-        if (! $this->isReadable() || $contents === false) {
+        if (is_null($this->stream) || ! $this->isReadable()) {
             $message = 'Could not get contents of stream';
 
             throw new \RuntimeException($message);
         }
 
-        return $contents;
+        return stream_get_contents($this->stream);
     }
 
     /**
@@ -163,14 +161,10 @@ class Stream implements StreamInterface
      */
     public function getSize()
     {
-        if ($this->stream !== null && $this->size === null) {
-            list($size, $stats) = array(null, null);
-
+        if (is_null($this->size) === true) {
             $stats = fstat($this->stream);
 
-            isset($stats['size']) && $size = $stats['size'];
-
-            $this->size = $size;
+            $this->size = $stats['size'];
         }
 
         return $this->size;
@@ -279,7 +273,7 @@ class Stream implements StreamInterface
 
         $this->stream && $position = ftell($this->stream);
 
-        if ($this->stream === null || $position === false) {
+        if (is_null($this->stream) || $position === false) {
             $message = 'Could not get position of pointer in stream';
 
             throw new \RuntimeException($message);
@@ -298,18 +292,14 @@ class Stream implements StreamInterface
      */
     public function write($string)
     {
-        $written = false;
-
-        $this->stream && $written = fwrite($this->stream, $string);
-
-        if (! $this->isWritable() || $written === false) {
-            $message = 'Could not write to stream';
+        if (! $this->isWritable()) {
+            $message = 'Stream is not writable';
 
             throw new \RuntimeException($message);
         }
 
         $this->size = null;
 
-        return $written;
+        return fwrite($this->stream, $string);
     }
 }

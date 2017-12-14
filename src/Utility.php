@@ -3,7 +3,6 @@
 namespace Slytherium;
 
 use Slytherium\Http\Message\UploadedFile;
-use Slytherium\Http\Message\UploadedFileInterface;
 use Slytherium\Http\Message\Uri;
 
 /**
@@ -45,22 +44,21 @@ class Utility
         foreach ((array) $uploaded as $name => $file) {
             $files[$name] = array();
 
-            if (isset($file[0]) === true) {
-                $files[$name] = $file;
+            if (isset($file[0]) === false) {
+                is_array($file['name']) || $file = self::arrayify($file);
+
+                $count = count($file['name']);
+
+                $files = self::convert($files, $file, $name, $count);
 
                 continue;
             }
 
-            is_array($file['name']) || $file = self::arrayify($file);
-
-            $count = count($file['name']);
-
-            $files = self::convert($files, $file, $name, $count);
+            $files[$name] = $file;
         }
 
         return $files;
     }
-
 
     /**
      * Generates a \Slytherium\Http\Message\UriInterface if it does not exists.

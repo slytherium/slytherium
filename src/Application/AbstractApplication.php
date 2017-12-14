@@ -4,15 +4,14 @@ namespace Slytherium\Application;
 
 use Slytherium\Application;
 use Slytherium\Http\Message\ServerRequestInterface;
-use Slytherium\Routing\Dispatcher;
 
 /**
- * Router Application
+ * Application Interface
  *
  * @package Slytherium
  * @author  Rougin Royce Gutib <rougingutib@gmail.com>
  */
-class Router extends \Slytherium\Routing\Router implements ApplicationInterface
+abstract class AbstractApplication implements ApplicationInterface
 {
     /**
      * @var \Slytherium\Application
@@ -20,7 +19,7 @@ class Router extends \Slytherium\Routing\Router implements ApplicationInterface
     protected $application;
 
     /**
-     * Initializes the decorator instance.
+     * Initializes the application instance.
      *
      * @param \Slytherium\Application|null $application
      */
@@ -30,28 +29,15 @@ class Router extends \Slytherium\Routing\Router implements ApplicationInterface
     }
 
     /**
-     * Handles the ServerRequest to convert it to a Response.
-     *
-     * @param  \Slytherium\Http\Message\ServerRequestInterface $request
-     * @return \Slytherium\Http\Message\ResponseInterface
-     */
-    public function handle(ServerRequestInterface $request)
-    {
-        $dispatcher = Application::DISPATCHER;
-
-        $this->application->set($dispatcher, new Dispatcher($this));
-
-        return $this->application->handle($request);
-    }
-
-    /**
      * Runs the application and returns the stream instance.
      *
      * @return \Rougin\Slytherin\Http\Message\StreamInterface
      */
     public function run()
     {
-        $request = $this->application->get(Application::REQUEST);
+        $constant = Application::REQUEST;
+
+        $request = $this->application->get($constant);
 
         $response = $this->handle($request);
 
@@ -66,17 +52,19 @@ class Router extends \Slytherium\Routing\Router implements ApplicationInterface
      * @param  string $method
      * @param  mixed  $parameters
      * @return mixed
+     *
+     * @throws \BadMethodCallException
      */
     public function __call($method, $parameters)
     {
-        $result = $this;
-
         if (method_exists($this->application, $method)) {
             $class = array($this->application, $method);
             
-            $result = call_user_func_array($class, $parameters);
+            return call_user_func_array($class, $parameters);
         }
 
-        return $result;
+        $message = 'Method "' . $method . '" is undefined!';
+
+        throw new \BadMethodCallException($message);
     }
 }

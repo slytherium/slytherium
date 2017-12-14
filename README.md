@@ -33,7 +33,7 @@ class HelloController
 }
 ```
 
-### Using `Application\Router`
+### Using `Application\RouterApplication`
 
 **index.php**
 
@@ -44,7 +44,7 @@ use Slytherium\Http\Message\ServerRequestInterface;
 $request = new Slytherium\Http\Message\ServerRequest($_SERVER);
 
 // Initializes the router application
-$app = new Slytherium\Application\Router;
+$app = new Slytherium\Application\RouterApplication;
 
 // Sets the server request inside the application
 $app->set(ServerRequestInterface::class, $request);
@@ -62,7 +62,7 @@ $app->get('/hello/{name}', 'HelloController@greet');
 echo $app->run();
 ```
 
-### Using `Application\Middleware`
+### Using `Application\MiddlewareApplication`
 
 **RouterMiddleware.php**
 
@@ -141,7 +141,7 @@ use Slytherium\Http\Message\ServerRequestInterface;
 $request = new Slytherium\Http\Message\ServerRequest($_SERVER);
 
 // Initializes the middleware application
-$app = new Slytherium\Application\Middleware;
+$app = new Slytherium\Application\MiddlewareApplication;
 
 // Sets the server request inside the application
 $app->set(ServerRequestInterface::class, $request);

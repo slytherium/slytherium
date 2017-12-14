@@ -19,11 +19,4 @@ interface ApplicationInterface
      * @return \Slytherium\Http\Message\ResponseInterface
      */
     public function handle(ServerRequestInterface $request);
-
-    /**
-     * Runs the application and returns the stream instance.
-     *
-     * @return \Rougin\Slytherin\Http\Message\StreamInterface
-     */
-    public function run();
 }

@@ -50,11 +50,9 @@ class Utility
                 $count = count($file['name']);
 
                 $files = self::convert($files, $file, $name, $count);
-
-                continue;
             }
 
-            $files[$name] = $file;
+            isset($file[0]) && $files[$name] = $file;
         }
 
         return $files;

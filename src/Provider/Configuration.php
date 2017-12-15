@@ -22,7 +22,7 @@ class Configuration implements ConfigurationInterface
      */
     public function __construct(array $data = array())
     {
-        $this->data = $this->dotify($data);
+        $this->data = $data;
     }
 
     /**
@@ -52,10 +52,12 @@ class Configuration implements ConfigurationInterface
         foreach ((array) $items as $configuration) {
             $name = basename($configuration, '.php');
 
+            $name = strtolower($name);
+
             $data[$name] = require $configuration;
         }
 
-        $this->data = array_merge($this->data, $this->dotify($data));
+        $this->data = array_merge($this->data, $data);
 
         return $this;
     }
@@ -68,7 +70,7 @@ class Configuration implements ConfigurationInterface
      */
     public function offsetExists($offset)
     {
-        return isset($this->data[$offset]);
+        return $this->offsetGet($offset) !== null;
     }
 
     /**
@@ -79,7 +81,19 @@ class Configuration implements ConfigurationInterface
      */
     public function offsetGet($offset)
     {
-        return isset($this->data[$offset]) ? $this->data[$offset] : null;
+        $keys = array_filter(explode('.', $offset));
+
+        $length = count($keys);
+
+        $data = $this->data;
+
+        for ($i = 0; $i < $length; $i++) {
+            $index = $keys[$i];
+
+            $data = &$data[$index];
+        }
+
+        return $data;
     }
 
     /**
@@ -91,7 +105,9 @@ class Configuration implements ConfigurationInterface
      */
     public function offsetSet($offset, $value)
     {
-        $this->data[$offset] = $value;
+        $keys = array_filter(explode('.', $offset));
+
+        $this->save($keys, $this->data, $value);
     }
 
     /**
@@ -102,7 +118,9 @@ class Configuration implements ConfigurationInterface
      */
     public function offsetUnset($offset)
     {
-        unset($this->data[$offset]);
+        $keys = array_filter(explode('.', $offset));
+
+        unset($this->data[$keys[0]]);
     }
 
     /**
@@ -120,30 +138,27 @@ class Configuration implements ConfigurationInterface
     }
 
     /**
-     * Converts the data into dot notation values.
+     * Saves the specified key in the list of data.
      *
-     * @param  array $data
-     * @param  array $result
-     * @return array
+     * @param  array  &$keys
+     * @param  array  &$data
+     * @param  mixed  $value
+     * @return mixed
      */
-    protected function dotify(array $data, $result = array())
+    protected function save(array &$keys, &$data, $value)
     {
-        $array = new \RecursiveArrayIterator($data);
+        $key = array_shift($keys);
 
-        $iterator = new \RecursiveIteratorIterator($array);
+        if (empty($keys)) {
+            $data[$key] = $value;
 
-        foreach ($iterator as $value) {
-            $keys = array();
-
-            foreach (range(0, $iterator->getDepth()) as $depth) {
-                $subiterator = $iterator->getSubIterator($depth);
-
-                array_push($keys, $subiterator->key());
-            }
-
-            $result[strtolower(join('.', $keys))] = $value;
+            return $data[$key];
         }
 
-        return $result;
+        if (! isset($data[$key])) {
+            $data[$key] = array();
+        }
+
+        return $this->save($keys, $data[$key], $value);
     }
 }

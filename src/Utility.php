@@ -35,12 +35,11 @@ class Utility
      * Parses the $_FILES into multiple \UploadedFileInterface instances.
      *
      * @param  array $uploaded
+     * @param  array $files
      * @return \Slytherium\Http\Message\UploadedFileInterface[]
      */
-    public static function files(array $uploaded)
+    public static function files(array $uploaded, $files = array())
     {
-        $files = array();
-
         foreach ((array) $uploaded as $name => $file) {
             $files[$name] = array();
 
@@ -50,11 +49,9 @@ class Utility
                 $count = count($file['name']);
 
                 $files = self::convert($files, $file, $name, $count);
-
-                continue;
+            } else {
+                $files[$name] = $file;
             }
-
-            $files[$name] = $file;
         }
 
         return $files;

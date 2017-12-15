@@ -4,7 +4,6 @@ namespace Slytherium\Provider\Slytherin;
 
 use Rougin\Slytherin\Container\ContainerInterface;
 use Slytherium\Container\WritableInterface;
-use Slytherium\Provider\Common\Container as CommonContainer;
 
 /**
  * Slytherin to Slytherium Bridge Container
@@ -12,8 +11,13 @@ use Slytherium\Provider\Common\Container as CommonContainer;
  * @package Slytherium
  * @author  Rougin Royce Gutib <rougingutib@gmail.com>
  */
-class BridgeContainer extends CommonContainer implements WritableInterface
+class BridgeContainer extends Container implements WritableInterface
 {
+    /**
+     * @var \Rougin\Slytherin\Container\ContainerInterface
+     */
+    protected $container;
+
     /**
      * Initializes the container instance.
      *

@@ -50,8 +50,6 @@ class Configuration implements ConfigurationInterface
         $items = $directory ? glob($path . '/**/*.php') : array($path);
 
         foreach ((array) $items as $configuration) {
-            $configuration = strtolower($configuration);
-
             $name = basename($configuration, '.php');
 
             $data[$name] = require $configuration;
@@ -143,7 +141,7 @@ class Configuration implements ConfigurationInterface
                 array_push($keys, $subiterator->key());
             }
 
-            $result[join('.', $keys)] = $value;
+            $result[strtolower(join('.', $keys))] = $value;
         }
 
         return $result;

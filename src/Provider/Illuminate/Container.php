@@ -21,7 +21,7 @@ class Container extends Illuminate implements ContainerInterface
      */
     public function get($id)
     {
-        return parent::get($id);
+        return $this->has($id) ? $this->offsetGet($id) : null;
     }
 
     /**
@@ -32,6 +32,6 @@ class Container extends Illuminate implements ContainerInterface
      */
     public function has($id)
     {
-        return parent::has($id);
+        return $this->bound($id);
     }
 }

@@ -31,13 +31,20 @@ class IlluminateProviderTest extends \PHPUnit_Framework_TestCase
      */
     public function setUp()
     {
-        $class = 'Slytherium\Provider\ConfigurationInterface';
-
         $events = 'Illuminate\Events\EventServiceProvider';
+
+        $loader = 'Illuminate\Config\LoaderInterface';
 
         $this->container = new Container;
 
-        $this->container->set($class, new Configuration);
+        // LoaderInterface only exists in Laravel v4.1.* releases.
+        if (interface_exists($loader) === false) {
+            $class = 'Slytherium\Provider\ConfigurationInterface';
+
+            $config = new Configuration;
+
+            $this->container->set($class, $config);
+        }
 
         $this->provider = new IlluminateProvider($events);
     }
@@ -49,9 +56,9 @@ class IlluminateProviderTest extends \PHPUnit_Framework_TestCase
      */
     public function testRegisterMethod()
     {
-        $expected = 'Illuminate\Events\Dispatcher';
-
         $container = $this->provider->register($this->container);
+
+        $expected = 'Illuminate\Events\Dispatcher';
 
         $result = $container->get('events');
 

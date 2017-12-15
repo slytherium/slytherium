@@ -1,9 +1,17 @@
 <?php
 
-$config = array();
+return array(
+    /**
+     * Name of the application.
+     *
+     * @var string
+     */
+    'app_name' => 'Slytherium Framework',
 
-$config['app_name'] = 'Slytherium Framework';
-
-$config['base_url'] = 'http://localhost:8000';
-
-return $config;
+    /**
+     * The base URL.
+     *
+     * @var string
+     */
+    'base_url' => 'http://localhost:8000',
+);

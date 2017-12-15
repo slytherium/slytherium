@@ -8,7 +8,7 @@ namespace Slytherium\Provider;
  * @package Slytherium
  * @author  Rougin Royce Gutib <rougingutib@gmail.com>
  */
-class Configuration implements \ArrayAccess
+class Configuration implements ConfigurationInterface
 {
     /**
      * @var array
@@ -42,15 +42,16 @@ class Configuration implements \ArrayAccess
      *
      * @param  string  $path
      * @param  boolean $directory
+     * @param  array   $data
      * @return self
      */
-    public function load($path, $directory = false)
+    public function load($path, $directory = false, $data = array())
     {
         $items = $directory ? glob($path . '/**/*.php') : array($path);
 
-        $data = array();
-
         foreach ((array) $items as $configuration) {
+            $configuration = strtolower($configuration);
+
             $name = basename($configuration, '.php');
 
             $data[$name] = require $configuration;

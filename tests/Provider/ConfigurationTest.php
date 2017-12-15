@@ -1,8 +1,6 @@
 <?php
 
-namespace Slytherium\Configuration;
-
-use Slytherium\Provider\Configuration;
+namespace Slytherium\Provider;
 
 /**
  * Configuration Test

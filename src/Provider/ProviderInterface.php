@@ -17,8 +17,10 @@ use Slytherium\Container\WritableInterface;
  */
 interface ProviderInterface
 {
+    const CONFIG = 'Slytherium\Provider\ConfigurationInterface';
+
     /**
-     * Defines the specified integration.
+     * Registers the bindings in the container.
      *
      * @param  \Slytherium\Container\WritableInterface $container
      * @return \Slytherium\Container\WritableInterface

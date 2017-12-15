@@ -16,7 +16,8 @@ interface ContainerInterface
      * @param  string $id
      * @return mixed
      *
-     * @throws \Slytherium\Container\NotFoundException
+     * @throws \Rougin\Slytherin\Container\Exception\NotFoundException
+     * @throws \Rougin\Slytherin\Container\Exception\ContainerException
      */
     public function get($id);
 

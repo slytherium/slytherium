@@ -16,7 +16,7 @@ use Slytherium\Routing\Router;
 class RouterApplication extends AbstractApplication
 {
     /**
-     * @var \Slytherium\Http\Routing\RouterInterface
+     * @var \Slytherium\Routing\RouterInterface
      */
     protected $router;
 

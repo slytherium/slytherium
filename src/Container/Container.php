@@ -34,7 +34,7 @@ class Container implements WritableInterface
      * @param  \Slytherium\Container\ContainerInterface $container
      * @return self
      */
-    public function delegate($container)
+    public function delegate(ContainerInterface $container)
     {
         $this->delegate = $container;
 

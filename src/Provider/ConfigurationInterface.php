@@ -11,6 +11,13 @@ namespace Slytherium\Provider;
 interface ConfigurationInterface extends \ArrayAccess
 {
     /**
+     * Returns all the stored configurations.
+     *
+     * @return array
+     */
+    public function all();
+
+    /**
      * Returns the value from the specified key.
      *
      * @param  string     $key

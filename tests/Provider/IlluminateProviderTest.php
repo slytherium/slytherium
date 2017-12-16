@@ -58,9 +58,11 @@ class IlluminateProviderTest extends \PHPUnit_Framework_TestCase
     {
         $container = $this->provider->register($this->container);
 
+        $illuminate = $container->get('Illuminate\Container\Container');
+
         $expected = 'Illuminate\Events\Dispatcher';
 
-        $result = $container->get('events');
+        $result = $illuminate->make('events');
 
         $this->assertInstanceOf($expected, $result);
     }

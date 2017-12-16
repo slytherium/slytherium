@@ -26,6 +26,16 @@ class Configuration implements ConfigurationInterface
     }
 
     /**
+     * Returns all the stored configurations.
+     *
+     * @return array
+     */
+    public function all()
+    {
+        return $this->data;
+    }
+
+    /**
      * Returns the value from the specified key.
      *
      * @param  string     $key

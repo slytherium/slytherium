@@ -3,8 +3,8 @@
 namespace Slytherium\Provider;
 
 use Illuminate\Config\Repository;
+use Illuminate\Container\Container;
 use Slytherium\Container\WritableInterface;
-use Slytherium\Provider\Illuminate\Container;
 
 /**
  * Illuminate Provider
@@ -14,6 +14,11 @@ use Slytherium\Provider\Illuminate\Container;
  */
 class IlluminateProvider implements ProviderInterface
 {
+    /**
+     * @var string
+     */
+    protected $container = 'Illuminate\Container\Container';
+
     /**
      * @var string
      */
@@ -43,9 +48,7 @@ class IlluminateProvider implements ProviderInterface
 
         $provider->register();
 
-        $container->set(get_class($illuminate), $illuminate);
-
-        return $container->delegate($illuminate);
+        return $container->set($this->name, $illuminate);
     }
 
     /**
@@ -56,11 +59,9 @@ class IlluminateProvider implements ProviderInterface
      */
     protected function container(WritableInterface $container)
     {
-        $class = 'Slytherium\Provider\Illuminate\Container';
-
         $illuminate = null;
 
-        if ($container->has($class) === false) {
+        if ($container->has($this->class) === false) {
             $illuminate = new Container;
 
             if ($container->has(self::CONFIG) === true) {
@@ -72,6 +73,6 @@ class IlluminateProvider implements ProviderInterface
             }
         }
 
-        return $illuminate ?: $container->get($class);
+        return $illuminate ?: $container->get($this->class);
     }
 }

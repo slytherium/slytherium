@@ -2,10 +2,10 @@
 
 namespace Slytherium\Provider;
 
+use Rougin\Slytherin\Integration\Configuration;
 use Rougin\Slytherin\Integration\IntegrationInterface;
 use Slytherium\Container\WritableInterface;
 use Slytherium\Provider\Slytherin\BridgeContainer;
-use Slytherium\Provider\Slytherin\Configuration as SlytherinConfig;
 use Slytherium\Provider\Slytherin\Container;
 
 /**
@@ -45,7 +45,7 @@ class SlytherinProvider implements ProviderInterface
 
         $config = $container->get(ProviderInterface::CONFIG);
 
-        $config = new SlytherinConfig($config);
+        $config = new Configuration($config->all());
 
         $result = $integration->define($container, $config);
 

@@ -48,7 +48,9 @@ class IlluminateProvider implements ProviderInterface
 
         $provider->register();
 
-        return $container->set($this->name, $illuminate);
+        $container->set($this->container, $illuminate);
+
+        return $container;
     }
 
     /**
@@ -61,7 +63,7 @@ class IlluminateProvider implements ProviderInterface
     {
         $illuminate = null;
 
-        if ($container->has($this->class) === false) {
+        if ($container->has($this->container) === false) {
             $illuminate = new Container;
 
             if ($container->has(self::CONFIG) === true) {
@@ -73,6 +75,6 @@ class IlluminateProvider implements ProviderInterface
             }
         }
 
-        return $illuminate ?: $container->get($this->class);
+        return $illuminate ?: $container->get($this->container);
     }
 }

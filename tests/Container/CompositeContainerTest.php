@@ -6,12 +6,12 @@ use Slytherium\Fixture\Http\Controllers\ExtendedController;
 use Slytherium\Fixture\Http\Controllers\SimpleController;
 
 /**
- * Reflection Container Test
+ * Composite Container Test
  *
  * @package Slytherium
  * @author  Rougin Royce Gutib <rougingutib@gmail.com>
  */
-class ReflectionContainerTest extends \PHPUnit_Framework_TestCase
+class CompositeContainerTest extends \PHPUnit_Framework_TestCase
 {
     /**
      * @var \Slytherium\Container\ContainerInterface
@@ -25,7 +25,15 @@ class ReflectionContainerTest extends \PHPUnit_Framework_TestCase
      */
     public function setUp()
     {
-        $this->container = new ReflectionContainer;
+        list($first, $second) = array(new Container, new Container);
+
+        $container = new CompositeContainer;
+
+        $first->set('simple', $simple = new SimpleController);
+
+        $second->set('extended', new ExtendedController($simple));
+
+        $this->container = $container->add($first)->add($second);
     }
 
     /**
@@ -37,29 +45,13 @@ class ReflectionContainerTest extends \PHPUnit_Framework_TestCase
     {
         $name = get_class(new SimpleController);
 
-        $instance = $this->container->get($name);
+        $instance = $this->container->get('simple');
 
         $this->assertInstanceOf($name, $instance);
     }
 
     /**
-     * Tests ContainerInterface::get with constructor classes.
-     *
-     * @return void
-     */
-    public function testGetMethodWithConstructorClasses()
-    {
-        $extended = new ExtendedController(new SimpleController);
-
-        $name = get_class($extended);
-
-        $instance = $this->container->get($name);
-
-        $this->assertInstanceOf($name, $instance);
-    }
-
-    /**
-     * Tests ContainerInterface::get methodh NotFoundException.
+     * Tests ContainerInterface::get method with NotFoundException.
      *
      * @return void
      */
@@ -69,6 +61,6 @@ class ReflectionContainerTest extends \PHPUnit_Framework_TestCase
 
         $this->setExpectedException($exception);
 
-        $this->container->get('simple');
+        $this->container->get('test');
     }
 }

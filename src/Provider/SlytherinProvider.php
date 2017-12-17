@@ -2,11 +2,11 @@
 
 namespace Slytherium\Provider;
 
+use Rougin\Slytherin\Container\Container;
 use Rougin\Slytherin\Integration\Configuration as SlytherinConfig;
 use Rougin\Slytherin\Integration\IntegrationInterface;
 use Slytherium\Container\WritableInterface;
 use Slytherium\Provider\Slytherin\BridgeContainer;
-use Slytherium\Provider\Slytherin\Container;
 
 /**
  * Slytherin Provider
@@ -35,11 +35,15 @@ class SlytherinProvider implements ProviderInterface
      * Registers the bindings in the container.
      *
      * @param  \Slytherium\Container\WritableInterface $container
-     * @return \Slytherium\Container\WritableInterface
+     * @return \Slytherium\Container\ContainerInterface
      */
     public function register(WritableInterface $container)
     {
-        $container = new Container($container);
+        $name = 'Rougin\Slytherin\Container\Container';
+
+        $slytherin = new Container;
+
+        $container->has($name) && $slytherin = $container->get($name);
 
         $integration = $this->integration;
 
@@ -47,8 +51,8 @@ class SlytherinProvider implements ProviderInterface
 
         $config = new SlytherinConfig($config->all());
 
-        $result = $integration->define($container, $config);
+        $result = $integration->define($slytherin, $config);
 
-        return new BridgeContainer($result);
+        return $container->set($name, $result);
     }
 }

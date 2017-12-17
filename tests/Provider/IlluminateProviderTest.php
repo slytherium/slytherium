@@ -20,6 +20,11 @@ class IlluminateProviderTest extends \PHPUnit_Framework_TestCase
     protected $container;
 
     /**
+     * @var \Slytherium\Provider\FrameworkProvider
+     */
+    protected $framework;
+
+    /**
      * @var \Slytherium\Provider\ProviderInterface
      */
     protected $provider;
@@ -41,6 +46,8 @@ class IlluminateProviderTest extends \PHPUnit_Framework_TestCase
 
         $this->container->set($class, $config);
 
+        $this->framework = new FrameworkProvider;
+
         $this->provider = new IlluminateProvider($events);
     }
 
@@ -53,11 +60,11 @@ class IlluminateProviderTest extends \PHPUnit_Framework_TestCase
     {
         $container = $this->provider->register($this->container);
 
-        $illuminate = $container->get('Illuminate\Container\Container');
+        $container = $this->framework->register($container);
 
         $expected = 'Illuminate\Events\Dispatcher';
 
-        $result = $illuminate->make('events');
+        $result = $container->get('events');
 
         $this->assertInstanceOf($expected, $result);
     }

@@ -22,6 +22,11 @@ class SlytherinProviderTest extends \PHPUnit_Framework_TestCase
     protected $container;
 
     /**
+     * @var \Slytherium\Provider\FrameworkProvider
+     */
+    protected $framework;
+
+    /**
      * @var \Slytherium\Provider\ProviderInterface
      */
     protected $provider;
@@ -41,6 +46,8 @@ class SlytherinProviderTest extends \PHPUnit_Framework_TestCase
 
         $this->provider = new SlytherinProvider(new RendererIntegration);
 
+        $this->framework = new FrameworkProvider;
+
         $this->container = $container;
     }
 
@@ -51,15 +58,17 @@ class SlytherinProviderTest extends \PHPUnit_Framework_TestCase
      */
     public function testRegisterMethod()
     {
+        $class = 'Rougin\Slytherin\Container\Container';
+
         $container = $this->provider->register($this->container);
+
+        $container = $this->framework->register($container);
 
         $renderer = 'Rougin\Slytherin\Template\RendererInterface';
 
-        $renderer = $container->get($renderer);
-
         $expected = 'Hello world';
 
-        $result = $renderer->render('HelloWorld');
+        $result = $container->get($renderer)->render('HelloWorld');
 
         $this->assertEquals($expected, $result);
     }
@@ -69,30 +78,14 @@ class SlytherinProviderTest extends \PHPUnit_Framework_TestCase
      *
      * @return void
      */
-    public function testHasMethodOfBridgeContainerFromRegisterMethod()
+    public function testHasMethodOfSlytherinContainerFromRegisterMethod()
     {
         $container = $this->provider->register($this->container);
+
+        $container = $this->framework->register($container);
 
         $renderer = 'Rougin\Slytherin\Template\RendererInterface';
 
         $this->assertTrue($container->has($renderer));
-    }
-
-    /**
-     * Tests BridgeContainer::set from ProviderInterface::register.
-     *
-     * @return void
-     */
-    public function testSetMethodOfBridgeContainerFromRegisterMethod()
-    {
-        $expected = 'Slytherium\Fixture\Http\Controllers\SimpleController';
-
-        $container = $this->provider->register($this->container);
-
-        $container = $container->set($expected, new SimpleController);
-
-        $result = $container->get($expected);
-
-        $this->assertInstanceOf($expected, $result);
     }
 }

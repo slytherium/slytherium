@@ -1,29 +1,29 @@
 <?php
 
-namespace Slytherium\Provider\Slytherin;
+namespace Slytherium\Provider\Illuminate;
 
-use Rougin\Slytherin\Container\ContainerInterface;
-use Slytherium\Container\ContainerInterface as SlytheriumContainer;
+use Illuminate\Contracts\Container\Container as ContainerContract;
+use Slytherium\Container\ContainerInterface;
 
 /**
- * Slytherin to Slytherium Bridge Container
+ * Illuminate to Slytherium Bridge Container
  *
  * @package Slytherium
  * @author  Rougin Royce Gutib <rougingutib@gmail.com>
  */
-class Container implements SlytheriumContainer
+class Container implements ContainerInterface
 {
     /**
-     * @var \Rougin\Slytherin\Container\ContainerInterface
+     * @var \Illuminate\Contracts\Container\Container
      */
     protected $container;
 
     /**
      * Initializes the container instance.
      *
-     * @param \Rougin\Slytherin\Container\ContainerInterface $container
+     * @param \Illuminate\Contracts\Container\Container $container
      */
-    public function __construct(ContainerInterface $container)
+    public function __construct(ContainerContract $container)
     {
         $this->container = $container;
     }
@@ -36,7 +36,7 @@ class Container implements SlytheriumContainer
      */
     public function get($id)
     {
-        return $this->container->get($id);
+        return $this->container->make($id);
     }
 
     /**
@@ -47,6 +47,6 @@ class Container implements SlytheriumContainer
      */
     public function has($id)
     {
-        return $this->container->has($id);
+        return $this->container->bound($id);
     }
 }

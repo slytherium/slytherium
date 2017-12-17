@@ -33,6 +33,8 @@ class Kernel extends HttpKernel
      */
     public function __construct(ConfigurationInterface $configuration)
     {
+        echo 'SlytheriumKernel::__construct' . PHP_EOL;
+
         $this->configuration = $configuration;
 
         $parameters = $configuration->get('symfony', array(), true);
@@ -57,6 +59,8 @@ class Kernel extends HttpKernel
      */
     public function add(BundleInterface $bundle)
     {
+        echo 'SlytheriumKernel::add' . PHP_EOL;
+
         array_push($this->items, $bundle);
 
         return $this;
@@ -69,6 +73,8 @@ class Kernel extends HttpKernel
      */
     public function registerBundles()
     {
+        echo 'SlytheriumKernel::registerBundles' . PHP_EOL;
+
         return (array) $this->items;
     }
 
@@ -80,12 +86,16 @@ class Kernel extends HttpKernel
      */
     public function registerContainerConfiguration(LoaderInterface $loader)
     {
+        echo 'SlytheriumKernel::registerContainerConfiguration' . PHP_EOL;
+
         $configuration = $this->configuration;
 
         $loader->load(function ($container) use ($configuration) {
             $items = $configuration->get('symfony', array(), true);
 
             foreach ($items as $key => $value) {
+                echo $key . ' => ' . $value . PHP_EOL;
+
                 $exists = $container->hasParameter($key) === true;
 
                 $exists || $container->setParameter($key, $value);
@@ -101,6 +111,8 @@ class Kernel extends HttpKernel
      */
     protected function defaults(array $config)
     {
+        echo 'SlytheriumKernel::defaults' . PHP_EOL;
+
         $items = array('kernel.debug' => true);
 
         $items['kernel.environment'] = 'dev';

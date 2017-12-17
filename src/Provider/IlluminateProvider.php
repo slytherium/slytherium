@@ -38,7 +38,7 @@ class IlluminateProvider implements ProviderInterface
      * Registers the bindings in the container.
      *
      * @param  \Slytherium\Container\WritableInterface $container
-     * @return \Slytherium\Container\WritableInterface
+     * @return \Slytherium\Container\ContainerInterface
      */
     public function register(WritableInterface $container)
     {

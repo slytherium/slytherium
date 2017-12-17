@@ -20,6 +20,11 @@ class SymfonyProviderTest extends \PHPUnit_Framework_TestCase
     protected $container;
 
     /**
+     * @var \Slytherium\Provider\FrameworkProvider
+     */
+    protected $framework;
+
+    /**
      * @var \Slytherium\Provider\ProviderInterface[]
      */
     protected $providers;
@@ -50,6 +55,8 @@ class SymfonyProviderTest extends \PHPUnit_Framework_TestCase
         $this->bundle('FrameworkBundle');
 
         $this->bundle('TwigBundle');
+
+        $this->framework = new FrameworkProvider;
     }
 
     /**
@@ -61,19 +68,15 @@ class SymfonyProviderTest extends \PHPUnit_Framework_TestCase
     {
         $container = $this->container;
 
-        foreach ($this->providers as $provider) {
-            $result = $provider->register($container);
-
-            $container = $result;
+        foreach ((array) $this->providers as $provider) {
+            $container = $provider->register($container);
         }
 
-        $kernel = $container->get('Slytherium\Provider\Symfony\Kernel');
-
-        $kernel->boot();
+        $container = $this->framework->register($container);
 
         $expected = 'Twig_Environment';
 
-        $result = $kernel->getContainer()->get('twig');
+        $result = $container->get('twig');
 
         $this->assertInstanceOf($expected, $result);
     }

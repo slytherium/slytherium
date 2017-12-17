@@ -5,8 +5,6 @@ namespace Slytherium\Provider;
 use Slytherium\Container\Container;
 use Slytherium\Provider\Configuration;
 use Slytherium\Provider\SymfonyProvider;
-use Symfony\Bundle\FrameworkBundle\FrameworkBundle;
-use Symfony\Bundle\TwigBundle\TwigBundle;
 
 /**
  * Symfony Provider Test
@@ -49,8 +47,9 @@ class SymfonyProviderTest extends \PHPUnit_Framework_TestCase
 
         $this->container->set($class, $config);
 
-        $this->providers[] = new SymfonyProvider(new FrameworkBundle);
-        $this->providers[] = new SymfonyProvider(new TwigBundle);
+        $this->bundle('FrameworkBundle');
+
+        $this->bundle('TwigBundle');
     }
 
     /**
@@ -77,5 +76,22 @@ class SymfonyProviderTest extends \PHPUnit_Framework_TestCase
         $result = $kernel->getContainer()->get('twig');
 
         $this->assertInstanceOf($expected, $result);
+    }
+
+    /**
+     * Adds a new bundle to the list of providers.
+     *
+     * @param  string $name
+     * @return void
+     */
+    protected function bundle($name)
+    {
+        $class = 'Symfony\\Bundle\\' . $name . '\\' . $name;
+
+        $message = $name . ' is not installed.';
+
+        class_exists($class) || $this->markTestSkipped($message);
+
+        $this->providers[] = new SymfonyProvider(new $class);
     }
 }

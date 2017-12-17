@@ -24,7 +24,8 @@ matrix:
 before_script:
   - travis_retry composer self-update
   - travis_retry composer update ${COMPOSER_FLAGS} --no-interaction --prefer-source
-  - composer require illuminate/config:"~4.1|~5.0" illuminate/events:"~4.1|~5.0" rougin/slytherin symfony/framework-bundle:"~2.8|~3.0" symfony/twig-bundle:"~2.8|~3.0" --dev
+  - if [[ $TRAVIS_PHP_VERSION != '5.3' ]]; then composer require symfony/framework-bundle:"~2.8|~3.0" symfony/twig-bundle:"~2.8|~3.0" --dev; fi
+  - composer require illuminate/config:"~4.1|~5.0" illuminate/events:"~4.1|~5.0" symfony/console:"~2.8|~3.0" rougin/slytherin:"~0.9" --dev
 
 script:
   - vendor/bin/phpunit --coverage-text --coverage-clover=coverage.clover

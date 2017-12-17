@@ -68,7 +68,7 @@ class IlluminateProvider implements ProviderInterface
 
             $illuminate = new Container;
 
-            if (interface_exists($loader) === true) {
+            if (interface_exists($loader) === false) {
                 $config = $container->get(self::CONFIG);
 
                 $items = $config->get('illuminate', array());

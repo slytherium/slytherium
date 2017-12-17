@@ -37,14 +37,11 @@ class IlluminateProviderTest extends \PHPUnit_Framework_TestCase
 
         $this->container = new Container;
 
-        // LoaderInterface only exists in Laravel v4.1.* releases.
-        if (interface_exists($loader) === false) {
-            $class = 'Slytherium\Provider\ConfigurationInterface';
+        $class = 'Slytherium\Provider\ConfigurationInterface';
 
-            $config = new Configuration;
+        $config = new Configuration;
 
-            $this->container->set($class, $config);
-        }
+        $this->container->set($class, $config);
 
         $this->provider = new IlluminateProvider($events);
     }

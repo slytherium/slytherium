@@ -28,11 +28,12 @@ class Configuration implements ConfigurationInterface
     /**
      * Returns all the stored configurations.
      *
+     * @param  boolean $dotify
      * @return array
      */
-    public function all()
+    public function all($dotify = false)
     {
-        return $this->data;
+        return $dotify ? $this->dotify($this->data) : $this->data;
     }
 
     /**
@@ -40,11 +41,14 @@ class Configuration implements ConfigurationInterface
      *
      * @param  string     $key
      * @param  mixed|null $default
+     * @param  boolean    $dotify
      * @return mixed
      */
-    public function get($key, $default = null)
+    public function get($key, $default = null, $dotify = false)
     {
-        return $this->offsetGet($key) ?: $default;
+        $items = $this->offsetGet($key) ?: $default;
+
+        return $dotify ? $this->dotify($items) : $items;
     }
 
     /**
@@ -148,6 +152,33 @@ class Configuration implements ConfigurationInterface
     }
 
     /**
+     * Converts the data into dot notation values.
+     *
+     * @param  array $data
+     * @param  array $result
+     * @return array
+     */
+    protected function dotify(array $data, $result = array())
+    {
+        $array = new \RecursiveArrayIterator($data);
+
+        $iterator = new \RecursiveIteratorIterator($array);
+
+        foreach ($iterator as $value) {
+            $keys = array();
+
+            foreach (range(0, $iterator->getDepth()) as $depth) {
+                $subiterator = $iterator->getSubIterator($depth);
+                array_push($keys, $subiterator->key());
+            }
+
+            $result[strtolower(join('.', $keys))] = $value;
+        }
+
+        return $result;
+    }
+
+    /**
      * Saves the specified key in the list of data.
      *
      * @param  array  &$keys
@@ -165,9 +196,7 @@ class Configuration implements ConfigurationInterface
             return $data[$key];
         }
 
-        if (! isset($data[$key])) {
-            $data[$key] = array();
-        }
+        isset($data[$key]) || $data[$key] = array();
 
         return $this->save($keys, $data[$key], $value);
     }

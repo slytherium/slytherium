@@ -13,18 +13,20 @@ interface ConfigurationInterface extends \ArrayAccess
     /**
      * Returns all the stored configurations.
      *
+     * @param  boolean $dotify
      * @return array
      */
-    public function all();
+    public function all($dotify = false);
 
     /**
      * Returns the value from the specified key.
      *
      * @param  string     $key
      * @param  mixed|null $default
+     * @param  boolean    $dotify
      * @return mixed
      */
-    public function get($key, $default = null);
+    public function get($key, $default = null, $dotify = false);
 
     /**
      * Loads the configuration from a specified file or directory.

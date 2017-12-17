@@ -30,6 +30,34 @@ class ConfigurationTest extends \PHPUnit_Framework_TestCase
     }
 
     /**
+     * Tests ConfigurationInterface::all.
+     *
+     * @return void
+     */
+    public function testAllMethod()
+    {
+        $expected = array('user' => array('name' => 'Rougin'));
+
+        $result = $this->config->all();
+
+        $this->assertEquals($expected, $result);
+    }
+
+    /**
+     * Tests ConfigurationInterface::all with "dotify" enabled.
+     *
+     * @return void
+     */
+    public function testAllMethodWithDotifyEnabled()
+    {
+        $expected = array('user.name' => 'Rougin');
+
+        $result = $this->config->all(true);
+
+        $this->assertEquals($expected, $result);
+    }
+
+    /**
      * Tests ConfigurationInterface::get.
      *
      * @return void

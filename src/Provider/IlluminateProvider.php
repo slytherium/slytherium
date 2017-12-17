@@ -64,15 +64,13 @@ class IlluminateProvider implements ProviderInterface
         $illuminate = null;
 
         if ($container->has($this->container) === false) {
+            $config = $container->get(self::CONFIG);
+
             $illuminate = new Container;
 
-            if ($container->has(self::CONFIG) === true) {
-                $config = $container->get(self::CONFIG);
+            $items = $config->get('illuminate', array());
 
-                $items = $config->get('illuminate', array());
-
-                $illuminate['config'] = new Repository($items);
-            }
+            $illuminate['config'] = new Repository($items);
         }
 
         return $illuminate ?: $container->get($this->container);

@@ -2,7 +2,7 @@
 
 namespace Slytherium\Provider\Illuminate;
 
-use Illuminate\Contracts\Container\Container as ContainerContract;
+use Illuminate\Container\Container as IlluminateContainer;
 use Slytherium\Container\ContainerInterface;
 
 /**
@@ -14,16 +14,16 @@ use Slytherium\Container\ContainerInterface;
 class Container implements ContainerInterface
 {
     /**
-     * @var \Illuminate\Contracts\Container\Container
+     * @var \Illuminate\Container\Container
      */
     protected $container;
 
     /**
      * Initializes the container instance.
      *
-     * @param \Illuminate\Contracts\Container\Container $container
+     * @param \Illuminate\Container\Container $container
      */
-    public function __construct(ContainerContract $container)
+    public function __construct(IlluminateContainer $container)
     {
         $this->container = $container;
     }

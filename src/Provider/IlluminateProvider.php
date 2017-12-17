@@ -2,6 +2,7 @@
 
 namespace Slytherium\Provider;
 
+use Illuminate\Config\Repository;
 use Illuminate\Container\Container;
 use Slytherium\Container\WritableInterface;
 
@@ -63,18 +64,16 @@ class IlluminateProvider implements ProviderInterface
         $illuminate = null;
 
         if ($container->has($this->container) === false) {
-            $repository = 'Illuminate\Config\Repository';
+            $loader = 'Illuminate\Config\LoaderInterface';
 
             $illuminate = new Container;
 
-            if (class_exists($repository) === true) {
+            if (interface_exists($loader) === true) {
                 $config = $container->get(self::CONFIG);
 
                 $items = $config->get('illuminate', array());
 
-                $config = new $repository($items);
-
-                $illuminate['config'] = $config;
+                $illuminate['config'] = new Repository($items);
             }
         }
 

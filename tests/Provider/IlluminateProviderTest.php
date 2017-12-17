@@ -33,8 +33,6 @@ class IlluminateProviderTest extends \PHPUnit_Framework_TestCase
     {
         $events = 'Illuminate\Events\EventServiceProvider';
 
-        $loader = 'Illuminate\Config\LoaderInterface';
-
         $this->container = new Container;
 
         $class = 'Slytherium\Provider\ConfigurationInterface';

@@ -16,8 +16,7 @@ class Utility
     /**
      * Converts each value as array.
      *
-     * @param  array   $item
-     * @param  boolean $convert
+     * @param  array $item
      * @return array
      */
     public static function arrayify(array $item)

@@ -80,7 +80,7 @@ class SilexProvider implements ProviderInterface
     /**
      * Returns a Pimple container with default parameters.
      *
-     * @param \Pimple\Container $container
+     * @param  \Pimple\Container $pimple
      * @return \Pimple\Container
      */
     protected function defaults(Container $pimple)

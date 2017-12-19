@@ -157,7 +157,8 @@ class Configuration implements ConfigurationInterface
      * Converts the data into dot notation values.
      *
      * @param  array  $data
-     * @param  string $context
+     * @param  array  $result
+     * @param  string $key
      * @return array
      */
     protected function dotify(array $data, array $result = array(), $key = '')

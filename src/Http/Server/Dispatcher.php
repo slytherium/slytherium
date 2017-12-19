@@ -27,7 +27,7 @@ class Dispatcher implements DispatcherInterface
         foreach ((array) $stack as $item) {
             $middleware = $this->transform($item);
 
-            array_push($this->stack, $item);
+            array_push($this->stack, $middleware);
         }
     }
 

@@ -2,6 +2,7 @@
 
 namespace Slytherium\Provider;
 
+use Silex\Provider\HttpKernelServiceProvider;
 use Slytherium\Container\Container;
 use Slytherium\Provider\Configuration;
 use Slytherium\Provider\SilexProvider;
@@ -64,7 +65,11 @@ class SilexProviderTest extends \PHPUnit_Framework_TestCase
      */
     public function testRegisterMethod()
     {
+        $http = new SilexProvider(new HttpKernelServiceProvider);
+
         $container = $this->provider->register($this->container);
+
+        $container = $this->provider->register($container);
 
         $container = $this->framework->register($container);
 

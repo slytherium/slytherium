@@ -58,7 +58,13 @@ class IlluminateProviderTest extends \PHPUnit_Framework_TestCase
      */
     public function testRegisterMethod()
     {
+        $session = 'Illuminate\Session\SessionServiceProvider';
+
+        $session = new IlluminateProvider($session);
+
         $container = $this->provider->register($this->container);
+
+        $container = $this->provider->register($container);
 
         $container = $this->framework->register($container);
 

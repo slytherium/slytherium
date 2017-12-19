@@ -61,8 +61,6 @@ class IlluminateProvider implements ProviderInterface
      */
     protected function container(WritableInterface $container)
     {
-        $illuminate = null;
-
         if ($container->has($this->container) === false) {
             $loader = 'Illuminate\Config\LoaderInterface';
 
@@ -75,8 +73,10 @@ class IlluminateProvider implements ProviderInterface
 
                 $illuminate['config'] = new Repository($items);
             }
+
+            return $illuminate;
         }
 
-        return $illuminate ?: $container->get($this->container);
+        return $container->get($this->container);
     }
 }

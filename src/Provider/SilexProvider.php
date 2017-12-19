@@ -55,10 +55,9 @@ class SilexProvider implements ProviderInterface
      * Returns a \Illuminate\Container\Container instance.
      *
      * @param  \Slytherium\Container\WritableInterface $container
-     * @param  \Pimple\Container|null                  $pimple
      * @return \Illuminate\Container\Container
      */
-    protected function container(WritableInterface $container, Container $pimple = null)
+    protected function container(WritableInterface $container)
     {
         if ($container->has($this->container) === false) {
             $config = $container->get(self::CONFIG);
@@ -72,9 +71,11 @@ class SilexProvider implements ProviderInterface
 
                 $exists && $pimple[$key] = $value;
             }
+
+            return $pimple;
         }
 
-        return $pimple ?: $container->get($this->container);
+        return $container->get($this->container);
     }
 
     /**

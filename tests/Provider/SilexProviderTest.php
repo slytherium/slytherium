@@ -2,8 +2,9 @@
 
 namespace Slytherium\Provider;
 
-use Silex\Provider\HttpKernelServiceProvider;
 use Slytherium\Container\Container;
+use Slytherium\Fixture\Providers\SilexExtendedProvider;
+use Slytherium\Fixture\Providers\SilexSimpleProvider;
 use Slytherium\Provider\Configuration;
 use Slytherium\Provider\SilexProvider;
 
@@ -26,36 +27,21 @@ class SilexProviderTest extends \PHPUnit_Framework_TestCase
     protected $framework;
 
     /**
-     * @var \Slytherium\Provider\ProviderInterface
-     */
-    protected $provider;
-
-    /**
      * Sets up the provider instance.
      *
      * @return void
      */
     public function setUp()
     {
-        $message = 'Silex Providers is not installed.';
-
-        $twig = 'Silex\Provider\TwigServiceProvider';
-
-        class_exists($twig) || $this->markTestSkipped($message);
-
         $this->container = new Container;
 
         $class = 'Slytherium\Provider\ConfigurationInterface';
 
         $config = new Configuration;
 
-        $config->set('silex.twig.path', array());
-
         $this->container->set($class, $config);
 
         $this->framework = new FrameworkProvider;
-
-        $this->provider = new SilexProvider(new $twig);
     }
 
     /**
@@ -65,17 +51,19 @@ class SilexProviderTest extends \PHPUnit_Framework_TestCase
      */
     public function testRegisterMethod()
     {
-        $http = new SilexProvider(new HttpKernelServiceProvider);
+        $simple = new SilexProvider(new SilexSimpleProvider);
 
-        $container = $this->provider->register($this->container);
+        $extended = new SilexProvider(new SilexExtendedProvider);
 
-        $container = $this->provider->register($container);
+        $container = $simple->register($this->container);
+
+        $container = $extended->register($container);
 
         $container = $this->framework->register($container);
 
-        $expected = 'Twig_Environment';
+        $expected = 'Slytherium\Fixture\Http\Controllers\ExtendedController';
 
-        $result = $container->get('twig');
+        $result = $container->get('extended');
 
         $this->assertInstanceOf($expected, $result);
     }

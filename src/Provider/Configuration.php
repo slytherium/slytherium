@@ -46,7 +46,9 @@ class Configuration implements ConfigurationInterface
      */
     public function get($key, $default = null, $dotify = false)
     {
-        $items = $this->offsetGet($key) ?: $default;
+        $result = $this->offsetGet($key);
+
+        $items = $result !== null ? $result : $default;
 
         return $dotify ? $this->dotify($items) : $items;
     }
@@ -154,25 +156,24 @@ class Configuration implements ConfigurationInterface
     /**
      * Converts the data into dot notation values.
      *
-     * @param  array $data
-     * @param  array $result
+     * @param  array  $data
+     * @param  string $context
      * @return array
      */
-    protected function dotify(array $data, $result = array())
+    protected function dotify(array $data, array $result = array(), $key = '')
     {
-        $array = new \RecursiveArrayIterator($data);
+        foreach ((array) $data as $name => $value) {
+            if (! is_array($value) || empty($value)) {
+                $result[$key . $name] = $value;
 
-        $iterator = new \RecursiveIteratorIterator($array);
-
-        foreach ($iterator as $value) {
-            $keys = array();
-
-            foreach (range(0, $iterator->getDepth()) as $depth) {
-                $subiterator = $iterator->getSubIterator($depth);
-                array_push($keys, $subiterator->key());
+                continue;
             }
 
-            $result[strtolower(join('.', $keys))] = $value;
+            $new = $key . $name . '.';
+
+            $array = $this->dotify($value, $result, $new);
+
+            $result = array_merge($result, $array);
         }
 
         return $result;

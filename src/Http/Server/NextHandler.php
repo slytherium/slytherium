@@ -41,6 +41,17 @@ class NextHandler implements HandlerInterface
      * @param  \Slytherium\Http\Message\ServerRequestInterface $request
      * @return \Slytherium\Http\Message\ResponseInterface
      */
+    public function __invoke(ServerRequestInterface $request)
+    {
+        return $this->handle($request);
+    }
+
+    /**
+     * Dispatch the next available middleware and return the response.
+     *
+     * @param  \Slytherium\Http\Message\ServerRequestInterface $request
+     * @return \Slytherium\Http\Message\ResponseInterface
+     */
     public function handle(ServerRequestInterface $request)
     {
         return $this->middleware->process($request, $this->handler);

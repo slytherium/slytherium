@@ -4,7 +4,7 @@ namespace Slytherium\Provider;
 
 use Slytherium\Container\WritableInterface;
 use Symfony\Component\HttpKernel\Bundle\BundleInterface;
-use Slytherium\Provider\Symfony\Kernel;
+use Slytherium\Provider\SymfonyKernel;
 
 /**
  * Symfony Provider
@@ -14,7 +14,7 @@ use Slytherium\Provider\Symfony\Kernel;
  */
 class SymfonyProvider implements ProviderInterface
 {
-    const KERNEL = 'Slytherium\Provider\Symfony\Kernel';
+    const KERNEL = 'Slytherium\Provider\SymfonyKernel';
 
     /**
      * @var \Symfony\Component\HttpKernel\Bundle\BundleInterface
@@ -44,7 +44,7 @@ class SymfonyProvider implements ProviderInterface
         } else {
             $configuration = $container->get(ProviderInterface::CONFIG);
 
-            $kernel = new Kernel($configuration);
+            $kernel = new SymfonyKernel($configuration);
         }
 
         $kernel->add($this->bundle);

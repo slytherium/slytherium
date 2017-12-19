@@ -6,7 +6,6 @@ use Rougin\Slytherin\Container\Container;
 use Rougin\Slytherin\Integration\Configuration as SlytherinConfig;
 use Rougin\Slytherin\Integration\IntegrationInterface;
 use Slytherium\Container\WritableInterface;
-use Slytherium\Provider\Slytherin\BridgeContainer;
 
 /**
  * Slytherin Provider

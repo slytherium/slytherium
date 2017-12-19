@@ -1,29 +1,28 @@
 <?php
 
-namespace Slytherium\Provider\Illuminate;
+namespace Slytherium\Container;
 
-use Illuminate\Container\Container as IlluminateContainer;
-use Slytherium\Container\ContainerInterface;
+use Pimple\Container as BaseContainer;
 
 /**
- * Illuminate to Slytherium Bridge Container
+ * Pimple to Slytherium Container
  *
  * @package Slytherium
  * @author  Rougin Royce Gutib <rougingutib@gmail.com>
  */
-class Container implements ContainerInterface
+class PimpleContainer implements ContainerInterface
 {
     /**
-     * @var \Illuminate\Container\Container
+     * @var \Pimple\Container
      */
     protected $container;
 
     /**
      * Initializes the container instance.
      *
-     * @param \Illuminate\Container\Container $container
+     * @param \Pimple\Container $container
      */
-    public function __construct(IlluminateContainer $container)
+    public function __construct(BaseContainer $container)
     {
         $this->container = $container;
     }
@@ -36,7 +35,7 @@ class Container implements ContainerInterface
      */
     public function get($id)
     {
-        return $this->container->make($id);
+        return $this->container[$id];
     }
 
     /**
@@ -47,6 +46,6 @@ class Container implements ContainerInterface
      */
     public function has($id)
     {
-        return $this->container->bound($id);
+        return isset($this->container[$id]);
     }
 }

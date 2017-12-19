@@ -4,8 +4,8 @@ namespace Slytherium\Provider;
 
 use Slytherium\Container\CompositeContainer;
 use Slytherium\Container\ContainerInterface;
+use Slytherium\Container\SymfonyContainer;
 use Slytherium\Container\WritableInterface;
-use Slytherium\Provider\Symfony\Container as SymfonyContainer;
 
 /**
  * Framework Provider
@@ -15,10 +15,28 @@ use Slytherium\Provider\Symfony\Container as SymfonyContainer;
  */
 class FrameworkProvider implements ProviderInterface
 {
+    const ILLUMINATE_CONTAINER = 'Illuminate\Container\Container';
+
+    const SILEX_CONTAINER = 'Pimple\Container';
+
+    const SLYTHERIN_CONTAINER = 'Rougin\Slytherin\Container\Container';
+
+    const SYMFONY_KERNEL = 'Slytherium\Provider\SymfonyKernel';
+
     /**
      * @var \Slytherium\Container\CompositeContainer
      */
     protected $container;
+
+    /**
+     * @var array
+     */
+    protected $externals = array();
+
+    /**
+     * @var array
+     */
+    protected $wrappers = array();
 
     /**
      * Initializes the container instance.
@@ -28,6 +46,14 @@ class FrameworkProvider implements ProviderInterface
     public function __construct(CompositeContainer $container = null)
     {
         $this->container = $container ?: new CompositeContainer;
+
+        $this->externals[] = self::ILLUMINATE_CONTAINER;
+        $this->externals[] = self::SILEX_CONTAINER;
+        $this->externals[] = self::SLYTHERIN_CONTAINER;
+
+        $this->wrappers[] = 'Slytherium\Container\IlluminateContainer';
+        $this->wrappers[] = 'Slytherium\Container\PimpleContainer';
+        $this->wrappers[] = 'Slytherium\Container\SlytherinContainer';
     }
 
     /**
@@ -42,9 +68,7 @@ class FrameworkProvider implements ProviderInterface
 
         $this->externals($container);
 
-        $kernel = 'Slytherium\Provider\Symfony\Kernel';
-
-        if ($container->has($kernel) === true) {
+        if ($container->has(self::SYMFONY_KERNEL)) {
             $instance = $this->symfony($container);
 
             $this->container->add($instance);
@@ -61,15 +85,7 @@ class FrameworkProvider implements ProviderInterface
      */
     protected function externals(ContainerInterface $container)
     {
-        list($externals, $wrappers) = array(array(), array());
-
-        $externals[] = 'Illuminate\Container\Container';
-        $externals[] = 'Rougin\Slytherin\Container\Container';
-
-        $wrappers[] = 'Slytherium\Provider\Illuminate\Container';
-        $wrappers[] = 'Slytherium\Provider\Slytherin\Container';
-
-        $containers = array_combine($externals, $wrappers);
+        $containers = array_combine($this->externals, $this->wrappers);
 
         foreach ($containers as $external => $wrapper) {
             $contains = $container->has($external);
@@ -90,10 +106,12 @@ class FrameworkProvider implements ProviderInterface
      */
     protected function symfony(ContainerInterface $container)
     {
-        $kernel = $container->get('Slytherium\Provider\Symfony\Kernel');
+        $kernel = $container->get(self::SYMFONY_KERNEL);
 
         $kernel->boot();
 
-        return new SymfonyContainer($kernel->getContainer());
+        $container = $kernel->getContainer();
+
+        return new SymfonyContainer($container);
     }
 }

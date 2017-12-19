@@ -16,7 +16,8 @@ class Utility
     /**
      * Converts each value as array.
      *
-     * @param  array $item
+     * @param  array   $item
+     * @param  boolean $convert
      * @return array
      */
     public static function arrayify(array $item)
@@ -24,9 +25,11 @@ class Utility
         $array = array();
 
         foreach ($item as $key => $value) {
-            $new = array($value);
+            $new = (array) array($value);
 
-            $array[$key] = $new;
+            isset($item['name']) && $value = $new;
+
+            $array[$key] = $value;
         }
 
         return $array;
@@ -41,17 +44,11 @@ class Utility
     public static function files(array $uploaded, $files = array())
     {
         foreach ((array) $uploaded as $name => $file) {
+            $array = self::arrayify($file);
+
             $files[$name] = array();
 
-            if (isset($file[0]) === false) {
-                is_array($file['name']) || $file = self::arrayify($file);
-
-                $count = count($file['name']);
-
-                $files = self::convert($files, $file, $name, $count);
-
-                continue;
-            }
+            isset($file[0]) || $file = self::convert($file, $array);
 
             $files[$name] = $file;
         }
@@ -82,30 +79,30 @@ class Utility
     /**
      * Converts the data from $_FILES to multiple \UploadInterface instances.
      *
-     * @param  array   $files
-     * @param  array   $current
-     * @param  string  $name
-     * @param  integer $count
+     * @param  array $file
+     * @param  array $current
      * @return array
      */
-    protected static function convert($files, $current, $name, $count)
+    protected static function convert($file, $current)
     {
-        for ($i = 0; $i < $count; $i++) {
+        list($count, $items) = array(count($file['name']), array());
+
+        for ($i = 0; $i < (integer) $count; $i++) {
             foreach (array_keys($current) as $key) {
                 $item = $current[$key][$i];
 
-                $files[$name][$i][$key] = $item;
+                $file[$i][$key] = $item;
             }
 
-            $error = $files[$name][$i]['error'];
-            $original = $files[$name][$i]['name'];
-            $size = $files[$name][$i]['size'];
-            $tmp = $files[$name][$i]['tmp_name'];
-            $type = $files[$name][$i]['type'];
+            $error = $file[$i]['error'];
+            $original = $file[$i]['name'];
+            $size = $file[$i]['size'];
+            $tmp = $file[$i]['tmp_name'];
+            $type = $file[$i]['type'];
 
-            $files[$name][$i] = new UploadedFile($tmp, $size, $error, $original, $type);
+            $items[$i] = new UploadedFile($tmp, $size, $error, $original, $type);
         }
 
-        return $files;
+        return $items;
     }
 }

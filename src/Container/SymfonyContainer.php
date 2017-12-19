@@ -1,9 +1,8 @@
 <?php
 
-namespace Slytherium\Provider\Symfony;
+namespace Slytherium\Container;
 
-use Symfony\Component\DependencyInjection\ContainerInterface;
-use Slytherium\Provider\Slytherin\Container as SlytherinContainer;
+use Symfony\Component\DependencyInjection\ContainerInterface as SymfonyContainerInterface;
 
 /**
  * Symfony to Slytherium Bridge Container
@@ -11,7 +10,7 @@ use Slytherium\Provider\Slytherin\Container as SlytherinContainer;
  * @package Slytherium
  * @author  Rougin Royce Gutib <rougingutib@gmail.com>
  */
-class Container extends SlytherinContainer
+class SymfonyContainer extends SlytherinContainer
 {
     /**
      * @var \Symfony\Component\DependencyInjection\ContainerInterface
@@ -23,7 +22,7 @@ class Container extends SlytherinContainer
      *
      * @param \Symfony\Component\DependencyInjection\ContainerInterface $container
      */
-    public function __construct(ContainerInterface $container)
+    public function __construct(SymfonyContainerInterface $container)
     {
         $this->container = $container;
     }

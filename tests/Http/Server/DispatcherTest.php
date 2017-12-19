@@ -5,6 +5,7 @@ namespace Slytherium\Http\Server;
 use Slytherium\Fixture\Http\Middlewares\FinalMiddleware;
 use Slytherium\Fixture\Http\Middlewares\JsonMiddleware;
 use Slytherium\Http\Message\ServerRequest;
+use Slytherium\Http\Message\Stream;
 use Slytherium\Http\Server\Dispatcher;
 
 /**
@@ -60,6 +61,44 @@ class DispatcherTest extends \PHPUnit_Framework_TestCase
         $response = $this->dispatcher->dispatch($this->request);
 
         $result = $response->getHeader('Content-Type');
+
+        $this->assertEquals($expected, $result);
+    }
+
+    /**
+     * Tests DispatcherInterface::dispatch with closures.
+     *
+     * @return void
+     */
+    public function testDispatchMethodWithClosures()
+    {
+        $this->dispatcher->pipe(function ($request, $next) {
+            $response = $next($request);
+
+            $stream = new Stream(fopen('php://temp', 'r+'));
+
+            $text = (string) $response->getBody();
+
+            $stream->write($text . ' world');
+
+            return $response->withBody($stream);
+        });
+
+        $this->dispatcher->pipe(function ($request, $next) {
+            $response = $next($request);
+
+            $response->getBody()->write('Hello');
+
+            return $response;
+        });
+
+        $this->dispatcher->pipe(new FinalMiddleware);
+
+        $expected = 'Hello world';
+
+        $response = $this->dispatcher->dispatch($this->request);
+
+        $result = (string) $response->getBody();
 
         $this->assertEquals($expected, $result);
     }

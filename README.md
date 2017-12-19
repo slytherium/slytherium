@@ -41,7 +41,7 @@ class HelloController
 use Slytherium\Http\Message\ServerRequestInterface;
 
 // Creates the server request instance
-$request = new Slytherium\Http\Message\ServerRequest($_SERVER);
+$request = new Slytherium\Http\Message\ServerRequest($_SERVER, $_COOKIE, $_GET, $_FILES, $_POST);
 
 // Initializes the router application
 $app = new Slytherium\Application\RouterApplication;
@@ -138,7 +138,7 @@ class RouterMiddleware implements MiddlewareInterface
 use Slytherium\Http\Message\ServerRequestInterface;
 
 // Creates the server request instance
-$request = new Slytherium\Http\Message\ServerRequest($_SERVER);
+$request = new Slytherium\Http\Message\ServerRequest($_SERVER, $_COOKIE, $_GET, $_FILES, $_POST);
 
 // Initializes the middleware application
 $app = new Slytherium\Application\MiddlewareApplication;

@@ -72,6 +72,22 @@ class ConfigurationTest extends \PHPUnit_Framework_TestCase
     }
 
     /**
+     * Tests ConfigurationInterface::get with an empty array.
+     *
+     * @return void
+     */
+    public function testGetMethodWithEmptyArray()
+    {
+        $expected = array();
+
+        $this->config->set('app.views', array());
+
+        $result = $this->config->get('app.views');
+
+        $this->assertEquals($expected, $result);
+    }
+
+    /**
      * Tests ConfigurationInterface::load.
      *
      * @return void

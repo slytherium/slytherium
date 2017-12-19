@@ -25,7 +25,7 @@ class Dispatcher implements DispatcherInterface
     public function __construct(array $stack = array())
     {
         foreach ((array) $stack as $item) {
-            is_string($item) && $item = new $item;
+            $middleware = $this->transform($item);
 
             array_push($this->stack, $item);
         }
@@ -63,14 +63,31 @@ class Dispatcher implements DispatcherInterface
     /**
      * Adds a new middleware to the stack.
      *
-     * @param  \Slytherium\Http\Server\MiddlewareInterface $middleware
+     * @param  mixed $item
      * @return self
      */
-    public function pipe(MiddlewareInterface $middleware)
+    public function pipe($item)
     {
-        $this->stack[] = $middleware;
+        $item = $this->transform($item);
+
+        array_push($this->stack, $item);
 
         return $this;
+    }
+
+    /**
+     * Transforms the specified input into a middleware.
+     *
+     * @param  mixed $item
+     * @return \Slytherium\Http\Server\MiddlewareInterface
+     */
+    protected function transform($item)
+    {
+        is_string($item) && $item = new $item;
+
+        is_callable($item) && $item = new ClosureMiddleware($item);
+
+        return $item;
     }
 
     /**

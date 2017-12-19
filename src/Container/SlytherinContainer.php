@@ -1,17 +1,16 @@
 <?php
 
-namespace Slytherium\Provider\Slytherin;
+namespace Slytherium\Container;
 
-use Rougin\Slytherin\Container\ContainerInterface;
-use Slytherium\Container\ContainerInterface as SlytheriumContainer;
+use Rougin\Slytherin\Container\ContainerInterface as SlytherinContainerInterface;
 
 /**
- * Slytherin to Slytherium Bridge Container
+ * Slytherin to Slytherium Container
  *
  * @package Slytherium
  * @author  Rougin Royce Gutib <rougingutib@gmail.com>
  */
-class Container implements SlytheriumContainer
+class SlytherinContainer implements ContainerInterface
 {
     /**
      * @var \Rougin\Slytherin\Container\ContainerInterface
@@ -23,7 +22,7 @@ class Container implements SlytheriumContainer
      *
      * @param \Rougin\Slytherin\Container\ContainerInterface $container
      */
-    public function __construct(ContainerInterface $container)
+    public function __construct(SlytherinContainerInterface $container)
     {
         $this->container = $container;
     }

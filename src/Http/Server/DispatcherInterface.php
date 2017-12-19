@@ -23,8 +23,8 @@ interface DispatcherInterface extends MiddlewareInterface
     /**
      * Adds a new middleware to the stack.
      *
-     * @param  \Slytherium\Http\Server\MiddlewareInterface $middleware
+     * @param  mixed $middleware
      * @return self
      */
-    public function pipe(MiddlewareInterface $middleware);
+    public function pipe($middleware);
 }

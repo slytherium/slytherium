@@ -28,7 +28,7 @@ before_script:
   - if [[ $TRAVIS_PHP_VERSION == '5.6' ]]; then composer require silex/providers symfony/console:"~2.8|~3.0" symfony/framework-bundle:"~2.8|~3.0" symfony/twig-bundle:"~2.8|~3.0" --dev; fi
   - if [[ $TRAVIS_PHP_VERSION == '7.0' ]]; then composer require silex/providers symfony/console:"~2.8|~3.0" symfony/framework-bundle:"~2.8|~3.0" symfony/twig-bundle:"~2.8|~3.0" --dev; fi
   - if [[ $TRAVIS_PHP_VERSION == 'hhvm' ]]; then composer require silex/providers symfony/console:"~2.8|~3.0" symfony/framework-bundle:"~2.8|~3.0" symfony/twig-bundle:"~2.8|~3.0" --dev; fi
-  - composer require illuminate/config:"~4.1|~5.0" illuminate/events:"~4.1|~5.0" illuminate/session:"~4.1|~5.0" pimple/pimple rougin/slytherin --dev
+  - composer require illuminate/config:"~4.1|~5.0" illuminate/events:"~4.1|~5.0" pimple/pimple rougin/slytherin --dev
 
 script:
   - vendor/bin/phpunit --coverage-text --coverage-clover=coverage.clover

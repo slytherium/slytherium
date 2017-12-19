@@ -3,8 +3,8 @@
 namespace Slytherium\Provider;
 
 use Slytherium\Container\Container;
-use Slytherium\Fixture\Providers\SilexExtendedProvider;
-use Slytherium\Fixture\Providers\SilexSimpleProvider;
+use Slytherium\Fixture\Providers\SilexExtendedServiceProvider;
+use Slytherium\Fixture\Providers\SilexSimpleServiceProvider;
 use Slytherium\Provider\Configuration;
 use Slytherium\Provider\SilexProvider;
 
@@ -39,6 +39,8 @@ class SilexProviderTest extends \PHPUnit_Framework_TestCase
 
         $config = new Configuration;
 
+        $config->set('silex.simple.paths', array());
+
         $this->container->set($class, $config);
 
         $this->framework = new FrameworkProvider;
@@ -51,9 +53,9 @@ class SilexProviderTest extends \PHPUnit_Framework_TestCase
      */
     public function testRegisterMethod()
     {
-        $simple = new SilexProvider(new SilexSimpleProvider);
+        $simple = new SilexProvider(new SilexSimpleServiceProvider);
 
-        $extended = new SilexProvider(new SilexExtendedProvider);
+        $extended = new SilexProvider(new SilexExtendedServiceProvider);
 
         $container = $simple->register($this->container);
 

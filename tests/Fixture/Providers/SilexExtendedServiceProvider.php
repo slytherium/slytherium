@@ -4,15 +4,16 @@ namespace Slytherium\Fixture\Providers;
 
 use Pimple\Container;
 use Pimple\ServiceProviderInterface;
+use Slytherium\Fixture\Http\Controllers\ExtendedController;
 use Slytherium\Fixture\Http\Controllers\SimpleController;
 
 /**
- * Silex Simple Provider
+ * Silex Extended Service Provider
  *
  * @package Slytherium
  * @author  Rougin Royce Gutib <rougingutib@gmail.com>
  */
-class SilexSimpleProvider implements ServiceProviderInterface
+class SilexExtendedServiceProvider implements ServiceProviderInterface
 {
     /**
      * Registers services on the given container.
@@ -21,6 +22,8 @@ class SilexSimpleProvider implements ServiceProviderInterface
      */
     public function register(Container $pimple)
     {
-        $pimple['simple'] = new SimpleController;
+        $simple = $pimple['simple'] ?: new SimpleController;
+
+        $pimple['extended'] = new ExtendedController($simple);
     }
 }

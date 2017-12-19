@@ -14,6 +14,10 @@ use Slytherium\Provider\IlluminateProvider;
  */
 class IlluminateProviderTest extends \PHPUnit_Framework_TestCase
 {
+    const SIMPLE_PROVIDER = 'Slytherium\Fixture\Providers\IlluminateSimpleServiceProvider';
+
+    const EXTENDED_PROVIDER = 'Slytherium\Fixture\Providers\IlluminateExtendedServiceProvider';
+
     /**
      * @var \Slytherium\Container\WritableInterface
      */
@@ -36,8 +40,6 @@ class IlluminateProviderTest extends \PHPUnit_Framework_TestCase
      */
     public function setUp()
     {
-        $events = 'Illuminate\Events\EventServiceProvider';
-
         $this->container = new Container;
 
         $class = 'Slytherium\Provider\ConfigurationInterface';
@@ -47,8 +49,6 @@ class IlluminateProviderTest extends \PHPUnit_Framework_TestCase
         $this->container->set($class, $config);
 
         $this->framework = new FrameworkProvider;
-
-        $this->provider = new IlluminateProvider($events);
     }
 
     /**
@@ -58,15 +58,19 @@ class IlluminateProviderTest extends \PHPUnit_Framework_TestCase
      */
     public function testRegisterMethod()
     {
-        $container = $this->provider->register($this->container);
+        $simple = new IlluminateProvider(self::SIMPLE_PROVIDER);
 
-        $container = $this->provider->register($container);
+        $extended = new IlluminateProvider(self::EXTENDED_PROVIDER);
+
+        $container = $simple->register($this->container);
+
+        $container = $extended->register($container);
 
         $container = $this->framework->register($container);
 
-        $expected = 'Illuminate\Events\Dispatcher';
+        $expected = 'Slytherium\Fixture\Http\Controllers\ExtendedController';
 
-        $result = $container->get('events');
+        $result = $container->get('extended');
 
         $this->assertInstanceOf($expected, $result);
     }

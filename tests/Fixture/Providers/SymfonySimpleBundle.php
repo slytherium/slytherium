@@ -2,9 +2,8 @@
 
 namespace Slytherium\Fixture\Providers;
 
-use Symfony\Component\HttpKernel\Bundle\Bundle;
 use Symfony\Component\DependencyInjection\ContainerBuilder;
-use Slytherium\Fixture\Http\Controllers\SimpleController;
+use Symfony\Component\HttpKernel\Bundle\Bundle;
 
 /**
  * Symfony Simple Bundle
@@ -21,6 +20,8 @@ class SymfonySimpleBundle extends Bundle
      */
     public function build(ContainerBuilder $container)
     {
-        $container->set('simple', new SimpleController);
+        $simple = 'Slytherium\Fixture\Http\Controllers\SimpleController';
+
+        $container->register('simple', $simple);
     }
 }

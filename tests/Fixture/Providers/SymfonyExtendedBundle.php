@@ -2,9 +2,8 @@
 
 namespace Slytherium\Fixture\Providers;
 
-use Slytherium\Fixture\Http\Controllers\ExtendedController;
-use Slytherium\Fixture\Http\Controllers\SimpleController;
 use Symfony\Component\DependencyInjection\ContainerBuilder;
+use Symfony\Component\DependencyInjection\Reference;
 use Symfony\Component\HttpKernel\Bundle\Bundle;
 
 /**
@@ -22,10 +21,10 @@ class SymfonyExtendedBundle extends Bundle
      */
     public function build(ContainerBuilder $container)
     {
-        $simple = new SimpleController;
+        $extended = 'Slytherium\Fixture\Http\Controllers\ExtendedController';
 
-        $extended = new ExtendedController($simple);
+        $definition = $container->register('extended', $extended);
 
-        $container->set('extended', $extended);
+        $definition->setArgument('$controller', new Reference('simple'));
     }
 }

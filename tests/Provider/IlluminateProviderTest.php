@@ -3,8 +3,6 @@
 namespace Slytherium\Provider;
 
 use Slytherium\Container\Container;
-use Slytherium\Provider\Configuration;
-use Slytherium\Provider\IlluminateProvider;
 
 /**
  * Illuminate Provider Test
@@ -14,9 +12,9 @@ use Slytherium\Provider\IlluminateProvider;
  */
 class IlluminateProviderTest extends \PHPUnit_Framework_TestCase
 {
-    const SIMPLE_PROVIDER = 'Slytherium\Fixture\Providers\IlluminateSimpleServiceProvider';
+    const FOOD_PROVIDER = 'Slytherium\Fixture\Providers\FoodServiceProvider';
 
-    const EXTENDED_PROVIDER = 'Slytherium\Fixture\Providers\IlluminateExtendedServiceProvider';
+    const TEST_PROVIDER = 'Slytherium\Fixture\Providers\TestServiceProvider';
 
     /**
      * @var \Slytherium\Container\WritableInterface
@@ -58,19 +56,19 @@ class IlluminateProviderTest extends \PHPUnit_Framework_TestCase
      */
     public function testRegisterMethod()
     {
-        $simple = new IlluminateProvider(self::SIMPLE_PROVIDER);
+        $fooo = new IlluminateProvider(self::FOOD_PROVIDER);
 
-        $extended = new IlluminateProvider(self::EXTENDED_PROVIDER);
+        $test = new IlluminateProvider(self::TEST_PROVIDER);
 
-        $container = $simple->register($this->container);
+        $container = $fooo->register($this->container);
 
-        $container = $extended->register($container);
+        $container = $test->register($container);
 
         $container = $this->framework->register($container);
 
-        $expected = 'Slytherium\Fixture\Http\Controllers\ExtendedController';
+        $expected = 'Slytherium\Fixture\Http\Controllers\TestController';
 
-        $result = $container->get('extended');
+        $result = $container->get('test');
 
         $this->assertInstanceOf($expected, $result);
     }

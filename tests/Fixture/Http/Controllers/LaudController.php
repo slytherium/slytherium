@@ -3,26 +3,26 @@
 namespace Slytherium\Fixture\Http\Controllers;
 
 /**
- * Extended Controller
+ * Laud Controller
  *
  * @package Slytherium
  * @author  Rougin Royce Gutib <rougingutib@gmail.com>
  */
-class ExtendedController
+class LaudController
 {
     /**
-     * @var \Slytherium\Fixture\Http\Controllers\SimpleController
+     * @var \Slytherium\Fixture\Http\Controllers\HailController
      */
-    protected $controller;
+    protected $hail;
 
     /**
      * Initializes the controller instance.
      *
-     * @param \Slytherium\Fixture\Http\Controllers\SimpleController $controller
+     * @param \Slytherium\Fixture\Http\Controllers\HailController $hail
      */
-    public function __construct(SimpleController $controller)
+    public function __construct(HailController $hail)
     {
-        $this->controller = $controller;
+        $this->hail = $hail;
     }
 
     /**
@@ -32,7 +32,7 @@ class ExtendedController
      */
     public function greet()
     {
-        $text = $this->controller->greet();
+        $text = $this->hail->greet();
 
         return $text . ' and people';
     }

@@ -3,10 +3,8 @@
 namespace Slytherium\Provider;
 
 use Slytherium\Container\Container;
-use Slytherium\Fixture\Providers\SilexExtendedServiceProvider;
-use Slytherium\Fixture\Providers\SilexSimpleServiceProvider;
-use Slytherium\Provider\Configuration;
-use Slytherium\Provider\SilexProvider;
+use Slytherium\Fixture\Providers\BlogServiceProvider;
+use Slytherium\Fixture\Providers\UserServiceProvider;
 
 /**
  * Silex Provider Test
@@ -39,7 +37,7 @@ class SilexProviderTest extends \PHPUnit_Framework_TestCase
 
         $config = new Configuration;
 
-        $config->set('silex.simple.paths', array());
+        $config->set('silex.user.paths', array());
 
         $this->container->set($class, $config);
 
@@ -53,19 +51,19 @@ class SilexProviderTest extends \PHPUnit_Framework_TestCase
      */
     public function testRegisterMethod()
     {
-        $simple = new SilexProvider(new SilexSimpleServiceProvider);
+        $user = new SilexProvider(new UserServiceProvider);
 
-        $extended = new SilexProvider(new SilexExtendedServiceProvider);
+        $blog = new SilexProvider(new BlogServiceProvider);
 
-        $container = $simple->register($this->container);
+        $container = $user->register($this->container);
 
-        $container = $extended->register($container);
+        $container = $blog->register($container);
 
         $container = $this->framework->register($container);
 
-        $expected = 'Slytherium\Fixture\Http\Controllers\ExtendedController';
+        $expected = 'Slytherium\Fixture\Http\Controllers\BlogController';
 
-        $result = $container->get('extended');
+        $result = $container->get('blog');
 
         $this->assertInstanceOf($expected, $result);
     }

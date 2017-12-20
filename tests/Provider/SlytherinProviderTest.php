@@ -4,9 +4,6 @@ namespace Slytherium\Provider;
 
 use Rougin\Slytherin\Template\RendererIntegration;
 use Slytherium\Container\Container;
-use Slytherium\Fixture\Http\Controllers\SimpleController;
-use Slytherium\Provider\Configuration;
-use Slytherium\Provider\SlytherinProvider;
 
 /**
  * Slytherin Provider Test

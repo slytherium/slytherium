@@ -3,10 +3,8 @@
 namespace Slytherium\Provider;
 
 use Slytherium\Container\Container;
-use Slytherium\Fixture\Providers\SymfonyExtendedBundle;
-use Slytherium\Fixture\Providers\SymfonySimpleBundle;
-use Slytherium\Provider\Configuration;
-use Slytherium\Provider\SymfonyProvider;
+use Slytherium\Fixture\Providers\SlytherinAuthBundle;
+use Slytherium\Fixture\Providers\SlytherinRoleBundle;
 
 /**
  * Symfony Provider Test
@@ -27,11 +25,6 @@ class SymfonyProviderTest extends \PHPUnit_Framework_TestCase
     protected $framework;
 
     /**
-     * @var \Slytherium\Provider\ProviderInterface[]
-     */
-    protected $providers;
-
-    /**
      * Sets up the provider instance.
      *
      * @return void
@@ -44,10 +37,14 @@ class SymfonyProviderTest extends \PHPUnit_Framework_TestCase
 
         $root = __DIR__ . '/../Fixture';
 
+        $this->deleteFiles($root . '/Symfony/cache');
+
+        $this->deleteFiles($root . '/Symfony/logs');
+
         $config->set('symfony.kernel.debug', true);
         $config->set('symfony.kernel.environment', 'dev');
         $config->set('symfony.kernel.project_dir', $root);
-        $config->set('symfony.kernel.root_dir', $root . '/symfony');
+        $config->set('symfony.kernel.root_dir', $root . '/Symfony');
         $config->set('symfony.kernel.secret', 'secret');
 
         $this->container = new Container;
@@ -66,20 +63,42 @@ class SymfonyProviderTest extends \PHPUnit_Framework_TestCase
     {
         $container = $this->container;
 
-        $simple = new SymfonyProvider(new SymfonySimpleBundle);
+        $role = new SymfonyProvider(new SlytherinRoleBundle);
 
-        $extended = new SymfonyProvider(new SymfonyExtendedBundle);
+        $auth = new SymfonyProvider(new SlytherinAuthBundle);
 
-        $container = $simple->register($container);
+        $container = $role->register($container);
 
-        $container = $extended->register($container);
+        $container = $auth->register($container);
 
         $container = $this->framework->register($container);
 
-        $expected = 'Slytherium\Fixture\Http\Controllers\ExtendedController';
+        $expected = 'Slytherium\Fixture\Http\Controllers\AuthController';
 
-        $result = $container->get('extended');
+        $result = $container->get('auth');
 
         $this->assertInstanceOf($expected, $result);
+    }
+
+    /**
+     * Deletes the directory recursively.
+     *
+     * @param  string $target
+     * @return void
+     */
+    protected function deleteFiles($target)
+    {
+        if (is_dir($target) === true) {
+            // GLOB_MARK adds a slash to directories returned
+            $files = glob($target . '*', GLOB_MARK);
+
+            foreach ($files as $file) {
+                $this->deleteFiles($file);
+            }
+
+            return file_exists($target) && rmdir($target);
+        }
+
+        file_exists($target) && unlink($target);
     }
 }

@@ -3,15 +3,14 @@
 namespace Slytherium\Fixture\Providers;
 
 use Illuminate\Support\ServiceProvider;
-use Slytherium\Fixture\Http\Controllers\SimpleController;
 
 /**
- * Illuminate Simple Service Provider
+ * Food Service Provider
  *
  * @package Slytherium
  * @author  Rougin Royce Gutib <rougingutib@gmail.com>
  */
-class IlluminateSimpleServiceProvider extends ServiceProvider
+class FoodServiceProvider extends ServiceProvider
 {
     /**
      * Registers the service provider.
@@ -20,8 +19,8 @@ class IlluminateSimpleServiceProvider extends ServiceProvider
      */
     public function register()
     {
-        $simple = 'Slytherium\Fixture\Http\Controllers\SimpleController';
+        $food = 'Slytherium\Fixture\Http\Controllers\FoodController';
 
-        $this->app->bind('simple', $simple);
+        $this->app->bind('food', $food);
     }
 }

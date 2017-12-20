@@ -2,8 +2,8 @@
 
 namespace Slytherium\Application;
 
-use Slytherium\Fixture\Http\Controllers\ExtendedController;
-use Slytherium\Fixture\Http\Controllers\SimpleController;
+use Slytherium\Fixture\Http\Controllers\HailController;
+use Slytherium\Fixture\Http\Controllers\LaudController;
 use Slytherium\Http\Message\ServerRequest;
 
 /**
@@ -23,7 +23,7 @@ class RouterApplicationTest extends TestCase
     {
         $this->application = new RouterApplication;
 
-        $instance = get_class(new ExtendedController(new SimpleController));
+        $instance = get_class(new LaudController(new HailController));
 
         $this->application->connect('/greet', $instance . '@greet');
         $this->application->delete('/greet', $instance . '@greet');

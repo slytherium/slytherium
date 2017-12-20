@@ -3,16 +3,15 @@
 namespace Slytherium\Fixture\Providers;
 
 use Symfony\Component\DependencyInjection\ContainerBuilder;
-use Symfony\Component\DependencyInjection\Reference;
 use Symfony\Component\HttpKernel\Bundle\Bundle;
 
 /**
- * Symfony Extended Bundle
+ * Slytherin Role Bundle
  *
  * @package Slytherium
  * @author  Rougin Royce Gutib <rougingutib@gmail.com>
  */
-class SymfonyExtendedBundle extends Bundle
+class SlytherinRoleBundle extends Bundle
 {
     /**
      * Builds the bundle.
@@ -21,10 +20,8 @@ class SymfonyExtendedBundle extends Bundle
      */
     public function build(ContainerBuilder $container)
     {
-        $extended = 'Slytherium\Fixture\Http\Controllers\ExtendedController';
+        $role = 'Slytherium\Fixture\Http\Controllers\RoleController';
 
-        $definition = $container->register('extended', $extended);
-
-        $definition->setArgument('$controller', new Reference('simple'));
+        $container->register('role', $role);
     }
 }

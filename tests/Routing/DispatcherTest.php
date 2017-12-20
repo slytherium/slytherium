@@ -3,8 +3,8 @@
 namespace Slytherium\Routing;
 
 use Slytherium\Container\ReflectionContainer;
-use Slytherium\Fixture\Http\Controllers\ExtendedController;
-use Slytherium\Fixture\Http\Controllers\SimpleController;
+use Slytherium\Fixture\Http\Controllers\HailController;
+use Slytherium\Fixture\Http\Controllers\LaudController;
 use Slytherium\Routing\Dispatcher;
 use Slytherium\Routing\Resolver;
 use Slytherium\Routing\Router;
@@ -29,9 +29,9 @@ class DispatcherTest extends \PHPUnit_Framework_TestCase
      */
     public function setUp()
     {
-        list($simple, $extended) = array(new SimpleController, null);
+        list($simple, $extended) = array(new HailController, null);
 
-        $extended = new ExtendedController($simple);
+        $extended = new LaudController($simple);
 
         $router = new Router;
 
@@ -53,7 +53,7 @@ class DispatcherTest extends \PHPUnit_Framework_TestCase
      */
     public function testDispatchMethod()
     {
-        $simple = get_class(new SimpleController);
+        $simple = get_class(new HailController);
 
         $expected = array($simple . '@greet', array());
 

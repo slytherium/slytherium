@@ -2,7 +2,7 @@
 
 namespace Slytherium\Application;
 
-use Slytherium\Fixture\Http\Controllers\SimpleController;
+use Slytherium\Fixture\Http\Controllers\HailController;
 use Slytherium\Fixture\Http\Middlewares\RouterMiddleware;
 use Slytherium\Routing\Dispatcher;
 use Slytherium\Routing\Route;
@@ -25,7 +25,7 @@ class MiddlewareApplicationTest extends TestCase
     {
         $this->application = new MiddlewareApplication;
 
-        $handler = get_class(new SimpleController) . '@greet';
+        $handler = get_class(new HailController) . '@greet';
 
         $router = new Router(array(new Route('GET', '/hi', $handler)));
 

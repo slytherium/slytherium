@@ -2,8 +2,8 @@
 
 namespace Slytherium\Container;
 
-use Slytherium\Fixture\Http\Controllers\ExtendedController;
-use Slytherium\Fixture\Http\Controllers\SimpleController;
+use Slytherium\Fixture\Http\Controllers\HailController;
+use Slytherium\Fixture\Http\Controllers\LaudController;
 
 /**
  * Reflection Container Test
@@ -35,7 +35,7 @@ class ReflectionContainerTest extends \PHPUnit_Framework_TestCase
      */
     public function testGetMethod()
     {
-        $name = get_class(new SimpleController);
+        $name = get_class(new HailController);
 
         $instance = $this->container->get($name);
 
@@ -49,7 +49,7 @@ class ReflectionContainerTest extends \PHPUnit_Framework_TestCase
      */
     public function testGetMethodWithConstructorClasses()
     {
-        $extended = new ExtendedController(new SimpleController);
+        $extended = new LaudController(new HailController);
 
         $name = get_class($extended);
 

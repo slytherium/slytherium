@@ -34,7 +34,7 @@ class RouterTest extends \PHPUnit_Framework_TestCase
      */
     public function testAddMethod()
     {
-        $this->router->get('/greet/:id', 'SimpleController@greet');
+        $this->router->get('/greet/:id', 'HailController@greet');
 
         $this->assertTrue($this->router->has('GET', '/greet/rrg'));
     }
@@ -48,16 +48,16 @@ class RouterTest extends \PHPUnit_Framework_TestCase
     {
         $expected = 10;
 
-        $this->router->connect('/', 'SimpleController@greet');
-        $this->router->delete('/', 'SimpleController@greet');
-        $this->router->get('/', 'SimpleController@greet');
-        $this->router->head('/', 'SimpleController@greet');
-        $this->router->options('/', 'SimpleController@greet');
-        $this->router->patch('/', 'SimpleController@greet');
-        $this->router->post('/', 'SimpleController@greet');
-        $this->router->purge('/', 'SimpleController@greet');
-        $this->router->put('/', 'SimpleController@greet');
-        $this->router->trace('/', 'SimpleController@greet');
+        $this->router->connect('/', 'HailController@greet');
+        $this->router->delete('/', 'HailController@greet');
+        $this->router->get('/', 'HailController@greet');
+        $this->router->head('/', 'HailController@greet');
+        $this->router->options('/', 'HailController@greet');
+        $this->router->patch('/', 'HailController@greet');
+        $this->router->post('/', 'HailController@greet');
+        $this->router->purge('/', 'HailController@greet');
+        $this->router->put('/', 'HailController@greet');
+        $this->router->trace('/', 'HailController@greet');
 
         $result = $this->router->routes();
 

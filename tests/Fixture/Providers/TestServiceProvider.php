@@ -3,15 +3,14 @@
 namespace Slytherium\Fixture\Providers;
 
 use Illuminate\Support\ServiceProvider;
-use Slytherium\Fixture\Http\Controllers\ExtendedController;
 
 /**
- * Illuminate Extended Service Provider
+ * Test Service Provider
  *
  * @package Slytherium
  * @author  Rougin Royce Gutib <rougingutib@gmail.com>
  */
-class IlluminateExtendedServiceProvider extends ServiceProvider
+class TestServiceProvider extends ServiceProvider
 {
     /**
      * Registers the service provider.
@@ -20,8 +19,8 @@ class IlluminateExtendedServiceProvider extends ServiceProvider
      */
     public function register()
     {
-        $extended = 'Slytherium\Fixture\Http\Controllers\ExtendedController';
+        $test = 'Slytherium\Fixture\Http\Controllers\TestController';
 
-        $this->app->bind('extended', $extended);
+        $this->app->bind('test', $test);
     }
 }

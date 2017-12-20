@@ -3,7 +3,7 @@
 namespace Slytherium\Application;
 
 use Slytherium\Application;
-use Slytherium\Fixture\Http\Controllers\SimpleController;
+use Slytherium\Fixture\Http\Controllers\HailController;
 use Slytherium\Http\Message\Response;
 use Slytherium\Http\Message\ServerRequest;
 use Slytherium\Routing\Dispatcher;
@@ -30,7 +30,7 @@ class ApplicationTest extends TestCase
 
         $router = new Router;
 
-        $router->get('/', get_class(new SimpleController) . '@greet');
+        $router->get('/', get_class(new HailController) . '@greet');
 
         $this->application->set($dispatcher, new Dispatcher($router));
 

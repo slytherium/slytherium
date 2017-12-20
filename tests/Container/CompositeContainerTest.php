@@ -2,8 +2,8 @@
 
 namespace Slytherium\Container;
 
-use Slytherium\Fixture\Http\Controllers\ExtendedController;
-use Slytherium\Fixture\Http\Controllers\SimpleController;
+use Slytherium\Fixture\Http\Controllers\HailController;
+use Slytherium\Fixture\Http\Controllers\LaudController;
 
 /**
  * Composite Container Test
@@ -29,9 +29,9 @@ class CompositeContainerTest extends \PHPUnit_Framework_TestCase
 
         $container = new CompositeContainer;
 
-        $first->set('simple', $simple = new SimpleController);
+        $first->set('simple', $simple = new HailController);
 
-        $second->set('extended', new ExtendedController($simple));
+        $second->set('extended', new LaudController($simple));
 
         $this->container = $container->add($first)->add($second);
     }
@@ -43,7 +43,7 @@ class CompositeContainerTest extends \PHPUnit_Framework_TestCase
      */
     public function testGetMethod()
     {
-        $name = get_class(new SimpleController);
+        $name = get_class(new HailController);
 
         $instance = $this->container->get('simple');
 

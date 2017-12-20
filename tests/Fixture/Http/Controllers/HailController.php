@@ -3,12 +3,12 @@
 namespace Slytherium\Fixture\Http\Controllers;
 
 /**
- * Simple Controller
+ * Hail Controller
  *
  * @package Slytherium
  * @author  Rougin Royce Gutib <rougingutib@gmail.com>
  */
-class SimpleController
+class HailController
 {
     /**
      * Returns the text "Hello, world".

@@ -3,15 +3,17 @@
 namespace Slytherium\Fixture\Providers;
 
 use Symfony\Component\DependencyInjection\ContainerBuilder;
+use Symfony\Component\DependencyInjection\Definition;
+use Symfony\Component\DependencyInjection\Reference;
 use Symfony\Component\HttpKernel\Bundle\Bundle;
 
 /**
- * Symfony Simple Bundle
+ * Slytherin Auth Bundle
  *
  * @package Slytherium
  * @author  Rougin Royce Gutib <rougingutib@gmail.com>
  */
-class SymfonySimpleBundle extends Bundle
+class SlytherinAuthBundle extends Bundle
 {
     /**
      * Builds the bundle.
@@ -20,8 +22,10 @@ class SymfonySimpleBundle extends Bundle
      */
     public function build(ContainerBuilder $container)
     {
-        $simple = 'Slytherium\Fixture\Http\Controllers\SimpleController';
+        $auth = 'Slytherium\Fixture\Http\Controllers\AuthController';
 
-        $container->register('simple', $simple);
+        $definition = new Definition($auth, array(new Reference('role')));
+
+        $container->setDefinition('auth', $definition);
     }
 }

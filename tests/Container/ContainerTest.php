@@ -3,7 +3,7 @@
 namespace Slytherium\Container;
 
 use Slytherium\Container\ReflectionContainer;
-use Slytherium\Fixture\Http\Controllers\SimpleController;
+use Slytherium\Fixture\Http\Controllers\HailController;
 
 /**
  * Container Test
@@ -35,7 +35,7 @@ class ContainerTest extends \PHPUnit_Framework_TestCase
      */
     public function testDelegateMethod()
     {
-        $simple = new SimpleController;
+        $simple = new HailController;
 
         $name = get_class($simple);
 
@@ -53,7 +53,7 @@ class ContainerTest extends \PHPUnit_Framework_TestCase
      */
     public function testGetMethod()
     {
-        $simple = new SimpleController;
+        $simple = new HailController;
 
         $name = get_class($simple);
 
@@ -85,7 +85,7 @@ class ContainerTest extends \PHPUnit_Framework_TestCase
      */
     public function testSetMethod()
     {
-        $this->container->set('simple', new SimpleController);
+        $this->container->set('simple', new HailController);
 
         $this->assertTrue($this->container->has('simple'));
     }

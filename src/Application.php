@@ -38,7 +38,7 @@ class Application extends Container implements ApplicationInterface
      * Emits the headers from the response instance.
      *
      * @param  \Slytherium\Http\Message\ResponseInterface $response
-     * @return void
+     * @return \Slytherium\Http\Message\ResponseInterface
      */
     public function emit(ResponseInterface $response)
     {
@@ -57,6 +57,8 @@ class Application extends Container implements ApplicationInterface
 
             header($name . ': ' . $value);
         }
+
+        return $response;
     }
 
     /**
@@ -95,9 +97,7 @@ class Application extends Container implements ApplicationInterface
 
         $response = $this->handle($request);
 
-        $this->emit($response);
-
-        return $response->getBody();
+        return $this->emit($response)->getBody();
     }
 
     /**

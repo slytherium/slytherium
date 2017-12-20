@@ -35,9 +35,9 @@ class ContainerTest extends \PHPUnit_Framework_TestCase
      */
     public function testDelegateMethod()
     {
-        $simple = new HailController;
+        $hail = new HailController;
 
-        $name = get_class($simple);
+        $name = get_class($hail);
 
         $this->container->delegate(new ReflectionContainer);
 
@@ -53,13 +53,13 @@ class ContainerTest extends \PHPUnit_Framework_TestCase
      */
     public function testGetMethod()
     {
-        $simple = new HailController;
+        $hail = new HailController;
 
-        $name = get_class($simple);
+        $name = get_class($hail);
 
-        $this->container->set('simple', $simple);
+        $this->container->set('hail', $hail);
 
-        $instance = $this->container->get('simple');
+        $instance = $this->container->get('hail');
 
         $this->assertInstanceOf($name, $instance);
     }
@@ -75,7 +75,7 @@ class ContainerTest extends \PHPUnit_Framework_TestCase
 
         $this->setExpectedException($exception);
 
-        $this->container->get('simple');
+        $this->container->get('hail');
     }
 
     /**
@@ -85,9 +85,9 @@ class ContainerTest extends \PHPUnit_Framework_TestCase
      */
     public function testSetMethod()
     {
-        $this->container->set('simple', new HailController);
+        $this->container->set('hail', new HailController);
 
-        $this->assertTrue($this->container->has('simple'));
+        $this->assertTrue($this->container->has('hail'));
     }
 
     /**

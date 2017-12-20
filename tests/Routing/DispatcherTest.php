@@ -29,13 +29,13 @@ class DispatcherTest extends \PHPUnit_Framework_TestCase
      */
     public function setUp()
     {
-        list($simple, $extended) = array(new HailController, null);
+        list($hail, $laud) = array(new HailController, null);
 
-        $extended = new LaudController($simple);
+        $laud = new LaudController($hail);
 
         $router = new Router;
 
-        $router->get('/greeeeet', get_class($simple) . '@greet');
+        $router->get('/greeeeet', get_class($hail) . '@greet');
 
         $router->get('/helloo/{name}', function ($name = 'Doe') {
             $message = sprintf('Hello, my name is %s', $name);
@@ -53,9 +53,9 @@ class DispatcherTest extends \PHPUnit_Framework_TestCase
      */
     public function testDispatchMethod()
     {
-        $simple = get_class(new HailController);
+        $hail = get_class(new HailController);
 
-        $expected = array($simple . '@greet', array());
+        $expected = array($hail . '@greet', array());
 
         $resolver = $this->dispatcher->dispatch('GET', '/greeeeet');
 

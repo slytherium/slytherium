@@ -33,7 +33,7 @@ class Router implements RouterInterface
      */
     public function add(Route $route)
     {
-        array_push($this->routes, $route);
+        $this->routes[] = $route;
 
         return $this;
     }

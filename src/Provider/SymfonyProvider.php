@@ -39,13 +39,17 @@ class SymfonyProvider implements ProviderInterface
      */
     public function register(WritableInterface $container)
     {
-        if ($container->has(self::KERNEL)) {
+        if ($container->has(self::KERNEL) === true) {
             $kernel = $container->get(self::KERNEL);
-        } else {
-            $configuration = $container->get(ProviderInterface::CONFIG);
 
-            $kernel = new SymfonyKernel($configuration);
+            $kernel->add($this->bundle);
+
+            return $container->set(self::KERNEL, $kernel);
         }
+
+        $configuration = $container->get(ProviderInterface::CONFIG);
+
+        $kernel = new SymfonyKernel($configuration);
 
         $kernel->add($this->bundle);
 

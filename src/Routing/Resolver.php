@@ -58,13 +58,13 @@ class Resolver implements ResolverInterface
             $instance = $this->instance($class);
 
             $this->handler = array($instance, $method);
-        } else {
-            $reflection = new \ReflectionFunction($this->handler);
+
+            return $this->execute($reflection);
         }
 
-        $parameters = $this->arguments($reflection, $this->parameters);
+        $reflection = new \ReflectionFunction($this->handler);
 
-        return call_user_func_array($this->handler, $parameters);
+        return $this->execute($reflection);
     }
 
     /**
@@ -115,6 +115,19 @@ class Resolver implements ResolverInterface
         }
 
         return $arguments;
+    }
+
+    /**
+     * Executes the specified handler with its required reflection.
+     *
+     * @param  \ReflectionFunctionAbstract $reflection
+     * @return mixed
+     */
+    protected function execute(\ReflectionFunctionAbstract $reflection)
+    {
+        $parameters = $this->arguments($reflection, $this->parameters);
+
+        return call_user_func_array($this->handler, $parameters);
     }
 
     /**

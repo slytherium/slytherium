@@ -27,7 +27,7 @@ class Dispatcher implements DispatcherInterface
         foreach ((array) $stack as $item) {
             $middleware = $this->transform($item);
 
-            array_push($this->stack, $middleware);
+            $this->stack[] = $middleware;
         }
     }
 
@@ -53,9 +53,11 @@ class Dispatcher implements DispatcherInterface
      */
     public function process(ServerRequestInterface $request, HandlerInterface $handler)
     {
-        array_push($this->stack, new LastMiddleware($handler));
+        $this->stack[] = new LastMiddleware($handler);
 
-        ($response = $this->dispatch($request)) && array_pop($this->stack);
+        $response = $this->dispatch($request);
+
+        unset($this->stack[count($this->stack) - 1]);
 
         return $response;
     }
@@ -70,7 +72,7 @@ class Dispatcher implements DispatcherInterface
     {
         $item = $this->transform($item);
 
-        array_push($this->stack, $item);
+        $this->stack[] = $item;
 
         return $this;
     }

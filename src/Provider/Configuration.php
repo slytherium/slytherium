@@ -164,17 +164,17 @@ class Configuration implements ConfigurationInterface
     protected function dotify(array $data, array $result = array(), $key = '')
     {
         foreach ((array) $data as $name => $value) {
-            if (! is_array($value) || empty($value)) {
-                $result[$key . $name] = $value;
+            if (is_array($value) && empty($value) === false) {
+                $new = $key . $name . '.';
+
+                $array = $this->dotify($value, $result, $new);
+
+                $result = array_merge($result, $array);
 
                 continue;
             }
 
-            $new = $key . $name . '.';
-
-            $array = $this->dotify($value, $result, $new);
-
-            $result = array_merge($result, $array);
+            $result[$key . $name] = $value;
         }
 
         return $result;
@@ -192,14 +192,12 @@ class Configuration implements ConfigurationInterface
     {
         $key = array_shift($keys);
 
-        if (empty($keys)) {
-            $data[$key] = $value;
+        if (empty($keys) === false) {
+            ! isset($data[$key]) && $data[$key] = array();
 
-            return $data[$key];
+            return $this->save($keys, $data[$key], $value);
         }
 
-        isset($data[$key]) || $data[$key] = array();
-
-        return $this->save($keys, $data[$key], $value);
+        return $data[$key] = $value;
     }
 }

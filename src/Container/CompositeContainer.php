@@ -22,7 +22,7 @@ class CompositeContainer implements ContainerInterface
      */
     public function add(ContainerInterface $container)
     {
-        array_push($this->containers, $container);
+        $this->containers[] = $container;
 
         return $this;
     }

@@ -99,7 +99,7 @@ class FrameworkProvider implements ProviderInterface
     }
 
     /**
-     * Returns the instance from Symfony and wrap it into a Slytherium container.
+     * Returns the instance from Symfony and wrap it into a SymfonyContainer.
      *
      * @param  \Slytherium\Container\ContainerInterface $container
      * @return \Slytherium\Container\ContainerInterface

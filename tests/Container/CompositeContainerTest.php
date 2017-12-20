@@ -29,9 +29,9 @@ class CompositeContainerTest extends \PHPUnit_Framework_TestCase
 
         $container = new CompositeContainer;
 
-        $first->set('simple', $simple = new HailController);
+        $first->set('hail', $hail = new HailController);
 
-        $second->set('extended', new LaudController($simple));
+        $second->set('laud', new LaudController($hail));
 
         $this->container = $container->add($first)->add($second);
     }
@@ -45,7 +45,7 @@ class CompositeContainerTest extends \PHPUnit_Framework_TestCase
     {
         $name = get_class(new HailController);
 
-        $instance = $this->container->get('simple');
+        $instance = $this->container->get('hail');
 
         $this->assertInstanceOf($name, $instance);
     }

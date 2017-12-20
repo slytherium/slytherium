@@ -88,9 +88,7 @@ class Utility
 
         for ($i = 0; $i < (integer) $count; $i++) {
             foreach (array_keys($current) as $key) {
-                $item = $current[$key][$i];
-
-                $file[$i][$key] = $item;
+                $file[$i][$key] = $current[$key][$i];
             }
 
             $error = $file[$i]['error'];

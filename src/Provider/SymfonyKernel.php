@@ -57,7 +57,7 @@ class SymfonyKernel extends Kernel
      */
     public function add(BundleInterface $bundle)
     {
-        array_push($this->items, $bundle);
+        $this->items[] = $bundle;
 
         return $this;
     }

@@ -49,9 +49,9 @@ class ReflectionContainerTest extends \PHPUnit_Framework_TestCase
      */
     public function testGetMethodWithConstructorClasses()
     {
-        $extended = new LaudController(new HailController);
+        $laud = new LaudController(new HailController);
 
-        $name = get_class($extended);
+        $name = get_class($laud);
 
         $instance = $this->container->get($name);
 
@@ -69,6 +69,6 @@ class ReflectionContainerTest extends \PHPUnit_Framework_TestCase
 
         $this->setExpectedException($exception);
 
-        $this->container->get('simple');
+        $this->container->get('hail');
     }
 }

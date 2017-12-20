@@ -7,7 +7,7 @@
 [![Quality Score][ico-code-quality]][link-code-quality]
 [![Total Downloads][ico-downloads]][link-downloads]
 
-Slytherium is yet another simple and extensible micro-framework for PHP. This package supercedes and replaces [Slytherin](https://github.com/rougin/slytherin).
+Slytherium is yet another simple and extensible micro-framework for PHP.
 
 ## Install
 
@@ -21,48 +21,50 @@ Want to use this framework on PHP v5.2.0 and below? Use the [Legacy](https://git
 
 ## Usage
 
-**Hello.php**
+**GreetController.php**
 
 ``` php
-class HelloController
+class GreetController
 {
     public function greet($name = 'Stranger')
     {
-        return sprintf('Hello, %s!', $name);
+        return sprintf('Greet, %s!', $name);
     }
 }
 ```
 
-### Using `Application\RouterApplication`
+### Using `RouterApplication`
 
 **index.php**
 
 ``` php
+use Slytherium\Application\RouterApplication;
+use Slytherium\Http\Message\ServerRequest;
 use Slytherium\Http\Message\ServerRequestInterface;
 
 // Creates the server request instance
-$request = new Slytherium\Http\Message\ServerRequest($_SERVER, $_COOKIE, $_GET, $_FILES, $_POST);
+$request = new ServerRequest($_SERVER, $_COOKIE, $_GET, $_FILES, $_POST);
 
 // Initializes the router application
-$app = new Slytherium\Application\RouterApplication;
+$app = new RouterApplication;
 
 // Sets the server request inside the application
 $app->set(ServerRequestInterface::class, $request);
 
-// Defines the HelloController instance
-$app->set(HelloController::class, new HelloController);
+// Defines the GreetController instance
+$app->set(GreetController::class, new GreetController);
 
 // Creates a HTTP route of GET /
-$app->get('/', 'HelloController@greet');
+$app->get('/', 'GreetController@greet');
 
 // Creates a HTTP route of GET /hello/{name}
-$app->get('/hello/{name}', 'HelloController@greet');
+$app->get('/hello/{name}', 'GreetController@greet');
 
 // Runs the application
 echo $app->run();
 ```
 
-### Using `Application\MiddlewareApplication`
+### Using `MiddlewareApplication`
 
 **RouterMiddleware.php**
 
@@ -122,10 +124,10 @@ class RouterMiddleware implements MiddlewareInterface
         $router = new Slytherium\Routing\Router;
 
         // Creates a HTTP route of GET /
-        $router->get('/', 'HelloController@greet');
+        $router->get('/', 'GreetController@greet');
 
         // Creates a HTTP route of GET /hello/{name}
-        $router->get('/hello/{name}', 'HelloController@greet');
+        $router->get('/hello/{name}', 'GreetController@greet');
 
         return $router;
     }
@@ -135,19 +137,21 @@ class RouterMiddleware implements MiddlewareInterface
 **index.php**
 
 ``` php
+use Slytherium\Application\MiddlewareApplication;
+use Slytherium\Http\Message\ServerRequest;
 use Slytherium\Http\Message\ServerRequestInterface;
 
 // Creates the server request instance
-$request = new Slytherium\Http\Message\ServerRequest($_SERVER, $_COOKIE, $_GET, $_FILES, $_POST);
+$request = new ServerRequest($_SERVER, $_COOKIE, $_GET, $_FILES, $_POST);
 
 // Initializes the middleware application
-$app = new Slytherium\Application\MiddlewareApplication;
+$app = new MiddlewareApplication;
 
 // Sets the server request inside the application
 $app->set(ServerRequestInterface::class, $request);
 
-// Defines the HelloController instance
-$app->set(HelloController::class, new HelloController);
+// Defines the GreetController instance
+$app->set(GreetController::class, new GreetController);
 
 // Pipes the router middleware into the application
 $app->pipe(new RouterMiddleware);

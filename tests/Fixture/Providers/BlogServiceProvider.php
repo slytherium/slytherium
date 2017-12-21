@@ -1,15 +1,15 @@
 <?php
 
-namespace Slytherium\Fixture\Providers;
+namespace Zapheus\Fixture\Providers;
 
 use Pimple\Container;
 use Pimple\ServiceProviderInterface;
-use Slytherium\Fixture\Http\Controllers\BlogController;
+use Zapheus\Fixture\Http\Controllers\BlogController;
 
 /**
  * Blog Service Provider
  *
- * @package Slytherium
+ * @package Zapheus
  * @author  Rougin Royce Gutib <rougingutib@gmail.com>
  */
 class BlogServiceProvider implements ServiceProviderInterface

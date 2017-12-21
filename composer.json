@@ -1,15 +1,15 @@
 {
-    "name": "slytherium/slytherium",
+    "name": "zapheus/zapheus",
     "description": "Yet another simple and extensible micro-framework for PHP.",
-    "keywords": ["php framework", "php library", "slytherium"],
-    "homepage": "https://github.com/slytherium/slytherium",
+    "keywords": ["php framework", "php library", "zapheus"],
+    "homepage": "https://github.com/zapheus/zapheus",
     "license": "MIT",
     "authors": [
         {
             "name": "Rougin Royce Gutib",
             "email": "rougingutib@gmail.com",
             "homepage": "https://rougin.github.io",
-            "role": "Developer"
+            "role": "Software Engineer"
         }
     ],
     "require": {
@@ -21,12 +21,12 @@
     },
     "autoload": {
         "psr-4": {
-            "Slytherium\\": "src"
+            "Zapheus\\": "src"
         }
     },
     "autoload-dev": {
         "psr-4": {
-            "Slytherium\\": "tests"
+            "Zapheus\\": "tests"
         }
     },
     "scripts": {

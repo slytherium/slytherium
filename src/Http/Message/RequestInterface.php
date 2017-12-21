@@ -1,11 +1,11 @@
 <?php
 
-namespace Slytherium\Http\Message;
+namespace Zapheus\Http\Message;
 
 /**
  * Request Interface
  *
- * @package Slytherium
+ * @package Zapheus
  * @author  Rougin Royce Gutib <rougingutib@gmail.com>
  */
 interface RequestInterface extends MessageInterface
@@ -27,7 +27,7 @@ interface RequestInterface extends MessageInterface
     /**
      * Retrieves the URI instance.
      *
-     * @return \Slytherium\Http\Message\UriInterface
+     * @return \Zapheus\Http\Message\UriInterface
      */
     public function getUri();
 
@@ -52,7 +52,7 @@ interface RequestInterface extends MessageInterface
     /**
      * Returns an instance with the provided URI.
      *
-     * @param  \Slytherium\Http\Message\UriInterface $uri
+     * @param  \Zapheus\Http\Message\UriInterface $uri
      * @param  boolean                               $preserve
      * @return static
      */

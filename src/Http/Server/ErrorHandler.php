@@ -1,13 +1,13 @@
 <?php
 
-namespace Slytherium\Http\Server;
+namespace Zapheus\Http\Server;
 
-use Slytherium\Http\Message\ServerRequestInterface;
+use Zapheus\Http\Message\ServerRequestInterface;
 
 /**
  * Error Handler
  *
- * @package Slytherium
+ * @package Zapheus
  * @author  Rougin Royce Gutib <rougingutib@gmail.com>
  */
 class ErrorHandler implements HandlerInterface
@@ -20,7 +20,7 @@ class ErrorHandler implements HandlerInterface
     /**
      * @var string
      */
-    protected $response = 'Slytherium\Http\Message\ResponseInterface';
+    protected $response = 'Zapheus\Http\Message\ResponseInterface';
 
     /**
      * @var string
@@ -40,8 +40,8 @@ class ErrorHandler implements HandlerInterface
     /**
      * Dispatch the next available middleware and return the response.
      *
-     * @param  \Slytherium\Http\Message\ServerRequestInterface $request
-     * @return \Slytherium\Http\Message\ResponseInterface
+     * @param  \Zapheus\Http\Message\ServerRequestInterface $request
+     * @return \Zapheus\Http\Message\ResponseInterface
      */
     public function handle(ServerRequestInterface $request)
     {

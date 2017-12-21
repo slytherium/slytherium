@@ -1,6 +1,6 @@
 <?php
 
-namespace Slytherium\Http\Message;
+namespace Zapheus\Http\Message;
 
 /*
  * This file is part of the Symfony package.
@@ -14,7 +14,7 @@ namespace Slytherium\Http\Message;
 /**
  * Request
  *
- * @package Slytherium
+ * @package Zapheus
  * @author  Rougin Royce Gutib <rougingutib@gmail.com>
  */
 class Request extends Message implements RequestInterface
@@ -30,17 +30,19 @@ class Request extends Message implements RequestInterface
     protected $method = 'GET';
 
     /**
-     * @var \Slytherium\Http\Message\UriInterface
+     * @var \Zapheus\Http\Message\UriInterface
      */
     protected $uri;
 
     /**
-     * @param string                                        $method
-     * @param string                                        $target
-     * @param \Slytherium\Http\Message\UriInterface|null    $uri
-     * @param \Slytherium\Http\Message\StreamInterface|null $body
-     * @param array                                         $headers
-     * @param string                                        $version
+     * Initializes the request instance.
+     *
+     * @param string                                     $method
+     * @param string                                     $target
+     * @param \Zapheus\Http\Message\UriInterface|null    $uri
+     * @param \Zapheus\Http\Message\StreamInterface|null $body
+     * @param array                                      $headers
+     * @param string                                     $version
      */
     public function __construct($method = 'GET', $target = '/', UriInterface $uri = null, StreamInterface $body = null, array $headers = array(), $version = '1.1')
     {
@@ -76,7 +78,7 @@ class Request extends Message implements RequestInterface
     /**
      * Retrieves the URI instance.
      *
-     * @return \Slytherium\Http\Message\UriInterface
+     * @return \Zapheus\Http\Message\UriInterface
      */
     public function getUri()
     {
@@ -118,7 +120,7 @@ class Request extends Message implements RequestInterface
     /**
      * Returns an instance with the provided URI.
      *
-     * @param  \Slytherium\Http\Message\UriInterface $uri
+     * @param  \Zapheus\Http\Message\UriInterface $uri
      * @param  boolean                               $preserve
      * @return static
      */

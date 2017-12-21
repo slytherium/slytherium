@@ -1,11 +1,11 @@
 <?php
 
-namespace Slytherium\Routing;
+namespace Zapheus\Routing;
 
 /**
  * Router
  *
- * @package Slytherium
+ * @package Zapheus
  * @author  Rougin Royce Gutib <rougingutib@gmail.com>
  */
 class Router implements RouterInterface
@@ -18,7 +18,7 @@ class Router implements RouterInterface
     /**
      * Initializes the router instance.
      *
-     * @param \Slytherium\Routing\Route[] $routes
+     * @param \Zapheus\Routing\Route[] $routes
      */
     public function __construct(array $routes = array())
     {
@@ -28,7 +28,7 @@ class Router implements RouterInterface
     /**
      * Adds a new Route instance to the collection.
      *
-     * @param  \Slytherium\Routing\Route $route
+     * @param  \Zapheus\Routing\Route $route
      * @return self
      */
     public function add(Route $route)

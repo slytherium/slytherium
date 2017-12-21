@@ -1,13 +1,13 @@
 <?php
 
-namespace Slytherium\Http\Server;
+namespace Zapheus\Http\Server;
 
-use Slytherium\Http\Message\ServerRequestInterface;
+use Zapheus\Http\Message\ServerRequestInterface;
 
 /**
  * Handler Interface
  *
- * @package Slytherium
+ * @package Zapheus
  * @author  Rougin Royce Gutib <rougingutib@gmail.com>
  */
 interface HandlerInterface
@@ -15,8 +15,8 @@ interface HandlerInterface
     /**
      * Dispatch the next available middleware and return the response.
      *
-     * @param  \Slytherium\Http\Message\ServerRequestInterface $request
-     * @return \Slytherium\Http\Message\ResponseInterface
+     * @param  \Zapheus\Http\Message\ServerRequestInterface $request
+     * @return \Zapheus\Http\Message\ResponseInterface
      */
     public function handle(ServerRequestInterface $request);
 }

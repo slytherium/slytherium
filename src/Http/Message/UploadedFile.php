@@ -1,6 +1,6 @@
 <?php
 
-namespace Slytherium\Http\Message;
+namespace Zapheus\Http\Message;
 
 /*
  * This file is part of the Symfony package.
@@ -14,7 +14,7 @@ namespace Slytherium\Http\Message;
 /**
  * Uploaded File
  *
- * @package Slytherium
+ * @package Zapheus
  * @author  Kévin Dunglas <dunglas@gmail.com>
  * @author  Rougin Royce Gutib <rougingutib@gmail.com>
  */
@@ -46,11 +46,13 @@ class UploadedFile implements UploadedFileInterface
     protected $media;
 
     /**
-     * @param string  $file
-     * @param integer $size
-     * @param integer $error
-     * @param string  $name
-     * @param string  $media
+     * Initializes the uploaded file instance.
+     *
+     * @param string       $file
+     * @param integer|null $size
+     * @param integer      $error
+     * @param string|null  $name
+     * @param string|null  $media
      */
     public function __construct($file, $size = null, $error = UPLOAD_ERR_OK, $name = null, $media = null)
     {
@@ -108,7 +110,7 @@ class UploadedFile implements UploadedFileInterface
     /**
      * Retrieve a stream representing the uploaded file.
      *
-     * @return \Slytherium\Http\Message\StreamInterface
+     * @return \Zapheus\Http\Message\StreamInterface
      *
      * @throws \RuntimeException
      */

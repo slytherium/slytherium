@@ -1,28 +1,28 @@
 <?php
 
-namespace Slytherium\Http\Server;
+namespace Zapheus\Http\Server;
 
-use Slytherium\Fixture\Http\Middlewares\FinalMiddleware;
-use Slytherium\Fixture\Http\Middlewares\JsonMiddleware;
-use Slytherium\Http\Message\ServerRequest;
-use Slytherium\Http\Message\Stream;
-use Slytherium\Http\Server\Dispatcher;
+use Zapheus\Fixture\Http\Middlewares\FinalMiddleware;
+use Zapheus\Fixture\Http\Middlewares\JsonMiddleware;
+use Zapheus\Http\Message\ServerRequest;
+use Zapheus\Http\Message\Stream;
+use Zapheus\Http\Server\Dispatcher;
 
 /**
  * Dispatcher Test
  *
- * @package Slytherium
+ * @package Zapheus
  * @author  Rougin Royce Gutib <rougingutib@gmail.com>
  */
 class DispatcherTest extends \PHPUnit_Framework_TestCase
 {
     /**
-     * @var \Slytherium\Http\Server\DispatcherInterface
+     * @var \Zapheus\Http\Server\DispatcherInterface
      */
     protected $dispatcher;
 
     /**
-     * @var \Slytherium\Http\Message\ServerRequestInterface
+     * @var \Zapheus\Http\Message\ServerRequestInterface
      */
     protected $request;
 

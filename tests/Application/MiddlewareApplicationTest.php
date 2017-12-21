@@ -1,17 +1,17 @@
 <?php
 
-namespace Slytherium\Application;
+namespace Zapheus\Application;
 
-use Slytherium\Fixture\Http\Controllers\HailController;
-use Slytherium\Fixture\Http\Middlewares\RouterMiddleware;
-use Slytherium\Routing\Dispatcher;
-use Slytherium\Routing\Route;
-use Slytherium\Routing\Router;
+use Zapheus\Fixture\Http\Controllers\HailController;
+use Zapheus\Fixture\Http\Middlewares\RouterMiddleware;
+use Zapheus\Routing\Dispatcher;
+use Zapheus\Routing\Route;
+use Zapheus\Routing\Router;
 
 /**
  * Middleware Application Test
  *
- * @package Slytherium
+ * @package Zapheus
  * @author  Rougin Royce Gutib <rougingutib@gmail.com>
  */
 class MiddlewareApplicationTest extends TestCase

@@ -1,24 +1,24 @@
 <?php
 
-namespace Slytherium\Routing;
+namespace Zapheus\Routing;
 
-use Slytherium\Container\ReflectionContainer;
-use Slytherium\Fixture\Http\Controllers\HailController;
-use Slytherium\Fixture\Http\Controllers\LaudController;
-use Slytherium\Routing\Dispatcher;
-use Slytherium\Routing\Resolver;
-use Slytherium\Routing\Router;
+use Zapheus\Container\ReflectionContainer;
+use Zapheus\Fixture\Http\Controllers\HailController;
+use Zapheus\Fixture\Http\Controllers\LaudController;
+use Zapheus\Routing\Dispatcher;
+use Zapheus\Routing\Resolver;
+use Zapheus\Routing\Router;
 
 /**
  * Dispatcher Test
  *
- * @package Slytherium
+ * @package Zapheus
  * @author  Rougin Royce Gutib <rougingutib@gmail.com>
  */
 class DispatcherTest extends \PHPUnit_Framework_TestCase
 {
     /**
-     * @var \Slytherium\Routing\DispatcherInterface
+     * @var \Zapheus\Routing\DispatcherInterface
      */
     protected $dispatcher;
 

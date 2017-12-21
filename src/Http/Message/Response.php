@@ -1,6 +1,6 @@
 <?php
 
-namespace Slytherium\Http\Message;
+namespace Zapheus\Http\Message;
 
 /*
  * This file is part of the Symfony package.
@@ -14,7 +14,7 @@ namespace Slytherium\Http\Message;
 /**
  * Response
  *
- * @package Slytherium
+ * @package Zapheus
  * @author  Rougin Royce Gutib <rougingutib@gmail.com>
  */
 class Response extends Message implements ResponseInterface
@@ -102,10 +102,12 @@ class Response extends Message implements ResponseInterface
     protected $reason = 'OK';
 
     /**
-     * @param integer                                       $code
-     * @param \Slytherium\Http\Message\StreamInterface|null $body
-     * @param string                                        $version
-     * @param array                                         $headers
+     * Initializes the response instance.
+     *
+     * @param integer                                    $code
+     * @param \Zapheus\Http\Message\StreamInterface|null $body
+     * @param string                                     $version
+     * @param array                                      $headers
      */
     public function __construct($code = 200, StreamInterface $body = null, array $headers = array(), $version = '1.1')
     {

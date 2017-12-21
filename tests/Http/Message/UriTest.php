@@ -1,17 +1,17 @@
 <?php
 
-namespace Slytherium\Http\Message;
+namespace Zapheus\Http\Message;
 
 /**
  * Uri Test
  *
- * @package Slytherium
+ * @package Zapheus
  * @author  Rougin Royce Gutib <rougingutib@gmail.com>
  */
 class UriTest extends \PHPUnit_Framework_TestCase
 {
     /**
-     * @var \Slytherium\Http\Message\UriInterface
+     * @var \Zapheus\Http\Message\UriInterface
      */
     protected $uri;
 

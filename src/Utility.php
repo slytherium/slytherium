@@ -1,14 +1,14 @@
 <?php
 
-namespace Slytherium;
+namespace Zapheus;
 
-use Slytherium\Http\Message\UploadedFile;
-use Slytherium\Http\Message\Uri;
+use Zapheus\Http\Message\UploadedFile;
+use Zapheus\Http\Message\Uri;
 
 /**
  * Utility
  *
- * @package Slytherium
+ * @package Zapheus
  * @author  Rougin Royce Gutib <rougingutib@gmail.com>
  */
 class Utility
@@ -38,7 +38,7 @@ class Utility
      *
      * @param  array $uploaded
      * @param  array $files
-     * @return \Slytherium\Http\Message\UploadedFileInterface[]
+     * @return \Zapheus\Http\Message\UploadedFileInterface[]
      */
     public static function files(array $uploaded, $files = array())
     {
@@ -56,11 +56,11 @@ class Utility
     }
 
     /**
-     * Generates a \Slytherium\Http\Message\UriInterface if it does not exists.
+     * Generates a \Zapheus\Http\Message\UriInterface if it does not exists.
      *
      * @param  array                                      $server
-     * @param  \Slytherium\Http\Message\UriInterface|null $uri
-     * @return \Slytherium\Http\Message\UriInterface
+     * @param  \Zapheus\Http\Message\UriInterface|null $uri
+     * @return \Zapheus\Http\Message\UriInterface
      */
     public static function uri(array $server, $uri = null)
     {

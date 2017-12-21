@@ -1,11 +1,11 @@
 <?php
 
-namespace Slytherium\Provider;
+namespace Zapheus\Provider;
 
 /**
  * Configuration Interface
  *
- * @package Slytherium
+ * @package Zapheus
  * @author  Rougin Royce Gutib <rougingutib@gmail.com>
  */
 interface ConfigurationInterface extends \ArrayAccess

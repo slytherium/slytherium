@@ -1,20 +1,20 @@
 <?php
 
-namespace Slytherium\Container;
+namespace Zapheus\Container;
 
-use Slytherium\Fixture\Http\Controllers\HailController;
-use Slytherium\Fixture\Http\Controllers\LaudController;
+use Zapheus\Fixture\Http\Controllers\HailController;
+use Zapheus\Fixture\Http\Controllers\LaudController;
 
 /**
  * Composite Container Test
  *
- * @package Slytherium
+ * @package Zapheus
  * @author  Rougin Royce Gutib <rougingutib@gmail.com>
  */
 class CompositeContainerTest extends \PHPUnit_Framework_TestCase
 {
     /**
-     * @var \Slytherium\Container\ContainerInterface
+     * @var \Zapheus\Container\ContainerInterface
      */
     protected $container;
 
@@ -57,7 +57,7 @@ class CompositeContainerTest extends \PHPUnit_Framework_TestCase
      */
     public function testGetMethodWithNotFoundException()
     {
-        $exception = 'Slytherium\Container\NotFoundException';
+        $exception = 'Zapheus\Container\NotFoundException';
 
         $this->setExpectedException($exception);
 

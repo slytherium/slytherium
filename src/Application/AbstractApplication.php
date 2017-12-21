@@ -1,27 +1,27 @@
 <?php
 
-namespace Slytherium\Application;
+namespace Zapheus\Application;
 
-use Slytherium\Application;
-use Slytherium\Http\Message\ServerRequestInterface;
+use Zapheus\Application;
+use Zapheus\Http\Message\ServerRequestInterface;
 
 /**
  * Application Interface
  *
- * @package Slytherium
+ * @package Zapheus
  * @author  Rougin Royce Gutib <rougingutib@gmail.com>
  */
 abstract class AbstractApplication implements ApplicationInterface
 {
     /**
-     * @var \Slytherium\Application
+     * @var \Zapheus\Application
      */
     protected $application;
 
     /**
      * Initializes the application instance.
      *
-     * @param \Slytherium\Application|null $application
+     * @param \Zapheus\Application|null $application
      */
     public function __construct(Application $application = null)
     {

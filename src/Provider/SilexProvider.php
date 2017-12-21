@@ -1,15 +1,15 @@
 <?php
 
-namespace Slytherium\Provider;
+namespace Zapheus\Provider;
 
 use Pimple\Container;
 use Pimple\ServiceProviderInterface;
-use Slytherium\Container\WritableInterface;
+use Zapheus\Container\WritableInterface;
 
 /**
  * Silex Provider
  *
- * @package Slytherium
+ * @package Zapheus
  * @author  Rougin Royce Gutib <rougingutib@gmail.com>
  */
 class SilexProvider implements ProviderInterface
@@ -37,8 +37,8 @@ class SilexProvider implements ProviderInterface
     /**
      * Registers the bindings in the container.
      *
-     * @param  \Slytherium\Container\WritableInterface $container
-     * @return \Slytherium\Container\ContainerInterface
+     * @param  \Zapheus\Container\WritableInterface $container
+     * @return \Zapheus\Container\ContainerInterface
      */
     public function register(WritableInterface $container)
     {
@@ -54,7 +54,7 @@ class SilexProvider implements ProviderInterface
     /**
      * Returns a \Illuminate\Container\Container instance.
      *
-     * @param  \Slytherium\Container\WritableInterface $container
+     * @param  \Zapheus\Container\WritableInterface $container
      * @return \Illuminate\Container\Container
      */
     protected function container(WritableInterface $container)

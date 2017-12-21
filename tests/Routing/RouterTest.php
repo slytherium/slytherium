@@ -1,19 +1,19 @@
 <?php
 
-namespace Slytherium\Routing;
+namespace Zapheus\Routing;
 
-use Slytherium\Routing\Router;
+use Zapheus\Routing\Router;
 
 /**
  * Router Test
  *
- * @package Slytherium
+ * @package Zapheus
  * @author  Rougin Royce Gutib <rougingutib@gmail.com>
  */
 class RouterTest extends \PHPUnit_Framework_TestCase
 {
     /**
-     * @var \Slytherium\Routing\RouterInterface
+     * @var \Zapheus\Routing\RouterInterface
      */
     protected $router;
 

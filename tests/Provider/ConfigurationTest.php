@@ -1,17 +1,17 @@
 <?php
 
-namespace Slytherium\Provider;
+namespace Zapheus\Provider;
 
 /**
  * Configuration Test
  *
- * @package Slytherium
+ * @package Zapheus
  * @author  Rougin Royce Gutib <rougingutib@gmail.com>
  */
 class ConfigurationTest extends \PHPUnit_Framework_TestCase
 {
     /**
-     * @var \Slytherium\Provider\ConfigurationInterface
+     * @var \Zapheus\Provider\ConfigurationInterface
      */
     protected $config;
 
@@ -94,7 +94,7 @@ class ConfigurationTest extends \PHPUnit_Framework_TestCase
      */
     public function testLoadMethod()
     {
-        $expected = 'Slytherium Framework';
+        $expected = 'Zapheus Framework';
 
         $path = str_replace('Provider', 'Fixture', __DIR__) . '/Config/App.php';
 
@@ -112,7 +112,7 @@ class ConfigurationTest extends \PHPUnit_Framework_TestCase
      */
     public function testSetMethod()
     {
-        $expected = 'Slytherium';
+        $expected = 'Zapheus';
 
         $this->config->set('user.name', $expected);
 

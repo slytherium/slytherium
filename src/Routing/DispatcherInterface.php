@@ -1,11 +1,11 @@
 <?php
 
-namespace Slytherium\Routing;
+namespace Zapheus\Routing;
 
 /**
  * Route Dispatcher Interface
  *
- * @package Slytherium
+ * @package Zapheus
  * @author  Rougin Royce Gutib <rougingutib@gmail.com>
  */
 interface DispatcherInterface
@@ -15,7 +15,7 @@ interface DispatcherInterface
      *
      * @param  string $method
      * @param  string $uri
-     * @return \Slytherium\Routing\ResolverInterface
+     * @return \Zapheus\Routing\ResolverInterface
      *
      * @throws \UnexpectedValueException
      */

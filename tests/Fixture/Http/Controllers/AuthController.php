@@ -1,24 +1,24 @@
 <?php
 
-namespace Slytherium\Fixture\Http\Controllers;
+namespace Zapheus\Fixture\Http\Controllers;
 
 /**
  * Auth Controller
  *
- * @package Slytherium
+ * @package Zapheus
  * @author  Rougin Royce Gutib <rougingutib@gmail.com>
  */
 class AuthController
 {
     /**
-     * @var \Slytherium\Fixture\Http\Controllers\RoleController $role
+     * @var \Zapheus\Fixture\Http\Controllers\RoleController $role
      */
     protected $role;
 
     /**
      * Initializes the controller instance.
      *
-     * @param \Slytherium\Fixture\Http\Controllers\RoleController $role
+     * @param \Zapheus\Fixture\Http\Controllers\RoleController $role
      */
     public function __construct(RoleController $role)
     {

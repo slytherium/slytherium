@@ -1,8 +1,8 @@
 <?php
 
-namespace Slytherium\Provider;
+namespace Zapheus\Provider;
 
-use Slytherium\Provider\ConfigurationInterface;
+use Zapheus\Provider\ConfigurationInterface;
 use Symfony\Component\Config\Loader\LoaderInterface;
 use Symfony\Component\DependencyInjection\ContainerBuilder;
 use Symfony\Component\HttpKernel\Bundle\BundleInterface;
@@ -11,13 +11,13 @@ use Symfony\Component\HttpKernel\Kernel;
 /**
  * Symfony Kernel
  *
- * @package Slytherium
+ * @package Zapheus
  * @author  Rougin Royce Gutib <rougingutib@gmail.com>
  */
 class SymfonyKernel extends Kernel
 {
     /**
-     * @var \Slytherium\Provider\ConfigurationInterface
+     * @var \Zapheus\Provider\ConfigurationInterface
      */
     protected $configuration;
 
@@ -29,7 +29,7 @@ class SymfonyKernel extends Kernel
     /**
      * Initializes the kernel instance.
      *
-     * @param \Slytherium\Provider\ConfigurationInterface $configuration
+     * @param \Zapheus\Provider\ConfigurationInterface $configuration
      */
     public function __construct(ConfigurationInterface $configuration)
     {

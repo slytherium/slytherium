@@ -1,19 +1,19 @@
 <?php
 
-namespace Slytherium\Routing;
+namespace Zapheus\Routing;
 
-use Slytherium\Container\ContainerInterface;
+use Zapheus\Container\ContainerInterface;
 
 /**
  * Resolver
  *
- * @package Slytherium
+ * @package Zapheus
  * @author  Rougin Royce Gutib <rougingutib@gmail.com>
  */
 class Resolver implements ResolverInterface
 {
     /**
-     * @var \Slytherium\Container\ContainerInterface
+     * @var \Zapheus\Container\ContainerInterface
      */
     protected $container;
 
@@ -43,7 +43,7 @@ class Resolver implements ResolverInterface
     /**
      * Resolves the specified handler against a container instance.
      *
-     * @param  \Slytherium\Container\ContainerInterface $container
+     * @param  \Zapheus\Container\ContainerInterface $container
      * @return mixed
      */
     public function resolve(ContainerInterface $container)

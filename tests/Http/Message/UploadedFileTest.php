@@ -1,11 +1,11 @@
 <?php
 
-namespace Slytherium\Http\Message;
+namespace Zapheus\Http\Message;
 
 /**
  * Uploaded File Test
  *
- * @package Slytherium
+ * @package Zapheus
  * @author  Rougin Royce Gutib <rougingutib@gmail.com>
  */
 class UploadedFileTest extends \PHPUnit_Framework_TestCase
@@ -16,7 +16,7 @@ class UploadedFileTest extends \PHPUnit_Framework_TestCase
     protected $file;
 
     /**
-     * @var \Slytherium\Http\Message\UploadedFileInterface
+     * @var \Zapheus\Http\Message\UploadedFileInterface
      */
     protected $uploaded;
 
@@ -95,7 +95,7 @@ class UploadedFileTest extends \PHPUnit_Framework_TestCase
      */
     public function testGetStreamMethod()
     {
-        $expected = 'Slytherium\Http\Message\StreamInterface';
+        $expected = 'Zapheus\Http\Message\StreamInterface';
 
         $result = $this->uploaded->getStream();
 

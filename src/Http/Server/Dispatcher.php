@@ -1,13 +1,13 @@
 <?php
 
-namespace Slytherium\Http\Server;
+namespace Zapheus\Http\Server;
 
-use Slytherium\Http\Message\ServerRequestInterface;
+use Zapheus\Http\Message\ServerRequestInterface;
 
 /**
  * Middleware Dispatcher
  *
- * @package Slytherium
+ * @package Zapheus
  * @author  Rougin Royce Gutib <rougingutib@gmail.com>
  */
 class Dispatcher implements DispatcherInterface
@@ -34,8 +34,8 @@ class Dispatcher implements DispatcherInterface
     /**
      * Dispatches the defined middleware stack.
      *
-     * @param  \Slytherium\Http\Message\ServerRequestInterface $request
-     * @return \Slytherium\Http\Message\ResponseInterface
+     * @param  \Zapheus\Http\Message\ServerRequestInterface $request
+     * @return \Zapheus\Http\Message\ResponseInterface
      */
     public function dispatch(ServerRequestInterface $request)
     {
@@ -47,9 +47,9 @@ class Dispatcher implements DispatcherInterface
     /**
      * Processes an incoming server request and return a response.
      *
-     * @param  \Slytherium\Http\Message\ServerRequestInterface $request
-     * @param  \Slytherium\Http\Server\HandlerInterface $handler
-     * @return \Slytherium\Http\Message\ResponseInterface
+     * @param  \Zapheus\Http\Message\ServerRequestInterface $request
+     * @param  \Zapheus\Http\Server\HandlerInterface $handler
+     * @return \Zapheus\Http\Message\ResponseInterface
      */
     public function process(ServerRequestInterface $request, HandlerInterface $handler)
     {
@@ -65,14 +65,12 @@ class Dispatcher implements DispatcherInterface
     /**
      * Adds a new middleware to the stack.
      *
-     * @param  mixed $item
+     * @param  mixed $middleware
      * @return self
      */
-    public function pipe($item)
+    public function pipe($middleware)
     {
-        $item = $this->transform($item);
-
-        $this->stack[] = $item;
+        $this->stack[] = $this->transform($middleware);
 
         return $this;
     }
@@ -80,23 +78,25 @@ class Dispatcher implements DispatcherInterface
     /**
      * Transforms the specified input into a middleware.
      *
-     * @param  mixed $item
-     * @return \Slytherium\Http\Server\MiddlewareInterface
+     * @param  mixed $middleware
+     * @return \Zapheus\Http\Server\MiddlewareInterface
      */
-    protected function transform($item)
+    protected function transform($middleware)
     {
-        is_string($item) && $item = new $item;
+        if (is_string($middleware) === true) {
+            $middleware = new $middleware;
+        } elseif (is_callable($middleware)) {
+            $middleware = new ClosureMiddleware($middleware);
+        }
 
-        is_callable($item) && $item = new ClosureMiddleware($item);
-
-        return $item;
+        return $middleware;
     }
 
     /**
      * Resolves the whole stack through its index.
      *
      * @param  integer $index
-     * @return \Slytherium\Http\Server\HandlerInterface
+     * @return \Zapheus\Http\Server\HandlerInterface
      */
     protected function resolve($index)
     {

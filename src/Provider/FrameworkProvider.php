@@ -1,16 +1,16 @@
 <?php
 
-namespace Slytherium\Provider;
+namespace Zapheus\Provider;
 
-use Slytherium\Container\CompositeContainer;
-use Slytherium\Container\ContainerInterface;
-use Slytherium\Container\SymfonyContainer;
-use Slytherium\Container\WritableInterface;
+use Zapheus\Container\CompositeContainer;
+use Zapheus\Container\ContainerInterface;
+use Zapheus\Container\SymfonyContainer;
+use Zapheus\Container\WritableInterface;
 
 /**
  * Framework Provider
  *
- * @package Slytherium
+ * @package Zapheus
  * @author  Rougin Royce Gutib <rougingutib@gmail.com>
  */
 class FrameworkProvider implements ProviderInterface
@@ -21,10 +21,10 @@ class FrameworkProvider implements ProviderInterface
 
     const SLYTHERIN_CONTAINER = 'Rougin\Slytherin\Container\Container';
 
-    const SYMFONY_KERNEL = 'Slytherium\Provider\SymfonyKernel';
+    const SYMFONY_KERNEL = 'Zapheus\Provider\SymfonyKernel';
 
     /**
-     * @var \Slytherium\Container\CompositeContainer
+     * @var \Zapheus\Container\CompositeContainer
      */
     protected $container;
 
@@ -41,7 +41,7 @@ class FrameworkProvider implements ProviderInterface
     /**
      * Initializes the container instance.
      *
-     * @param \Slytherium\Container\CompositeContainer|null $container
+     * @param \Zapheus\Container\CompositeContainer|null $container
      */
     public function __construct(CompositeContainer $container = null)
     {
@@ -51,16 +51,16 @@ class FrameworkProvider implements ProviderInterface
         $this->externals[] = self::SILEX_CONTAINER;
         $this->externals[] = self::SLYTHERIN_CONTAINER;
 
-        $this->wrappers[] = 'Slytherium\Container\IlluminateContainer';
-        $this->wrappers[] = 'Slytherium\Container\PimpleContainer';
-        $this->wrappers[] = 'Slytherium\Container\SlytherinContainer';
+        $this->wrappers[] = 'Zapheus\Container\IlluminateContainer';
+        $this->wrappers[] = 'Zapheus\Container\PimpleContainer';
+        $this->wrappers[] = 'Zapheus\Container\SlytherinContainer';
     }
 
     /**
      * Registers the bindings in the container.
      *
-     * @param  \Slytherium\Container\WritableInterface $container
-     * @return \Slytherium\Container\ContainerInterface
+     * @param  \Zapheus\Container\WritableInterface $container
+     * @return \Zapheus\Container\ContainerInterface
      */
     public function register(WritableInterface $container)
     {
@@ -78,9 +78,9 @@ class FrameworkProvider implements ProviderInterface
     }
 
     /**
-     * Gets the external container and wraps it to a Slytherium container.
+     * Gets the external container and wraps it to a Zapheus container.
      *
-     * @param  \Slytherium\Container\ContainerInterface $container
+     * @param  \Zapheus\Container\ContainerInterface $container
      * @return void
      */
     protected function externals(ContainerInterface $container)
@@ -101,8 +101,8 @@ class FrameworkProvider implements ProviderInterface
     /**
      * Returns the instance from Symfony and wrap it into a SymfonyContainer.
      *
-     * @param  \Slytherium\Container\ContainerInterface $container
-     * @return \Slytherium\Container\ContainerInterface
+     * @param  \Zapheus\Container\ContainerInterface $container
+     * @return \Zapheus\Container\ContainerInterface
      */
     protected function symfony(ContainerInterface $container)
     {

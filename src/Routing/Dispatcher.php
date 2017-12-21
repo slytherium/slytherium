@@ -1,24 +1,24 @@
 <?php
 
-namespace Slytherium\Routing;
+namespace Zapheus\Routing;
 
 /**
  * Route Dispatcher
  *
- * @package Slytherium
+ * @package Zapheus
  * @author  Rougin Royce Gutib <rougingutib@gmail.com>
  */
 class Dispatcher implements DispatcherInterface
 {
     /**
-     * @var \Slytherium\Routing\RouterInterface
+     * @var \Zapheus\Routing\RouterInterface
      */
     protected $router;
 
     /**
      * Initializes the dispatcher instance.
      *
-     * @param \Slytherium\Routing\RouterInterface $router
+     * @param \Zapheus\Routing\RouterInterface $router
      */
     public function __construct(RouterInterface $router)
     {
@@ -30,7 +30,7 @@ class Dispatcher implements DispatcherInterface
      *
      * @param  string $method
      * @param  string $uri
-     * @return \Slytherium\Routing\ResolverInterface
+     * @return \Zapheus\Routing\ResolverInterface
      *
      * @throws \UnexpectedValueException
      */

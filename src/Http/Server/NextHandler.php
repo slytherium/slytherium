@@ -1,32 +1,32 @@
 <?php
 
-namespace Slytherium\Http\Server;
+namespace Zapheus\Http\Server;
 
-use Slytherium\Http\Message\ServerRequestInterface;
+use Zapheus\Http\Message\ServerRequestInterface;
 
 /**
  * Next Handler
  *
- * @package Slytherium
+ * @package Zapheus
  * @author  Rougin Royce Gutib <rougingutib@gmail.com>
  */
 class NextHandler implements HandlerInterface
 {
     /**
-     * @var \Slytherium\Http\Server\MiddlewareInterface
+     * @var \Zapheus\Http\Server\MiddlewareInterface
      */
     protected $middleware;
 
     /**
-     * @var \Slytherium\Http\Server\HandlerInterface
+     * @var \Zapheus\Http\Server\HandlerInterface
      */
     protected $handler;
 
     /**
      * Initializes the handler instance.
      *
-     * @param \Slytherium\Http\Server\MiddlewareInterface $middleware
-     * @param \Slytherium\Http\Server\HandlerInterface    $handler
+     * @param \Zapheus\Http\Server\MiddlewareInterface $middleware
+     * @param \Zapheus\Http\Server\HandlerInterface    $handler
      */
     public function __construct(MiddlewareInterface $middleware, HandlerInterface $handler)
     {
@@ -38,8 +38,8 @@ class NextHandler implements HandlerInterface
     /**
      * Dispatch the next available middleware and return the response.
      *
-     * @param  \Slytherium\Http\Message\ServerRequestInterface $request
-     * @return \Slytherium\Http\Message\ResponseInterface
+     * @param  \Zapheus\Http\Message\ServerRequestInterface $request
+     * @return \Zapheus\Http\Message\ResponseInterface
      */
     public function __invoke(ServerRequestInterface $request)
     {
@@ -49,8 +49,8 @@ class NextHandler implements HandlerInterface
     /**
      * Dispatch the next available middleware and return the response.
      *
-     * @param  \Slytherium\Http\Message\ServerRequestInterface $request
-     * @return \Slytherium\Http\Message\ResponseInterface
+     * @param  \Zapheus\Http\Message\ServerRequestInterface $request
+     * @return \Zapheus\Http\Message\ResponseInterface
      */
     public function handle(ServerRequestInterface $request)
     {

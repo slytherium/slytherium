@@ -1,19 +1,19 @@
 <?php
 
-namespace Slytherium\Renderer;
+namespace Zapheus\Renderer;
 
-use Slytherium\Renderer\Renderer;
+use Zapheus\Renderer\Renderer;
 
 /**
  * Renderer Test
  *
- * @package Slytherium
+ * @package Zapheus
  * @author  Rougin Royce Gutib <rougingutib@gmail.com>
  */
 class RendererTest extends \PHPUnit_Framework_TestCase
 {
     /**
-     * @var \Slytherium\Renderer\RendererInterface
+     * @var \Zapheus\Renderer\RendererInterface
      */
     protected $renderer;
 

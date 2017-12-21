@@ -1,20 +1,20 @@
 <?php
 
-namespace Slytherium\Application;
+namespace Zapheus\Application;
 
-use Slytherium\Container\ReflectionContainer;
-use Slytherium\Http\Message\ServerRequest;
+use Zapheus\Container\ReflectionContainer;
+use Zapheus\Http\Message\ServerRequest;
 
 /**
  * Application Test Case
  *
- * @package Slytherium
+ * @package Zapheus
  * @author  Rougin Royce Gutib <rougingutib@gmail.com>
  */
 class TestCase extends \PHPUnit_Framework_TestCase
 {
     /**
-     * @var \Slytherium\Application\ApplicationInterface
+     * @var \Zapheus\Application\ApplicationInterface
      */
     protected $application;
 
@@ -23,11 +23,11 @@ class TestCase extends \PHPUnit_Framework_TestCase
      *
      * @param  string $method
      * @param  string $uri
-     * @return \Slytherium\Application\ApplicationInterface
+     * @return \Zapheus\Application\ApplicationInterface
      */
     protected function request($method, $uri)
     {
-        $interface = 'Slytherium\Http\Message\ServerRequestInterface';
+        $interface = 'Zapheus\Http\Message\ServerRequestInterface';
 
         $server = array();
 

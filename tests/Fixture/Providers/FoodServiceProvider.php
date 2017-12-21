@@ -1,13 +1,13 @@
 <?php
 
-namespace Slytherium\Fixture\Providers;
+namespace Zapheus\Fixture\Providers;
 
 use Illuminate\Support\ServiceProvider;
 
 /**
  * Food Service Provider
  *
- * @package Slytherium
+ * @package Zapheus
  * @author  Rougin Royce Gutib <rougingutib@gmail.com>
  */
 class FoodServiceProvider extends ServiceProvider
@@ -19,7 +19,7 @@ class FoodServiceProvider extends ServiceProvider
      */
     public function register()
     {
-        $food = 'Slytherium\Fixture\Http\Controllers\FoodController';
+        $food = 'Zapheus\Fixture\Http\Controllers\FoodController';
 
         $this->app->bind('food', $food);
     }

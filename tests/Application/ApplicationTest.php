@@ -1,18 +1,18 @@
 <?php
 
-namespace Slytherium\Application;
+namespace Zapheus\Application;
 
-use Slytherium\Application;
-use Slytherium\Fixture\Http\Controllers\HailController;
-use Slytherium\Http\Message\Response;
-use Slytherium\Http\Message\ServerRequest;
-use Slytherium\Routing\Dispatcher;
-use Slytherium\Routing\Router;
+use Zapheus\Application;
+use Zapheus\Fixture\Http\Controllers\HailController;
+use Zapheus\Http\Message\Response;
+use Zapheus\Http\Message\ServerRequest;
+use Zapheus\Routing\Dispatcher;
+use Zapheus\Routing\Router;
 
 /**
  * Application Test
  *
- * @package Slytherium
+ * @package Zapheus
  * @author  Rougin Royce Gutib <rougingutib@gmail.com>
  */
 class ApplicationTest extends TestCase
@@ -26,7 +26,7 @@ class ApplicationTest extends TestCase
     {
         $this->application = new Application;
 
-        $dispatcher = 'Slytherium\Routing\DispatcherInterface';
+        $dispatcher = 'Zapheus\Routing\DispatcherInterface';
 
         $router = new Router;
 
@@ -34,11 +34,11 @@ class ApplicationTest extends TestCase
 
         $this->application->set($dispatcher, new Dispatcher($router));
 
-        $interface = 'Slytherium\Http\Message\ResponseInterface';
+        $interface = 'Zapheus\Http\Message\ResponseInterface';
 
         $response = new Response;
 
-        $response = $response->withHeader('name', 'Slytherium');
+        $response = $response->withHeader('name', 'Zapheus');
 
         $this->application->set($interface, $response);
     }

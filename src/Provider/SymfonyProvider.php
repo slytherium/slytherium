@@ -1,20 +1,20 @@
 <?php
 
-namespace Slytherium\Provider;
+namespace Zapheus\Provider;
 
-use Slytherium\Container\WritableInterface;
+use Zapheus\Container\WritableInterface;
 use Symfony\Component\HttpKernel\Bundle\BundleInterface;
-use Slytherium\Provider\SymfonyKernel;
+use Zapheus\Provider\SymfonyKernel;
 
 /**
  * Symfony Provider
  *
- * @package Slytherium
+ * @package Zapheus
  * @author  Rougin Royce Gutib <rougingutib@gmail.com>
  */
 class SymfonyProvider implements ProviderInterface
 {
-    const KERNEL = 'Slytherium\Provider\SymfonyKernel';
+    const KERNEL = 'Zapheus\Provider\SymfonyKernel';
 
     /**
      * @var \Symfony\Component\HttpKernel\Bundle\BundleInterface
@@ -34,8 +34,8 @@ class SymfonyProvider implements ProviderInterface
     /**
      * Registers the bindings in the container.
      *
-     * @param  \Slytherium\Container\WritableInterface $container
-     * @return \Slytherium\Container\ContainerInterface
+     * @param  \Zapheus\Container\WritableInterface $container
+     * @return \Zapheus\Container\ContainerInterface
      */
     public function register(WritableInterface $container)
     {

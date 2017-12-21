@@ -1,6 +1,6 @@
 <?php
 
-namespace Slytherium\Fixture\Providers;
+namespace Zapheus\Fixture\Providers;
 
 use Symfony\Component\DependencyInjection\ContainerBuilder;
 use Symfony\Component\DependencyInjection\Definition;
@@ -10,7 +10,7 @@ use Symfony\Component\HttpKernel\Bundle\Bundle;
 /**
  * Slytherin Auth Bundle
  *
- * @package Slytherium
+ * @package Zapheus
  * @author  Rougin Royce Gutib <rougingutib@gmail.com>
  */
 class SlytherinAuthBundle extends Bundle
@@ -22,7 +22,7 @@ class SlytherinAuthBundle extends Bundle
      */
     public function build(ContainerBuilder $container)
     {
-        $auth = 'Slytherium\Fixture\Http\Controllers\AuthController';
+        $auth = 'Zapheus\Fixture\Http\Controllers\AuthController';
 
         $definition = new Definition($auth, array(new Reference('role')));
 

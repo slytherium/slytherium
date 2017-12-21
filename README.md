@@ -1,4 +1,4 @@
-# Slytherium
+# Zapheus
 
 [![Latest Version on Packagist][ico-version]][link-packagist]
 [![Software License][ico-license]](LICENSE.md)
@@ -7,17 +7,17 @@
 [![Quality Score][ico-code-quality]][link-code-quality]
 [![Total Downloads][ico-downloads]][link-downloads]
 
-Slytherium is yet another simple and extensible micro-framework for PHP.
+Zapheus is yet another simple and extensible micro-framework for PHP.
 
 ## Install
 
 Via Composer
 
 ``` bash
-$ composer require slytherium/slytherium
+$ composer require zapheus/zapheus
 ```
 
-Want to use this framework on PHP v5.2.0 and below? Use the [Legacy](https://github.com/slytherium/legacy) package instead.
+Want to use this framework on PHP v5.2.0 and below? Use the [Legacy](https://github.com/zapheus/legacy) package instead.
 
 ## Usage
 
@@ -38,9 +38,9 @@ class GreetController
 **index.php**
 
 ``` php
-use Slytherium\Application\RouterApplication;
-use Slytherium\Http\Message\ServerRequest;
-use Slytherium\Http\Message\ServerRequestInterface;
+use Zapheus\Application\RouterApplication;
+use Zapheus\Http\Message\ServerRequest;
+use Zapheus\Http\Message\ServerRequestInterface;
 
 // Creates the server request instance
 $request = new ServerRequest($_SERVER, $_COOKIE, $_GET, $_FILES, $_POST);
@@ -69,11 +69,11 @@ echo $app->run();
 **RouterMiddleware.php**
 
 ``` php
-use Slytherium\Application;
-use Slytherium\Http\Message\ServerRequestInterface;
-use Slytherium\Http\Server\HandlerInterface;
-use Slytherium\Http\Server\MiddlewareInterface;
-use Slytherium\Routing\Dispatcher;
+use Zapheus\Application;
+use Zapheus\Http\Message\ServerRequestInterface;
+use Zapheus\Http\Server\HandlerInterface;
+use Zapheus\Http\Server\MiddlewareInterface;
+use Zapheus\Routing\Dispatcher;
 
 class RouterMiddleware implements MiddlewareInterface
 {
@@ -87,9 +87,9 @@ class RouterMiddleware implements MiddlewareInterface
     /**
      * Processes an incoming server request and return a response.
      *
-     * @param  \Slytherium\Http\Message\ServerRequestInterface $request
-     * @param  \Slytherium\Http\Server\HandlerInterface        $handler
-     * @return \Slytherium\Http\Message\ResponseInterface
+     * @param  \Zapheus\Http\Message\ServerRequestInterface $request
+     * @param  \Zapheus\Http\Server\HandlerInterface        $handler
+     * @return \Zapheus\Http\Message\ResponseInterface
      */
     public function process(ServerRequestInterface $request, HandlerInterface $handler)
     {
@@ -114,14 +114,14 @@ class RouterMiddleware implements MiddlewareInterface
     }
 
     /**
-     * Returns the \Slytherium\Routing\Router instance.
+     * Returns the \Zapheus\Routing\Router instance.
      *
-     * @return \Slytherium\Routing\RouterInterface
+     * @return \Zapheus\Routing\RouterInterface
      */
     protected function router()
     {
         // Initializes the HTTP router
-        $router = new Slytherium\Routing\Router;
+        $router = new Zapheus\Routing\Router;
 
         // Creates a HTTP route of GET /
         $router->get('/', 'GreetController@greet');
@@ -137,9 +137,9 @@ class RouterMiddleware implements MiddlewareInterface
 **index.php**
 
 ``` php
-use Slytherium\Application\MiddlewareApplication;
-use Slytherium\Http\Message\ServerRequest;
-use Slytherium\Http\Message\ServerRequestInterface;
+use Zapheus\Application\MiddlewareApplication;
+use Zapheus\Http\Message\ServerRequest;
+use Zapheus\Http\Message\ServerRequestInterface;
 
 // Creates the server request instance
 $request = new ServerRequest($_SERVER, $_COOKIE, $_GET, $_FILES, $_POST);
@@ -191,17 +191,17 @@ If you discover any security related issues, please email rougingutib@gmail.com 
 
 The MIT License (MIT). Please see [LICENSE.md](LICENSE.md) for more information.
 
-[ico-version]: https://img.shields.io/packagist/v/slytherium/slytherium.svg?style=flat-square
+[ico-version]: https://img.shields.io/packagist/v/zapheus/zapheus.svg?style=flat-square
 [ico-license]: https://img.shields.io/badge/license-MIT-brightgreen.svg?style=flat-square
-[ico-travis]: https://img.shields.io/travis/slytherium/slytherium/master.svg?style=flat-square
-[ico-scrutinizer]: https://img.shields.io/scrutinizer/coverage/g/slytherium/slytherium.svg?style=flat-square
-[ico-code-quality]: https://img.shields.io/scrutinizer/g/slytherium/slytherium.svg?style=flat-square
-[ico-downloads]: https://img.shields.io/packagist/dt/slytherium/slytherium.svg?style=flat-square
+[ico-travis]: https://img.shields.io/travis/zapheus/zapheus/master.svg?style=flat-square
+[ico-scrutinizer]: https://img.shields.io/scrutinizer/coverage/g/zapheus/zapheus.svg?style=flat-square
+[ico-code-quality]: https://img.shields.io/scrutinizer/g/zapheus/zapheus.svg?style=flat-square
+[ico-downloads]: https://img.shields.io/packagist/dt/zapheus/zapheus.svg?style=flat-square
 
-[link-packagist]: https://packagist.org/packages/slytherium/slytherium
-[link-travis]: https://travis-ci.org/slytherium/slytherium
-[link-scrutinizer]: https://scrutinizer-ci.com/g/slytherium/slytherium/code-structure
-[link-code-quality]: https://scrutinizer-ci.com/g/slytherium/slytherium
-[link-downloads]: https://packagist.org/packages/slytherium/slytherium
+[link-packagist]: https://packagist.org/packages/zapheus/zapheus
+[link-travis]: https://travis-ci.org/zapheus/zapheus
+[link-scrutinizer]: https://scrutinizer-ci.com/g/zapheus/zapheus/code-structure
+[link-code-quality]: https://scrutinizer-ci.com/g/zapheus/zapheus
+[link-downloads]: https://packagist.org/packages/zapheus/zapheus
 [link-author]: https://github.com/rougin
 [link-contributors]: ../../contributors

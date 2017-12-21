@@ -1,11 +1,11 @@
 <?php
 
-namespace Slytherium\Container;
+namespace Zapheus\Container;
 
 /**
  * Writable Interface
  *
- * @package Slytherium
+ * @package Zapheus
  * @author  Rougin Royce Gutib <rougingutib@gmail.com>
  */
 interface WritableInterface extends ContainerInterface
@@ -17,7 +17,7 @@ interface WritableInterface extends ContainerInterface
      * @param  mixed  $concrete
      * @return self
      *
-     * @throws \Slytherium\Container\ContainerException
+     * @throws \Zapheus\Container\ContainerException
      */
     public function set($id, $concrete);
 }

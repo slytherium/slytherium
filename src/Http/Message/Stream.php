@@ -1,6 +1,6 @@
 <?php
 
-namespace Slytherium\Http\Message;
+namespace Zapheus\Http\Message;
 
 /*
  * This file is part of the Symfony package.
@@ -14,7 +14,7 @@ namespace Slytherium\Http\Message;
 /**
  * Stream
  *
- * @package Slytherium
+ * @package Zapheus
  * @author  Kévin Dunglas <dunglas@gmail.com>
  * @author  Jérémy 'Jejem' Desvages <jejem@phyrexia.org>
  * @author  Rougin Royce Gutib <rougingutib@gmail.com>
@@ -64,6 +64,8 @@ class Stream implements StreamInterface
     protected $meta = null;
 
     /**
+     * Initializes the stream instance.
+     *
      * @param resource|null $stream
      */
     public function __construct($stream = null)

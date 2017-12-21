@@ -1,17 +1,17 @@
 <?php
 
-namespace Slytherium\Container;
+namespace Zapheus\Container;
 
 /**
  * Container
  *
- * @package Slytherium
+ * @package Zapheus
  * @author  Rougin Royce Gutib <rougingutib@gmail.com>
  */
 class Container implements WritableInterface
 {
     /**
-     * @var \Slytherium\Container\ContainerInterface|null
+     * @var \Zapheus\Container\ContainerInterface|null
      */
     protected $delegate = null;
 
@@ -21,7 +21,9 @@ class Container implements WritableInterface
     protected $objects = array();
 
     /**
-     * @param \Slytherium\Container\ContainerInterface|null $delegate
+     * Initializes the container instance.
+     *
+     * @param \Zapheus\Container\ContainerInterface|null $delegate
      */
     public function __construct(ContainerInterface $delegate = null)
     {
@@ -31,7 +33,7 @@ class Container implements WritableInterface
     /**
      * Delegates a new container.
      *
-     * @param  \Slytherium\Container\ContainerInterface $container
+     * @param  \Zapheus\Container\ContainerInterface $container
      * @return self
      */
     public function delegate(ContainerInterface $container)
@@ -47,7 +49,7 @@ class Container implements WritableInterface
      * @param  string $id
      * @return mixed
      *
-     * @throws \Slytherium\Container\NotFoundException
+     * @throws \Zapheus\Container\NotFoundException
      */
     public function get($id)
     {
@@ -80,7 +82,7 @@ class Container implements WritableInterface
      * @param  mixed  $concrete
      * @return self
      *
-     * @throws \Slytherium\Container\ContainerException
+     * @throws \Zapheus\Container\ContainerException
      */
     public function set($id, $concrete)
     {

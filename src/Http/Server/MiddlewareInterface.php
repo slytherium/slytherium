@@ -1,13 +1,13 @@
 <?php
 
-namespace Slytherium\Http\Server;
+namespace Zapheus\Http\Server;
 
-use Slytherium\Http\Message\ServerRequestInterface;
+use Zapheus\Http\Message\ServerRequestInterface;
 
 /**
  * Middleware Interface
  *
- * @package Slytherium
+ * @package Zapheus
  * @author  Rougin Royce Gutib <rougingutib@gmail.com>
  */
 interface MiddlewareInterface
@@ -15,9 +15,9 @@ interface MiddlewareInterface
     /**
      * Processes an incoming server request and return a response.
      *
-     * @param  \Slytherium\Http\Message\ServerRequestInterface $request
-     * @param  \Slytherium\Http\Server\HandlerInterface        $handler
-     * @return \Slytherium\Http\Message\ResponseInterface
+     * @param  \Zapheus\Http\Message\ServerRequestInterface $request
+     * @param  \Zapheus\Http\Server\HandlerInterface        $handler
+     * @return \Zapheus\Http\Message\ResponseInterface
      */
     public function process(ServerRequestInterface $request, HandlerInterface $handler);
 }

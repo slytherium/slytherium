@@ -1,29 +1,29 @@
 <?php
 
-namespace Slytherium\Application;
+namespace Zapheus\Application;
 
-use Slytherium\Application;
-use Slytherium\Http\Message\ServerRequestInterface;
-use Slytherium\Routing\Dispatcher;
-use Slytherium\Routing\Router;
+use Zapheus\Application;
+use Zapheus\Http\Message\ServerRequestInterface;
+use Zapheus\Routing\Dispatcher;
+use Zapheus\Routing\Router;
 
 /**
  * Router Application
  *
- * @package Slytherium
+ * @package Zapheus
  * @author  Rougin Royce Gutib <rougingutib@gmail.com>
  */
 class RouterApplication extends AbstractApplication
 {
     /**
-     * @var \Slytherium\Routing\RouterInterface
+     * @var \Zapheus\Routing\RouterInterface
      */
     protected $router;
 
     /**
      * Initializes the application instance.
      *
-     * @param \Slytherium\Application|null $application
+     * @param \Zapheus\Application|null $application
      */
     public function __construct(Application $application = null)
     {
@@ -35,8 +35,8 @@ class RouterApplication extends AbstractApplication
     /**
      * Handles the ServerRequest to convert it to a Response.
      *
-     * @param  \Slytherium\Http\Message\ServerRequestInterface $request
-     * @return \Slytherium\Http\Message\ResponseInterface
+     * @param  \Zapheus\Http\Message\ServerRequestInterface $request
+     * @return \Zapheus\Http\Message\ResponseInterface
      */
     public function handle(ServerRequestInterface $request)
     {

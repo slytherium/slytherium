@@ -1,11 +1,11 @@
 <?php
 
-namespace Slytherium\Container;
+namespace Zapheus\Container;
 
 /**
  * Not Found Exception
  *
- * @package Slytherium
+ * @package Zapheus
  * @author  Rougin Royce Gutib <rougingutib@gmail.com>
  */
 class NotFoundException extends \InvalidArgumentException

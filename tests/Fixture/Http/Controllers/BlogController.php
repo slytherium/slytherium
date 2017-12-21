@@ -1,24 +1,24 @@
 <?php
 
-namespace Slytherium\Fixture\Http\Controllers;
+namespace Zapheus\Fixture\Http\Controllers;
 
 /**
  * Blog Controller
  *
- * @package Slytherium
+ * @package Zapheus
  * @author  Rougin Royce Gutib <rougingutib@gmail.com>
  */
 class BlogController
 {
     /**
-     * @var \Slytherium\Fixture\Http\Controllers\UserController $user
+     * @var \Zapheus\Fixture\Http\Controllers\UserController $user
      */
     protected $user;
 
     /**
      * Initializes the controller instance.
      *
-     * @param \Slytherium\Fixture\Http\Controllers\UserController $user
+     * @param \Zapheus\Fixture\Http\Controllers\UserController $user
      */
     public function __construct(UserController $user)
     {

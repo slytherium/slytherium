@@ -1,16 +1,16 @@
 <?php
 
-namespace Slytherium\Provider;
+namespace Zapheus\Provider;
 
 use Rougin\Slytherin\Container\Container;
 use Rougin\Slytherin\Integration\Configuration as SlytherinConfig;
 use Rougin\Slytherin\Integration\IntegrationInterface;
-use Slytherium\Container\WritableInterface;
+use Zapheus\Container\WritableInterface;
 
 /**
  * Slytherin Provider
  *
- * @package Slytherium
+ * @package Zapheus
  * @author  Rougin Royce Gutib <rougingutib@gmail.com>
  */
 class SlytherinProvider implements ProviderInterface
@@ -33,8 +33,8 @@ class SlytherinProvider implements ProviderInterface
     /**
      * Registers the bindings in the container.
      *
-     * @param  \Slytherium\Container\WritableInterface $container
-     * @return \Slytherium\Container\ContainerInterface
+     * @param  \Zapheus\Container\WritableInterface $container
+     * @return \Zapheus\Container\ContainerInterface
      */
     public function register(WritableInterface $container)
     {

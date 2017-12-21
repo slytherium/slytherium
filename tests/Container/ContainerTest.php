@@ -1,20 +1,20 @@
 <?php
 
-namespace Slytherium\Container;
+namespace Zapheus\Container;
 
-use Slytherium\Container\ReflectionContainer;
-use Slytherium\Fixture\Http\Controllers\HailController;
+use Zapheus\Container\ReflectionContainer;
+use Zapheus\Fixture\Http\Controllers\HailController;
 
 /**
  * Container Test
  *
- * @package Slytherium
+ * @package Zapheus
  * @author  Rougin Royce Gutib <rougingutib@gmail.com>
  */
 class ContainerTest extends \PHPUnit_Framework_TestCase
 {
     /**
-     * @var \Slytherium\Container\ContainerInterface
+     * @var \Zapheus\Container\ContainerInterface
      */
     protected $container;
 
@@ -71,7 +71,7 @@ class ContainerTest extends \PHPUnit_Framework_TestCase
      */
     public function testGetMethodWithNotFoundException()
     {
-        $exception = 'Slytherium\Container\NotFoundException';
+        $exception = 'Zapheus\Container\NotFoundException';
 
         $this->setExpectedException($exception);
 
@@ -97,7 +97,7 @@ class ContainerTest extends \PHPUnit_Framework_TestCase
      */
     public function testSetMethodWithContainerException()
     {
-        $exception = 'Slytherium\Container\ContainerException';
+        $exception = 'Zapheus\Container\ContainerException';
 
         $this->setExpectedException($exception);
 

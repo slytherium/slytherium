@@ -1,29 +1,24 @@
 <?php
 
-namespace Slytherium\Provider;
+namespace Zapheus\Provider;
 
-use Slytherium\Container\WritableInterface;
+use Zapheus\Container\WritableInterface;
 
 /**
  * Provider Interface
  *
- * TODO: Support service providers from other frameworks:
- * - https://silex.symfony.com/doc/2.0/providers.html
- * - https://laravel.com/docs/5.5/providers
- * - https://symfony.com/doc/current/bundles.html
- *
- * @package Slytherium
+ * @package Zapheus
  * @author  Rougin Royce Gutib <rougingutib@gmail.com>
  */
 interface ProviderInterface
 {
-    const CONFIG = 'Slytherium\Provider\ConfigurationInterface';
+    const CONFIG = 'Zapheus\Provider\ConfigurationInterface';
 
     /**
      * Registers the bindings in the container.
      *
-     * @param  \Slytherium\Container\WritableInterface $container
-     * @return \Slytherium\Container\ContainerInterface
+     * @param  \Zapheus\Container\WritableInterface $container
+     * @return \Zapheus\Container\ContainerInterface
      */
     public function register(WritableInterface $container);
 }

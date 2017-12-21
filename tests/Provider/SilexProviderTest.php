@@ -1,26 +1,26 @@
 <?php
 
-namespace Slytherium\Provider;
+namespace Zapheus\Provider;
 
-use Slytherium\Container\Container;
-use Slytherium\Fixture\Providers\BlogServiceProvider;
-use Slytherium\Fixture\Providers\UserServiceProvider;
+use Zapheus\Container\Container;
+use Zapheus\Fixture\Providers\BlogServiceProvider;
+use Zapheus\Fixture\Providers\UserServiceProvider;
 
 /**
  * Silex Provider Test
  *
- * @package Slytherium
+ * @package Zapheus
  * @author  Rougin Royce Gutib <rougingutib@gmail.com>
  */
 class SilexProviderTest extends \PHPUnit_Framework_TestCase
 {
     /**
-     * @var \Slytherium\Container\WritableInterface
+     * @var \Zapheus\Container\WritableInterface
      */
     protected $container;
 
     /**
-     * @var \Slytherium\Provider\FrameworkProvider
+     * @var \Zapheus\Provider\FrameworkProvider
      */
     protected $framework;
 
@@ -31,9 +31,15 @@ class SilexProviderTest extends \PHPUnit_Framework_TestCase
      */
     public function setUp()
     {
+        $message = 'Pimple Container is not yet installed.';
+
+        $container = 'Pimple\Container';
+
+        class_exists($container) || $this->markTestSkipped($message);
+
         $this->container = new Container;
 
-        $class = 'Slytherium\Provider\ConfigurationInterface';
+        $class = 'Zapheus\Provider\ConfigurationInterface';
 
         $config = new Configuration;
 
@@ -61,7 +67,7 @@ class SilexProviderTest extends \PHPUnit_Framework_TestCase
 
         $container = $this->framework->register($container);
 
-        $expected = 'Slytherium\Fixture\Http\Controllers\BlogController';
+        $expected = 'Zapheus\Fixture\Http\Controllers\BlogController';
 
         $result = $container->get('blog');
 

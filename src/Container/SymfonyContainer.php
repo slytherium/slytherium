@@ -1,13 +1,13 @@
 <?php
 
-namespace Slytherium\Container;
+namespace Zapheus\Container;
 
 use Symfony\Component\DependencyInjection\ContainerInterface as SymfonyContainerInterface;
 
 /**
- * Symfony to Slytherium Bridge Container
+ * Symfony to Zapheus Container
  *
- * @package Slytherium
+ * @package Zapheus
  * @author  Rougin Royce Gutib <rougingutib@gmail.com>
  */
 class SymfonyContainer extends SlytherinContainer

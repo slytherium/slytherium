@@ -1,26 +1,26 @@
 <?php
 
-namespace Slytherium\Provider;
+namespace Zapheus\Provider;
 
-use Slytherium\Container\Container;
-use Slytherium\Fixture\Providers\SlytherinAuthBundle;
-use Slytherium\Fixture\Providers\SlytherinRoleBundle;
+use Zapheus\Container\Container;
+use Zapheus\Fixture\Providers\SlytherinAuthBundle;
+use Zapheus\Fixture\Providers\SlytherinRoleBundle;
 
 /**
  * Symfony Provider Test
  *
- * @package Slytherium
+ * @package Zapheus
  * @author  Rougin Royce Gutib <rougingutib@gmail.com>
  */
 class SymfonyProviderTest extends \PHPUnit_Framework_TestCase
 {
     /**
-     * @var \Slytherium\Container\WritableInterface
+     * @var \Zapheus\Container\WritableInterface
      */
     protected $container;
 
     /**
-     * @var \Slytherium\Provider\FrameworkProvider
+     * @var \Zapheus\Provider\FrameworkProvider
      */
     protected $framework;
 
@@ -31,7 +31,13 @@ class SymfonyProviderTest extends \PHPUnit_Framework_TestCase
      */
     public function setUp()
     {
-        $class = 'Slytherium\Provider\ConfigurationInterface';
+        $message = 'Symfony Kernel is not yet installed.';
+
+        $kernel = 'Symfony\Component\HttpKernel\Kernel';
+
+        class_exists($kernel) || $this->markTestSkipped($message);
+
+        $class = 'Zapheus\Provider\ConfigurationInterface';
 
         $config = new Configuration;
 
@@ -73,7 +79,7 @@ class SymfonyProviderTest extends \PHPUnit_Framework_TestCase
 
         $container = $this->framework->register($container);
 
-        $expected = 'Slytherium\Fixture\Http\Controllers\AuthController';
+        $expected = 'Zapheus\Fixture\Http\Controllers\AuthController';
 
         $result = $container->get('auth');
 

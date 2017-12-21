@@ -1,11 +1,11 @@
 <?php
 
-namespace Slytherium\Provider;
+namespace Zapheus\Provider;
 
 /**
  * Configuration
  *
- * @package Slytherium
+ * @package Zapheus
  * @author  Rougin Royce Gutib <rougingutib@gmail.com>
  */
 class Configuration implements ConfigurationInterface

@@ -1,6 +1,6 @@
 <?php
 
-namespace Slytherium\Http\Message;
+namespace Zapheus\Http\Message;
 
 /*
  * This file is part of the Symfony package.
@@ -14,7 +14,7 @@ namespace Slytherium\Http\Message;
 /**
  * URI
  *
- * @package Slytherium
+ * @package Zapheus
  * @author  Kévin Dunglas <dunglas@gmail.com>
  * @author  Rougin Royce Gutib <rougingutib@gmail.com>
  */

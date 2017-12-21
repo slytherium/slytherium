@@ -1,11 +1,11 @@
 <?php
 
-namespace Slytherium\Container;
+namespace Zapheus\Container;
 
 /**
  * Composite Container
  *
- * @package Slytherium
+ * @package Zapheus
  * @author  Rougin Royce Gutib <rougingutib@gmail.com>
  */
 class CompositeContainer implements ContainerInterface
@@ -18,7 +18,7 @@ class CompositeContainer implements ContainerInterface
     /**
      * Adds a container to the array of containers.
      *
-     * @param \Slytherium\Container\ContainerInterface $container
+     * @param \Zapheus\Container\ContainerInterface $container
      */
     public function add(ContainerInterface $container)
     {

@@ -1,11 +1,11 @@
 <?php
 
-namespace Slytherium\Renderer;
+namespace Zapheus\Renderer;
 
 /**
  * Renderer
  *
- * @package Slytherium
+ * @package Zapheus
  * @author  Rougin Royce Gutib <rougingutib@gmail.com>
  */
 class Renderer implements RendererInterface

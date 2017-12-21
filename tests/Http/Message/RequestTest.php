@@ -1,17 +1,17 @@
 <?php
 
-namespace Slytherium\Http\Message;
+namespace Zapheus\Http\Message;
 
 /**
  * Request Test
  *
- * @package Slytherium
+ * @package Zapheus
  * @author  Rougin Royce Gutib <rougingutib@gmail.com>
  */
 class RequestTest extends \PHPUnit_Framework_TestCase
 {
     /**
-     * @var \Slytherium\Http\Message\RequestInterface
+     * @var \Zapheus\Http\Message\RequestInterface
      */
     protected $request;
 

@@ -1,15 +1,15 @@
 <?php
 
-namespace Slytherium\Fixture\Providers;
+namespace Zapheus\Fixture\Providers;
 
 use Pimple\Container;
 use Pimple\ServiceProviderInterface;
-use Slytherium\Fixture\Http\Controllers\UserController;
+use Zapheus\Fixture\Http\Controllers\UserController;
 
 /**
  * User Service Provider
  *
- * @package Slytherium
+ * @package Zapheus
  * @author  Rougin Royce Gutib <rougingutib@gmail.com>
  */
 class UserServiceProvider implements ServiceProviderInterface

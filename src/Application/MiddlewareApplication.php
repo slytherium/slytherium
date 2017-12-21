@@ -1,30 +1,30 @@
 <?php
 
-namespace Slytherium\Application;
+namespace Zapheus\Application;
 
-use Slytherium\Application;
-use Slytherium\Http\Message\ServerRequestInterface;
-use Slytherium\Http\Server\ApplicationHandler;
-use Slytherium\Http\Server\Dispatcher;
-use Slytherium\Http\Server\MiddlewareInterface;
+use Zapheus\Application;
+use Zapheus\Http\Message\ServerRequestInterface;
+use Zapheus\Http\Server\ApplicationHandler;
+use Zapheus\Http\Server\Dispatcher;
+use Zapheus\Http\Server\MiddlewareInterface;
 
 /**
  * Middleware Application
  *
- * @package Slytherium
+ * @package Zapheus
  * @author  Rougin Royce Gutib <rougingutib@gmail.com>
  */
 class MiddlewareApplication extends AbstractApplication
 {
     /**
-     * @var \Slytherium\Http\Server\DispatcherInterface
+     * @var \Zapheus\Http\Server\DispatcherInterface
      */
     protected $dispatcher;
 
     /**
      * Initializes the application instance.
      *
-     * @param \Slytherium\Application|null $application
+     * @param \Zapheus\Application|null $application
      */
     public function __construct(Application $application = null)
     {
@@ -36,8 +36,8 @@ class MiddlewareApplication extends AbstractApplication
     /**
      * Handles the ServerRequest to convert it to a Response.
      *
-     * @param  \Slytherium\Http\Message\ServerRequestInterface $request
-     * @return \Slytherium\Http\Message\ResponseInterface
+     * @param  \Zapheus\Http\Message\ServerRequestInterface $request
+     * @return \Zapheus\Http\Message\ResponseInterface
      */
     public function handle(ServerRequestInterface $request)
     {

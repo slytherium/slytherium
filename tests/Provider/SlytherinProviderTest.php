@@ -1,30 +1,30 @@
 <?php
 
-namespace Slytherium\Provider;
+namespace Zapheus\Provider;
 
 use Rougin\Slytherin\Template\RendererIntegration;
-use Slytherium\Container\Container;
+use Zapheus\Container\Container;
 
 /**
  * Slytherin Provider Test
  *
- * @package Slytherium
+ * @package Zapheus
  * @author  Rougin Royce Gutib <rougingutib@gmail.com>
  */
 class SlytherinProviderTest extends \PHPUnit_Framework_TestCase
 {
     /**
-     * @var \Slytherium\Container\WritableInterface
+     * @var \Zapheus\Container\WritableInterface
      */
     protected $container;
 
     /**
-     * @var \Slytherium\Provider\FrameworkProvider
+     * @var \Zapheus\Provider\FrameworkProvider
      */
     protected $framework;
 
     /**
-     * @var \Slytherium\Provider\ProviderInterface
+     * @var \Zapheus\Provider\ProviderInterface
      */
     protected $provider;
 
@@ -35,11 +35,17 @@ class SlytherinProviderTest extends \PHPUnit_Framework_TestCase
      */
     public function setUp()
     {
+        $message = 'Slytherin Renderer is not yet installed.';
+
+        $renderer = 'Rougin\Slytherin\Template\Renderer';
+
+        class_exists($renderer) || $this->markTestSkipped($message);
+
         list($config, $container) = array(new Configuration, new Container);
 
         $config->set('app.views', __DIR__ . '/../Fixture/Views');
 
-        $container->set('Slytherium\Provider\ConfigurationInterface', $config);
+        $container->set('Zapheus\Provider\ConfigurationInterface', $config);
 
         $this->provider = new SlytherinProvider(new RendererIntegration);
 

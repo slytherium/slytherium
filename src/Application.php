@@ -1,33 +1,34 @@
 <?php
 
-namespace Slytherium;
+namespace Zapheus;
 
-use Slytherium\Application\ApplicationInterface;
-use Slytherium\Container\Container;
-use Slytherium\Http\Message\Response;
-use Slytherium\Http\Message\ResponseInterface;
-use Slytherium\Http\Message\ServerRequestInterface;
+use Zapheus\Application\ApplicationInterface;
+use Zapheus\Container\Container;
+use Zapheus\Container\ContainerInterface;
+use Zapheus\Http\Message\Response;
+use Zapheus\Http\Message\ResponseInterface;
+use Zapheus\Http\Message\ServerRequestInterface;
 
 /**
  * Application
  *
- * @package Slytherium
+ * @package Zapheus
  * @author  Rougin Royce Gutib <rougingutib@gmail.com>
  */
 class Application extends Container implements ApplicationInterface
 {
-    const DISPATCHER = 'Slytherium\Routing\DispatcherInterface';
+    const DISPATCHER = 'Zapheus\Routing\DispatcherInterface';
 
-    const REQUEST = 'Slytherium\Http\Message\ServerRequestInterface';
+    const REQUEST = 'Zapheus\Http\Message\ServerRequestInterface';
 
     const RESOLVER_ATTRIBUTE = 'request-handler';
 
-    const RESPONSE = 'Slytherium\Http\Message\ResponseInterface';
+    const RESPONSE = 'Zapheus\Http\Message\ResponseInterface';
 
     /**
      * Initializes the application instance.
      *
-     * @param \Slytherium\Container\ContainerInterface|null $container
+     * @param \Zapheus\Container\ContainerInterface|null $container
      */
     public function __construct(ContainerInterface $container = null)
     {
@@ -37,8 +38,8 @@ class Application extends Container implements ApplicationInterface
     /**
      * Emits the headers from the response instance.
      *
-     * @param  \Slytherium\Http\Message\ResponseInterface $response
-     * @return \Slytherium\Http\Message\ResponseInterface
+     * @param  \Zapheus\Http\Message\ResponseInterface $response
+     * @return \Zapheus\Http\Message\ResponseInterface
      */
     public function emit(ResponseInterface $response)
     {
@@ -64,8 +65,8 @@ class Application extends Container implements ApplicationInterface
     /**
      * Handles the ServerRequest to convert it to a Response.
      *
-     * @param  \Slytherium\Http\Message\ServerRequestInterface $request
-     * @return \Slytherium\Http\Message\ResponseInterface
+     * @param  \Zapheus\Http\Message\ServerRequestInterface $request
+     * @return \Zapheus\Http\Message\ResponseInterface
      */
     public function handle(ServerRequestInterface $request)
     {
@@ -104,7 +105,7 @@ class Application extends Container implements ApplicationInterface
      * Converts the given result into a response instance.
      *
      * @param  mixed $result
-     * @return \Slytherium\Http\Message\ResponseInterface
+     * @return \Zapheus\Http\Message\ResponseInterface
      */
     protected function response($result)
     {

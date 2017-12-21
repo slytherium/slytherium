@@ -1,6 +1,6 @@
 <?php
 
-namespace Slytherium\Http\Message;
+namespace Zapheus\Http\Message;
 
 /*
  * This file is part of the Symfony package.
@@ -11,12 +11,12 @@ namespace Slytherium\Http\Message;
  * file that was distributed with this source code.
  */
 
-use Slytherium\Utility;
+use Zapheus\Utility;
 
 /**
  * Server Request
  *
- * @package Slytherium
+ * @package Zapheus
  * @author  Kévin Dunglas <dunglas@gmail.com>
  * @author  Rougin Royce Gutib <rougingutib@gmail.com>
  */
@@ -53,16 +53,18 @@ class ServerRequest extends Request implements ServerRequestInterface
     protected $attributes = array();
 
     /**
-     * @param array                                         $server
-     * @param array                                         $cookies
-     * @param array                                         $query
-     * @param array                                         $uploaded
-     * @param array|null                                    $data
-     * @param array                                         $attributes
-     * @param \Slytherium\Http\Message\UriInterface|null    $uri
-     * @param \Slytherium\Http\Message\StreamInterface|null $body
-     * @param array                                         $headers
-     * @param string                                        $version
+     * Initializes the server request instance.
+     *
+     * @param array                                      $server
+     * @param array                                      $cookies
+     * @param array                                      $query
+     * @param array                                      $uploaded
+     * @param array|null                                 $data
+     * @param array                                      $attributes
+     * @param \Zapheus\Http\Message\UriInterface|null    $uri
+     * @param \Zapheus\Http\Message\StreamInterface|null $body
+     * @param array                                      $headers
+     * @param string                                     $version
      */
     public function __construct(array $server, array $cookies = array(), array $query = array(), array $uploaded = array(), $data = null, array $attributes = array(), UriInterface $uri = null, StreamInterface $body = null, array $headers = array(), $version = '1.1')
     {
@@ -146,7 +148,7 @@ class ServerRequest extends Request implements ServerRequestInterface
     /**
      * Retrieve normalized file upload data.
      *
-     * @return \Slytherium\Http\Message\UploadedFileInterface[]
+     * @return \Zapheus\Http\Message\UploadedFileInterface[]
      */
     public function getUploadedFiles()
     {
@@ -219,7 +221,7 @@ class ServerRequest extends Request implements ServerRequestInterface
     /**
      * Create a new instance with the specified uploaded files.
      *
-     * @param  \Slytherium\Http\Message\UploadedFileInterface[] $uploaded
+     * @param  \Zapheus\Http\Message\UploadedFileInterface[] $uploaded
      * @return static
      *
      * @throws \InvalidArgumentException

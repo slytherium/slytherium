@@ -1,17 +1,17 @@
 <?php
 
-namespace Slytherium\Http\Message;
+namespace Zapheus\Http\Message;
 
 /**
  * Stream Test
  *
- * @package Slytherium
+ * @package Zapheus
  * @author  Rougin Royce Gutib <rougingutib@gmail.com>
  */
 class StreamTest extends \PHPUnit_Framework_TestCase
 {
     /**
-     * @var \Slytherium\Http\Message\StreamInterface
+     * @var \Zapheus\Http\Message\StreamInterface
      */
     protected $stream;
 

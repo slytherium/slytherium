@@ -1,13 +1,13 @@
 <?php
 
-namespace Slytherium\Container;
+namespace Zapheus\Container;
 
 use Illuminate\Container\Container as BaseContainer;
 
 /**
- * Illuminate to Slytherium Container
+ * Illuminate to Zapheus Container
  *
- * @package Slytherium
+ * @package Zapheus
  * @author  Rougin Royce Gutib <rougingutib@gmail.com>
  */
 class IlluminateContainer implements ContainerInterface

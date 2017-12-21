@@ -1,33 +1,33 @@
 <?php
 
-namespace Slytherium\Provider;
+namespace Zapheus\Provider;
 
-use Slytherium\Container\Container;
+use Zapheus\Container\Container;
 
 /**
  * Illuminate Provider Test
  *
- * @package Slytherium
+ * @package Zapheus
  * @author  Rougin Royce Gutib <rougingutib@gmail.com>
  */
 class IlluminateProviderTest extends \PHPUnit_Framework_TestCase
 {
-    const FOOD_PROVIDER = 'Slytherium\Fixture\Providers\FoodServiceProvider';
+    const FOOD_PROVIDER = 'Zapheus\Fixture\Providers\FoodServiceProvider';
 
-    const TEST_PROVIDER = 'Slytherium\Fixture\Providers\TestServiceProvider';
+    const TEST_PROVIDER = 'Zapheus\Fixture\Providers\TestServiceProvider';
 
     /**
-     * @var \Slytherium\Container\WritableInterface
+     * @var \Zapheus\Container\WritableInterface
      */
     protected $container;
 
     /**
-     * @var \Slytherium\Provider\FrameworkProvider
+     * @var \Zapheus\Provider\FrameworkProvider
      */
     protected $framework;
 
     /**
-     * @var \Slytherium\Provider\ProviderInterface
+     * @var \Zapheus\Provider\ProviderInterface
      */
     protected $provider;
 
@@ -38,9 +38,15 @@ class IlluminateProviderTest extends \PHPUnit_Framework_TestCase
      */
     public function setUp()
     {
+        $message = 'Illuminate Container is not yet installed.';
+
+        $container = 'Illuminate\Container\Container';
+
+        class_exists($container) || $this->markTestSkipped($message);
+
         $this->container = new Container;
 
-        $class = 'Slytherium\Provider\ConfigurationInterface';
+        $class = 'Zapheus\Provider\ConfigurationInterface';
 
         $config = new Configuration;
 
@@ -66,7 +72,7 @@ class IlluminateProviderTest extends \PHPUnit_Framework_TestCase
 
         $container = $this->framework->register($container);
 
-        $expected = 'Slytherium\Fixture\Http\Controllers\TestController';
+        $expected = 'Zapheus\Fixture\Http\Controllers\TestController';
 
         $result = $container->get('test');
 

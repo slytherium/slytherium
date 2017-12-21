@@ -1,11 +1,11 @@
 <?php
 
-namespace Slytherium\Http\Message;
+namespace Zapheus\Http\Message;
 
 /**
  * Server Request Test
  *
- * @package Slytherium
+ * @package Zapheus
  * @author  Rougin Royce Gutib <rougingutib@gmail.com>
  */
 class ServerRequestTest extends \PHPUnit_Framework_TestCase
@@ -16,7 +16,7 @@ class ServerRequestTest extends \PHPUnit_Framework_TestCase
     protected $files = array('file' => array());
 
     /**
-     * @var \Slytherium\Http\Message\ServerRequestInterface
+     * @var \Zapheus\Http\Message\ServerRequestInterface
      */
     protected $request;
 

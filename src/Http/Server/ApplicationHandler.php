@@ -1,27 +1,27 @@
 <?php
 
-namespace Slytherium\Http\Server;
+namespace Zapheus\Http\Server;
 
-use Slytherium\Application;
-use Slytherium\Http\Message\ServerRequestInterface;
+use Zapheus\Application;
+use Zapheus\Http\Message\ServerRequestInterface;
 
 /**
  * Application Handler
  *
- * @package Slytherium
+ * @package Zapheus
  * @author  Rougin Royce Gutib <rougingutib@gmail.com>
  */
 class ApplicationHandler implements HandlerInterface
 {
     /**
-     * @var \Slytherium\Application
+     * @var \Zapheus\Application
      */
     protected $application;
 
     /**
      * Initializes the handler instance.
      *
-     * @param \Slytherium\Application $application
+     * @param \Zapheus\Application $application
      */
     public function __construct(Application $application)
     {
@@ -31,8 +31,8 @@ class ApplicationHandler implements HandlerInterface
     /**
      * Dispatch the next available middleware and return the response.
      *
-     * @param  \Slytherium\Http\Message\ServerRequestInterface $request
-     * @return \Slytherium\Http\Message\ResponseInterface
+     * @param  \Zapheus\Http\Message\ServerRequestInterface $request
+     * @return \Zapheus\Http\Message\ResponseInterface
      */
     public function handle(ServerRequestInterface $request)
     {

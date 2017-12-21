@@ -1,30 +1,30 @@
 <?php
 
-namespace Slytherium\Fixture\Http\Middlewares;
+namespace Zapheus\Fixture\Http\Middlewares;
 
-use Slytherium\Application;
-use Slytherium\Http\Message\ServerRequestInterface;
-use Slytherium\Http\Server\HandlerInterface;
-use Slytherium\Http\Server\MiddlewareInterface;
-use Slytherium\Routing\DispatcherInterface;
+use Zapheus\Application;
+use Zapheus\Http\Message\ServerRequestInterface;
+use Zapheus\Http\Server\HandlerInterface;
+use Zapheus\Http\Server\MiddlewareInterface;
+use Zapheus\Routing\DispatcherInterface;
 
 /**
  * Router Middleware
  *
- * @package Slytherium
+ * @package Zapheus
  * @author  Rougin Royce Gutib <rougingutib@gmail.com>
  */
 class RouterMiddleware implements MiddlewareInterface
 {
     /**
-     * @var \Slytherium\Routing\DispatcherInterface
+     * @var \Zapheus\Routing\DispatcherInterface
      */
     protected $dispatcher;
 
     /**
      * Initializes the dispatcher instance.
      *
-     * @param \Slytherium\Routing\DispatcherInterface $dispatcher
+     * @param \Zapheus\Routing\DispatcherInterface $dispatcher
      */
     public function __construct(DispatcherInterface $dispatcher)
     {
@@ -34,9 +34,9 @@ class RouterMiddleware implements MiddlewareInterface
     /**
      * Processes an incoming server request and return a response.
      *
-     * @param  \Slytherium\Http\Message\ServerRequestInterface $request
-     * @param  \Slytherium\Http\Server\HandlerInterface        $handler
-     * @return \Slytherium\Http\Message\ResponseInterface
+     * @param  \Zapheus\Http\Message\ServerRequestInterface $request
+     * @param  \Zapheus\Http\Server\HandlerInterface        $handler
+     * @return \Zapheus\Http\Message\ResponseInterface
      */
     public function process(ServerRequestInterface $request, HandlerInterface $handler)
     {

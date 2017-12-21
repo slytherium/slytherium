@@ -1,15 +1,15 @@
 <?php
 
-namespace Slytherium\Application;
+namespace Zapheus\Application;
 
-use Slytherium\Fixture\Http\Controllers\HailController;
-use Slytherium\Fixture\Http\Controllers\LaudController;
-use Slytherium\Http\Message\ServerRequest;
+use Zapheus\Fixture\Http\Controllers\HailController;
+use Zapheus\Fixture\Http\Controllers\LaudController;
+use Zapheus\Http\Message\ServerRequest;
 
 /**
  * Router Application Test
  *
- * @package Slytherium
+ * @package Zapheus
  * @author  Rougin Royce Gutib <rougingutib@gmail.com>
  */
 class RouterApplicationTest extends TestCase

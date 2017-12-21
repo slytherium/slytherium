@@ -1,13 +1,13 @@
 <?php
 
-namespace Slytherium\Container;
+namespace Zapheus\Container;
 
 use Pimple\Container as BaseContainer;
 
 /**
- * Pimple to Slytherium Container
+ * Pimple to Zapheus Container
  *
- * @package Slytherium
+ * @package Zapheus
  * @author  Rougin Royce Gutib <rougingutib@gmail.com>
  */
 class PimpleContainer implements ContainerInterface

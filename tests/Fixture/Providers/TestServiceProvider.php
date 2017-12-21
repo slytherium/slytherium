@@ -1,13 +1,13 @@
 <?php
 
-namespace Slytherium\Fixture\Providers;
+namespace Zapheus\Fixture\Providers;
 
 use Illuminate\Support\ServiceProvider;
 
 /**
  * Test Service Provider
  *
- * @package Slytherium
+ * @package Zapheus
  * @author  Rougin Royce Gutib <rougingutib@gmail.com>
  */
 class TestServiceProvider extends ServiceProvider
@@ -19,7 +19,7 @@ class TestServiceProvider extends ServiceProvider
      */
     public function register()
     {
-        $test = 'Slytherium\Fixture\Http\Controllers\TestController';
+        $test = 'Zapheus\Fixture\Http\Controllers\TestController';
 
         $this->app->bind('test', $test);
     }

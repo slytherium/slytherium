@@ -1,11 +1,11 @@
 <?php
 
-namespace Slytherium\Container;
+namespace Zapheus\Container;
 
 /**
  * Container Interface
  *
- * @package Slytherium
+ * @package Zapheus
  * @author  Rougin Royce Gutib <rougingutib@gmail.com>
  */
 interface ContainerInterface

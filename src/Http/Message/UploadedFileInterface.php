@@ -1,11 +1,11 @@
 <?php
 
-namespace Slytherium\Http\Message;
+namespace Zapheus\Http\Message;
 
 /**
  * Uploaded File Interface
  *
- * @package Slytherium
+ * @package Zapheus
  * @author  Rougin Royce Gutib <rougingutib@gmail.com>
  */
 interface UploadedFileInterface
@@ -34,7 +34,7 @@ interface UploadedFileInterface
     /**
      * Retrieve a stream representing the uploaded file.
      *
-     * @return \Slytherium\Http\Message\StreamInterface
+     * @return \Zapheus\Http\Message\StreamInterface
      *
      * @throws \RuntimeException
      */

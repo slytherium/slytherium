@@ -1,15 +1,15 @@
 <?php
 
-namespace Slytherium\Provider;
+namespace Zapheus\Provider;
 
 use Illuminate\Config\Repository;
 use Illuminate\Container\Container;
-use Slytherium\Container\WritableInterface;
+use Zapheus\Container\WritableInterface;
 
 /**
  * Illuminate Provider
  *
- * @package Slytherium
+ * @package Zapheus
  * @author  Rougin Royce Gutib <rougingutib@gmail.com>
  */
 class IlluminateProvider implements ProviderInterface
@@ -37,8 +37,8 @@ class IlluminateProvider implements ProviderInterface
     /**
      * Registers the bindings in the container.
      *
-     * @param  \Slytherium\Container\WritableInterface $container
-     * @return \Slytherium\Container\ContainerInterface
+     * @param  \Zapheus\Container\WritableInterface $container
+     * @return \Zapheus\Container\ContainerInterface
      */
     public function register(WritableInterface $container)
     {
@@ -56,7 +56,7 @@ class IlluminateProvider implements ProviderInterface
     /**
      * Returns a \Illuminate\Container\Container instance.
      *
-     * @param  \Slytherium\Container\WritableInterface $container
+     * @param  \Zapheus\Container\WritableInterface $container
      * @return \Illuminate\Container\Container
      */
     protected function container(WritableInterface $container)

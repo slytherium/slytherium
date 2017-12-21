@@ -1,11 +1,11 @@
 <?php
 
-namespace Slytherium\Fixture\Http\Controllers;
+namespace Zapheus\Fixture\Http\Controllers;
 
 /**
  * User Controller
  *
- * @package Slytherium
+ * @package Zapheus
  * @author  Rougin Royce Gutib <rougingutib@gmail.com>
  */
 class UserController

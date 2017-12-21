@@ -1,6 +1,6 @@
 <?php
 
-namespace Slytherium\Http\Message;
+namespace Zapheus\Http\Message;
 
 /*
  * This file is part of the Symfony package.
@@ -14,14 +14,14 @@ namespace Slytherium\Http\Message;
 /**
  * Message
  *
- * @package Slytherium
+ * @package Zapheus
  * @author  Kévin Dunglas <dunglas@gmail.com>
  * @author  Rougin Royce Gutib <rougingutib@gmail.com>
  */
 class Message implements MessageInterface
 {
     /**
-     * @var \Slytherium\Http\Message\StreamInterface
+     * @var \Zapheus\Http\Message\StreamInterface
      */
     protected $body;
 
@@ -36,9 +36,11 @@ class Message implements MessageInterface
     protected $version = '1.1';
 
     /**
-     * @param \Slytherium\Http\Message\StreamInterface|null $body
-     * @param array                                         $headers
-     * @param string                                        $version
+     * Initializes the message instance.
+     *
+     * @param \Zapheus\Http\Message\StreamInterface|null $body
+     * @param array                                      $headers
+     * @param string                                     $version
      */
     public function __construct(StreamInterface $body = null, array $headers = array(), $version = '1.1')
     {
@@ -54,7 +56,7 @@ class Message implements MessageInterface
     /**
      * Gets the body of the message.
      *
-     * @return \Slytherium\Http\Message\StreamInterface
+     * @return \Zapheus\Http\Message\StreamInterface
      */
     public function getBody()
     {
@@ -137,7 +139,7 @@ class Message implements MessageInterface
      *
      * @throws \InvalidArgumentException
      *
-     * @param  \Slytherium\Http\Message\StreamInterface $body
+     * @param  \Zapheus\Http\Message\StreamInterface $body
      * @return static
      */
     public function withBody(StreamInterface $body)

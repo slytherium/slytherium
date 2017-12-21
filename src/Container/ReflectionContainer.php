@@ -1,11 +1,11 @@
 <?php
 
-namespace Slytherium\Container;
+namespace Zapheus\Container;
 
 /**
  * Reflection Container
  *
- * @package Slytherium
+ * @package Zapheus
  * @author  Rougin Royce Gutib <rougingutib@gmail.com>
  */
 class ReflectionContainer implements ContainerInterface
@@ -16,7 +16,7 @@ class ReflectionContainer implements ContainerInterface
      * @param  string $id
      * @return mixed
      *
-     * @throws \Slytherium\Container\NotFoundException
+     * @throws \Zapheus\Container\NotFoundException
      */
     public function get($id)
     {

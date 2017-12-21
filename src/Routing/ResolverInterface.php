@@ -1,13 +1,13 @@
 <?php
 
-namespace Slytherium\Routing;
+namespace Zapheus\Routing;
 
-use Slytherium\Container\ContainerInterface;
+use Zapheus\Container\ContainerInterface;
 
 /**
  * Resolver Interface
  *
- * @package Slytherium
+ * @package Zapheus
  * @author  Rougin Royce Gutib <rougingutib@gmail.com>
  */
 interface ResolverInterface
@@ -15,7 +15,7 @@ interface ResolverInterface
     /**
      * Resolves the specified handler against a container instance.
      *
-     * @param  \Slytherium\Container\ContainerInterface $container
+     * @param  \Zapheus\Container\ContainerInterface $container
      * @return mixed
      */
     public function resolve(ContainerInterface $container);

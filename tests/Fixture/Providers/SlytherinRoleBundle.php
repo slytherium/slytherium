@@ -1,6 +1,6 @@
 <?php
 
-namespace Slytherium\Fixture\Providers;
+namespace Zapheus\Fixture\Providers;
 
 use Symfony\Component\DependencyInjection\ContainerBuilder;
 use Symfony\Component\HttpKernel\Bundle\Bundle;
@@ -8,7 +8,7 @@ use Symfony\Component\HttpKernel\Bundle\Bundle;
 /**
  * Slytherin Role Bundle
  *
- * @package Slytherium
+ * @package Zapheus
  * @author  Rougin Royce Gutib <rougingutib@gmail.com>
  */
 class SlytherinRoleBundle extends Bundle
@@ -20,7 +20,7 @@ class SlytherinRoleBundle extends Bundle
      */
     public function build(ContainerBuilder $container)
     {
-        $role = 'Slytherium\Fixture\Http\Controllers\RoleController';
+        $role = 'Zapheus\Fixture\Http\Controllers\RoleController';
 
         $container->register('role', $role);
     }

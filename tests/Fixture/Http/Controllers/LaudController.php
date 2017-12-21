@@ -1,24 +1,24 @@
 <?php
 
-namespace Slytherium\Fixture\Http\Controllers;
+namespace Zapheus\Fixture\Http\Controllers;
 
 /**
  * Laud Controller
  *
- * @package Slytherium
+ * @package Zapheus
  * @author  Rougin Royce Gutib <rougingutib@gmail.com>
  */
 class LaudController
 {
     /**
-     * @var \Slytherium\Fixture\Http\Controllers\HailController
+     * @var \Zapheus\Fixture\Http\Controllers\HailController
      */
     protected $hail;
 
     /**
      * Initializes the controller instance.
      *
-     * @param \Slytherium\Fixture\Http\Controllers\HailController $hail
+     * @param \Zapheus\Fixture\Http\Controllers\HailController $hail
      */
     public function __construct(HailController $hail)
     {
@@ -26,7 +26,7 @@ class LaudController
     }
 
     /**
-     * Returns the text "Hello, world".
+     * Returns the text "Hello, world and people".
      *
      * @return string
      */

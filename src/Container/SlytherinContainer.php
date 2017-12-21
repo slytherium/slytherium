@@ -1,13 +1,13 @@
 <?php
 
-namespace Slytherium\Container;
+namespace Zapheus\Container;
 
 use Rougin\Slytherin\Container\ContainerInterface as SlytherinContainerInterface;
 
 /**
- * Slytherin to Slytherium Container
+ * Slytherin to Zapheus Container
  *
- * @package Slytherium
+ * @package Zapheus
  * @author  Rougin Royce Gutib <rougingutib@gmail.com>
  */
 class SlytherinContainer implements ContainerInterface

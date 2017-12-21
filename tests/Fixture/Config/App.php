@@ -6,7 +6,7 @@ return array(
      *
      * @var string
      */
-    'app_name' => 'Slytherium Framework',
+    'app_name' => 'Zapheus Framework',
 
     /**
      * The base URL.

@@ -1,11 +1,11 @@
 <?php
 
-namespace Slytherium\Http\Message;
+namespace Zapheus\Http\Message;
 
 /**
  * Message Interface
  *
- * @package Slytherium
+ * @package Zapheus
  * @author  Rougin Royce Gutib <rougingutib@gmail.com>
  */
 interface MessageInterface
@@ -89,14 +89,14 @@ interface MessageInterface
     /**
      * Gets the body of the message.
      *
-     * @return \Slytherium\Http\Message\StreamInterface
+     * @return \Zapheus\Http\Message\StreamInterface
      */
     public function getBody();
 
     /**
      * Return an instance with the specified message body.
      *
-     * @param  \Slytherium\Http\Message\StreamInterface $body
+     * @param  \Zapheus\Http\Message\StreamInterface $body
      * @return static
      *
      * @throws \InvalidArgumentException

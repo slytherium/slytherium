@@ -1,11 +1,11 @@
 <?php
 
-namespace Slytherium\Routing;
+namespace Zapheus\Routing;
 
 /**
  * Router Interface
  *
- * @package Slytherium
+ * @package Zapheus
  * @author  Rougin Royce Gutib <rougingutib@gmail.com>
  */
 interface RouterInterface
@@ -13,7 +13,7 @@ interface RouterInterface
     /**
      * Adds a new Route instance to the collection.
      *
-     * @param  \Slytherium\Routing\Route $route
+     * @param  \Zapheus\Routing\Route $route
      * @return self
      */
     public function add(Route $route);

@@ -1,11 +1,11 @@
 <?php
 
-namespace Slytherium\Routing;
+namespace Zapheus\Routing;
 
 /**
  * Route
  *
- * @package Slytherium
+ * @package Zapheus
  * @author  Rougin Royce Gutib <rougingutib@gmail.com>
  */
 class Route

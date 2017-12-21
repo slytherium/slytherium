@@ -1,17 +1,17 @@
 <?php
 
-namespace Slytherium\Http\Message;
+namespace Zapheus\Http\Message;
 
 /**
  * Message Test
  *
- * @package Slytherium
+ * @package Zapheus
  * @author  Rougin Royce Gutib <rougingutib@gmail.com>
  */
 class MessageTest extends \PHPUnit_Framework_TestCase
 {
     /**
-     * @var \Slytherium\Http\Message\MessageInterface
+     * @var \Zapheus\Http\Message\MessageInterface
      */
     protected $message;
 
@@ -32,7 +32,7 @@ class MessageTest extends \PHPUnit_Framework_TestCase
      */
     public function testGetBodyMethod()
     {
-        $expected = 'Slytherium\Http\Message\StreamInterface';
+        $expected = 'Zapheus\Http\Message\StreamInterface';
 
         $result = $this->message->getBody();
 

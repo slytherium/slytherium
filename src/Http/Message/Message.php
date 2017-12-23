@@ -54,7 +54,7 @@ class Message implements MessageInterface
     }
 
     /**
-     * Gets the body of the message.
+     * Returns the body of the message.
      *
      * @return \Zapheus\Http\Message\StreamInterface
      */
@@ -117,7 +117,7 @@ class Message implements MessageInterface
     }
 
     /**
-     * Return an instance with the specified header appended with the given value.
+     * Returns an instance with the specified header appended with the given value.
      *
      * @throws \InvalidArgumentException
      *
@@ -135,7 +135,7 @@ class Message implements MessageInterface
     }
 
     /**
-     * Return an instance with the specified message body.
+     * Returns an instance with the specified message body.
      *
      * @throws \InvalidArgumentException
      *
@@ -152,7 +152,7 @@ class Message implements MessageInterface
     }
 
     /**
-     * Return an instance with the provided value replacing the specified header.
+     * Returns an instance with the provided value replacing the specified header.
      *
      * @throws \InvalidArgumentException
      *
@@ -170,7 +170,7 @@ class Message implements MessageInterface
     }
 
     /**
-     * Return an instance with the specified HTTP protocol version.
+     * Returns an instance with the specified HTTP protocol version.
      *
      * @param  string $version
      * @return static
@@ -185,7 +185,7 @@ class Message implements MessageInterface
     }
 
     /**
-     * Return an instance without the specified header.
+     * Returns an instance without the specified header.
      *
      * @param  string $name
      * @return static

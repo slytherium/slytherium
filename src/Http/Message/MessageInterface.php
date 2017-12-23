@@ -18,7 +18,7 @@ interface MessageInterface
     public function getProtocolVersion();
 
     /**
-     * Return an instance with the specified HTTP protocol version.
+     * Returns an instance with the specified HTTP protocol version.
      *
      * @param  string $version
      * @return static
@@ -57,7 +57,7 @@ interface MessageInterface
     public function getHeaderLine($name);
 
     /**
-     * Return an instance with the provided value replacing the specified header.
+     * Returns an instance with the provided value replacing the specified header.
      *
      * @param  string          $name
      * @param  string|string[] $value
@@ -68,7 +68,7 @@ interface MessageInterface
     public function withHeader($name, $value);
 
     /**
-     * Return an instance with the specified header appended with the given value.
+     * Returns an instance with the specified header appended with the given value.
      *
      * @param  string          $name
      * @param  string|string[] $value
@@ -79,7 +79,7 @@ interface MessageInterface
     public function withAddedHeader($name, $value);
 
     /**
-     * Return an instance without the specified header.
+     * Returns an instance without the specified header.
      *
      * @param  string $name
      * @return static
@@ -87,14 +87,14 @@ interface MessageInterface
     public function withoutHeader($name);
 
     /**
-     * Gets the body of the message.
+     * Returns the body of the message.
      *
      * @return \Zapheus\Http\Message\StreamInterface
      */
     public function getBody();
 
     /**
-     * Return an instance with the specified message body.
+     * Returns an instance with the specified message body.
      *
      * @param  \Zapheus\Http\Message\StreamInterface $body
      * @return static

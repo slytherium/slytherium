@@ -32,7 +32,7 @@ interface RequestInterface extends MessageInterface
     public function getUri();
 
     /**
-     * Return an instance with the provided HTTP method.
+     * Returns an instance with the provided HTTP method.
      *
      * @param  string $method
      * @return static
@@ -42,7 +42,7 @@ interface RequestInterface extends MessageInterface
     public function withMethod($method);
 
     /**
-     * Return an instance with the specific request-target.
+     * Returns an instance with the specific request-target.
      *
      * @param  mixed $target
      * @return static

@@ -86,7 +86,7 @@ class Request extends Message implements RequestInterface
     }
 
     /**
-     * Return an instance with the provided HTTP method.
+     * Returns an instance with the provided HTTP method.
      *
      * @param  string $method
      * @return static
@@ -103,7 +103,7 @@ class Request extends Message implements RequestInterface
     }
 
     /**
-     * Return an instance with the specific request-target.
+     * Returns an instance with the specific request-target.
      *
      * @param  mixed $target
      * @return static

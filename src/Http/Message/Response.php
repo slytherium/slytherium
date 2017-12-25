@@ -119,7 +119,7 @@ class Response extends Message implements ResponseInterface
     }
 
     /**
-     * Gets the response reason phrase associated with the status code.
+     * Returns the response reason phrase associated with the status code.
      *
      * @return string
      */
@@ -129,7 +129,7 @@ class Response extends Message implements ResponseInterface
     }
 
     /**
-     * Gets the response status code.
+     * Returns the response status code.
      *
      * The status code is a 3-digit integer result code of the server's attempt
      * to understand and satisfy the request.
@@ -142,7 +142,7 @@ class Response extends Message implements ResponseInterface
     }
 
     /**
-     * Return an instance with the specified status code and, optionally, reason phrase.
+     * Returns an instance with the specified status code and, optionally, reason phrase.
      *
      * @param  integer $code
      * @param  string  $reason

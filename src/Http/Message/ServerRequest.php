@@ -84,7 +84,7 @@ class ServerRequest extends Request implements ServerRequestInterface
     }
 
     /**
-     * Retrieve a single derived request attribute.
+     * Retrieves a single derived request attribute.
      *
      * @param  string $name
      * @param  mixed  $default
@@ -156,7 +156,7 @@ class ServerRequest extends Request implements ServerRequestInterface
     }
 
     /**
-     * Return an instance with the specified derived request attribute.
+     * Returns an instance with the specified derived request attribute.
      *
      * @param  string $name
      * @param  mixed  $value
@@ -172,7 +172,7 @@ class ServerRequest extends Request implements ServerRequestInterface
     }
 
     /**
-     * Return an instance with the specified cookies.
+     * Returns an instance with the specified cookies.
      *
      * @param  array $cookies
      * @return static
@@ -187,7 +187,7 @@ class ServerRequest extends Request implements ServerRequestInterface
     }
 
     /**
-     * Return an instance with the specified body parameters.
+     * Returns an instance with the specified body parameters.
      *
      * @param  null|array|object $data
      * @return static
@@ -204,7 +204,7 @@ class ServerRequest extends Request implements ServerRequestInterface
     }
 
     /**
-     * Return an instance with the specified query string arguments.
+     * Returns an instance with the specified query string arguments.
      *
      * @param  array $query
      * @return static
@@ -236,7 +236,7 @@ class ServerRequest extends Request implements ServerRequestInterface
     }
 
     /**
-     * Return an instance that removes the specified derived request attribute.
+     * Returns an instance that removes the specified derived request attribute.
      *
      * @param  string $name
      * @return static

@@ -11,7 +11,7 @@ namespace Zapheus\Http\Message;
 interface ServerRequestInterface extends RequestInterface
 {
     /**
-     * Retrieve a single derived request attribute.
+     * Retrieves a single derived request attribute.
      *
      * @param  string $name
      * @param  mixed  $default
@@ -62,7 +62,7 @@ interface ServerRequestInterface extends RequestInterface
     public function getServerParams();
 
     /**
-     * Return an instance with the specified derived request attribute.
+     * Returns an instance with the specified derived request attribute.
      *
      * @param  string $name
      * @param  mixed  $value
@@ -71,7 +71,7 @@ interface ServerRequestInterface extends RequestInterface
     public function withAttribute($name, $value);
 
     /**
-     * Return an instance with the specified cookies.
+     * Returns an instance with the specified cookies.
      *
      * @param  array $cookies
      * @return static
@@ -79,7 +79,7 @@ interface ServerRequestInterface extends RequestInterface
     public function withCookieParams(array $cookies);
 
     /**
-     * Return an instance with the specified body parameters.
+     * Returns an instance with the specified body parameters.
      *
      * @param  null|array|object $data
      * @return static
@@ -89,7 +89,7 @@ interface ServerRequestInterface extends RequestInterface
     public function withParsedBody($data);
 
     /**
-     * Return an instance with the specified query string arguments.
+     * Returns an instance with the specified query string arguments.
      *
      * @param  array $query
      * @return static
@@ -107,7 +107,7 @@ interface ServerRequestInterface extends RequestInterface
     public function withUploadedFiles(array $uploadedFiles);
 
     /**
-     * Return an instance that removes the specified derived request attribute.
+     * Returns an instance that removes the specified derived request attribute.
      *
      * @param  string $name
      * @return static

@@ -142,7 +142,7 @@ class Stream implements StreamInterface
     }
 
     /**
-     * Get stream metadata as an associative array or retrieve a specific key.
+     * Returns stream metadata as an associative array or retrieve a specific key.
      *
      * @param  string $key
      * @return array|mixed|null
@@ -157,7 +157,7 @@ class Stream implements StreamInterface
     }
 
     /**
-     * Get the size of the stream if known.
+     * Returns the size of the stream if known.
      *
      * @return integer|null
      */

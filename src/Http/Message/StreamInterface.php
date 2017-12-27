@@ -48,7 +48,7 @@ interface StreamInterface
     public function getContents();
 
     /**
-     * Get stream metadata as an associative array or retrieve a specific key.
+     * Returns stream metadata as an associative array or retrieve a specific key.
      *
      * @param  string $key
      * @return array|mixed|null
@@ -56,7 +56,7 @@ interface StreamInterface
     public function getMetadata($key = null);
 
     /**
-     * Get the size of the stream if known.
+     * Returns the size of the stream if known.
      *
      * @return integer|null
      */

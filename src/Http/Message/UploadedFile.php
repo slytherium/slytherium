@@ -68,7 +68,7 @@ class UploadedFile implements UploadedFileInterface
     }
 
     /**
-     * Retrieve the filename sent by the client.
+     * Retrieves the filename sent by the client.
      *
      * @return string|null
      */
@@ -78,7 +78,7 @@ class UploadedFile implements UploadedFileInterface
     }
 
     /**
-     * Retrieve the media type sent by the client.
+     * Retrieves the media type sent by the client.
      *
      * @return string|null
      */
@@ -88,7 +88,7 @@ class UploadedFile implements UploadedFileInterface
     }
 
     /**
-     * Retrieve the error associated with the uploaded file.
+     * Retrieves the error associated with the uploaded file.
      *
      * @return integer
      */
@@ -98,7 +98,7 @@ class UploadedFile implements UploadedFileInterface
     }
 
     /**
-     * Retrieve the file size.
+     * Retrieves the file size.
      *
      * @return integer|null
      */
@@ -108,7 +108,7 @@ class UploadedFile implements UploadedFileInterface
     }
 
     /**
-     * Retrieve a stream representing the uploaded file.
+     * Retrieves a stream representing the uploaded file.
      *
      * @return \Zapheus\Http\Message\StreamInterface
      *

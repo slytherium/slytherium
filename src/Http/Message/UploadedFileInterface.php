@@ -11,28 +11,28 @@ namespace Zapheus\Http\Message;
 interface UploadedFileInterface
 {
     /**
-     * Retrieve the filename sent by the client.
+     * Retrieves the filename sent by the client.
      *
      * @return string|null
      */
     public function getClientFilename();
 
     /**
-     * Retrieve the media type sent by the client.
+     * Retrieves the media type sent by the client.
      *
      * @return string|null
      */
     public function getClientMediaType();
 
     /**
-     * Retrieve the error associated with the uploaded file.
+     * Retrieves the error associated with the uploaded file.
      *
      * @return integer
      */
     public function getError();
 
     /**
-     * Retrieve a stream representing the uploaded file.
+     * Retrieves a stream representing the uploaded file.
      *
      * @return \Zapheus\Http\Message\StreamInterface
      *
@@ -41,7 +41,7 @@ interface UploadedFileInterface
     public function getStream();
 
     /**
-     * Retrieve the file size.
+     * Retrieves the file size.
      *
      * @return integer|null
      */

@@ -18,63 +18,63 @@ interface UriInterface
     public function __toString();
 
     /**
-     * Retrieve the authority component of the URI.
+     * Retrieves the authority component of the URI.
      *
      * @return string
      */
     public function getAuthority();
 
     /**
-     * Retrieve the fragment component of the URI.
+     * Retrieves the fragment component of the URI.
      *
      * @return string
      */
     public function getFragment();
 
     /**
-     * Retrieve the host component of the URI.
+     * Retrieves the host component of the URI.
      *
      * @return string
      */
     public function getHost();
 
     /**
-     * Retrieve the path component of the URI.
+     * Retrieves the path component of the URI.
      *
      * @return string
      */
     public function getPath();
 
     /**
-     * Retrieve the port component of the URI.
+     * Retrieves the port component of the URI.
      *
      * @return integer|null
      */
     public function getPort();
 
     /**
-     * Retrieve the query string of the URI.
+     * Retrieves the query string of the URI.
      *
      * @return string
      */
     public function getQuery();
 
     /**
-     * Retrieve the scheme component of the URI.
+     * Retrieves the scheme component of the URI.
      *
      * @return string
      */
     public function getScheme();
 
     /**
-     * Retrieve the user information component of the URI.
+     * Retrieves the user information component of the URI.
      *
      * @return string
      */
     public function getUserInfo();
 
     /**
-     * Return an instance with the specified URI fragment.
+     * Returns an instance with the specified URI fragment.
      *
      * @param  string $fragment
      * @return static
@@ -82,7 +82,7 @@ interface UriInterface
     public function withFragment($fragment);
 
     /**
-     * Return an instance with the specified host.
+     * Returns an instance with the specified host.
      *
      * @param  string $host
      * @return static
@@ -92,7 +92,7 @@ interface UriInterface
     public function withHost($host);
 
     /**
-     * Return an instance with the specified path.
+     * Returns an instance with the specified path.
      *
      * @param  string $path
      * @return static
@@ -102,7 +102,7 @@ interface UriInterface
     public function withPath($path);
 
     /**
-     * Return an instance with the specified port.
+     * Returns an instance with the specified port.
      *
      * @param  integer|null $port
      * @return static
@@ -112,7 +112,7 @@ interface UriInterface
     public function withPort($port);
 
     /**
-     * Return an instance with the specified query string.
+     * Returns an instance with the specified query string.
      *
      * @param  string $query
      * @return static
@@ -122,7 +122,7 @@ interface UriInterface
     public function withQuery($query);
 
     /**
-     * Return an instance with the specified scheme.
+     * Returns an instance with the specified scheme.
      *
      * @param  string $scheme
      * @return static
@@ -132,7 +132,7 @@ interface UriInterface
     public function withScheme($scheme);
 
     /**
-     * Return an instance with the specified user information.
+     * Returns an instance with the specified user information.
      *
      * @param  string $user
      * @param  null|string $password

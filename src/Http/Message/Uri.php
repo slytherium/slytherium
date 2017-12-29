@@ -87,7 +87,7 @@ class Uri implements UriInterface
     }
 
     /**
-     * Retrieve the authority component of the URI.
+     * Retrieves the authority component of the URI.
      *
      * @return string
      */
@@ -105,7 +105,7 @@ class Uri implements UriInterface
     }
 
     /**
-     * Retrieve the fragment component of the URI.
+     * Retrieves the fragment component of the URI.
      *
      * @return string
      */
@@ -115,7 +115,7 @@ class Uri implements UriInterface
     }
 
     /**
-     * Retrieve the host component of the URI.
+     * Retrieves the host component of the URI.
      *
      * @return string
      */
@@ -125,7 +125,7 @@ class Uri implements UriInterface
     }
 
     /**
-     * Retrieve the path component of the URI.
+     * Retrieves the path component of the URI.
      *
      * @return string
      */
@@ -135,7 +135,7 @@ class Uri implements UriInterface
     }
 
     /**
-     * Retrieve the port component of the URI.
+     * Retrieves the port component of the URI.
      *
      * @return null|integer
      */
@@ -145,7 +145,7 @@ class Uri implements UriInterface
     }
 
     /**
-     * Retrieve the query string of the URI.
+     * Retrieves the query string of the URI.
      *
      * @return string
      */
@@ -155,7 +155,7 @@ class Uri implements UriInterface
     }
 
     /**
-     * Retrieve the scheme component of the URI.
+     * Retrieves the scheme component of the URI.
      *
      * @return string
      */
@@ -165,7 +165,7 @@ class Uri implements UriInterface
     }
 
     /**
-     * Retrieve the user information component of the URI.
+     * Retrieves the user information component of the URI.
      *
      * @return string
      */
@@ -175,7 +175,7 @@ class Uri implements UriInterface
     }
 
     /**
-     * Return an instance with the specified URI fragment.
+     * Returns an instance with the specified URI fragment.
      *
      * @param  string $fragment
      * @return static
@@ -190,7 +190,7 @@ class Uri implements UriInterface
     }
 
     /**
-     * Return an instance with the specified host.
+     * Returns an instance with the specified host.
      *
      * @param  string $host
      * @return static
@@ -209,7 +209,7 @@ class Uri implements UriInterface
     }
 
     /**
-     * Return an instance with the specified path.
+     * Returns an instance with the specified path.
      *
      * @param  string $path
      * @return static
@@ -228,7 +228,7 @@ class Uri implements UriInterface
     }
 
     /**
-     * Return an instance with the specified port.
+     * Returns an instance with the specified port.
      *
      * @param  null|integer $port
      * @return static
@@ -247,7 +247,7 @@ class Uri implements UriInterface
     }
 
     /**
-     * Return an instance with the specified query string.
+     * Returns an instance with the specified query string.
      *
      * @param  string $query
      * @return static
@@ -266,7 +266,7 @@ class Uri implements UriInterface
     }
 
     /**
-     * Return an instance with the specified scheme.
+     * Returns an instance with the specified scheme.
      *
      * @param  string $scheme
      * @return static
@@ -285,7 +285,7 @@ class Uri implements UriInterface
     }
 
     /**
-     * Return an instance with the specified user information.
+     * Returns an instance with the specified user information.
      *
      * @param  string      $user
      * @param  null|string $password

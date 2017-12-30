@@ -78,7 +78,7 @@ class FrameworkProvider implements ProviderInterface
     }
 
     /**
-     * Gets the external container and wraps it to a Zapheus container.
+     * Returns the external container and wraps it to a Zapheus container.
      *
      * @param  \Zapheus\Container\ContainerInterface $container
      * @return void

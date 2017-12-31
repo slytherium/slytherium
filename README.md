@@ -28,7 +28,7 @@ class GreetController
 {
     public function greet($name = 'Stranger')
     {
-        return sprintf('Greet, %s!', $name);
+        return sprintf('Hello, %s!', $name);
     }
 }
 ```
@@ -38,21 +38,13 @@ class GreetController
 **index.php**
 
 ``` php
-use Zapheus\Application\RouterApplication;
-use Zapheus\Http\Message\ServerRequest;
-use Zapheus\Http\Message\ServerRequestInterface;
+require 'vendor/autoload.php';
+require 'GreetController.php';
 
-// Creates the server request instance
-$request = new ServerRequest($_SERVER, $_COOKIE, $_GET, $_FILES, $_POST);
+use Zapheus\Application\RouterApplication;
 
 // Initializes the router application
 $app = new RouterApplication;
-
-// Sets the server request inside the application
-$app->set(ServerRequestInterface::class, $request);
-
-// Defines the GreetController instance
-$app->set(GreetController::class, new GreetController);
 
 // Creates a HTTP route of GET /
 $app->get('/', 'GreetController@greet');
@@ -60,7 +52,7 @@ $app->get('/', 'GreetController@greet');
 // Creates a HTTP route of GET /hello/{name}
 $app->get('/hello/{name}', 'GreetController@greet');
 
-// Runs the application
+// Handles the server request
 echo $app->run();
 ```
 
@@ -137,26 +129,19 @@ class RouterMiddleware implements MiddlewareInterface
 **index.php**
 
 ``` php
-use Zapheus\Application\MiddlewareApplication;
-use Zapheus\Http\Message\ServerRequest;
-use Zapheus\Http\Message\ServerRequestInterface;
+require 'vendor/autoload.php';
+require 'GreetController.php';
+require 'RouterMiddleware.php';
 
-// Creates the server request instance
-$request = new ServerRequest($_SERVER, $_COOKIE, $_GET, $_FILES, $_POST);
+use Zapheus\Application\MiddlewareApplication;
 
 // Initializes the middleware application
 $app = new MiddlewareApplication;
 
-// Sets the server request inside the application
-$app->set(ServerRequestInterface::class, $request);
-
-// Defines the GreetController instance
-$app->set(GreetController::class, new GreetController);
-
 // Pipes the router middleware into the application
 $app->pipe(new RouterMiddleware);
 
-// Runs the application
+// Handles the server request
 echo $app->run();
 ```
 

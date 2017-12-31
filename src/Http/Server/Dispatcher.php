@@ -2,6 +2,8 @@
 
 namespace Zapheus\Http\Server;
 
+use Zapheus\Container\ContainerInterface;
+use Zapheus\Container\ReflectionContainer;
 use Zapheus\Http\Message\ServerRequestInterface;
 
 /**
@@ -13,6 +15,11 @@ use Zapheus\Http\Message\ServerRequestInterface;
 class Dispatcher implements DispatcherInterface
 {
     /**
+     * @var \Zapheus\Container\ContainerInterface
+     */
+    protected $container;
+
+    /**
      * @var array
      */
     protected $stack = array();
@@ -20,15 +27,31 @@ class Dispatcher implements DispatcherInterface
     /**
      * Initializes the dispatcher instance.
      *
-     * @param array $stack
+     * @param array                                      $stack
+     * @param \Zapheus\Container\ContainerInterface|null $container
      */
-    public function __construct(array $stack = array())
+    public function __construct(array $stack = array(), ContainerInterface $container = null)
     {
-        foreach ((array) $stack as $item) {
+        $this->container($container ?: new ReflectionContainer);
+
+        foreach ((array) $stack as $key => $item) {
             $middleware = $this->transform($item);
 
             $this->stack[] = $middleware;
         }
+    }
+
+    /**
+     * Sets the container for binding middleware dependencies.
+     *
+     * @param  \Zapheus\Container\ContainerInterface $container
+     * @return self
+     */
+    public function container(ContainerInterface $container)
+    {
+        $this->container = $container;
+
+        return $this;
     }
 
     /**
@@ -84,8 +107,8 @@ class Dispatcher implements DispatcherInterface
     protected function transform($middleware)
     {
         if (is_string($middleware) === true) {
-            $middleware = new $middleware;
-        } elseif (is_callable($middleware)) {
+            $middleware = $this->container->get($middleware);
+        } elseif (is_callable($middleware) === true) {
             $middleware = new ClosureMiddleware($middleware);
         }
 

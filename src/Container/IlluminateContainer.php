@@ -2,7 +2,7 @@
 
 namespace Zapheus\Container;
 
-use Illuminate\Container\Container as BaseContainer;
+use Illuminate\Container\Container as Illuminate;
 
 /**
  * Illuminate to Zapheus Container
@@ -22,7 +22,7 @@ class IlluminateContainer implements ContainerInterface
      *
      * @param \Illuminate\Container\Container $container
      */
-    public function __construct(BaseContainer $container)
+    public function __construct(Illuminate $container)
     {
         $this->container = $container;
     }

@@ -2,7 +2,7 @@
 
 namespace Zapheus\Container;
 
-use Pimple\Container as BaseContainer;
+use Pimple\Container as Pimple;
 
 /**
  * Pimple to Zapheus Container
@@ -22,7 +22,7 @@ class PimpleContainer implements ContainerInterface
      *
      * @param \Pimple\Container $container
      */
-    public function __construct(BaseContainer $container)
+    public function __construct(Pimple $container)
     {
         $this->container = $container;
     }

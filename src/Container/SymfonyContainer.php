@@ -2,7 +2,7 @@
 
 namespace Zapheus\Container;
 
-use Symfony\Component\DependencyInjection\ContainerInterface as SymfonyContainerInterface;
+use Symfony\Component\DependencyInjection\ContainerInterface as Symfony;
 
 /**
  * Symfony to Zapheus Container
@@ -22,7 +22,7 @@ class SymfonyContainer extends SlytherinContainer
      *
      * @param \Symfony\Component\DependencyInjection\ContainerInterface $container
      */
-    public function __construct(SymfonyContainerInterface $container)
+    public function __construct(Symfony $container)
     {
         $this->container = $container;
     }

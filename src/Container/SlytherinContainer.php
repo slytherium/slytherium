@@ -2,7 +2,7 @@
 
 namespace Zapheus\Container;
 
-use Rougin\Slytherin\Container\ContainerInterface as SlytherinContainerInterface;
+use Rougin\Slytherin\Container\ContainerInterface as Slytherin;
 
 /**
  * Slytherin to Zapheus Container
@@ -22,7 +22,7 @@ class SlytherinContainer implements ContainerInterface
      *
      * @param \Rougin\Slytherin\Container\ContainerInterface $container
      */
-    public function __construct(SlytherinContainerInterface $container)
+    public function __construct(Slytherin $container)
     {
         $this->container = $container;
     }

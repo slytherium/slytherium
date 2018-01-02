@@ -33,6 +33,7 @@ class Utility
 
         return $array;
     }
+
     /**
      * Parses the $_FILES into multiple \UploadedFileInterface instances.
      *

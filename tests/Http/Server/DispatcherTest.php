@@ -104,6 +104,24 @@ class DispatcherTest extends \PHPUnit_Framework_TestCase
     }
 
     /**
+     * Tests DispatcherInterface::dispatch with string.
+     *
+     * @return void
+     */
+    public function testDispatchMethodWithString()
+    {
+        $this->dispatcher->pipe('Zapheus\Fixture\Http\Middlewares\FinalMiddleware');
+
+        $expected = array('application/json');
+
+        $response = $this->dispatcher->dispatch($this->request);
+
+        $result = $response->getHeader('Content-Type');
+
+        $this->assertEquals($expected, $result);
+    }
+
+    /**
      * Tests DispatcherInterface::dispatch with \LogicException.
      *
      * @return void

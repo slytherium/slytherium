@@ -4,6 +4,7 @@ namespace Zapheus\Application;
 
 use Zapheus\Application;
 use Zapheus\Http\Message\ServerRequestInterface;
+use Zapheus\Http\MessageProvider;
 
 /**
  * Application Interface
@@ -26,6 +27,8 @@ abstract class AbstractApplication implements ApplicationInterface
     public function __construct(Application $application = null)
     {
         $this->application = $application ?: new Application;
+
+        $this->application->add(new MessageProvider);
     }
 
     /**

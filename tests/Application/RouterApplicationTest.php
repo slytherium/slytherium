@@ -21,6 +21,8 @@ class RouterApplicationTest extends TestCase
      */
     public function setUp()
     {
+        parent::setUp();
+
         $this->application = new RouterApplication;
 
         $instance = get_class(new LaudController(new HailController));

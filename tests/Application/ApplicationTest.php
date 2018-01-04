@@ -24,6 +24,8 @@ class ApplicationTest extends TestCase
      */
     public function setUp()
     {
+        parent::setUp();
+
         $this->application = new Application;
 
         $dispatcher = 'Zapheus\Routing\DispatcherInterface';

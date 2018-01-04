@@ -23,6 +23,8 @@ class MiddlewareApplicationTest extends TestCase
      */
     public function setUp()
     {
+        parent::setUp();
+
         $this->application = new MiddlewareApplication;
 
         $handler = get_class(new HailController) . '@greet';

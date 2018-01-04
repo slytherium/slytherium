@@ -19,6 +19,19 @@ class TestCase extends \PHPUnit_Framework_TestCase
     protected $application;
 
     /**
+     * Sets up the application instance.
+     *
+     * @return void
+     */
+    public function setUp()
+    {
+        $_SERVER['REQUEST_METHOD'] = 'GET';
+        $_SERVER['REQUEST_URI'] = '/';
+        $_SERVER['SERVER_NAME'] = 'rougin.github.io';
+        $_SERVER['SERVER_PORT'] = 8000;
+    }
+
+    /**
      * Creates a dummy server request instance.
      *
      * @param  string $method
@@ -29,14 +42,12 @@ class TestCase extends \PHPUnit_Framework_TestCase
     {
         $interface = 'Zapheus\Http\Message\ServerRequestInterface';
 
-        $server = array();
+        $_SERVER['REQUEST_METHOD'] = $method;
+        $_SERVER['REQUEST_URI'] = $uri;
+        $_SERVER['SERVER_NAME'] = 'rougin.github.io';
+        $_SERVER['SERVER_PORT'] = 8000;
 
-        $server['REQUEST_METHOD'] = $method;
-        $server['REQUEST_URI'] = $uri;
-        $server['SERVER_NAME'] = 'rougin.github.io';
-        $server['SERVER_PORT'] = 8000;
-
-        $request = new ServerRequest($server);
+        $request = new ServerRequest($_SERVER);
 
         $this->application->delegate(new ReflectionContainer);
 

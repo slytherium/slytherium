@@ -19,15 +19,6 @@ interface RouterInterface
     public function add(Route $route);
 
     /**
-     * Checks if the router contains the specified HTTP method and URI.
-     *
-     * @param  string $method
-     * @param  string $uri
-     * @return boolean
-     */
-    public function has($method, $uri);
-
-    /**
      * Returns a listing of routes.
      *
      * @return array

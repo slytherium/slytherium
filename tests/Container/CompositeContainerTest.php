@@ -63,4 +63,14 @@ class CompositeContainerTest extends \PHPUnit_Framework_TestCase
 
         $this->container->get('test');
     }
+
+    /**
+     * Tests ContainerInterface::has.
+     *
+     * @return void
+     */
+    public function testHasMethod()
+    {
+        $this->assertTrue($this->container->has('hail'));
+    }
 }

@@ -49,7 +49,7 @@ class Router implements RouterInterface
     {
         $results = array();
 
-        foreach ($this->routes as $route) {
+        foreach ((array) $this->routes as $route) {
             $matched = preg_match($route->uri(true), $uri);
 
             $matched = $matched && $method === $route->method();

@@ -5,7 +5,6 @@ namespace Zapheus;
 use Zapheus\Application\ApplicationInterface;
 use Zapheus\Container\Container;
 use Zapheus\Container\ContainerInterface;
-use Zapheus\Http\Message\Response;
 use Zapheus\Http\Message\ResponseInterface;
 use Zapheus\Http\Message\ServerRequestInterface;
 
@@ -17,6 +16,8 @@ use Zapheus\Http\Message\ServerRequestInterface;
  */
 class Application extends Container implements ApplicationInterface
 {
+    const CONFIGURATION = 'Zapheus\Provider\ConfigurationInterface';
+
     const DISPATCHER = 'Zapheus\Routing\DispatcherInterface';
 
     const REQUEST = 'Zapheus\Http\Message\ServerRequestInterface';
@@ -26,6 +27,11 @@ class Application extends Container implements ApplicationInterface
     const RESPONSE = 'Zapheus\Http\Message\ResponseInterface';
 
     /**
+     * @var \Zapheus\Provider\ProviderInterface[]
+     */
+    protected $providers = array();
+
+    /**
      * Initializes the application instance.
      *
      * @param \Zapheus\Container\ContainerInterface|null $container
@@ -33,6 +39,25 @@ class Application extends Container implements ApplicationInterface
     public function __construct(ContainerInterface $container = null)
     {
         parent::__construct($container);
+
+        if ($this->has(self::CONFIGURATION) === false) {
+            $configuration = new Provider\Configuration;
+
+            $this->set(self::CONFIGURATION, $configuration);
+        }
+    }
+
+    /**
+     * Adds a new provider to be registered.
+     *
+     * @param  \Zapheus\Provider\ProviderInterface|string $provider
+     * @return self
+     */
+    public function add($provider)
+    {
+        is_string($provider) && $provider = $this->get($provider);
+
+        return $this->delegate($provider->register($this));
     }
 
     /**
@@ -111,7 +136,7 @@ class Application extends Container implements ApplicationInterface
     {
         $instanceof = $result instanceof ResponseInterface;
 
-        $response = new Response;
+        $response = new Http\Message\Response;
 
         $this->has(self::RESPONSE) && $response = $this->get(self::RESPONSE);
 

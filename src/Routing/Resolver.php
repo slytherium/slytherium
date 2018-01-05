@@ -87,7 +87,7 @@ class Resolver implements ResolverInterface
      */
     protected function argument(\ReflectionParameter $parameter, $name, $value)
     {
-        $default = $parameter->isDefaultValueAvailable() && is_null($value);
+        $default = $parameter->isDefaultValueAvailable() && $value === null;
 
         $default && $value = $parameter->getDefaultValue();
 

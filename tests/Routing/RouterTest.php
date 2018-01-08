@@ -36,7 +36,9 @@ class RouterTest extends \PHPUnit_Framework_TestCase
     {
         $this->router->get('/greet/:id', 'HailController@greet');
 
-        $this->assertTrue($this->router->has('GET', '/greet/rrg'));
+        $route = new Route('GET', 'greet/:id', 'HailController@greet');
+
+        $this->assertTrue($this->router->has($route));
     }
 
     /**

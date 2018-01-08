@@ -39,25 +39,14 @@ class Router implements RouterInterface
     }
 
     /**
-     * Checks if the router contains the specified HTTP method and URI.
+     * Checks if the router contains the specified route.
      *
-     * @param  string $method
-     * @param  string $uri
+     * @param  \Zapheus\Routing\Route $route
      * @return boolean
      */
-    public function has($method, $uri)
+    public function has(Route $route)
     {
-        $results = array();
-
-        foreach ((array) $this->routes as $route) {
-            $matched = preg_match($route->uri(true), $uri);
-
-            $matched = $matched && $method === $route->method();
-
-            $results[] = $matched;
-        }
-
-        return array_search(true, $results) !== false;
+        return array_search($route, $this->routes) !== false;
     }
 
     /**

@@ -116,7 +116,7 @@ class Application extends Container implements ApplicationInterface
     /**
      * Runs the application and returns the stream instance.
      *
-     * @return \Rougin\Slytherin\Http\Message\StreamInterface
+     * @return \Zapheus\Http\Message\StreamInterface
      */
     public function run()
     {

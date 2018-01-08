@@ -46,9 +46,7 @@ class SilexProvider implements ProviderInterface
 
         $this->provider->register($pimple);
 
-        $container->set($this->container, $pimple);
-
-        return $container;
+        return $container->set($this->container, $pimple);
     }
 
     /**

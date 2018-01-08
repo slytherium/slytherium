@@ -42,9 +42,7 @@ class RouterApplication extends AbstractApplication
     {
         $dispatcher = new Dispatcher($this->router);
 
-        $constant = Application::DISPATCHER;
-
-        $this->application->set($constant, $dispatcher);
+        $this->application->set(Application::DISPATCHER, $dispatcher);
 
         return $this->application->handle($request);
     }

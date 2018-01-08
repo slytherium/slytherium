@@ -1,6 +1,6 @@
 {
     "name": "zapheus/zapheus",
-    "description": "Yet another simple and extensible micro-framework for PHP.",
+    "description": "Yet another simple and extensible framework for PHP.",
     "keywords": ["php framework", "php library", "zapheus"],
     "homepage": "https://github.com/zapheus/zapheus",
     "license": "MIT",

@@ -7,7 +7,7 @@
 [![Quality Score][ico-code-quality]][link-code-quality]
 [![Total Downloads][ico-downloads]][link-downloads]
 
-Zapheus is yet another simple and extensible micro-framework for PHP.
+Zapheus is yet another simple and extensible framework for PHP.
 
 ## Install
 

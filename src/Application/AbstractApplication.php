@@ -38,9 +38,7 @@ abstract class AbstractApplication implements ApplicationInterface
      */
     public function run()
     {
-        $constant = Application::REQUEST;
-
-        $request = $this->application->get($constant);
+        $request = $this->application->get(Application::REQUEST);
 
         $response = $this->handle($request);
 

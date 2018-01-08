@@ -5,6 +5,7 @@ namespace Zapheus;
 use Zapheus\Application\ApplicationInterface;
 use Zapheus\Container\Container;
 use Zapheus\Container\ContainerInterface;
+use Zapheus\Container\NotFoundException;
 use Zapheus\Http\Message\ResponseInterface;
 use Zapheus\Http\Message\ServerRequestInterface;
 
@@ -136,9 +137,11 @@ class Application extends Container implements ApplicationInterface
     {
         $instanceof = $result instanceof ResponseInterface;
 
-        $response = new Http\Message\Response;
-
-        $this->has(self::RESPONSE) && $response = $this->get(self::RESPONSE);
+        try {
+            $response = $this->get(self::RESPONSE);
+        } catch (NotFoundException $error) {
+            $response = new Http\Message\Response;
+        }
 
         $instanceof || $response->getBody()->write($result);
 

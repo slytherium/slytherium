@@ -34,7 +34,7 @@ class FrameworkProvider implements ProviderInterface
     /**
      * @var array
      */
-    protected $wrappers = array('Zapheus\Container\SlytherinContainer');
+    protected $wrappers = array('Zapheus\Bridge\Slytherin\Container');
 
     /**
      * Initializes the container instance.

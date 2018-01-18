@@ -7,7 +7,7 @@
 [![Quality Score][ico-code-quality]][link-code-quality]
 [![Total Downloads][ico-downloads]][link-downloads]
 
-Yet another dumb and stupid PHP framework.
+An independent and framework-friendly PHP micro-framework.
 
 ## Install
 

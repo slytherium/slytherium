@@ -137,11 +137,7 @@ class Application extends Container implements ApplicationInterface
     {
         $instanceof = $result instanceof ResponseInterface;
 
-        try {
-            $response = $this->get(self::RESPONSE);
-        } catch (NotFoundException $error) {
-            $response = new Http\Message\Response;
-        }
+        $response = $this->get(self::RESPONSE);
 
         $instanceof || $response->getBody()->write($result);
 

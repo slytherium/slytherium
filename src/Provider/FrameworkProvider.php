@@ -51,7 +51,7 @@ class FrameworkProvider implements ProviderInterface
         $this->externals[] = self::SILEX_CONTAINER;
         $this->externals[] = self::SLYTHERIN_CONTAINER;
 
-        $this->wrappers[] = 'Zapheus\Container\IlluminateContainer';
+        $this->wrappers[] = 'Zapheus\Bridge\Illuminate\Container';
         $this->wrappers[] = 'Zapheus\Container\PimpleContainer';
         $this->wrappers[] = 'Zapheus\Container\SlytherinContainer';
     }
@@ -88,13 +88,15 @@ class FrameworkProvider implements ProviderInterface
         $containers = array_combine($this->externals, $this->wrappers);
 
         foreach ($containers as $external => $wrapper) {
-            $contains = $container->has($external);
+            if (class_exists($wrapper) === true) {
+                $contains = $container->has($external);
 
-            $instance = new $external;
+                $instance = new $external;
 
-            $contains && $instance = $container->get($external);
+                $contains && $instance = $container->get($external);
 
-            $this->container->add(new $wrapper($instance));
+                $this->container->add(new $wrapper($instance));
+            }
         }
     }
 

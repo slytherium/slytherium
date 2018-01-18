@@ -52,7 +52,7 @@ class FrameworkProvider implements ProviderInterface
         $this->externals[] = self::SLYTHERIN_CONTAINER;
 
         $this->wrappers[] = 'Zapheus\Bridge\Illuminate\Container';
-        $this->wrappers[] = 'Zapheus\Container\PimpleContainer';
+        $this->wrappers[] = 'Zapheus\Bridge\Silex\Container';
         $this->wrappers[] = 'Zapheus\Container\SlytherinContainer';
     }
 

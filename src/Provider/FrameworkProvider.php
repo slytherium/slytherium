@@ -2,9 +2,9 @@
 
 namespace Zapheus\Provider;
 
+use Zapheus\Bridge\Symfony\Container;
 use Zapheus\Container\CompositeContainer;
 use Zapheus\Container\ContainerInterface;
-use Zapheus\Container\SymfonyContainer;
 use Zapheus\Container\WritableInterface;
 
 /**
@@ -19,9 +19,7 @@ class FrameworkProvider implements ProviderInterface
 
     const SILEX_CONTAINER = 'Pimple\Container';
 
-    const SLYTHERIN_CONTAINER = 'Rougin\Slytherin\Container\Container';
-
-    const SYMFONY_KERNEL = 'Zapheus\Provider\SymfonyKernel';
+    const SYMFONY_KERNEL = 'Zapheus\Bridge\Symfony\Kernel';
 
     /**
      * @var \Zapheus\Container\CompositeContainer
@@ -31,12 +29,12 @@ class FrameworkProvider implements ProviderInterface
     /**
      * @var array
      */
-    protected $externals = array();
+    protected $externals = array('Rougin\Slytherin\Container\Container');
 
     /**
      * @var array
      */
-    protected $wrappers = array();
+    protected $wrappers = array('Zapheus\Container\SlytherinContainer');
 
     /**
      * Initializes the container instance.
@@ -48,12 +46,12 @@ class FrameworkProvider implements ProviderInterface
         $this->container = $container ?: new CompositeContainer;
 
         $this->externals[] = self::ILLUMINATE_CONTAINER;
+
         $this->externals[] = self::SILEX_CONTAINER;
-        $this->externals[] = self::SLYTHERIN_CONTAINER;
 
         $this->wrappers[] = 'Zapheus\Bridge\Illuminate\Container';
+
         $this->wrappers[] = 'Zapheus\Bridge\Silex\Container';
-        $this->wrappers[] = 'Zapheus\Container\SlytherinContainer';
     }
 
     /**
@@ -68,10 +66,14 @@ class FrameworkProvider implements ProviderInterface
 
         $this->externals($container);
 
-        if ($container->has(self::SYMFONY_KERNEL)) {
-            $instance = $this->symfony($container);
+        if ($container->has(self::SYMFONY_KERNEL) === true) {
+            $kernel = $container->get(self::SYMFONY_KERNEL);
 
-            $this->container->add($instance);
+            $kernel->boot();
+
+            $container = $kernel->getContainer();
+
+            $this->container->add(new Container($container));
         }
 
         return $this->container;
@@ -85,35 +87,16 @@ class FrameworkProvider implements ProviderInterface
      */
     protected function externals(ContainerInterface $container)
     {
-        $containers = array_combine($this->externals, $this->wrappers);
+        $items = array_combine($this->externals, $this->wrappers);
 
-        foreach ((array) $containers as $external => $wrapper) {
-            if (class_exists($external) && class_exists($wrapper)) {
-                $contains = $container->has($external);
+        foreach ($items as $external => $wrapper) {
+            if (class_exists($wrapper) === true) {
+                $object = $container->get($external);
 
-                $instance = new $external;
+                $instance = new $wrapper($object);
 
-                $contains && $instance = $container->get($external);
-
-                $this->container->add(new $wrapper($instance));
+                $this->container->add($instance);
             }
         }
-    }
-
-    /**
-     * Returns the instance from Symfony and wrap it into a SymfonyContainer.
-     *
-     * @param  \Zapheus\Container\ContainerInterface $container
-     * @return \Zapheus\Container\ContainerInterface
-     */
-    protected function symfony(ContainerInterface $container)
-    {
-        $kernel = $container->get(self::SYMFONY_KERNEL);
-
-        $kernel->boot();
-
-        $container = $kernel->getContainer();
-
-        return new SymfonyContainer($container);
     }
 }

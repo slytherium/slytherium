@@ -81,7 +81,7 @@ class Stream implements StreamInterface
      */
     public function close()
     {
-        is_null($this->stream) ?: fclose($this->stream);
+        $this->stream === null ?: fclose($this->stream);
 
         $this->detach();
     }
@@ -109,7 +109,7 @@ class Stream implements StreamInterface
      */
     public function eof()
     {
-        return is_null($this->stream) ?: feof($this->stream);
+        return $this->stream === null ?: feof($this->stream);
     }
 
     /**
@@ -121,7 +121,7 @@ class Stream implements StreamInterface
      */
     public function getContents()
     {
-        if (is_null($this->stream) || ! $this->isReadable()) {
+        if ($this->stream === null || ! $this->isReadable()) {
             $message = 'Could not get contents of stream';
 
             throw new \RuntimeException($message);
@@ -142,7 +142,7 @@ class Stream implements StreamInterface
 
         $metadata = isset($this->meta[$key]) ? $this->meta[$key] : null;
 
-        return is_null($key) ? $this->meta : $metadata;
+        return $key === null ? $this->meta : $metadata;
     }
 
     /**
@@ -152,7 +152,7 @@ class Stream implements StreamInterface
      */
     public function getSize()
     {
-        if (is_null($this->size) === true) {
+        if ($this->size === null) {
             $stats = fstat($this->stream);
 
             $this->size = $stats['size'];
@@ -264,7 +264,7 @@ class Stream implements StreamInterface
 
         $this->stream && $position = ftell($this->stream);
 
-        if (is_null($this->stream) || $position === false) {
+        if ($this->stream === null || $position === false) {
             $message = 'Could not get position of pointer in stream';
 
             throw new \RuntimeException($message);

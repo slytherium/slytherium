@@ -87,8 +87,8 @@ class FrameworkProvider implements ProviderInterface
     {
         $containers = array_combine($this->externals, $this->wrappers);
 
-        foreach ($containers as $external => $wrapper) {
-            if (class_exists($wrapper) === true) {
+        foreach ((array) $containers as $external => $wrapper) {
+            if (class_exists($external) && class_exists($wrapper)) {
                 $contains = $container->has($external);
 
                 $instance = new $external;

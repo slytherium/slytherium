@@ -12,7 +12,7 @@ use Zapheus\Http\Message\ServerRequest;
  * @package Zapheus
  * @author  Rougin Royce Gutib <rougingutib@gmail.com>
  */
-class RouterApplicationTest extends TestCase
+class RouterApplicationTest extends AbstractTestCase
 {
     /**
      * Sets up the application instance.

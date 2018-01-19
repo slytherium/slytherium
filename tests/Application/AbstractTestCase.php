@@ -6,12 +6,12 @@ use Zapheus\Container\ReflectionContainer;
 use Zapheus\Http\Message\ServerRequest;
 
 /**
- * Application Test Case
+ * Abstract Test Case
  *
  * @package Zapheus
  * @author  Rougin Royce Gutib <rougingutib@gmail.com>
  */
-class TestCase extends \PHPUnit_Framework_TestCase
+abstract class AbstractTestCase extends \PHPUnit_Framework_TestCase
 {
     /**
      * @var \Zapheus\Application\ApplicationInterface

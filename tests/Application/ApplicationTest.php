@@ -15,7 +15,7 @@ use Zapheus\Routing\Router;
  * @package Zapheus
  * @author  Rougin Royce Gutib <rougingutib@gmail.com>
  */
-class ApplicationTest extends TestCase
+class ApplicationTest extends AbstractTestCase
 {
     /**
      * Sets up the application instance.

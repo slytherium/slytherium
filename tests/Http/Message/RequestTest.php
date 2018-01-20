@@ -56,20 +56,4 @@ class RequestTest extends \PHPUnit_Framework_TestCase
 
         $this->assertEquals($expected, $result);
     }
-
-    /**
-     * Tests MessageInterface::getUri.
-     *
-     * @return void
-     */
-    public function testGetUriMethod()
-    {
-        $expected = new Uri('https://rougin.github.io');
-
-        $request = $this->request->withUri($expected);
-
-        $result = $request->getUri();
-
-        $this->assertEquals($expected, $result);
-    }
 }

@@ -51,6 +51,8 @@ class Uri implements UriInterface
     protected $uri = '';
 
     /**
+     * Initializes the URI instance.
+     *
      * @param string $uri
      */
     public function __construct($uri = '')

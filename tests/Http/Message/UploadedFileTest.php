@@ -117,7 +117,7 @@ class UploadedFileTest extends \PHPUnit_Framework_TestCase
 
         $uploaded = $this->instance($target);
 
-        $uploaded->moveTo($this->file);
+        unset($target);
     }
 
     /**

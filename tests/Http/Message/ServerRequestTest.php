@@ -201,4 +201,20 @@ class ServerRequestTest extends \PHPUnit_Framework_TestCase
 
         $this->assertNull($request->getAttribute('REQUEST_METHOD'));
     }
+
+    /**
+     * Tests MessageInterface::getUri.
+     *
+     * @return void
+     */
+    public function testGetUriMethod()
+    {
+        $expected = new Uri('https://rougin.github.io');
+
+        $request = $this->request->withUri($expected);
+
+        $result = $request->getUri();
+
+        $this->assertEquals($expected, $result);
+    }
 }

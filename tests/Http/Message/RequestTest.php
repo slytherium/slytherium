@@ -32,7 +32,17 @@ class RequestTest extends \PHPUnit_Framework_TestCase
 
         $_SERVER['HTTPS'] = 'off';
 
-        $this->request = new Request($_SERVER);
+        $_FILES['file']['error'] = array(0);
+
+        $_FILES['file']['name'] = array('test.txt');
+
+        $_FILES['file']['size'] = array(100);
+
+        $_FILES['file']['tmp_name'] = array('/tmp/test.txt');
+
+        $_FILES['file']['type'] = array('text/plain');
+
+        $this->request = new Request($_SERVER, array(), array(), $_FILES);
     }
 
     /**

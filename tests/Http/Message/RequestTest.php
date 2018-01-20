@@ -60,9 +60,15 @@ class RequestTest extends \PHPUnit_Framework_TestCase
     {
         $expected = array('name' => 'Rougin', 'address' => 'Tomorrowland');
 
-        $request = $this->request->set('cookies', $expected);
+        $cookies = $this->request->cookies();
 
-        $result = $request->cookies();
+        $cookies->set('address', 'Tomorrowland');
+
+        $cookies->set('name', 'Rougin');
+
+        $request = $this->request->set('cookies', $cookies);
+
+        $result = $request->cookies()->all();
 
         $this->assertEquals($expected, $result);
     }
@@ -126,9 +132,15 @@ class RequestTest extends \PHPUnit_Framework_TestCase
     {
         $expected = array('name' => 'Rougin Royce', 'age' => 20);
 
-        $request = $this->request->set('query', $expected);
+        $query = $this->request->query();
 
-        $result = $request->query();
+        $query->set('name', 'Rougin Royce');
+
+        $query->set('age', 20);
+
+        $request = $this->request->set('query', $query);
+
+        $result = $request->query()->all();
 
         $this->assertEquals($expected, $result);
     }

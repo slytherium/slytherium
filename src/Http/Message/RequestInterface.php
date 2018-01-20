@@ -13,14 +13,14 @@ interface RequestInterface extends MessageInterface
     /**
      * Returns an array of attributes derived from the request.
      *
-     * @return array
+     * @return \Zapheus\Http\Message\Collection
      */
     public function attributes();
 
     /**
      * Returns the cookies from the request.
      *
-     * @return array
+     * @return \Zapheus\Http\Message\Collection
      */
     public function cookies();
 
@@ -47,14 +47,14 @@ interface RequestInterface extends MessageInterface
     /**
      * Returns the query string arguments.
      *
-     * @return array
+     * @return \Zapheus\Http\Message\Collection
      */
     public function query();
 
     /**
      * Returns server parameters.
      *
-     * @return array
+     * @return \Zapheus\Http\Message\Collection
      */
     public function server();
 

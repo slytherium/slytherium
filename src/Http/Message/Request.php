@@ -63,11 +63,10 @@ class Request extends Message implements RequestInterface
      * @param array|null $data
      * @param array      $files
      * @param array      $query
+     * @param array      $attributes
      */
     public function __construct(array $server, array $cookies = array(), $data = null, array $files = array(), array $query = array(), array $attributes = array())
     {
-        isset($server['HTTPS']) || $server['HTTPS'] = 'off';
-
         parent::__construct($this->convert($server));
 
         $this->attributes = new Collection($attributes);
@@ -238,14 +237,14 @@ class Request extends Message implements RequestInterface
      */
     protected function generate(array $server)
     {
+        isset($server['HTTPS']) || $server['HTTPS'] = 'off';
+
         $http = $server['HTTPS'] === 'off' ? 'http' : 'https';
 
-        list($name, $port) = array('localhost', 8000);
+        $name = $server['SERVER_NAME'];
 
-        isset($server['SERVER_NAME']) && $name = isset($server['SERVER_NAME']);
+        $port = $server['SERVER_PORT'] . $this->target;
 
-        isset($server['SERVER_PORT']) && $port = isset($server['SERVER_PORT']);
-
-        return new Uri($http . '://' . $name . $port . $this->target);
+        return new Uri($http . '://' . $name . $port);
     }
 }

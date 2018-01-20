@@ -2,7 +2,7 @@
 
 namespace Zapheus\Application;
 
-use Zapheus\Http\Message\ServerRequestInterface;
+use Zapheus\Http\Message\RequestInterface;
 
 /**
  * Application Interface
@@ -13,10 +13,10 @@ use Zapheus\Http\Message\ServerRequestInterface;
 interface ApplicationInterface
 {
     /**
-     * Handles the ServerRequest to convert it to a Response.
+     * Handles the Request to convert it to a Response.
      *
-     * @param  \Zapheus\Http\Message\ServerRequestInterface $request
+     * @param  \Zapheus\Http\Message\RequestInterface $request
      * @return \Zapheus\Http\Message\ResponseInterface
      */
-    public function handle(ServerRequestInterface $request);
+    public function handle(RequestInterface $request);
 }

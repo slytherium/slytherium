@@ -3,140 +3,66 @@
 namespace Zapheus\Http\Message;
 
 /**
- * URI Interface
+ * Uri Interface
  *
  * @package Zapheus
  * @author  Rougin Royce Gutib <rougingutib@gmail.com>
  */
-interface UriInterface
+interface UriInterface extends MutatorInterface
 {
     /**
-     * Return the string representation as a URI reference.
+     * Returns the authority component of the URI.
      *
      * @return string
      */
-    public function __toString();
+    public function authority();
 
     /**
-     * Retrieves the authority component of the URI.
+     * Returns the fragment component of the URI.
      *
      * @return string
      */
-    public function getAuthority();
+    public function fragment();
 
     /**
-     * Retrieves the fragment component of the URI.
+     * Returns the host component of the URI.
      *
      * @return string
      */
-    public function getFragment();
+    public function host();
 
     /**
-     * Retrieves the host component of the URI.
+     * Returns the path component of the URI.
      *
      * @return string
      */
-    public function getHost();
+    public function path();
 
     /**
-     * Retrieves the path component of the URI.
+     * Returns the port component of the URI.
+     *
+     * @return null|integer
+     */
+    public function port();
+
+    /**
+     * Returns the query string of the URI.
      *
      * @return string
      */
-    public function getPath();
+    public function query();
 
     /**
-     * Retrieves the port component of the URI.
-     *
-     * @return integer|null
-     */
-    public function getPort();
-
-    /**
-     * Retrieves the query string of the URI.
+     * Returns the scheme component of the URI.
      *
      * @return string
      */
-    public function getQuery();
+    public function scheme();
 
     /**
-     * Retrieves the scheme component of the URI.
+     * Returns the user information component of the URI.
      *
      * @return string
      */
-    public function getScheme();
-
-    /**
-     * Retrieves the user information component of the URI.
-     *
-     * @return string
-     */
-    public function getUserInfo();
-
-    /**
-     * Returns an instance with the specified URI fragment.
-     *
-     * @param  string $fragment
-     * @return static
-     */
-    public function withFragment($fragment);
-
-    /**
-     * Returns an instance with the specified host.
-     *
-     * @param  string $host
-     * @return static
-     *
-     * @throws \InvalidArgumentException
-     */
-    public function withHost($host);
-
-    /**
-     * Returns an instance with the specified path.
-     *
-     * @param  string $path
-     * @return static
-     *
-     * @throws \InvalidArgumentException
-     */
-    public function withPath($path);
-
-    /**
-     * Returns an instance with the specified port.
-     *
-     * @param  integer|null $port
-     * @return static
-     *
-     * @throws \InvalidArgumentException
-     */
-    public function withPort($port);
-
-    /**
-     * Returns an instance with the specified query string.
-     *
-     * @param  string $query
-     * @return static
-     *
-     * @throws \InvalidArgumentException
-     */
-    public function withQuery($query);
-
-    /**
-     * Returns an instance with the specified scheme.
-     *
-     * @param  string $scheme
-     * @return static
-     *
-     * @throws \InvalidArgumentException
-     */
-    public function withScheme($scheme);
-
-    /**
-     * Returns an instance with the specified user information.
-     *
-     * @param  string $user
-     * @param  null|string $password
-     * @return static
-     */
-    public function withUserInfo($user, $password = null);
+    public function user();
 }

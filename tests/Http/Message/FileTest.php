@@ -1,0 +1,141 @@
+<?php
+
+namespace Zapheus\Http\Message;
+
+/**
+ * File Test
+ *
+ * @package Zapheus
+ * @author  Rougin Royce Gutib <rougingutib@gmail.com>
+ */
+class FileTest extends \PHPUnit_Framework_TestCase
+{
+    /**
+     * @var \Zapheus\Http\Message\FileInterface
+     */
+    protected $file;
+
+    /**
+     * @var string
+     */
+    protected $filename;
+
+    /**
+     * Sets up the uploaded file instance.
+     *
+     * @return void
+     */
+    public function setUp()
+    {
+        $name = __DIR__ . '/../../Fixture/Views/HelloWorld.php';
+
+        $this->filename = $name;
+
+        $this->file = $this->instance($name);
+    }
+
+    /**
+     * Tests FileInterface::error.
+     *
+     * @return void
+     */
+    public function testErrorMethod()
+    {
+        $expected = UPLOAD_ERR_OK;
+
+        $result = $this->file->error();
+
+        $this->assertEquals($expected, $result);
+    }
+
+    /**
+     * Tests FileInterface::move.
+     *
+     * @return void
+     */
+    public function testMoveMethod()
+    {
+        $target = str_replace('HelloWorld', 'MovedFile', $this->filename);
+
+        $this->file->move($target);
+
+        $this->assertFileExists($target);
+
+        unlink($target);
+    }
+
+    /**
+     * Tests FileInterface::name.
+     *
+     * @return void
+     */
+    public function testNameMethod()
+    {
+        $expected = basename($this->filename);
+
+        $result = $this->file->name();
+
+        $this->assertEquals($expected, $result);
+    }
+
+    /**
+     * Tests FileInterface::size.
+     *
+     * @return void
+     */
+    public function testSizeMethod()
+    {
+        $expected = filesize($this->filename);
+
+        $result = $this->file->size();
+
+        $this->assertEquals($expected, $result);
+    }
+
+    /**
+     * Tests FileInterface::stream.
+     *
+     * @return void
+     */
+    public function testStreamMethod()
+    {
+        $expected = 'Zapheus\Http\Message\StreamInterface';
+
+        $result = $this->file->stream();
+
+        $this->assertInstanceof($expected, $result);
+    }
+
+    /**
+     * Tests FileInterface::type.
+     *
+     * @return void
+     */
+    public function testTypeMethod()
+    {
+        $expected = mime_content_type($this->filename);
+
+        $result = $this->file->type();
+
+        $this->assertEquals($expected, $result);
+    }
+
+    /**
+     * Creates a new \FileInterface instance.
+     *
+     * @param  string $filename
+     * @return \FileInterface
+     */
+    protected function instance($filename)
+    {
+        file_put_contents($filename, 'Hello world');
+
+        $size = filesize($filename);
+
+        $name = basename($filename);
+
+        $type = mime_content_type($filename);
+
+        return new File($filename, $size, UPLOAD_ERR_OK, $name, $type);
+    }
+}

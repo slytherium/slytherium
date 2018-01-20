@@ -30,19 +30,21 @@ class StreamTest extends \PHPUnit_Framework_TestCase
     }
 
     /**
-     * Tests StreamInterface::__toString.
+     * Tests StreamInterface::contents with \RuntimeException.
      *
      * @return void
      */
-    public function testToStringMagicMethod()
+    public function testContentsMethodWithRuntimeException()
     {
-        $expected = 'Lorem ipsum dolor sit amet';
+        $this->setExpectedException('RuntimeException');
 
-        $result = (string) $this->stream;
+        $file = __DIR__ . '/../../Fixture/Views/HelloWorld.php';
 
-        $this->stream->close();
+        $resource = fopen($file, 'w');
 
-        $this->assertEquals($expected, $result);
+        $stream = new Stream($resource);
+
+        $stream->contents();
     }
 
     /**
@@ -61,38 +63,6 @@ class StreamTest extends \PHPUnit_Framework_TestCase
         $expected = false;
 
         $result = $stream->eof();
-
-        $this->assertEquals($expected, $result);
-    }
-
-    /**
-     * Tests StreamInterface::getContents with \RuntimeException.
-     *
-     * @return void
-     */
-    public function testGetContentsMethodWithRuntimeException()
-    {
-        $this->setExpectedException('RuntimeException');
-
-        $file = __DIR__ . '/../../Fixture/Views/HelloWorld.php';
-
-        $resource = fopen($file, 'w');
-
-        $stream = new Stream($resource);
-
-        $stream->getContents();
-    }
-
-    /**
-     * Tests StreamInterface::getSize.
-     *
-     * @return void
-     */
-    public function testGetSizeMethod()
-    {
-        $expected = 26;
-
-        $result = $this->stream->getSize();
 
         $this->assertEquals($expected, $result);
     }
@@ -132,6 +102,26 @@ class StreamTest extends \PHPUnit_Framework_TestCase
     }
 
     /**
+     * Tests StreamInterface::seek and StreamInterface::detach.
+     *
+     * @return void
+     */
+    public function testSeekMethodAndDetachMethod()
+    {
+        $this->setExpectedException('RuntimeException');
+
+        $file = __DIR__ . '/../../Fixture/Views/HelloWorld.php';
+
+        $resource = fopen($file, 'w');
+
+        $stream = new Stream($resource);
+
+        $stream->detach();
+
+        $stream->seek(2);
+    }
+
+    /**
      * Tests StreamInterface::seek and StreamInterface::tell.
      *
      * @return void
@@ -154,23 +144,17 @@ class StreamTest extends \PHPUnit_Framework_TestCase
     }
 
     /**
-     * Tests StreamInterface::seek and StreamInterface::detach.
+     * Tests StreamInterface::size.
      *
      * @return void
      */
-    public function testSeekMethodAndDetachMethod()
+    public function testSizeMethod()
     {
-        $this->setExpectedException('RuntimeException');
+        $expected = 26;
 
-        $file = __DIR__ . '/../../Fixture/Views/HelloWorld.php';
+        $result = $this->stream->size();
 
-        $resource = fopen($file, 'w');
-
-        $stream = new Stream($resource);
-
-        $stream->detach();
-
-        $stream->seek(2);
+        $this->assertEquals($expected, $result);
     }
 
     /**
@@ -191,6 +175,22 @@ class StreamTest extends \PHPUnit_Framework_TestCase
         $stream->detach();
 
         $stream->tell();
+    }
+
+    /**
+     * Tests StreamInterface::__toString.
+     *
+     * @return void
+     */
+    public function testToStringMagicMethod()
+    {
+        $expected = 'Lorem ipsum dolor sit amet';
+
+        $result = (string) $this->stream;
+
+        $this->stream->close();
+
+        $this->assertEquals($expected, $result);
     }
 
     /**

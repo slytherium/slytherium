@@ -3,7 +3,6 @@
 namespace Zapheus\Application;
 
 use Zapheus\Application;
-use Zapheus\Http\Message\ServerRequestInterface;
 use Zapheus\Http\MessageProvider;
 
 /**
@@ -44,7 +43,7 @@ abstract class AbstractApplication implements ApplicationInterface
 
         $this->application->emit($response);
 
-        return $response->getBody();
+        return $response->stream();
     }
 
     /**

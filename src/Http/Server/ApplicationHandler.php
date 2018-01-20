@@ -3,7 +3,7 @@
 namespace Zapheus\Http\Server;
 
 use Zapheus\Application;
-use Zapheus\Http\Message\ServerRequestInterface;
+use Zapheus\Http\Message\RequestInterface;
 
 /**
  * Application Handler
@@ -31,10 +31,10 @@ class ApplicationHandler implements HandlerInterface
     /**
      * Dispatch the next available middleware and return the response.
      *
-     * @param  \Zapheus\Http\Message\ServerRequestInterface $request
+     * @param  \Zapheus\Http\Message\RequestInterface $request
      * @return \Zapheus\Http\Message\ResponseInterface
      */
-    public function handle(ServerRequestInterface $request)
+    public function handle(RequestInterface $request)
     {
         return $this->application->handle($request);
     }

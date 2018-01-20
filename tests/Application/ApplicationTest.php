@@ -5,7 +5,6 @@ namespace Zapheus\Application;
 use Zapheus\Application;
 use Zapheus\Fixture\Http\Controllers\HailController;
 use Zapheus\Http\Message\Response;
-use Zapheus\Http\Message\ServerRequest;
 use Zapheus\Routing\Dispatcher;
 use Zapheus\Routing\Router;
 
@@ -38,9 +37,9 @@ class ApplicationTest extends AbstractTestCase
 
         $interface = 'Zapheus\Http\Message\ResponseInterface';
 
-        $response = new Response;
+        $headers = array('name' => array('Zapheus'));
 
-        $response = $response->withHeader('name', 'Zapheus');
+        $response = new Response(200, $headers);
 
         $this->application->set($interface, $response);
     }

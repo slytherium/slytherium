@@ -59,11 +59,9 @@ class MessageProviderTest extends \PHPUnit_Framework_TestCase
 
         $request = $container->get(MessageProvider::SERVER_REQUEST);
 
-        $server = $request->getServerParams();
-
         $expected = 'rougin.github.io';
 
-        $result = $server['SERVER_NAME'];
+        $result = $request->server()->get('SERVER_NAME');
 
         $this->assertEquals($expected, $result);
     }

@@ -26,33 +26,33 @@ class ResponseTest extends \PHPUnit_Framework_TestCase
     }
 
     /**
-     * Tests ResponseInterface::getStatusCode.
+     * Tests ResponseInterface::code.
      *
      * @return void
      */
-    public function testGetStatusCodeMethod()
+    public function testCodeMethod()
     {
         $expected = 404;
 
-        $response = $this->response->withStatus($expected);
+        $response = $this->response->set('code', $expected);
 
-        $result = $response->getStatusCode();
+        $result = $response->code();
 
         $this->assertEquals($expected, $result);
     }
 
     /**
-     * Tests ResponseInterface::getReasonPhrase.
+     * Tests ResponseInterface::reason.
      *
      * @return void
      */
-    public function testGetReasonPhraseMethod()
+    public function testReasonMethod()
     {
         $expected = 'Internal Server Error';
 
-        $response = $this->response->withStatus(500);
+        $response = $this->response->set('code', 500);
 
-        $result = $response->getReasonPhrase();
+        $result = $response->reason();
 
         $this->assertEquals($expected, $result);
     }

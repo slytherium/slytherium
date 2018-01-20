@@ -2,7 +2,7 @@
 
 namespace Zapheus\Http\Server;
 
-use Zapheus\Http\Message\ServerRequestInterface;
+use Zapheus\Http\Message\RequestInterface;
 
 /**
  * Next Handler
@@ -38,10 +38,10 @@ class NextHandler implements HandlerInterface
     /**
      * Dispatch the next available middleware and return the response.
      *
-     * @param  \Zapheus\Http\Message\ServerRequestInterface $request
+     * @param  \Zapheus\Http\Message\RequestInterface $request
      * @return \Zapheus\Http\Message\ResponseInterface
      */
-    public function __invoke(ServerRequestInterface $request)
+    public function __invoke(RequestInterface $request)
     {
         return $this->handle($request);
     }
@@ -49,10 +49,10 @@ class NextHandler implements HandlerInterface
     /**
      * Dispatch the next available middleware and return the response.
      *
-     * @param  \Zapheus\Http\Message\ServerRequestInterface $request
+     * @param  \Zapheus\Http\Message\RequestInterface $request
      * @return \Zapheus\Http\Message\ResponseInterface
      */
-    public function handle(ServerRequestInterface $request)
+    public function handle(RequestInterface $request)
     {
         return $this->middleware->process($request, $this->handler);
     }

@@ -3,7 +3,7 @@
 namespace Zapheus\Fixture\Http\Middlewares;
 
 use Zapheus\Application;
-use Zapheus\Http\Message\ServerRequestInterface;
+use Zapheus\Http\Message\RequestInterface;
 use Zapheus\Http\Server\HandlerInterface;
 use Zapheus\Http\Server\MiddlewareInterface;
 use Zapheus\Routing\DispatcherInterface;
@@ -32,23 +32,25 @@ class RouterMiddleware implements MiddlewareInterface
     }
 
     /**
-     * Processes an incoming server request and return a response.
+     * Processes an incoming request and return a response.
      *
-     * @param  \Zapheus\Http\Message\ServerRequestInterface $request
-     * @param  \Zapheus\Http\Server\HandlerInterface        $handler
+     * @param  \Zapheus\Http\Message\RequestInterface $request
+     * @param  \Zapheus\Http\Server\HandlerInterface  $handler
      * @return \Zapheus\Http\Message\ResponseInterface
      */
-    public function process(ServerRequestInterface $request, HandlerInterface $handler)
+    public function process(RequestInterface $request, HandlerInterface $handler)
     {
-        $attribute = Application::RESOLVER_ATTRIBUTE;
+        $path = $request->uri()->path();
 
-        $path = $request->getUri()->getPath();
-
-        $method = $request->getMethod();
+        $method = $request->method();
 
         $resolver = $this->dispatcher->dispatch($method, $path);
 
-        $request = $request->withAttribute($attribute, $resolver);
+        $attributes = $request->attributes();
+
+        $attributes->set(Application::RESOLVER_ATTRIBUTE, $resolver);
+
+        $request = $request->set('attributes', $attributes);
 
         return $handler->handle($request);
     }

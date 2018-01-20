@@ -2,7 +2,7 @@
 
 namespace Zapheus\Fixture\Http\Middlewares;
 
-use Zapheus\Http\Message\ServerRequestInterface;
+use Zapheus\Http\Message\RequestInterface;
 use Zapheus\Http\Server\HandlerInterface;
 use Zapheus\Http\Server\MiddlewareInterface;
 
@@ -15,18 +15,22 @@ use Zapheus\Http\Server\MiddlewareInterface;
 class JsonMiddleware implements MiddlewareInterface
 {
     /**
-     * Processes an incoming server request and return a response.
+     * Processes an incoming request and return a response.
      *
-     * @param  \Zapheus\Http\Message\ServerRequestInterface $request
-     * @param  \Zapheus\Http\Server\HandlerInterface        $handler
+     * @param  \Zapheus\Http\Message\RequestInterface $request
+     * @param  \Zapheus\Http\Server\HandlerInterface  $handler
      * @return \Zapheus\Http\Message\ResponseInterface
      */
-    public function process(ServerRequestInterface $request, HandlerInterface $handler)
+    public function process(RequestInterface $request, HandlerInterface $handler)
     {
         $response = $handler->handle($request);
 
-        $new = $response->withHeader('Content-Type', 'application/json');
+        $original = $headers = $response->headers();
 
-        return $response->hasHeader('Content-Type') ? $response : $new;
+        $headers->set('Content-Type', array('application/json'));
+
+        $new = $response->set('headers', $headers);
+
+        return $original->has('Content-Type') ? $response : $new;
     }
 }

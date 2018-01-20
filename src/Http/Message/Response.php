@@ -18,12 +18,10 @@ class Response extends Message implements ResponseInterface
     /**
      * @var array
      */
-    protected $codes = array(
-        // Informational 1xx
+    protected $reasons = array(
         100 => 'Continue',
         101 => 'Switching Protocols',
         102 => 'Processing',
-        // Successful 2xx
         200 => 'OK',
         201 => 'Created',
         202 => 'Accepted',
@@ -34,7 +32,6 @@ class Response extends Message implements ResponseInterface
         207 => 'Multi Status',
         208 => 'Already Reported',
         226 => 'Im Used',
-        // Redirection 3xx
         300 => 'Multiple Choices',
         301 => 'Moved Permanently',
         302 => 'Found',
@@ -44,7 +41,6 @@ class Response extends Message implements ResponseInterface
         306 => 'Reserved',
         307 => 'Temporary Redirect',
         308 => 'Permanent Redirect',
-        // Client Errors 4xx
         400 => 'Bad Request',
         401 => 'Unauthorized',
         402 => 'Payment Required',
@@ -73,7 +69,6 @@ class Response extends Message implements ResponseInterface
         429 => 'Too Many Requests',
         431 => 'Request Header Fields Too Large',
         451 => 'Unavailable For Legal Reasons',
-        // Server Errors 5xx
         500 => 'Internal Server Error',
         501 => 'Not Implemented',
         502 => 'Bad Gateway',
@@ -95,18 +90,29 @@ class Response extends Message implements ResponseInterface
     /**
      * Initializes the response instance.
      *
-     * @param integer                                    $code
-     * @param \Zapheus\Http\Message\StreamInterface|null $body
-     * @param string                                     $version
-     * @param array                                      $headers
+     * @param integer $code
+     * @param array   $headers
      */
-    public function __construct($code = 200, StreamInterface $body = null, array $headers = array(), $version = '1.1')
+    public function __construct($code = 200, array $headers = array())
     {
-        parent::__construct($body, $headers, $version);
+        parent::__construct($headers);
 
         $this->code = $code;
 
-        $this->reason = $this->codes[$code];
+        $this->reason = $this->reasons[$code];
+    }
+
+    /**
+     * Returns the response status code.
+     *
+     * @return integer
+     */
+    public function code()
+    {
+        return $this->code;
+
+        // getStatusCode
+        // withStatus
     }
 
     /**
@@ -114,41 +120,32 @@ class Response extends Message implements ResponseInterface
      *
      * @return string
      */
-    public function getReasonPhrase()
+    public function reason()
     {
         return $this->reason;
+
+        // getReasonPhrase
+        // // withStatus
     }
 
     /**
-     * Returns the response status code.
+     * Sets a value to a specified property.
      *
-     * The status code is a 3-digit integer result code of the server's attempt
-     * to understand and satisfy the request.
-     *
-     * @return integer
+     * @param  string  $name
+     * @param  mixed   $value
+     * @param  boolean $mutable
+     * @return self
      */
-    public function getStatusCode()
+    public function set($name, $value, $mutable = false)
     {
-        return $this->code;
-    }
+        $result = parent::set($name, $value, $mutable);
 
-    /**
-     * Returns an instance with the specified status code and, optionally, reason phrase.
-     *
-     * @param  integer $code
-     * @param  string  $reason
-     * @return static
-     *
-     * @throws \InvalidArgumentException
-     */
-    public function withStatus($code, $reason = '')
-    {
-        $new = clone $this;
+        if ($name === 'code') {
+            $reason = $result->reasons[$value];
 
-        $new->code = $code;
+            $result->reason = (string) $reason;
+        }
 
-        $new->reason = $reason === '' ? $new->codes[$code] : $reason;
-
-        return $new;
+        return $result;
     }
 }

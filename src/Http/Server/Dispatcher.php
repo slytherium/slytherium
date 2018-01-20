@@ -4,7 +4,7 @@ namespace Zapheus\Http\Server;
 
 use Zapheus\Container\ContainerInterface;
 use Zapheus\Container\ReflectionContainer;
-use Zapheus\Http\Message\ServerRequestInterface;
+use Zapheus\Http\Message\RequestInterface;
 
 /**
  * Middleware Dispatcher
@@ -57,10 +57,10 @@ class Dispatcher implements DispatcherInterface
     /**
      * Dispatches the defined middleware stack.
      *
-     * @param  \Zapheus\Http\Message\ServerRequestInterface $request
+     * @param  \Zapheus\Http\Message\RequestInterface $request
      * @return \Zapheus\Http\Message\ResponseInterface
      */
-    public function dispatch(ServerRequestInterface $request)
+    public function dispatch(RequestInterface $request)
     {
         $resolved = $this->resolve(0);
 
@@ -68,13 +68,13 @@ class Dispatcher implements DispatcherInterface
     }
 
     /**
-     * Processes an incoming server request and return a response.
+     * Processes an incoming request and return a response.
      *
-     * @param  \Zapheus\Http\Message\ServerRequestInterface $request
-     * @param  \Zapheus\Http\Server\HandlerInterface $handler
+     * @param  \Zapheus\Http\Message\RequestInterface $request
+     * @param  \Zapheus\Http\Server\HandlerInterface  $handler
      * @return \Zapheus\Http\Message\ResponseInterface
      */
-    public function process(ServerRequestInterface $request, HandlerInterface $handler)
+    public function process(RequestInterface $request, HandlerInterface $handler)
     {
         $this->stack[] = new LastMiddleware($handler);
 

@@ -6,8 +6,8 @@ use Zapheus\Application\ApplicationInterface;
 use Zapheus\Container\Container;
 use Zapheus\Container\ContainerInterface;
 use Zapheus\Container\NotFoundException;
+use Zapheus\Http\Message\RequestInterface;
 use Zapheus\Http\Message\ResponseInterface;
-use Zapheus\Http\Message\ServerRequestInterface;
 
 /**
  * Application
@@ -21,7 +21,7 @@ class Application extends Container implements ApplicationInterface
 
     const DISPATCHER = 'Zapheus\Routing\DispatcherInterface';
 
-    const REQUEST = 'Zapheus\Http\Message\ServerRequestInterface';
+    const REQUEST = 'Zapheus\Http\Message\RequestInterface';
 
     const RESOLVER_ATTRIBUTE = 'request-handler';
 
@@ -69,13 +69,11 @@ class Application extends Container implements ApplicationInterface
      */
     public function emit(ResponseInterface $response)
     {
-        $code = $response->getStatusCode();
+        $code = $response->code() . ' ' . $response->reason();
 
-        $code .= ' ' . $response->getReasonPhrase();
+        $headers = $response->headers()->all();
 
-        $headers = $response->getHeaders();
-
-        $version = $response->getProtocolVersion();
+        $version = $response->version();
 
         header(sprintf('HTTP/%s %s', $version, $code));
 
@@ -91,19 +89,21 @@ class Application extends Container implements ApplicationInterface
     /**
      * Handles the ServerRequest to convert it to a Response.
      *
-     * @param  \Zapheus\Http\Message\ServerRequestInterface $request
+     * @param  \Zapheus\Http\Message\RequestInterface $request
      * @return \Zapheus\Http\Message\ResponseInterface
      */
-    public function handle(ServerRequestInterface $request)
+    public function handle(RequestInterface $request)
     {
-        $resolver = $request->getAttribute(self::RESOLVER_ATTRIBUTE);
+        $attributes = $request->attributes();
+
+        $resolver = $attributes->get(self::RESOLVER_ATTRIBUTE);
 
         if ($this->has(self::DISPATCHER) === true) {
             $dispatcher = $this->get(self::DISPATCHER);
 
-            $path = $request->getUri()->getPath();
+            $path = $request->uri()->path();
 
-            $method = $request->getMethod();
+            $method = $request->method();
 
             $resolver = $dispatcher->dispatch($method, $path);
         }
@@ -124,7 +124,7 @@ class Application extends Container implements ApplicationInterface
 
         $response = $this->handle($request);
 
-        return $this->emit($response)->getBody();
+        return $this->emit($response)->stream();
     }
 
     /**
@@ -139,7 +139,7 @@ class Application extends Container implements ApplicationInterface
 
         $response = $this->get(self::RESPONSE);
 
-        $instanceof || $response->getBody()->write($result);
+        $instanceof || $response->stream()->write($result);
 
         return $instanceof ? $result : $response;
     }

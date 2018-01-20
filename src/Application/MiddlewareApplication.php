@@ -3,7 +3,7 @@
 namespace Zapheus\Application;
 
 use Zapheus\Application;
-use Zapheus\Http\Message\ServerRequestInterface;
+use Zapheus\Http\Message\RequestInterface;
 use Zapheus\Http\Server\ApplicationHandler;
 use Zapheus\Http\Server\Dispatcher;
 use Zapheus\Http\Server\MiddlewareInterface;
@@ -34,12 +34,12 @@ class MiddlewareApplication extends AbstractApplication
     }
 
     /**
-     * Handles the ServerRequest to convert it to a Response.
+     * Handles the Request to convert it to a Response.
      *
-     * @param  \Zapheus\Http\Message\ServerRequestInterface $request
+     * @param  \Zapheus\Http\Message\RequestInterface $request
      * @return \Zapheus\Http\Message\ResponseInterface
      */
-    public function handle(ServerRequestInterface $request)
+    public function handle(RequestInterface $request)
     {
         $handler = new ApplicationHandler($this->application);
 

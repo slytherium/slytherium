@@ -40,127 +40,127 @@ class UriTest extends \PHPUnit_Framework_TestCase
     }
 
     /**
-     * Tests UriInterface::getAuthority.
+     * Tests UriInterface::authority.
      *
      * @return void
      */
-    public function testGetAuthorityMethod()
+    public function testAuthorityMethod()
     {
         $expected = 'me@rougin.github.io:400';
 
-        $result = $this->uri->getAuthority();
+        $result = $this->uri->authority();
 
         $this->assertEquals($expected, $result);
     }
 
     /**
-     * Tests UriInterface::getFragment.
+     * Tests UriInterface::fragment.
      *
      * @return void
      */
-    public function testGetFragmentMethod()
+    public function testFragmentMethod()
     {
         $expected = 'test';
 
-        $uri = $this->uri->withFragment($expected);
+        $uri = $this->uri->set('fragment', $expected);
 
-        $result = $uri->getFragment();
+        $result = $uri->fragment();
 
         $this->assertEquals($expected, $result);
     }
 
     /**
-     * Tests UriInterface::getHost.
+     * Tests UriInterface::host.
      *
      * @return void
      */
-    public function testGetHostMethod()
+    public function testHostMethod()
     {
         $expected = 'google.com';
 
-        $uri = $this->uri->withHost($expected);
+        $uri = $this->uri->set('host', $expected);
 
-        $result = $uri->getHost();
+        $result = $uri->host();
 
         $this->assertEquals($expected, $result);
     }
 
     /**
-     * Tests UriInterface::getPath.
+     * Tests UriInterface::path.
      *
      * @return void
      */
-    public function testGetPathMethod()
+    public function testPathMethod()
     {
         $expected = '/test';
 
-        $uri = $this->uri->withPath($expected);
+        $uri = $this->uri->set('path', $expected);
 
-        $result = $uri->getPath();
+        $result = $uri->path();
 
         $this->assertEquals($expected, $result);
     }
 
     /**
-     * Tests UriInterface::getPort.
+     * Tests UriInterface::port.
      *
      * @return void
      */
-    public function testGetPortMethod()
+    public function testPortMethod()
     {
         $expected = 500;
 
-        $uri = $this->uri->withPort($expected);
+        $uri = $this->uri->set('port', $expected);
 
-        $result = $uri->getPort();
+        $result = $uri->port();
 
         $this->assertEquals($expected, $result);
     }
 
     /**
-     * Tests UriInterface::getQuery.
+     * Tests UriInterface::query.
      *
      * @return void
      */
-    public function testGetQueryMethod()
+    public function testQueryMethod()
     {
         $expected = 'type=user';
 
-        $uri = $this->uri->withQuery($expected);
+        $uri = $this->uri->set('query', $expected);
 
-        $result = $uri->getQuery();
+        $result = $uri->query();
 
         $this->assertEquals($expected, $result);
     }
 
     /**
-     * Tests UriInterface::getScheme.
+     * Tests UriInterface::scheme.
      *
      * @return void
      */
-    public function testGetSchemeMethod()
+    public function testSchemeMethod()
     {
         $expected = 'http';
 
-        $uri = $this->uri->withScheme($expected);
+        $uri = $this->uri->set('scheme', $expected);
 
-        $result = $uri->getScheme();
+        $result = $uri->scheme();
 
         $this->assertEquals('http', $result);
     }
 
     /**
-     * Tests UriInterface::getUserInfo.
+     * Tests UriInterface::user.
      *
      * @return void
      */
-    public function testGetUserInfoMethod()
+    public function testUserMethod()
     {
         $expected = 'username:password';
 
-        $uri = $this->uri->withUserInfo('username', 'password');
+        $uri = $this->uri->set('user', $expected);
 
-        $result = $uri->getUserInfo();
+        $result = $uri->user();
 
         $this->assertEquals($expected, $result);
     }

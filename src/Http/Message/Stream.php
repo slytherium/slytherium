@@ -11,46 +11,29 @@ namespace Zapheus\Http\Message;
 class Stream implements StreamInterface
 {
     /**
-     * Resource modes.
-     *
+     * @var array|null
+     */
+    protected $meta = null;
+
+    /**
      * @var array
      */
-    protected $modes = array(
-        /**
-         * A listing of readable modes.
-         *
-         * @var array
-         */
-        'readable' => array('r', 'r+', 'w+', 'a+', 'x+', 'c+', 'w+b'),
-
-        /**
-         * A listing of writable modes.
-         *
-         * @var array
-         */
-        'writable' => array('r+', 'w', 'w+', 'a', 'a+', 'x', 'x+', 'c', 'c+', 'w+b'),
-    );
+    protected $readable = array('r', 'r+', 'w+', 'a+', 'x+', 'c+', 'w+b');
 
     /**
-     * Underline stream.
-     *
-     * @var resource|null
-     */
-    protected $stream = null;
-
-    /**
-     * Size of file.
-     *
      * @var integer|null
      */
     protected $size = null;
 
     /**
-     * Metadata of file.
-     *
-     * @var array|null
+     * @var resource|null
      */
-    protected $meta = null;
+    protected $stream = null;
+
+    /**
+     * @var array
+     */
+    protected $writable = array('r+', 'w', 'w+', 'a', 'a+', 'x', 'x+', 'c', 'c+', 'w+b');
 
     /**
      * Initializes the stream instance.
@@ -63,7 +46,7 @@ class Stream implements StreamInterface
     }
 
     /**
-     * Reads all data from the stream into a string, from the beginning to end.
+     * Reads all data from the stream into a string..
      *
      * @return string
      */
@@ -71,7 +54,7 @@ class Stream implements StreamInterface
     {
         $this->rewind();
 
-        return $this->getContents();
+        return $this->contents();
     }
 
     /**
@@ -87,6 +70,24 @@ class Stream implements StreamInterface
     }
 
     /**
+     * Returns the remaining contents in a string
+     *
+     * @return string
+     *
+     * @throws \RuntimeException
+     */
+    public function contents()
+    {
+        if ($this->stream === null || ! $this->readable()) {
+            $message = 'Could not get contents of stream';
+
+            throw new \RuntimeException($message);
+        }
+
+        return stream_get_contents($this->stream);
+    }
+
+    /**
      * Separates any underlying resources from the stream.
      *
      * @return resource|null
@@ -96,7 +97,9 @@ class Stream implements StreamInterface
         $stream = $this->stream;
 
         $this->meta = null;
+
         $this->size = null;
+
         $this->stream = null;
 
         return $stream;
@@ -113,90 +116,18 @@ class Stream implements StreamInterface
     }
 
     /**
-     * Returns the remaining contents in a string
-     *
-     * @return string
-     *
-     * @throws \RuntimeException
-     */
-    public function getContents()
-    {
-        if ($this->stream === null || ! $this->isReadable()) {
-            $message = 'Could not get contents of stream';
-
-            throw new \RuntimeException($message);
-        }
-
-        return stream_get_contents($this->stream);
-    }
-
-    /**
      * Returns stream metadata as an associative array or retrieve a specific key.
      *
      * @param  string $key
      * @return array|mixed|null
      */
-    public function getMetadata($key = null)
+    public function metadata($key = null)
     {
         isset($this->stream) && $this->meta = stream_get_meta_data($this->stream);
 
         $metadata = isset($this->meta[$key]) ? $this->meta[$key] : null;
 
         return $key === null ? $this->meta : $metadata;
-    }
-
-    /**
-     * Returns the size of the stream if known.
-     *
-     * @return integer|null
-     */
-    public function getSize()
-    {
-        if ($this->size === null) {
-            $stats = fstat($this->stream);
-
-            $this->size = $stats['size'];
-        }
-
-        return $this->size;
-    }
-
-    /**
-     * Returns whether or not the stream is readable.
-     *
-     * @return boolean
-     */
-    public function isReadable()
-    {
-        $modes = $this->modes['readable'];
-
-        $mode = $this->getMetadata('mode');
-
-        return in_array($mode, $modes);
-    }
-
-    /**
-     * Returns whether or not the stream is seekable.
-     *
-     * @return boolean
-     */
-    public function isSeekable()
-    {
-        return $this->getMetadata('seekable');
-    }
-
-    /**
-     * Returns whether or not the stream is writable.
-     *
-     * @return boolean
-     */
-    public function isWritable()
-    {
-        $modes = $this->modes['writable'];
-
-        $mode = $this->getMetadata('mode');
-
-        return in_array($mode, $modes);
     }
 
     /**
@@ -211,13 +142,25 @@ class Stream implements StreamInterface
     {
         $data = fread($this->stream, $length);
 
-        if (! $this->isReadable() || $data === false) {
+        if (! $this->readable() || $data === false) {
             $message = 'Could not read from stream';
 
             throw new \RuntimeException($message);
         }
 
         return $data;
+    }
+
+    /**
+     * Returns whether or not the stream is readable.
+     *
+     * @return boolean
+     */
+    public function readable()
+    {
+        $mode = $this->metadata('mode');
+
+        return in_array($mode, $this->readable);
     }
 
     /**
@@ -244,11 +187,37 @@ class Stream implements StreamInterface
 
         $this->stream && $seek = fseek($this->stream, $offset, $whence);
 
-        if (! $this->isSeekable() || $seek === -1) {
+        if (! $this->seekable() || $seek === -1) {
             $message = 'Could not seek in stream';
 
             throw new \RuntimeException($message);
         }
+    }
+
+    /**
+     * Returns whether or not the stream is seekable.
+     *
+     * @return boolean
+     */
+    public function seekable()
+    {
+        return $this->metadata('seekable');
+    }
+
+    /**
+     * Returns the size of the stream if known.
+     *
+     * @return integer|null
+     */
+    public function size()
+    {
+        if ($this->size === null) {
+            $stats = fstat($this->stream);
+
+            $this->size = $stats['size'];
+        }
+
+        return $this->size;
     }
 
     /**
@@ -274,6 +243,18 @@ class Stream implements StreamInterface
     }
 
     /**
+     * Returns whether or not the stream is writable.
+     *
+     * @return boolean
+     */
+    public function writable()
+    {
+        $mode = $this->metadata('mode');
+
+        return in_array($mode, $this->writable);
+    }
+
+    /**
      * Write data to the stream.
      *
      * @param  string $string
@@ -283,7 +264,7 @@ class Stream implements StreamInterface
      */
     public function write($string)
     {
-        if (! $this->isWritable()) {
+        if ($this->writable() === false) {
             $message = 'Stream is not writable';
 
             throw new \RuntimeException($message);

@@ -2,7 +2,7 @@
 
 namespace Zapheus\Http\Server;
 
-use Zapheus\Http\Message\ServerRequestInterface;
+use Zapheus\Http\Message\RequestInterface;
 
 /**
  * Dispatcher Interface
@@ -15,10 +15,10 @@ interface DispatcherInterface extends MiddlewareInterface
     /**
      * Dispatches the defined middleware stack.
      *
-     * @param  \Zapheus\Http\Message\ServerRequestInterface $request
+     * @param  \Zapheus\Http\Message\RequestInterface $request
      * @return \Zapheus\Http\Message\ResponseInterface
      */
-    public function dispatch(ServerRequestInterface $request);
+    public function dispatch(RequestInterface $request);
 
     /**
      * Adds a new middleware to the stack.

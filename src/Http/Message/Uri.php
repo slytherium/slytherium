@@ -8,22 +8,22 @@ namespace Zapheus\Http\Message;
  * @package Zapheus
  * @author  Rougin Royce Gutib <rougingutib@gmail.com>
  */
-class Uri implements UriInterface
+class Uri extends Mutator implements UriInterface
 {
     /**
      * @var string
      */
-    protected $scheme = '';
-
-    /**
-     * @var string
-     */
-    protected $user = '';
+    protected $fragment = '';
 
     /**
      * @var string
      */
     protected $host = '';
+
+    /**
+     * @var string
+     */
+    protected $path = '';
 
     /**
      * @var integer|null
@@ -33,22 +33,22 @@ class Uri implements UriInterface
     /**
      * @var string
      */
-    protected $path = '';
-
-    /**
-     * @var string
-     */
     protected $query = '';
 
     /**
      * @var string
      */
-    protected $fragment = '';
+    protected $scheme = '';
 
     /**
      * @var string
      */
     protected $uri = '';
+
+    /**
+     * @var string
+     */
+    protected $user = '';
 
     /**
      * Initializes the URI instance.
@@ -69,7 +69,7 @@ class Uri implements UriInterface
     }
 
     /**
-     * Return the string representation as a URI reference.
+     * Returns the string representation as a URI reference.
      *
      * @return string
      */
@@ -79,216 +79,113 @@ class Uri implements UriInterface
     }
 
     /**
-     * Retrieves the authority component of the URI.
+     * Returns the authority component of the URI.
      *
      * @return string
      */
-    public function getAuthority()
+    public function authority()
     {
         $authority = $this->host;
 
-        if (! empty($this->host) && ! empty($this->user)) {
+        if ($this->host !== '' && $this->user !== null) {
             $authority = $this->user . '@' . $authority;
 
-            $authority .= ':'. $this->port;
+            $authority = $authority . ':' . $this->port;
         }
 
         return $authority;
+
+        // getAuthority
     }
 
     /**
-     * Retrieves the fragment component of the URI.
+     * Returns the fragment component of the URI.
      *
      * @return string
      */
-    public function getFragment()
+    public function fragment()
     {
         return $this->fragment;
+
+        // getFragment
+        // withFragment
     }
 
     /**
-     * Retrieves the host component of the URI.
+     * Returns the host component of the URI.
      *
      * @return string
      */
-    public function getHost()
+    public function host()
     {
         return $this->host;
+
+        // getHost
+        // withHost
     }
 
     /**
-     * Retrieves the path component of the URI.
+     * Returns the path component of the URI.
      *
      * @return string
      */
-    public function getPath()
+    public function path()
     {
         return $this->path;
+
+        // getPath
+        // withPath
     }
 
     /**
-     * Retrieves the port component of the URI.
+     * Returns the port component of the URI.
      *
      * @return null|integer
      */
-    public function getPort()
+    public function port()
     {
         return $this->port;
+
+        // getPort
+        // withPort
     }
 
     /**
-     * Retrieves the query string of the URI.
+     * Returns the query string of the URI.
      *
      * @return string
      */
-    public function getQuery()
+    public function query()
     {
         return $this->query;
+
+        // getQuery
+        // withQuery
     }
 
     /**
-     * Retrieves the scheme component of the URI.
+     * Returns the scheme component of the URI.
      *
      * @return string
      */
-    public function getScheme()
+    public function scheme()
     {
         return $this->scheme;
+
+        // getScheme
+        // withScheme
     }
 
     /**
-     * Retrieves the user information component of the URI.
+     * Returns the user information component of the URI.
      *
      * @return string
      */
-    public function getUserInfo()
+    public function user()
     {
         return $this->user;
-    }
 
-    /**
-     * Returns an instance with the specified URI fragment.
-     *
-     * @param  string $fragment
-     * @return static
-     */
-    public function withFragment($fragment)
-    {
-        $new = clone $this;
-
-        $new->fragment = $fragment;
-
-        return $new;
-    }
-
-    /**
-     * Returns an instance with the specified host.
-     *
-     * @param  string $host
-     * @return static
-     *
-     * @throws \InvalidArgumentException
-     */
-    public function withHost($host)
-    {
-        // TODO: Add \InvalidArgumentException
-
-        $new = clone $this;
-
-        $new->host = $host;
-
-        return $new;
-    }
-
-    /**
-     * Returns an instance with the specified path.
-     *
-     * @param  string $path
-     * @return static
-     *
-     * @throws \InvalidArgumentException
-     */
-    public function withPath($path)
-    {
-        // TODO: Add \InvalidArgumentException
-
-        $new = clone $this;
-
-        $new->path = $path;
-
-        return $new;
-    }
-
-    /**
-     * Returns an instance with the specified port.
-     *
-     * @param  null|integer $port
-     * @return static
-     *
-     * @throws \InvalidArgumentException
-     */
-    public function withPort($port)
-    {
-        // TODO: Add \InvalidArgumentException
-
-        $new = clone $this;
-
-        $new->port = $port;
-
-        return $new;
-    }
-
-    /**
-     * Returns an instance with the specified query string.
-     *
-     * @param  string $query
-     * @return static
-     *
-     * @throws \InvalidArgumentException
-     */
-    public function withQuery($query)
-    {
-        // TODO: Add \InvalidArgumentException
-
-        $new = clone $this;
-
-        $new->query = $query;
-
-        return $new;
-    }
-
-    /**
-     * Returns an instance with the specified scheme.
-     *
-     * @param  string $scheme
-     * @return static
-     *
-     * @throws \InvalidArgumentException
-     */
-    public function withScheme($scheme)
-    {
-        // TODO: Add \InvalidArgumentException
-
-        $new = clone $this;
-
-        $new->scheme = $scheme;
-
-        return $new;
-    }
-
-    /**
-     * Returns an instance with the specified user information.
-     *
-     * @param  string      $user
-     * @param  null|string $password
-     * @return static
-     */
-    public function withUserInfo($user, $password = null)
-    {
-        $new = clone $this;
-
-        $new->user = $user . ':' . $password;
-
-        return $new;
+        // getUserInfo
+        // withUserInfo
     }
 }

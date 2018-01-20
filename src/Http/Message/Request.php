@@ -11,9 +11,24 @@ namespace Zapheus\Http\Message;
 class Request extends Message implements RequestInterface
 {
     /**
-     * @var string
+     * @var \Zapheus\Http\Message\Collection
      */
-    protected $target = '/';
+    protected $attributes;
+
+    /**
+     * @var \Zapheus\Http\Message\Collection
+     */
+    protected $cookies;
+
+    /**
+     * @var array|null|object
+     */
+    protected $data;
+
+    /**
+     * @var array
+     */
+    protected $files = array();
 
     /**
      * @var string
@@ -21,114 +36,216 @@ class Request extends Message implements RequestInterface
     protected $method = 'GET';
 
     /**
-     * @var \Zapheus\Http\Message\UriInterface
+     * @var \Zapheus\Http\Message\Collection
+     */
+    protected $query;
+
+    /**
+     * @var \Zapheus\Http\Message\Collection
+     */
+    protected $server;
+
+    /**
+     * @var string
+     */
+    protected $target = '/';
+
+    /**
+     * @var \Zapheus\Http\Message\Uri
      */
     protected $uri;
 
     /**
      * Initializes the request instance.
      *
-     * @param string                                     $method
-     * @param string                                     $target
-     * @param \Zapheus\Http\Message\UriInterface|null    $uri
-     * @param \Zapheus\Http\Message\StreamInterface|null $body
-     * @param array                                      $headers
-     * @param string                                     $version
+     * @param array      $server
+     * @param array      $cookies
+     * @param array|null $data
+     * @param array      $files
+     * @param array      $query
      */
-    public function __construct($method = 'GET', $target = '/', UriInterface $uri = null, StreamInterface $body = null, array $headers = array(), $version = '1.1')
+    public function __construct(array $server, array $cookies = array(), $data = null, array $files = array(), array $query = array(), array $attributes = array())
     {
-        parent::__construct($body, $headers, $version);
+        isset($server['HTTPS']) || $server['HTTPS'] = 'off';
 
-        $this->method = $method;
+        parent::__construct($this->convert($server));
 
-        $this->target = $target;
+        $this->attributes = new Collection($attributes);
 
-        $this->uri = $uri === null ? new Uri : $uri;
+        $this->cookies = new Collection($cookies);
+
+        $this->data = $data;
+
+        $this->files = $files;
+
+        $this->method = $server['REQUEST_METHOD'];
+
+        $this->query = new Collection($query);
+
+        $this->server = new Collection($server);
+
+        $this->target = $server['REQUEST_URI'];
+
+        $this->uri = $this->generate($server);
     }
 
     /**
-     * Retrieves the HTTP method of the request.
+     * Returns an array of attributes derived from the request.
+     *
+     * @return \Zapheus\Http\Message\Collection
+     */
+    public function attributes()
+    {
+        return $this->attributes;
+
+        // getAttributes
+        // getAttribute
+        // withAttribute
+        // withoutAttribute
+    }
+
+    /**
+     * Returns the cookies from the request.
+     *
+     * @return \Zapheus\Http\Message\Collection
+     */
+    public function cookies()
+    {
+        return $this->cookies;
+
+        // getCookieParams
+        // withCookieParams
+    }
+
+    /**
+     * Returns any parameters provided in the request body.
+     *
+     * @return null|array|object
+     */
+    public function data()
+    {
+        return $this->data;
+
+        // getParsedBody
+        // withParsedBody
+    }
+
+    /**
+     * Returns normalized file upload data.
+     *
+     * @return \Zapheus\Http\Message\UploadedFileInterface[]
+     */
+    public function files()
+    {
+        return $this->files;
+
+        // getUploadedFiles
+        // withUploadedFiles
+    }
+
+    /**
+     * Returns the HTTP method of the request.
      *
      * @return string
      */
-    public function getMethod()
+    public function method()
     {
         return $this->method;
+
+        // getMethod
+        // withMethod
     }
 
     /**
-     * Retrieves the message's request target.
+     * Returns the query string arguments.
+     *
+     * @return \Zapheus\Http\Message\Collection
+     */
+    public function query()
+    {
+        return $this->query;
+
+        // getQueryParams
+        // withQueryParams
+    }
+
+    /**
+     * Returns server parameters.
+     *
+     * @return \Zapheus\Http\Message\Collection
+     */
+    public function server()
+    {
+        return $this->server;
+
+        // getServerParams
+    }
+
+    /**
+     * Returns the message's request target.
      *
      * @return string
      */
-    public function getRequestTarget()
+    public function target()
     {
         return $this->target;
+
+        // getRequestTarget
+        // withRequestTarget
     }
 
     /**
-     * Retrieves the URI instance.
+     * Returns the URI instance.
      *
-     * @return \Zapheus\Http\Message\UriInterface
+     * @return \Zapheus\Http\Message\Uri
      */
-    public function getUri()
+    public function uri()
     {
         return $this->uri;
+
+        // getUri
+        // withUri
     }
 
     /**
-     * Returns an instance with the provided HTTP method.
+     * Converts $_SERVER parameters to message header values.
      *
-     * @param  string $method
-     * @return static
-     *
-     * @throws \InvalidArgumentException
+     * @param  array $server
+     * @return array
      */
-    public function withMethod($method)
+    protected function convert(array $server)
     {
-        $new = clone $this;
+        $headers = array();
 
-        $new->method = $method;
+        foreach ((array) $server as $key => $value) {
+            $http = strpos($key, 'HTTP_') === 0;
 
-        return $new;
-    }
+            $string = strtolower(substr($key, 5));
 
-    /**
-     * Returns an instance with the specific request-target.
-     *
-     * @param  mixed $target
-     * @return static
-     */
-    public function withRequestTarget($target)
-    {
-        $new = clone $this;
+            $key = str_replace('_', '-', $string);
 
-        $new->target = $target;
-
-        return $new;
-    }
-
-    /**
-     * Returns an instance with the provided URI.
-     *
-     * @param  \Zapheus\Http\Message\UriInterface $uri
-     * @param  boolean                               $preserve
-     * @return static
-     */
-    public function withUri(UriInterface $uri, $preserve = false)
-    {
-        $new = clone $this;
-
-        $new->uri = $uri;
-
-        if (! $preserve && $host = $uri->getHost()) {
-            $port = $host . ':' . $uri->getPort();
-
-            $host = $uri->getPort() ? $port : $host;
-
-            $new->headers['Host'] = array($host);
+            $http && $headers[$key] = $value;
         }
 
-        return $new;
+        return $headers;
+    }
+
+    /**
+     * Generates an UriInterface based from server values.
+     *
+     * @param  array $server
+     * @return \Zapheus\Http\Message\UriInterface
+     */
+    protected function generate(array $server)
+    {
+        $http = $server['HTTPS'] === 'off' ? 'http' : 'https';
+
+        list($name, $port) = array('localhost', 8000);
+
+        isset($server['SERVER_NAME']) && $name = isset($server['SERVER_NAME']);
+
+        isset($server['SERVER_PORT']) && $port = isset($server['SERVER_PORT']);
+
+        return new Uri($http . '://' . $name . $port . $this->target);
     }
 }

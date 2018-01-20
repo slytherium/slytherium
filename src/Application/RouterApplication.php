@@ -3,7 +3,7 @@
 namespace Zapheus\Application;
 
 use Zapheus\Application;
-use Zapheus\Http\Message\ServerRequestInterface;
+use Zapheus\Http\Message\RequestInterface;
 use Zapheus\Routing\Dispatcher;
 use Zapheus\Routing\Router;
 
@@ -33,12 +33,12 @@ class RouterApplication extends AbstractApplication
     }
 
     /**
-     * Handles the ServerRequest to convert it to a Response.
+     * Handles the Request to convert it to a Response.
      *
-     * @param  \Zapheus\Http\Message\ServerRequestInterface $request
+     * @param  \Zapheus\Http\Message\RequestInterface $request
      * @return \Zapheus\Http\Message\ResponseInterface
      */
-    public function handle(ServerRequestInterface $request)
+    public function handle(RequestInterface $request)
     {
         $dispatcher = new Dispatcher($this->router);
 

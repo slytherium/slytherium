@@ -8,17 +8,17 @@ namespace Zapheus\Http\Message;
  * @package Zapheus
  * @author  Rougin Royce Gutib <rougingutib@gmail.com>
  */
-class Message implements MessageInterface
+class Message extends Mutator implements MessageInterface
 {
     /**
-     * @var \Zapheus\Http\Message\StreamInterface
+     * @var \Zapheus\Http\Message\Collection
      */
-    protected $body;
+    protected $headers;
 
     /**
-     * @var array
+     * @var \Zapheus\Http\Message\Stream
      */
-    protected $headers = array();
+    protected $stream;
 
     /**
      * @var string
@@ -28,170 +28,56 @@ class Message implements MessageInterface
     /**
      * Initializes the message instance.
      *
-     * @param \Zapheus\Http\Message\StreamInterface|null $body
-     * @param array                                      $headers
-     * @param string                                     $version
+     * @param array $headers
      */
-    public function __construct(StreamInterface $body = null, array $headers = array(), $version = '1.1')
+    public function __construct(array $headers = array())
     {
-        $default = new Stream(fopen('php://temp', 'r+'));
+        $this->headers = new Collection($headers);
 
-        $this->body = $body === null ? $default : $body;
-
-        $this->headers = $headers;
-
-        $this->version = $version;
+        $this->stream = new Stream(fopen('php://temp', 'r+'));
     }
 
     /**
-     * Returns the body of the message.
+     * Returns all message header values.
+     *
+     * @return \Zapheus\Http\Message\Collection
+     */
+    public function headers()
+    {
+        return $this->headers;
+
+        // getHeaders
+        // hasHeader
+        // getHeader
+        // getHeaderLine
+        // withHeader
+        // withAddedHeader
+        // withoutHeader
+    }
+
+    /**
+     * Returns the stream of the message.
      *
      * @return \Zapheus\Http\Message\StreamInterface
      */
-    public function getBody()
+    public function stream()
     {
-        return $this->body;
+        return $this->stream;
+
+        // getBody
+        // withBody
     }
 
     /**
-     * Retrieves a message header value by the given case-insensitive name.
-     *
-     * @param  string $name
-     * @return string[]
-     */
-    public function getHeader($name)
-    {
-        return $this->hasHeader($name) ? $this->headers[$name] : array();
-    }
-
-    /**
-     * Retrieves a comma-separated string of the values for a single header.
-     *
-     * @param  string $name
-     * @return string
-     */
-    public function getHeaderLine($name)
-    {
-        return $this->hasHeader($name) ? implode(',', $this->headers[$name]) : '';
-    }
-
-    /**
-     * Retrieves all message header values.
-     *
-     * @return string[][]
-     */
-    public function getHeaders()
-    {
-        return $this->headers;
-    }
-
-    /**
-     * Retrieves the HTTP protocol version as a string.
+     * Returns the HTTP protocol version as a string.
      *
      * @return string
      */
-    public function getProtocolVersion()
+    public function version()
     {
         return $this->version;
-    }
 
-    /**
-     * Retrieves a message header value by the given case-insensitive name.
-     *
-     * @param  string $name
-     * @return string[]
-     */
-    public function hasHeader($name)
-    {
-        return isset($this->headers[$name]);
-    }
-
-    /**
-     * Returns an instance with the specified header appended with the given value.
-     *
-     * @throws \InvalidArgumentException
-     *
-     * @param  string          $name
-     * @param  string|string[] $value
-     * @return static
-     */
-    public function withAddedHeader($name, $value)
-    {
-        $new = clone $this;
-
-        $new->headers[$name][] = $value;
-
-        return $new;
-    }
-
-    /**
-     * Returns an instance with the specified message body.
-     *
-     * @throws \InvalidArgumentException
-     *
-     * @param  \Zapheus\Http\Message\StreamInterface $body
-     * @return static
-     */
-    public function withBody(StreamInterface $body)
-    {
-        $new = clone $this;
-
-        $new->body = $body;
-
-        return $new;
-    }
-
-    /**
-     * Returns an instance with the provided value replacing the specified header.
-     *
-     * @throws \InvalidArgumentException
-     *
-     * @param  string          $name
-     * @param  string|string[] $value
-     * @return static
-     */
-    public function withHeader($name, $value)
-    {
-        $new = clone $this;
-
-        $new->headers[$name] = is_array($value) ? $value : array($value);
-
-        return $new;
-    }
-
-    /**
-     * Returns an instance with the specified HTTP protocol version.
-     *
-     * @param  string $version
-     * @return static
-     */
-    public function withProtocolVersion($version)
-    {
-        $new = clone $this;
-
-        $new->version = $version;
-
-        return $new;
-    }
-
-    /**
-     * Returns an instance without the specified header.
-     *
-     * @param  string $name
-     * @return static
-     */
-    public function withoutHeader($name)
-    {
-        $instance = clone $this;
-
-        if ($this->hasHeader($name)) {
-            $new = clone $this;
-
-            unset($new->headers[$name]);
-
-            $instance = $new;
-        }
-
-        return $instance;
+        // getProtocolVersion
+        // withProtocolVersion
     }
 }

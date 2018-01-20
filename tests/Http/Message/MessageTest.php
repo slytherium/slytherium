@@ -26,138 +26,68 @@ class MessageTest extends \PHPUnit_Framework_TestCase
     }
 
     /**
-     * Tests MessageInterface::getBody.
+     * Tests MessageInterface::headers.
      *
      * @return void
      */
-    public function testGetBodyMethod()
+    public function testHeadersMethod()
+    {
+        $expected = array('names' => array('Rougin', 'Royce'));
+
+        $message = $this->message->set('headers', $expected);
+
+        $result = (array) $message->headers();
+
+        $this->assertEquals($expected, $result);
+    }
+
+    /**
+     * Tests MessageInterface::stream.
+     *
+     * @return void
+     */
+    public function testStreamMethod()
     {
         $expected = 'Zapheus\Http\Message\StreamInterface';
 
-        $result = $this->message->getBody();
+        $result = $this->message->stream();
 
         $this->assertInstanceOf($expected, $result);
     }
 
     /**
-     * Tests MessageInterface::getBody with another stream instance.
+     * Tests MessageInterface::stream with another stream instance.
      *
      * @return void
      */
-    public function testGetBodyMethodWithAnotherStreamInstance()
+    public function testStreamMethodWithAnotherStreamInstance()
     {
         $stream = new Stream(fopen('php://temp', 'r+'));
 
         $stream->write('Hello, world');
 
-        $message = $this->message->withBody($stream);
+        $message = $this->message->set('stream', $stream);
 
         $expected = (string) $stream;
 
-        $result = (string) $message->getBody();
+        $result = (string) $message->stream();
 
         $this->assertEquals($expected, $result);
     }
 
     /**
-     * Tests MessageInterface::getHeader.
+     * Tests MessageInterface::version.
      *
      * @return void
      */
-    public function testGetHeaderMethod()
-    {
-        $message = $this->message->withHeader('name', 'Rougin');
-
-        $expected = array('Rougin');
-
-        $result = $message->getHeader('name');
-
-        $this->assertEquals($expected, $result);
-    }
-
-    /**
-     * Tests MessageInterface::getHeaderLine.
-     *
-     * @return void
-     */
-    public function testGetHeaderLineMethod()
-    {
-        $names = array('Rougin', 'Royce');
-
-        $message = $this->message->withHeader('names', $names);
-
-        $expected = 'Rougin,Royce';
-
-        $result = $message->getHeaderLine('names');
-
-        $this->assertEquals($expected, $result);
-    }
-
-    /**
-     * Tests MessageInterface::getHeaders.
-     *
-     * @return void
-     */
-    public function testGetHeadersMethod()
-    {
-        $names = array('Rougin', 'Royce');
-
-        $message = $this->message->withHeader('names', $names);
-
-        $expected = array('names' => $names);
-
-        $result = $message->getHeaders();
-
-        $this->assertEquals($expected, $result);
-    }
-
-    /**
-     * Tests MessageInterface::withAddedHeader.
-     *
-     * @return void
-     */
-    public function testWithAddedHeaderMethod()
-    {
-        $message = $this->message->withHeader('name', 'Rougin');
-
-        $message = $message->withAddedHeader('name', 'Royce');
-
-        $expected = array('Rougin', 'Royce');
-
-        $result = $message->getHeader('name');
-
-        $this->assertEquals($expected, $result);
-    }
-
-    /**
-     * Tests MessageInterface::getProtocolVersion.
-     *
-     * @return void
-     */
-    public function testGetProtocolVersionMethod()
+    public function testVersionMethod()
     {
         $expected = '2.0';
 
-        $message = $this->message->withProtocolVersion($expected);
+        $message = $this->message->set('version', $expected);
 
-        $result = $message->getProtocolVersion();
+        $result = $message->version();
 
         $this->assertEquals($expected, $result);
-    }
-
-    /**
-     * Tests MessageInterface::withoutHeader.
-     *
-     * @return void
-     */
-    public function testWithoutHeaderMethod()
-    {
-        $message = $this->message->withHeader('name', 'Rougin');
-
-        $message = $message->withAddedHeader('framework', 'Slytherin');
-
-        $message = $message->withoutHeader('name');
-
-        $this->assertFalse($message->hasHeader('name'));
     }
 }

@@ -3,8 +3,8 @@
 namespace Zapheus\Http;
 
 use Zapheus\Container\WritableInterface;
+use Zapheus\Http\Message\Request;
 use Zapheus\Http\Message\Response;
-use Zapheus\Http\Message\ServerRequest;
 use Zapheus\Provider\ProviderInterface;
 
 /**
@@ -15,7 +15,7 @@ use Zapheus\Provider\ProviderInterface;
  */
 class MessageProvider implements ProviderInterface
 {
-    const SERVER_REQUEST = 'Zapheus\Http\Message\ServerRequestInterface';
+    const SERVER_REQUEST = 'Zapheus\Http\Message\RequestInterface';
 
     const RESPONSE = 'Zapheus\Http\Message\ResponseInterface';
 
@@ -39,7 +39,7 @@ class MessageProvider implements ProviderInterface
 
         $server = $config->get('app.http.server', $_SERVER);
 
-        $request = new ServerRequest($server, $cookies, $query, $files, $data);
+        $request = new Request($server, $cookies, $data, $files, $query);
 
         $container->set(self::RESPONSE, new Response);
 

@@ -4,7 +4,6 @@ namespace Zapheus\Application;
 
 use Zapheus\Fixture\Http\Controllers\HailController;
 use Zapheus\Fixture\Http\Controllers\LaudController;
-use Zapheus\Http\Message\ServerRequest;
 
 /**
  * Router Application Test

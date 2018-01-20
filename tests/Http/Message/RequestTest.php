@@ -22,37 +22,159 @@ class RequestTest extends \PHPUnit_Framework_TestCase
      */
     public function setUp()
     {
-        $this->request = new Request;
+        $_SERVER['REQUEST_METHOD'] = 'GET';
+
+        $_SERVER['REQUEST_URI'] = '/';
+
+        $_SERVER['SERVER_NAME'] = 'rougin.github.io';
+
+        $_SERVER['SERVER_PORT'] = 8000;
+
+        $_SERVER['HTTPS'] = 'off';
+
+        $this->request = new Request($_SERVER);
     }
 
     /**
-     * Tests RequestInterface::getRequestTarget.
+     * Tests RequestInterface::attributes.
      *
      * @return void
      */
-    public function testGetRequestTargetMethod()
+    public function testAttributesMethod()
     {
-        $expected = 'origin-form';
+        $expected = array('name' => 'Rougin Royce');
 
-        $request = $this->request->withRequestTarget($expected);
+        $request = $this->request->set('attributes', $expected);
 
-        $result = $request->getRequestTarget();
+        $result = $request->attributes();
 
         $this->assertEquals($expected, $result);
     }
 
     /**
-     * Tests RequestInterface::getMethod.
+     * Tests RequestInterface::cookies.
      *
      * @return void
      */
-    public function testGetMethodMethod()
+    public function testCookiesMethod()
+    {
+        $expected = array('name' => 'Rougin', 'address' => 'Tomorrowland');
+
+        $request = $this->request->set('cookies', $expected);
+
+        $result = $request->cookies();
+
+        $this->assertEquals($expected, $result);
+    }
+
+    /**
+     * Tests RequestInterface::data.
+     *
+     * @return void
+     */
+    public function testDataMethod()
+    {
+        $expected = array('name' => 'Rougin Royce', 'age' => 20);
+
+        $request = $this->request->set('data', $expected);
+
+        $result = $request->data();
+
+        $this->assertEquals($expected, $result);
+    }
+
+    /**
+     * Tests RequestInterface::files.
+     *
+     * @return void
+     */
+    public function testFilesMethod()
+    {
+        $file = new File('/test.txt', 0, 0, 'test.txt', 'text/plain');
+
+        $expected = array($file);
+
+        $request = $this->request->set('files', $expected);
+
+        $result = $request->files();
+
+        $this->assertEquals($expected, $result);
+    }
+
+    /**
+     * Tests RequestInterface::method.
+     *
+     * @return void
+     */
+    public function testMethodMethod()
     {
         $expected = 'POST';
 
-        $request = $this->request->withMethod($expected);
+        $request = $this->request->set('method', $expected);
 
-        $result = $request->getMethod();
+        $result = $request->method();
+
+        $this->assertEquals($expected, $result);
+    }
+
+    /**
+     * Tests RequestInterface::query.
+     *
+     * @return void
+     */
+    public function testQueryMethod()
+    {
+        $expected = array('name' => 'Rougin Royce', 'age' => 20);
+
+        $request = $this->request->set('query', $expected);
+
+        $result = $request->query();
+
+        $this->assertEquals($expected, $result);
+    }
+
+    /**
+     * Tests RequestInterface::server.
+     *
+     * @return void
+     */
+    public function testServerMethod()
+    {
+        $result = $this->request->server()->all();
+
+        $expected = $_SERVER;
+
+        $this->assertEquals($expected, $result);
+    }
+
+    /**
+     * Tests RequestInterface::target.
+     *
+     * @return void
+     */
+    public function testTargetMethod()
+    {
+        $expected = 'origin-form';
+
+        $request = $this->request->set('target', $expected);
+
+        $result = $request->target();
+
+        $this->assertEquals($expected, $result);
+    }
+
+    /**
+     * Tests RequestInterface::uri.
+     *
+     * @return void
+     */
+    public function testUriMethod()
+    {
+        $expected = new Uri('https://rougin.github.io');
+
+        $request = $this->request->set('uri', $expected);
+
+        $result = $request->uri();
 
         $this->assertEquals($expected, $result);
     }

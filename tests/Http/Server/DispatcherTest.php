@@ -4,7 +4,7 @@ namespace Zapheus\Http\Server;
 
 use Zapheus\Fixture\Http\Middlewares\FinalMiddleware;
 use Zapheus\Fixture\Http\Middlewares\JsonMiddleware;
-use Zapheus\Http\Message\ServerRequest;
+use Zapheus\Http\Message\Request;
 use Zapheus\Http\Message\Stream;
 use Zapheus\Http\Server\Dispatcher;
 
@@ -22,7 +22,7 @@ class DispatcherTest extends \PHPUnit_Framework_TestCase
     protected $dispatcher;
 
     /**
-     * @var \Zapheus\Http\Message\ServerRequestInterface
+     * @var \Zapheus\Http\Message\RequestInterface
      */
     protected $request;
 
@@ -44,7 +44,7 @@ class DispatcherTest extends \PHPUnit_Framework_TestCase
         $server['SERVER_NAME'] = 'rougin.github.io';
         $server['SERVER_PORT'] = 8000;
 
-        $this->request = new ServerRequest($server);
+        $this->request = new Request($server);
     }
 
     /**
@@ -60,7 +60,7 @@ class DispatcherTest extends \PHPUnit_Framework_TestCase
 
         $response = $this->dispatcher->dispatch($this->request);
 
-        $result = $response->getHeader('Content-Type');
+        $result = $response->headers()->get('Content-Type');
 
         $this->assertEquals($expected, $result);
     }
@@ -77,17 +77,17 @@ class DispatcherTest extends \PHPUnit_Framework_TestCase
 
             $stream = new Stream(fopen('php://temp', 'r+'));
 
-            $text = (string) $response->getBody();
+            $text = (string) $response->stream();
 
             $stream->write($text . ' world');
 
-            return $response->withBody($stream);
+            return $response->set('stream', $stream);
         });
 
         $this->dispatcher->pipe(function ($request, $next) {
             $response = $next($request);
 
-            $response->getBody()->write('Hello');
+            $response->stream()->write('Hello');
 
             return $response;
         });
@@ -98,7 +98,7 @@ class DispatcherTest extends \PHPUnit_Framework_TestCase
 
         $response = $this->dispatcher->dispatch($this->request);
 
-        $result = (string) $response->getBody();
+        $result = (string) $response->stream();
 
         $this->assertEquals($expected, $result);
     }
@@ -116,7 +116,7 @@ class DispatcherTest extends \PHPUnit_Framework_TestCase
 
         $response = $this->dispatcher->dispatch($this->request);
 
-        $result = $response->getHeader('Content-Type');
+        $result = $response->headers()->get('Content-Type');
 
         $this->assertEquals($expected, $result);
     }

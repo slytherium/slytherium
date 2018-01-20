@@ -3,7 +3,7 @@
 namespace Zapheus\Application;
 
 use Zapheus\Container\ReflectionContainer;
-use Zapheus\Http\Message\ServerRequest;
+use Zapheus\Http\Message\Request;
 
 /**
  * Abstract Test Case
@@ -32,7 +32,7 @@ abstract class AbstractTestCase extends \PHPUnit_Framework_TestCase
     }
 
     /**
-     * Creates a dummy server request instance.
+     * Creates a dummy request instance.
      *
      * @param  string $method
      * @param  string $uri
@@ -40,14 +40,14 @@ abstract class AbstractTestCase extends \PHPUnit_Framework_TestCase
      */
     protected function request($method, $uri)
     {
-        $interface = 'Zapheus\Http\Message\ServerRequestInterface';
+        $interface = 'Zapheus\Http\Message\RequestInterface';
 
         $_SERVER['REQUEST_METHOD'] = $method;
         $_SERVER['REQUEST_URI'] = $uri;
         $_SERVER['SERVER_NAME'] = 'rougin.github.io';
         $_SERVER['SERVER_PORT'] = 8000;
 
-        $request = new ServerRequest($_SERVER);
+        $request = new Request($_SERVER);
 
         $this->application->delegate(new ReflectionContainer);
 

@@ -11,50 +11,64 @@ namespace Zapheus\Http\Message;
 interface RequestInterface extends MessageInterface
 {
     /**
-     * Retrieves the HTTP method of the request.
+     * Returns an array of attributes derived from the request.
+     *
+     * @return array
+     */
+    public function attributes();
+
+    /**
+     * Returns the cookies from the request.
+     *
+     * @return array
+     */
+    public function cookies();
+
+    /**
+     * Returns any parameters provided in the request body.
+     *
+     * @return null|array|object
+     */
+    public function data();
+    /**
+     * Returns normalized file upload data.
+     *
+     * @return \Zapheus\Http\Message\UploadedFileInterface[]
+     */
+    public function files();
+
+    /**
+     * Returns the HTTP method of the request.
      *
      * @return string
      */
-    public function getMethod();
+    public function method();
 
     /**
-     * Retrieves the message's request target.
+     * Returns the query string arguments.
+     *
+     * @return array
+     */
+    public function query();
+
+    /**
+     * Returns server parameters.
+     *
+     * @return array
+     */
+    public function server();
+
+    /**
+     * Returns the message's request target.
      *
      * @return string
      */
-    public function getRequestTarget();
+    public function target();
 
     /**
-     * Retrieves the URI instance.
+     * Returns the URI instance.
      *
-     * @return \Zapheus\Http\Message\UriInterface
+     * @return \Zapheus\Http\Message\Uri
      */
-    public function getUri();
-
-    /**
-     * Returns an instance with the provided HTTP method.
-     *
-     * @param  string $method
-     * @return static
-     *
-     * @throws \InvalidArgumentException
-     */
-    public function withMethod($method);
-
-    /**
-     * Returns an instance with the specific request-target.
-     *
-     * @param  mixed $target
-     * @return static
-     */
-    public function withRequestTarget($target);
-
-    /**
-     * Returns an instance with the provided URI.
-     *
-     * @param  \Zapheus\Http\Message\UriInterface $uri
-     * @param  boolean                               $preserve
-     * @return static
-     */
-    public function withUri(UriInterface $uri, $preserve = false);
+    public function uri();
 }

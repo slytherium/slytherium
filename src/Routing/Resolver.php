@@ -18,7 +18,7 @@ class Resolver implements ResolverInterface
     protected $container;
 
     /**
-     * @var callable|string
+     * @var array|callable|string
      */
     protected $handler;
 

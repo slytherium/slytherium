@@ -18,7 +18,7 @@ class Resolver implements ResolverInterface
     protected $container;
 
     /**
-     * @var object|mixed
+     * @var callable|string
      */
     protected $handler;
 
@@ -30,8 +30,8 @@ class Resolver implements ResolverInterface
     /**
      * Initializes the resolver instance.
      *
-     * @param object|mixed $handler
-     * @param array        $parameters
+     * @param callable|string $handler
+     * @param array           $parameters
      */
     public function __construct($handler, $parameters)
     {

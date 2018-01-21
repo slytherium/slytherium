@@ -42,9 +42,7 @@ class Stream implements StreamInterface
      */
     public function __construct($stream = null)
     {
-        $stream === false && $stream = null;
-
-        $this->stream = $stream;
+        $this->stream = $stream === false ? null : $stream;
     }
 
     /**

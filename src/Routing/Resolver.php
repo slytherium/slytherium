@@ -18,7 +18,7 @@ class Resolver implements ResolverInterface
     protected $container;
 
     /**
-     * @var callable|string
+     * @var object|mixed
      */
     protected $handler;
 
@@ -30,8 +30,8 @@ class Resolver implements ResolverInterface
     /**
      * Initializes the resolver instance.
      *
-     * @param callable|string $handler
-     * @param array           $parameters
+     * @param object|mixed $handler
+     * @param array        $parameters
      */
     public function __construct($handler, $parameters)
     {
@@ -107,7 +107,7 @@ class Resolver implements ResolverInterface
         foreach ($reflection->getParameters() as $key => $parameter) {
             $class = $parameter->getClass();
 
-            $name = $class ? $class->getName() : $parameter->getName();
+            $name = $class !== null ? $class->getName() : $parameter->getName();
 
             $default = isset($parameters[$name]) ? $parameters[$name] : null;
 

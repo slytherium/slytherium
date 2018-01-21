@@ -66,7 +66,7 @@ class Route
     /**
      * Returns the handler.
      *
-     * @return string|callble
+     * @return string|callable
      */
     public function handler()
     {

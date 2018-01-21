@@ -5,6 +5,7 @@ namespace Zapheus\Application;
 use Zapheus\Application;
 use Zapheus\Http\Message\RequestInterface;
 use Zapheus\Routing\Dispatcher;
+use Zapheus\Routing\Route;
 use Zapheus\Routing\Router;
 
 /**
@@ -56,7 +57,9 @@ class RouterApplication extends AbstractApplication
      */
     public function connect($uri, $handler)
     {
-        return $this->router->connect($uri, $handler);
+        $route = new Route('CONNECT', $uri, $handler);
+
+        return $this->router->add($route);
     }
 
     /**
@@ -68,7 +71,9 @@ class RouterApplication extends AbstractApplication
      */
     public function delete($uri, $handler)
     {
-        return $this->router->delete($uri, $handler);
+        $route = new Route('DELETE', $uri, $handler);
+
+        return $this->router->add($route);
     }
 
     /**
@@ -80,7 +85,9 @@ class RouterApplication extends AbstractApplication
      */
     public function get($uri, $handler)
     {
-        return $this->router->get($uri, $handler);
+        $route = new Route('GET', $uri, $handler);
+
+        return $this->router->add($route);
     }
 
     /**
@@ -92,7 +99,9 @@ class RouterApplication extends AbstractApplication
      */
     public function head($uri, $handler)
     {
-        return $this->router->head($uri, $handler);
+        $route = new Route('HEAD', $uri, $handler);
+
+        return $this->router->add($route);
     }
 
     /**
@@ -104,7 +113,9 @@ class RouterApplication extends AbstractApplication
      */
     public function options($uri, $handler)
     {
-        return $this->router->options($uri, $handler);
+        $route = new Route('OPTIONS', $uri, $handler);
+
+        return $this->router->add($route);
     }
 
     /**
@@ -116,7 +127,9 @@ class RouterApplication extends AbstractApplication
      */
     public function patch($uri, $handler)
     {
-        return $this->router->patch($uri, $handler);
+        $route = new Route('PATCH', $uri, $handler);
+
+        return $this->router->add($route);
     }
 
     /**
@@ -128,7 +141,9 @@ class RouterApplication extends AbstractApplication
      */
     public function post($uri, $handler)
     {
-        return $this->router->post($uri, $handler);
+        $route = new Route('POST', $uri, $handler);
+
+        return $this->router->add($route);
     }
 
     /**
@@ -140,7 +155,9 @@ class RouterApplication extends AbstractApplication
      */
     public function purge($uri, $handler)
     {
-        return $this->router->purge($uri, $handler);
+        $route = new Route('PURGE', $uri, $handler);
+
+        return $this->router->add($route);
     }
 
     /**
@@ -152,7 +169,9 @@ class RouterApplication extends AbstractApplication
      */
     public function put($uri, $handler)
     {
-        return $this->router->put($uri, $handler);
+        $route = new Route('PUT', $uri, $handler);
+
+        return $this->router->add($route);
     }
 
     /**
@@ -164,6 +183,8 @@ class RouterApplication extends AbstractApplication
      */
     public function trace($uri, $handler)
     {
-        return $this->router->trace($uri, $handler);
+        $route = new Route('TRACE', $uri, $handler);
+
+        return $this->router->add($route);
     }
 }

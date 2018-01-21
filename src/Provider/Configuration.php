@@ -50,7 +50,9 @@ class Configuration implements ConfigurationInterface
 
         $items = $result !== null ? $result : $default;
 
-        return $dotify ? $this->dotify($items) : $items;
+        $exists = is_array($items) && $dotify === true;
+
+        return $exists ? $this->dotify($items) : $items;
     }
 
     /**

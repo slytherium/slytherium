@@ -57,12 +57,10 @@ class ReflectionContainer implements ContainerInterface
      */
     protected function argument(\ReflectionParameter $parameter, $name)
     {
-        $argument = null;
-
         try {
             $argument = $parameter->getDefaultValue();
         } catch (\ReflectionException $exception) {
-            $argument = $argument ?: $this->get($name);
+            $argument = $this->get($name);
         }
 
         return $argument;
@@ -81,7 +79,7 @@ class ReflectionContainer implements ContainerInterface
         foreach ($reflection->getParameters() as $key => $parameter) {
             $class = $parameter->getClass();
 
-            $name = $class ? $class->getName() : $parameter->getName();
+            $name = $class !== null ? $class->getName() : $parameter->getName();
 
             $arguments[$key] = $this->argument($parameter, $name);
         }

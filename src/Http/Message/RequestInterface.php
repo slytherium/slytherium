@@ -27,7 +27,7 @@ interface RequestInterface extends MessageInterface
     /**
      * Returns any parameters provided in the request body.
      *
-     * @return null|array|object
+     * @return array|null|object
      */
     public function data();
 

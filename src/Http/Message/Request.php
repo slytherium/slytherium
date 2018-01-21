@@ -58,12 +58,12 @@ class Request extends Message implements RequestInterface
     /**
      * Initializes the request instance.
      *
-     * @param array      $server
-     * @param array      $cookies
-     * @param array|null $data
-     * @param array      $files
-     * @param array      $query
-     * @param array      $attributes
+     * @param array             $server
+     * @param array             $cookies
+     * @param array|null|object $data
+     * @param array             $files
+     * @param array             $query
+     * @param array             $attributes
      */
     public function __construct(array $server, array $cookies = array(), $data = null, array $files = array(), array $query = array(), array $attributes = array())
     {
@@ -119,7 +119,7 @@ class Request extends Message implements RequestInterface
     /**
      * Returns any parameters provided in the request body.
      *
-     * @return null|array|object
+     * @return array|null|object
      */
     public function data()
     {

@@ -30,6 +30,7 @@ interface RequestInterface extends MessageInterface
      * @return null|array|object
      */
     public function data();
+
     /**
      * Returns normalized file upload data.
      *

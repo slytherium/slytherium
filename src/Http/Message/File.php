@@ -111,7 +111,7 @@ class File implements FileInterface
     {
         $stream = fopen($this->file, 'r');
 
-        $stream === false && $stream = null;
+        $stream = $stream === false ? null : $stream;
 
         return new Stream($stream);
     }

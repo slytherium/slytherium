@@ -36,7 +36,7 @@ class Message extends Mutator implements MessageInterface
 
         $stream = fopen('php://temp', 'r+');
 
-        $stream === false && $stream = null;
+        $stream = $stream === false ? null : $stream;
 
         $this->stream = new Stream($stream);
     }

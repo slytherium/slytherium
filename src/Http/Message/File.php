@@ -11,7 +11,7 @@ namespace Zapheus\Http\Message;
 class File implements FileInterface
 {
     /**
-     * @var integer|UPLOAD_ERR_OK
+     * @var integer|\UPLOAD_ERR_OK
      */
     protected $error;
 

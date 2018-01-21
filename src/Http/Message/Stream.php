@@ -38,10 +38,12 @@ class Stream implements StreamInterface
     /**
      * Initializes the stream instance.
      *
-     * @param resource|null $stream
+     * @param boolean|resource|null $stream
      */
     public function __construct($stream = null)
     {
+        $stream === false && $stream = null;
+
         $this->stream = $stream;
     }
 

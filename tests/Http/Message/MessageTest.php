@@ -34,9 +34,11 @@ class MessageTest extends \PHPUnit_Framework_TestCase
     {
         $expected = array('names' => array('Rougin', 'Royce'));
 
-        $message = $this->message->set('headers', $expected);
+        $headers = new Collection($expected);
 
-        $result = (array) $message->headers();
+        $message = $this->message->set('headers', $headers);
+
+        $result = $message->headers()->all();
 
         $this->assertEquals($expected, $result);
     }

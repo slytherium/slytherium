@@ -13,7 +13,7 @@ interface MessageInterface extends MutatorInterface
     /**
      * Returns all message header values.
      *
-     * @return array
+     * @return \Zapheus\Http\Message\Collection
      */
     public function headers();
 

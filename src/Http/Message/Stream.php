@@ -131,7 +131,7 @@ class Stream implements StreamInterface
     }
 
     /**
-     * Read data from the stream.
+     * Reads data from the stream.
      *
      * @param  integer $length
      * @return string
@@ -164,7 +164,7 @@ class Stream implements StreamInterface
     }
 
     /**
-     * Seek to the beginning of the stream.
+     * Seeks to the beginning of the stream.
      *
      * @throws \RuntimeException
      */
@@ -174,7 +174,7 @@ class Stream implements StreamInterface
     }
 
     /**
-     * Seek to a position in the stream.
+     * Seeks to a position in the stream.
      *
      * @param integer $offset
      * @param integer $whence
@@ -255,7 +255,7 @@ class Stream implements StreamInterface
     }
 
     /**
-     * Write data to the stream.
+     * Writes data to the stream.
      *
      * @param  string $string
      * @return integer

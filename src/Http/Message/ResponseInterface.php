@@ -8,6 +8,19 @@ namespace Zapheus\Http\Message;
  * @package Zapheus
  * @author  Rougin Royce Gutib <rougingutib@gmail.com>
  */
-interface ResponseInterface
+interface ResponseInterface extends MessageInterface
 {
+    /**
+     * Returns the response status code.
+     *
+     * @return integer
+     */
+    public function code();
+
+    /**
+     * Returns the response reason phrase associated with the status code.
+     *
+     * @return string
+     */
+    public function reason();
 }

@@ -34,7 +34,11 @@ class Message extends Mutator implements MessageInterface
     {
         $this->headers = new Collection($headers);
 
-        $this->stream = new Stream(fopen('php://temp', 'r+'));
+        $stream = fopen('php://temp', 'r+');
+
+        $stream === false && $stream = null;
+
+        $this->stream = new Stream($stream);
     }
 
     /**

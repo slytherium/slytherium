@@ -109,7 +109,11 @@ class File implements FileInterface
      */
     public function stream()
     {
-        return new Stream(fopen($this->file, 'r'));
+        $stream = fopen($this->file, 'r');
+
+        $stream === false && $stream = null;
+
+        return new Stream($stream);
     }
 
     /**

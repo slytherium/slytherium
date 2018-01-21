@@ -62,7 +62,7 @@ echo $app->run();
 
 ``` php
 use Zapheus\Application;
-use Zapheus\Http\Message\ServerRequestInterface;
+use Zapheus\Http\Message\RequestInterface;
 use Zapheus\Http\Server\HandlerInterface;
 use Zapheus\Http\Server\MiddlewareInterface;
 use Zapheus\Routing\Dispatcher;
@@ -79,17 +79,17 @@ class RouterMiddleware implements MiddlewareInterface
     /**
      * Processes an incoming server request and return a response.
      *
-     * @param  \Zapheus\Http\Message\ServerRequestInterface $request
-     * @param  \Zapheus\Http\Server\HandlerInterface        $handler
+     * @param  \Zapheus\Http\Message\RequestInterface $request
+     * @param  \Zapheus\Http\Server\HandlerInterface  $handler
      * @return \Zapheus\Http\Message\ResponseInterface
      */
-    public function process(ServerRequestInterface $request, HandlerInterface $handler)
+    public function process(RequestInterface $request, HandlerInterface $handler)
     {
         // Returns the path from the URI instance
-        $path = $request->getUri()->getPath();
+        $path = $request->uri()->path();
 
         // Returns the current HTTP method from the $_SERVER
-        $method = $request->getMethod();
+        $method = $request->method();
 
         // Creates the router dispatcher instance 
         $dispatcher = new Dispatcher($this->router());
@@ -99,7 +99,11 @@ class RouterMiddleware implements MiddlewareInterface
 
         // Sets the resolver attribute into the request in order to be
         // called inside the Application instance and return the response.
-        $request = $request->withAttribute($this->attribute, $resolver);
+        $attributes = $request->attributes();
+
+        $attributes->set($this->attribute, $resolver);
+
+        $request = $request->set('attributes', $attributes);
 
         // Handles the next middleware
         return $handler->handle($request);
@@ -113,7 +117,7 @@ class RouterMiddleware implements MiddlewareInterface
     protected function router()
     {
         // Initializes the HTTP router
-        $router = new Zapheus\Routing\Router;
+        $router = new \Zapheus\Routing\Router;
 
         // Creates a HTTP route of GET /
         $router->get('/', 'GreetController@greet');

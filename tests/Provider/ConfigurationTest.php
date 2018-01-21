@@ -16,7 +16,7 @@ class ConfigurationTest extends \PHPUnit_Framework_TestCase
     protected $config;
 
     /**
-     * Sets up the config instance.
+     * Sets up the configuration instance.
      *
      * @return void
      */

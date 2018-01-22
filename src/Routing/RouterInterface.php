@@ -19,9 +19,9 @@ interface RouterInterface
     public function add(Route $route);
 
     /**
-     * Returns a listing of routes.
+     * Returns an array of routes.
      *
-     * @return array
+     * @return \Zapheus\Routing\Route[]
      */
     public function routes();
 }

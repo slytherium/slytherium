@@ -31,11 +31,10 @@ interface ConfigurationInterface extends \ArrayAccess
     /**
      * Loads the configuration from a specified file or directory.
      *
-     * @param  string  $path
-     * @param  boolean $directory
-     * @return self
+     * @param  string $path
+     * @return void
      */
-    public function load($path, $directory = false);
+    public function load($path);
 
     /**
      * Sets the value to the specified key.

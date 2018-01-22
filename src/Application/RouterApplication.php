@@ -49,7 +49,7 @@ class RouterApplication extends AbstractApplication
     }
 
     /**
-     * Adds a new Route instance in CONNECT HTTP method.
+     * Adds a new route instance in CONNECT HTTP method.
      *
      * @param  string          $uri
      * @param  string|callable $handler
@@ -57,13 +57,11 @@ class RouterApplication extends AbstractApplication
      */
     public function connect($uri, $handler)
     {
-        $route = new Route('CONNECT', $uri, $handler);
-
-        return $this->router->add($route);
+        return $this->router->connect($uri, $handler);
     }
 
     /**
-     * Adds a new Route instance in DELETE HTTP method.
+     * Adds a new route instance in DELETE HTTP method.
      *
      * @param  string          $uri
      * @param  string|callable $handler
@@ -71,13 +69,11 @@ class RouterApplication extends AbstractApplication
      */
     public function delete($uri, $handler)
     {
-        $route = new Route('DELETE', $uri, $handler);
-
-        return $this->router->add($route);
+        return $this->router->delete($uri, $handler);
     }
 
     /**
-     * Adds a new Route instance in GET HTTP method.
+     * Adds a new route instance in GET HTTP method.
      *
      * @param  string          $uri
      * @param  string|callable $handler
@@ -85,13 +81,11 @@ class RouterApplication extends AbstractApplication
      */
     public function get($uri, $handler)
     {
-        $route = new Route('GET', $uri, $handler);
-
-        return $this->router->add($route);
+        return $this->router->get($uri, $handler);
     }
 
     /**
-     * Adds a new Route instance in HEAD HTTP method.
+     * Adds a new route instance in HEAD HTTP method.
      *
      * @param  string          $uri
      * @param  string|callable $handler
@@ -99,13 +93,11 @@ class RouterApplication extends AbstractApplication
      */
     public function head($uri, $handler)
     {
-        $route = new Route('HEAD', $uri, $handler);
-
-        return $this->router->add($route);
+        return $this->router->head($uri, $handler);
     }
 
     /**
-     * Adds a new Route instance in OPTIONS HTTP method.
+     * Adds a new route instance in OPTIONS HTTP method.
      *
      * @param  string          $uri
      * @param  string|callable $handler
@@ -113,13 +105,11 @@ class RouterApplication extends AbstractApplication
      */
     public function options($uri, $handler)
     {
-        $route = new Route('OPTIONS', $uri, $handler);
-
-        return $this->router->add($route);
+        return $this->router->options($uri, $handler);
     }
 
     /**
-     * Adds a new Route instance in PATCH HTTP method.
+     * Adds a new route instance in PATCH HTTP method.
      *
      * @param  string          $uri
      * @param  string|callable $handler
@@ -127,13 +117,11 @@ class RouterApplication extends AbstractApplication
      */
     public function patch($uri, $handler)
     {
-        $route = new Route('PATCH', $uri, $handler);
-
-        return $this->router->add($route);
+        return $this->router->patch($uri, $handler);
     }
 
     /**
-     * Adds a new Route instance in POST HTTP method.
+     * Adds a new route instance in POST HTTP method.
      *
      * @param  string          $uri
      * @param  string|callable $handler
@@ -141,13 +129,11 @@ class RouterApplication extends AbstractApplication
      */
     public function post($uri, $handler)
     {
-        $route = new Route('POST', $uri, $handler);
-
-        return $this->router->add($route);
+        return $this->router->post($uri, $handler);
     }
 
     /**
-     * Adds a new Route instance in PURGE HTTP method.
+     * Adds a new route instance in PURGE HTTP method.
      *
      * @param  string          $uri
      * @param  string|callable $handler
@@ -155,13 +141,11 @@ class RouterApplication extends AbstractApplication
      */
     public function purge($uri, $handler)
     {
-        $route = new Route('PURGE', $uri, $handler);
-
-        return $this->router->add($route);
+        return $this->router->purge($uri, $handler);
     }
 
     /**
-     * Adds a new Route instance in PUT HTTP method.
+     * Adds a new route instance in PUT HTTP method.
      *
      * @param  string          $uri
      * @param  string|callable $handler
@@ -169,13 +153,11 @@ class RouterApplication extends AbstractApplication
      */
     public function put($uri, $handler)
     {
-        $route = new Route('PUT', $uri, $handler);
-
-        return $this->router->add($route);
+        return $this->router->put($uri, $handler);
     }
 
     /**
-     * Adds a new Route instance in TRACE HTTP method.
+     * Adds a new route instance in TRACE HTTP method.
      *
      * @param  string          $uri
      * @param  string|callable $handler
@@ -183,8 +165,6 @@ class RouterApplication extends AbstractApplication
      */
     public function trace($uri, $handler)
     {
-        $route = new Route('TRACE', $uri, $handler);
-
-        return $this->router->add($route);
+        return $this->router->trace($uri, $handler);
     }
 }

@@ -96,7 +96,7 @@ class ConfigurationTest extends \PHPUnit_Framework_TestCase
     {
         $expected = 'Zapheus Framework';
 
-        $path = str_replace('Provider', 'Fixture', __DIR__) . '/Config/App.php';
+        $path = str_replace('Provider', 'Fixture', __DIR__) . '/Config';
 
         $this->config->load($path);
 

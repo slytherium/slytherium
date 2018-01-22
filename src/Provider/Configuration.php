@@ -58,26 +58,30 @@ class Configuration implements ConfigurationInterface
     /**
      * Loads the configuration from a specified file or directory.
      *
-     * @param  string  $path
-     * @param  boolean $directory
-     * @param  array   $data
-     * @return self
+     * @param  string $path
+     * @return void
      */
-    public function load($path, $directory = false, $data = array())
+    public function load($path)
     {
-        $items = $directory ? glob($path . '/**/*.php') : array($path);
+        list($data, $items) = array(array(), array($path));
 
-        foreach ((array) $items as $configuration) {
-            $name = basename($configuration, '.php');
+        if (substr($path, -4) !== '.php') {
+            $folder = new \RecursiveDirectoryIterator($path);
 
-            $name = strtolower($name);
+            $items = new \RecursiveIteratorIterator($folder);
 
-            $data[$name] = require $configuration;
+            $items = new \RegexIterator($items, '/^.+\.php$/i', 1);
+        }
+
+        foreach ($items as $item) {
+            $item = is_array($item) ? $item[0] : $item;
+
+            $name = basename((string) $item, '.php');
+
+            $data[strtolower($name)] = require $item;
         }
 
         $this->data = array_merge($this->data, $data);
-
-        return $this;
     }
 
     /**
@@ -185,9 +189,9 @@ class Configuration implements ConfigurationInterface
     /**
      * Saves the specified key in the list of data.
      *
-     * @param  array  &$keys
-     * @param  array  &$data
-     * @param  mixed  $value
+     * @param  array &$keys
+     * @param  array &$data
+     * @param  mixed $value
      * @return mixed
      */
     protected function save(array &$keys, &$data, $value)

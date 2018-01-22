@@ -4,6 +4,7 @@ namespace Zapheus\Application;
 
 use Zapheus\Application;
 use Zapheus\Fixture\Http\Controllers\HailController;
+use Zapheus\Fixture\Providers\TestProvider;
 use Zapheus\Http\Message\Response;
 use Zapheus\Routing\Dispatcher;
 use Zapheus\Routing\Router;
@@ -42,6 +43,34 @@ class ApplicationTest extends AbstractTestCase
         $response = new Response(200, $headers);
 
         $this->application->set($interface, $response);
+    }
+
+    /**
+     * Tests Application::has.
+     *
+     * @return void
+     */
+    public function testHasMethod()
+    {
+        $interface = 'Zapheus\Http\Message\ResponseInterface';
+
+        $this->assertTrue($this->application->has($interface));
+    }
+
+    /**
+     * Tests Application::providers.
+     *
+     * @return void
+     */
+    public function testProvidersMethod()
+    {
+        $this->application->add($test = new TestProvider);
+
+        $expected = array(get_class($test));
+
+        $result = $this->application->providers();
+
+        $this->assertEquals($expected, $result);
     }
 
     /**

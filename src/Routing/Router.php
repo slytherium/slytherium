@@ -11,7 +11,12 @@ namespace Zapheus\Routing;
 class Router implements RouterInterface
 {
     /**
-     * @var array
+     * @var string
+     */
+    protected $namespace = '';
+
+    /**
+     * @var \Zapheus\Routing\Route[]
      */
     protected $routes = array();
 
@@ -26,7 +31,7 @@ class Router implements RouterInterface
     }
 
     /**
-     * Adds a new Route instance to the collection.
+     * Adds a new route instance to the collection.
      *
      * @param  \Zapheus\Routing\Route $route
      * @return self
@@ -36,6 +41,42 @@ class Router implements RouterInterface
         $this->routes[] = $route;
 
         return $this;
+    }
+
+    /**
+     * Adds a new route instance in CONNECT HTTP method.
+     *
+     * @param  string          $uri
+     * @param  string|callable $handler
+     * @return self
+     */
+    public function connect($uri, $handler)
+    {
+        return $this->add($this->route('CONNECT', $uri, $handler));
+    }
+
+    /**
+     * Adds a new route instance in DELETE HTTP method.
+     *
+     * @param  string          $uri
+     * @param  string|callable $handler
+     * @return self
+     */
+    public function delete($uri, $handler)
+    {
+        return $this->add($this->route('DELETE', $uri, $handler));
+    }
+
+    /**
+     * Adds a new route instance in GET HTTP method.
+     *
+     * @param  string          $uri
+     * @param  string|callable $handler
+     * @return self
+     */
+    public function get($uri, $handler)
+    {
+        return $this->add($this->route('GET', $uri, $handler));
     }
 
     /**
@@ -50,53 +91,7 @@ class Router implements RouterInterface
     }
 
     /**
-     * Returns a listing of routes.
-     *
-     * @return array
-     */
-    public function routes()
-    {
-        return $this->routes;
-    }
-
-    /**
-     * Adds a new Route instance in CONNECT HTTP method.
-     *
-     * @param  string          $uri
-     * @param  string|callable $handler
-     * @return self
-     */
-    public function connect($uri, $handler)
-    {
-        return $this->add(new Route('CONNECT', $uri, $handler));
-    }
-
-    /**
-     * Adds a new Route instance in DELETE HTTP method.
-     *
-     * @param  string          $uri
-     * @param  string|callable $handler
-     * @return self
-     */
-    public function delete($uri, $handler)
-    {
-        return $this->add(new Route('DELETE', $uri, $handler));
-    }
-
-    /**
-     * Adds a new Route instance in GET HTTP method.
-     *
-     * @param  string          $uri
-     * @param  string|callable $handler
-     * @return self
-     */
-    public function get($uri, $handler)
-    {
-        return $this->add(new Route('GET', $uri, $handler));
-    }
-
-    /**
-     * Adds a new Route instance in HEAD HTTP method.
+     * Adds a new route instance in HEAD HTTP method.
      *
      * @param  string          $uri
      * @param  string|callable $handler
@@ -104,11 +99,11 @@ class Router implements RouterInterface
      */
     public function head($uri, $handler)
     {
-        return $this->add(new Route('HEAD', $uri, $handler));
+        return $this->add($this->route('HEAD', $uri, $handler));
     }
 
     /**
-     * Adds a new Route instance in OPTIONS HTTP method.
+     * Adds a new route instance in OPTIONS HTTP method.
      *
      * @param  string          $uri
      * @param  string|callable $handler
@@ -116,11 +111,11 @@ class Router implements RouterInterface
      */
     public function options($uri, $handler)
     {
-        return $this->add(new Route('OPTIONS', $uri, $handler));
+        return $this->add($this->route('OPTIONS', $uri, $handler));
     }
 
     /**
-     * Adds a new Route instance in PATCH HTTP method.
+     * Adds a new route instance in PATCH HTTP method.
      *
      * @param  string          $uri
      * @param  string|callable $handler
@@ -128,11 +123,11 @@ class Router implements RouterInterface
      */
     public function patch($uri, $handler)
     {
-        return $this->add(new Route('PATCH', $uri, $handler));
+        return $this->add($this->route('PATCH', $uri, $handler));
     }
 
     /**
-     * Adds a new Route instance in POST HTTP method.
+     * Adds a new route instance in POST HTTP method.
      *
      * @param  string          $uri
      * @param  string|callable $handler
@@ -140,11 +135,11 @@ class Router implements RouterInterface
      */
     public function post($uri, $handler)
     {
-        return $this->add(new Route('POST', $uri, $handler));
+        return $this->add($this->route('POST', $uri, $handler));
     }
 
     /**
-     * Adds a new Route instance in PURGE HTTP method.
+     * Adds a new route instance in PURGE HTTP method.
      *
      * @param  string          $uri
      * @param  string|callable $handler
@@ -152,11 +147,11 @@ class Router implements RouterInterface
      */
     public function purge($uri, $handler)
     {
-        return $this->add(new Route('PURGE', $uri, $handler));
+        return $this->add($this->route('PURGE', $uri, $handler));
     }
 
     /**
-     * Adds a new Route instance in PUT HTTP method.
+     * Adds a new route instance in PUT HTTP method.
      *
      * @param  string          $uri
      * @param  string|callable $handler
@@ -164,11 +159,21 @@ class Router implements RouterInterface
      */
     public function put($uri, $handler)
     {
-        return $this->add(new Route('PUT', $uri, $handler));
+        return $this->add($this->route('PUT', $uri, $handler));
     }
 
     /**
-     * Adds a new Route instance in TRACE HTTP method.
+     * Returns an array of routes.
+     *
+     * @return \Zapheus\Routing\Route[]
+     */
+    public function routes()
+    {
+        return $this->routes;
+    }
+
+    /**
+     * Adds a new route instance in TRACE HTTP method.
      *
      * @param  string          $uri
      * @param  string|callable $handler
@@ -176,6 +181,27 @@ class Router implements RouterInterface
      */
     public function trace($uri, $handler)
     {
-        return $this->add(new Route('TRACE', $uri, $handler));
+        return $this->add($this->route('TRACE', $uri, $handler));
+    }
+
+    /**
+     * Prepares a new route instance.
+     *
+     * @param  string $method
+     * @param  string $uri
+     * @param  string $handler
+     * @return \Zapheus\Routing\Route
+     */
+    protected function route($method, $uri, $handler)
+    {
+        if (is_string($handler) === true) {
+            $namespace = $this->namespace;
+
+            $namespace !== '' && $namespace .= '\\';
+
+            $handler = $namespace . $handler;
+        }
+
+        return new Route($method, $uri, $handler);
     }
 }

@@ -17,7 +17,7 @@ use Zapheus\Routing\Router;
 class RouterApplication extends AbstractApplication
 {
     /**
-     * @var \Zapheus\Routing\RouterInterface
+     * @var \Zapheus\Routing\Router
      */
     protected $router;
 

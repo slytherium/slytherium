@@ -28,7 +28,7 @@ class Application implements ApplicationInterface, WritableInterface
     const RESPONSE = 'Zapheus\Http\Message\ResponseInterface';
 
     /**
-     * @var \Zapheus\Container\ContainerInterface
+     * @var \Zapheus\Container\WritableInterface
      */
     protected $container;
 
@@ -40,9 +40,9 @@ class Application implements ApplicationInterface, WritableInterface
     /**
      * Initializes the application instance.
      *
-     * @param \Zapheus\Container\ContainerInterface|null $container
+     * @param \Zapheus\Container\WritableInterface|null $container
      */
-    public function __construct(ContainerInterface $container = null)
+    public function __construct(WritableInterface $container = null)
     {
         $container = $container === null ? new Container : $container;
 
@@ -70,19 +70,6 @@ class Application implements ApplicationInterface, WritableInterface
         $this->container = $container;
 
         $this->providers[] = get_class($provider);
-
-        return $this;
-    }
-
-    /**
-     * Delegates a new container.
-     *
-     * @param  \Zapheus\Container\ContainerInterface $container
-     * @return self
-     */
-    public function delegate(ContainerInterface $container)
-    {
-        $this->container->delegate($container);
 
         return $this;
     }

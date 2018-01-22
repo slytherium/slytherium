@@ -26,8 +26,11 @@ abstract class AbstractTestCase extends \PHPUnit_Framework_TestCase
     public function setUp()
     {
         $_SERVER['REQUEST_METHOD'] = 'GET';
+
         $_SERVER['REQUEST_URI'] = '/';
+
         $_SERVER['SERVER_NAME'] = 'rougin.github.io';
+
         $_SERVER['SERVER_PORT'] = 8000;
     }
 
@@ -43,13 +46,14 @@ abstract class AbstractTestCase extends \PHPUnit_Framework_TestCase
         $interface = 'Zapheus\Http\Message\RequestInterface';
 
         $_SERVER['REQUEST_METHOD'] = $method;
+
         $_SERVER['REQUEST_URI'] = $uri;
+
         $_SERVER['SERVER_NAME'] = 'rougin.github.io';
+
         $_SERVER['SERVER_PORT'] = 8000;
 
         $request = new Request($_SERVER);
-
-        $this->application->delegate(new ReflectionContainer);
 
         $this->application->set($interface, $request);
 

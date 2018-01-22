@@ -2,6 +2,9 @@
 
 namespace Zapheus\Application;
 
+use Zapheus\Application;
+use Zapheus\Container\Container;
+use Zapheus\Container\ReflectionContainer;
 use Zapheus\Fixture\Http\Controllers\HailController;
 use Zapheus\Fixture\Http\Controllers\LaudController;
 
@@ -22,7 +25,11 @@ class RouterApplicationTest extends AbstractTestCase
     {
         parent::setUp();
 
-        $this->application = new RouterApplication;
+        $reflection = new ReflectionContainer;
+
+        $application = new Application(new Container($reflection));
+
+        $this->application = new RouterApplication($application);
 
         $instance = get_class(new LaudController(new HailController));
 

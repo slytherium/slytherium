@@ -2,6 +2,9 @@
 
 namespace Zapheus\Application;
 
+use Zapheus\Application;
+use Zapheus\Container\Container;
+use Zapheus\Container\ReflectionContainer;
 use Zapheus\Fixture\Http\Controllers\HailController;
 use Zapheus\Fixture\Http\Middlewares\RouterMiddleware;
 use Zapheus\Routing\Dispatcher;
@@ -25,7 +28,11 @@ class MiddlewareApplicationTest extends AbstractTestCase
     {
         parent::setUp();
 
-        $this->application = new MiddlewareApplication;
+        $reflection = new ReflectionContainer;
+
+        $application = new Application(new Container($reflection));
+
+        $this->application = new MiddlewareApplication($application);
 
         $handler = get_class(new HailController) . '@greet';
 

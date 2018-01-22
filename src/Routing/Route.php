@@ -23,7 +23,7 @@ class Route
     protected $uri;
 
     /**
-     * @var string|callable
+     * @var callable|string
      */
     protected $handler;
 
@@ -32,7 +32,7 @@ class Route
      *
      * @param string          $method
      * @param string          $uri
-     * @param string|callable $handler
+     * @param callable|string $handler
      */
     public function __construct($method, $uri, $handler)
     {
@@ -66,7 +66,7 @@ class Route
     /**
      * Returns the handler.
      *
-     * @return string|callable
+     * @return callable|string
      */
     public function handler()
     {

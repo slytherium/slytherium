@@ -3,8 +3,6 @@
 namespace Zapheus\Application;
 
 use Zapheus\Application;
-use Zapheus\Container\Container;
-use Zapheus\Container\ReflectionContainer;
 use Zapheus\Fixture\Http\Controllers\HailController;
 use Zapheus\Fixture\Providers\TestProvider;
 use Zapheus\Http\Message\Response;
@@ -28,9 +26,7 @@ class ApplicationTest extends AbstractTestCase
     {
         parent::setUp();
 
-        $container = new Container(new ReflectionContainer);
-
-        $this->application = new Application($container);
+        $this->application = new Application;
 
         $dispatcher = 'Zapheus\Routing\DispatcherInterface';
 

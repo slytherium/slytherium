@@ -188,8 +188,8 @@ class Router implements RouterInterface
      * Prepares a new route instance.
      *
      * @param  string          $method
-     * @param  callable|string $uri
-     * @param  string          $handler
+     * @param  string          $uri
+     * @param  callable|string $handler
      * @return \Zapheus\Routing\Route
      */
     protected function route($method, $uri, $handler)

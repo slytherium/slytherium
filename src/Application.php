@@ -5,7 +5,6 @@ namespace Zapheus;
 use Zapheus\Application\ApplicationInterface;
 use Zapheus\Container\Container;
 use Zapheus\Container\ContainerInterface;
-use Zapheus\Container\WritableInterface;
 use Zapheus\Http\Message\RequestInterface;
 use Zapheus\Http\Message\ResponseInterface;
 
@@ -15,7 +14,7 @@ use Zapheus\Http\Message\ResponseInterface;
  * @package Zapheus
  * @author  Rougin Royce Gutib <rougingutib@gmail.com>
  */
-class Application implements ApplicationInterface, WritableInterface
+class Application extends Container implements ApplicationInterface
 {
     const CONFIGURATION = 'Zapheus\Provider\ConfigurationInterface';
 
@@ -28,11 +27,6 @@ class Application implements ApplicationInterface, WritableInterface
     const RESPONSE = 'Zapheus\Http\Message\ResponseInterface';
 
     /**
-     * @var \Zapheus\Container\WritableInterface
-     */
-    protected $container;
-
-    /**
      * @var string[]
      */
     protected $providers = array();
@@ -40,38 +34,35 @@ class Application implements ApplicationInterface, WritableInterface
     /**
      * Initializes the application instance.
      *
-     * @param \Zapheus\Container\WritableInterface|null $container
+     * @param \Zapheus\Container\ContainerInterface|null $container
      */
-    public function __construct(WritableInterface $container = null)
+    public function __construct(ContainerInterface $container = null)
     {
-        $container = $container === null ? new Container : $container;
+        parent::__construct($container);
 
-        if ($container->has(self::CONFIGURATION) === false) {
+        if ($this->has(self::CONFIGURATION) === false) {
             $configuration = new Provider\Configuration;
 
-            $container->set(self::CONFIGURATION, $configuration);
+            $this->set(self::CONFIGURATION, $configuration);
         }
-
-        $this->container = $container;
     }
 
     /**
      * Adds a new provider to be registered.
+     * TODO: Improve registration of providers.
      *
-     * @param  \Zapheus\Provider\ProviderInterface $provider
+     * @param  \Zapheus\Provider\ProviderInterface|string $provider
      * @return self
      */
     public function add($provider)
     {
-        $container = $this->container;
+        is_string($provider) && $provider = $this->get($provider);
 
-        $container = $provider->register($container);
+        $container = count($this->providers) > 0 ? $this->delegate : $this;
 
-        $this->container = $container;
+        $this->providers[] = (string) get_class($provider);
 
-        $this->providers[] = get_class($provider);
-
-        return $this;
+        return $this->delegate($provider->register($container));
     }
 
     /**
@@ -100,19 +91,6 @@ class Application implements ApplicationInterface, WritableInterface
     }
 
     /**
-     * Finds an entry of the container by its identifier and returns it.
-     *
-     * @param  string $id
-     * @return mixed
-     *
-     * @throws \Zapheus\Container\NotFoundException
-     */
-    public function get($id)
-    {
-        return $this->container->get($id);
-    }
-
-    /**
      * Handles the ServerRequest to convert it to a Response.
      *
      * @param  \Zapheus\Http\Message\RequestInterface $request
@@ -120,34 +98,23 @@ class Application implements ApplicationInterface, WritableInterface
      */
     public function handle(RequestInterface $request)
     {
-        list($attributes, $result) = array($request->attributes(), null);
+        $attributes = $request->attributes();
 
         $resolver = $attributes->get(self::RESOLVER_ATTRIBUTE);
 
-        if ($this->container->has(self::DISPATCHER) === true) {
-            $dispatcher = $this->container->get(self::DISPATCHER);
+        if ($this->has(self::DISPATCHER) === true) {
+            $dispatcher = $this->get(self::DISPATCHER);
 
-            $path = (string) $request->uri()->path();
+            $path = $request->uri()->path();
 
-            $method = (string) $request->method();
+            $method = $request->method();
 
             $resolver = $dispatcher->dispatch($method, $path);
         }
 
-        $resolver && $result = $resolver->resolve($this->container);
+        $result = $resolver ? $resolver->resolve($this) : null;
 
         return $this->response($result);
-    }
-
-    /**
-     * Returns true if the container can return an entry for the given identifier.
-     *
-     * @param  string $id
-     * @return boolean
-     */
-    public function has($id)
-    {
-        return $this->container->has($id);
     }
 
     /**
@@ -167,27 +134,11 @@ class Application implements ApplicationInterface, WritableInterface
      */
     public function run()
     {
-        $request = $this->container->get(self::REQUEST);
+        $request = $this->get(self::REQUEST);
 
         $response = $this->handle($request);
 
         return $this->emit($response)->stream();
-    }
-
-    /**
-     * Sets a new instance to the container.
-     *
-     * @param  string $id
-     * @param  mixed  $concrete
-     * @return self
-     *
-     * @throws \Zapheus\Container\ContainerException
-     */
-    public function set($id, $concrete)
-    {
-        $this->container->set($id, $concrete);
-
-        return $this;
     }
 
     /**
@@ -200,7 +151,7 @@ class Application implements ApplicationInterface, WritableInterface
     {
         $instanceof = $result instanceof ResponseInterface;
 
-        $response = $this->container->get(self::RESPONSE);
+        $response = $this->get(self::RESPONSE);
 
         $instanceof || $response->stream()->write($result);
 

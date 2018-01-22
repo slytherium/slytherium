@@ -55,6 +55,8 @@ abstract class AbstractTestCase extends \PHPUnit_Framework_TestCase
 
         $request = new Request($_SERVER);
 
+        $this->application->delegate(new ReflectionContainer);
+
         $this->application->set($interface, $request);
 
         return $this->application;

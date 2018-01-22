@@ -22,20 +22,20 @@ class RouterApplicationTest extends AbstractTestCase
     {
         parent::setUp();
 
-        $this->application = new RouterApplication;
+        $this->app = new RouterApplication($this->application());
 
         $instance = get_class(new LaudController(new HailController));
 
-        $this->application->connect('/greet', $instance . '@greet');
-        $this->application->delete('/greet', $instance . '@greet');
-        $this->application->get('/greet', $instance . '@greet');
-        $this->application->head('/greet', $instance . '@greet');
-        $this->application->options('/greet', $instance . '@greet');
-        $this->application->patch('/greet', $instance . '@greet');
-        $this->application->post('/greet', $instance . '@greet');
-        $this->application->purge('/greet', $instance . '@greet');
-        $this->application->put('/greet', $instance . '@greet');
-        $this->application->trace('/greet', $instance . '@greet');
+        $this->app->connect('/greet', $instance . '@greet');
+        $this->app->delete('/greet', $instance . '@greet');
+        $this->app->get('/greet', $instance . '@greet');
+        $this->app->head('/greet', $instance . '@greet');
+        $this->app->options('/greet', $instance . '@greet');
+        $this->app->patch('/greet', $instance . '@greet');
+        $this->app->post('/greet', $instance . '@greet');
+        $this->app->purge('/greet', $instance . '@greet');
+        $this->app->put('/greet', $instance . '@greet');
+        $this->app->trace('/greet', $instance . '@greet');
     }
 
     /**
@@ -63,6 +63,6 @@ class RouterApplicationTest extends AbstractTestCase
     {
         $this->setExpectedException('BadMethodCallException');
 
-        $this->application->test();
+        $this->app->test();
     }
 }

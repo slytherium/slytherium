@@ -2,6 +2,8 @@
 
 namespace Zapheus\Application;
 
+use Zapheus\Application;
+use Zapheus\Container\Container;
 use Zapheus\Container\ReflectionContainer;
 use Zapheus\Http\Message\Request;
 
@@ -16,7 +18,7 @@ abstract class AbstractTestCase extends \PHPUnit_Framework_TestCase
     /**
      * @var \Zapheus\Application\ApplicationInterface
      */
-    protected $application;
+    protected $app;
 
     /**
      * Sets up the application instance.
@@ -32,6 +34,18 @@ abstract class AbstractTestCase extends \PHPUnit_Framework_TestCase
         $_SERVER['SERVER_NAME'] = 'rougin.github.io';
 
         $_SERVER['SERVER_PORT'] = 8000;
+    }
+
+    /**
+     * Returns an application instance.
+     *
+     * @return \Zapheus\Application
+     */
+    protected function application()
+    {
+        $container = new Container(new ReflectionContainer);
+
+        return new Application($container);
     }
 
     /**
@@ -55,10 +69,8 @@ abstract class AbstractTestCase extends \PHPUnit_Framework_TestCase
 
         $request = new Request($_SERVER);
 
-        $this->application->delegate(new ReflectionContainer);
+        $this->app->set($interface, $request);
 
-        $this->application->set($interface, $request);
-
-        return $this->application;
+        return $this->app;
     }
 }

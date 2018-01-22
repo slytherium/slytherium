@@ -25,7 +25,7 @@ class MiddlewareApplicationTest extends AbstractTestCase
     {
         parent::setUp();
 
-        $this->application = new MiddlewareApplication;
+        $this->app = new MiddlewareApplication($this->application());
 
         $handler = get_class(new HailController) . '@greet';
 
@@ -33,7 +33,7 @@ class MiddlewareApplicationTest extends AbstractTestCase
 
         $middleware = new RouterMiddleware(new Dispatcher($router));
 
-        $this->application->pipe($middleware);
+        $this->app->pipe($middleware);
     }
 
     /**
@@ -61,6 +61,6 @@ class MiddlewareApplicationTest extends AbstractTestCase
     {
         $this->setExpectedException('BadMethodCallException');
 
-        $this->application->test();
+        $this->app->test();
     }
 }

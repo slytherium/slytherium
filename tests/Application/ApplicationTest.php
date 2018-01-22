@@ -26,7 +26,7 @@ class ApplicationTest extends AbstractTestCase
     {
         parent::setUp();
 
-        $this->application = new Application;
+        $this->app = $this->application();
 
         $dispatcher = 'Zapheus\Routing\DispatcherInterface';
 
@@ -34,7 +34,7 @@ class ApplicationTest extends AbstractTestCase
 
         $router->get('/', get_class(new HailController) . '@greet');
 
-        $this->application->set($dispatcher, new Dispatcher($router));
+        $this->app->set($dispatcher, new Dispatcher($router));
 
         $interface = 'Zapheus\Http\Message\ResponseInterface';
 
@@ -42,7 +42,7 @@ class ApplicationTest extends AbstractTestCase
 
         $response = new Response(200, $headers);
 
-        $this->application->set($interface, $response);
+        $this->app->set($interface, $response);
     }
 
     /**
@@ -54,7 +54,7 @@ class ApplicationTest extends AbstractTestCase
     {
         $interface = 'Zapheus\Http\Message\ResponseInterface';
 
-        $this->assertTrue($this->application->has($interface));
+        $this->assertTrue($this->app->has($interface));
     }
 
     /**
@@ -64,11 +64,11 @@ class ApplicationTest extends AbstractTestCase
      */
     public function testProvidersMethod()
     {
-        $this->application->add($test = new TestProvider);
+        $this->app->add($test = new TestProvider);
 
         $expected = array(get_class($test));
 
-        $result = $this->application->providers();
+        $result = $this->app->providers();
 
         $this->assertEquals($expected, $result);
     }

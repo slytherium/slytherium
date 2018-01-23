@@ -65,11 +65,9 @@ class Application implements ApplicationInterface, WritableInterface
     {
         $container = $this->container;
 
-        $container = $provider->register($container);
+        $this->container = $provider->register($container);
 
-        $this->container = $container;
-
-        $this->providers[] = get_class($provider);
+        $this->providers[] = (string) get_class($provider);
 
         return $this;
     }
@@ -86,15 +84,15 @@ class Application implements ApplicationInterface, WritableInterface
 
         $headers = $response->headers()->all();
 
-        $version = $response->version();
-
-        header(sprintf('HTTP/%s %s', $version, $code));
+        $version = (string) $response->version();
 
         foreach ($headers as $name => $values) {
             $value = implode(',', $values);
 
             header($name . ': ' . $value);
         }
+
+        header(sprintf('HTTP/%s %s', $version, $code));
 
         return $response;
     }

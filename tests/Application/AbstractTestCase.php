@@ -2,8 +2,6 @@
 
 namespace Zapheus\Application;
 
-use Zapheus\Application;
-use Zapheus\Container\Container;
 use Zapheus\Container\ReflectionContainer;
 use Zapheus\Http\Message\Request;
 
@@ -43,9 +41,11 @@ abstract class AbstractTestCase extends \PHPUnit_Framework_TestCase
      */
     protected function application()
     {
-        $container = new Container(new ReflectionContainer);
+        $container = new \Zapheus\Container\Container;
 
-        return new Application($container);
+        $container->delegate(new ReflectionContainer);
+
+        return new \Zapheus\Application($container);
     }
 
     /**

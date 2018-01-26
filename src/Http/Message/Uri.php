@@ -188,4 +188,21 @@ class Uri extends Mutator implements UriInterface
         // getUserInfo
         // withUserInfo
     }
+
+    /**
+     * Returns an URI instance based from the server parameters.
+     *
+     * @param  array $server
+     * @return self
+     */
+    public static function instance(array $server)
+    {
+        isset($server['HTTPS']) || $server['HTTPS'] = 'off';
+
+        $http = ($server['HTTPS'] === 'off' ? 'http' : 'https') . '://';
+
+        $port = $server['SERVER_PORT'] . $server['REQUEST_URI'];
+
+        return new Uri($http . $server['SERVER_NAME'] . $port);
+    }
 }

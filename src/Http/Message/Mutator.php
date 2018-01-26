@@ -8,7 +8,7 @@ namespace Zapheus\Http\Message;
  * @package Zapheus
  * @author  Rougin Royce Gutib <rougingutib@gmail.com>
  */
-class Mutator
+class Mutator implements MutatorInterface
 {
     /**
      * Sets a value to a specified property.

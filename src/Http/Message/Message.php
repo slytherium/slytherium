@@ -84,4 +84,27 @@ class Message extends Mutator implements MessageInterface
         // getProtocolVersion
         // withProtocolVersion
     }
+
+    /**
+     * Returns header values from $_SERVER parameters.
+     *
+     * @param  array $server
+     * @return array
+     */
+    public static function request(array $server)
+    {
+        $headers = array();
+
+        foreach ((array) $server as $key => $value) {
+            $http = strpos($key, 'HTTP_') === 0;
+
+            $string = strtolower(substr($key, 5));
+
+            $key = str_replace('_', '-', $string);
+
+            $http && $headers[$key] = $value;
+        }
+
+        return $headers;
+    }
 }

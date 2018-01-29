@@ -46,6 +46,8 @@ use Zapheus\Application\RouterApplication;
 // Initializes the router application
 $app = new RouterApplication;
 
+$app->set(GreetController::class, new GreetController);
+
 // Creates a HTTP route of GET /
 $app->get('/', 'GreetController@greet');
 
@@ -141,6 +143,8 @@ use Zapheus\Application\MiddlewareApplication;
 
 // Initializes the middleware application
 $app = new MiddlewareApplication;
+
+$app->set(GreetController::class, new GreetController);
 
 // Pipes the router middleware into the application
 $app->pipe(new RouterMiddleware);

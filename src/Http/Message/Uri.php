@@ -62,7 +62,7 @@ class Uri extends Mutator implements UriInterface
         foreach ($parts as $key => $value) {
             $key === 'user' && $this->user = $value;
 
-            $this->$key = $value;
+            $this->$key = (string) $value;
         }
 
         $this->uri = $uri;
@@ -144,7 +144,7 @@ class Uri extends Mutator implements UriInterface
      */
     public function port()
     {
-        return $this->port;
+        return (integer) $this->port;
 
         // getPort
         // withPort
@@ -197,12 +197,12 @@ class Uri extends Mutator implements UriInterface
      */
     public static function instance(array $server)
     {
-        isset($server['HTTPS']) || $server['HTTPS'] = 'off';
+        isset($server['HTTPS']) || $server['HTTPS'] = (string) 'off';
 
         $http = ($server['HTTPS'] === 'off' ? 'http' : 'https') . '://';
 
         $port = $server['SERVER_PORT'] . $server['REQUEST_URI'];
 
-        return new Uri($http . $server['SERVER_NAME'] . $port);
+        return new Uri($http . $server['SERVER_NAME'] . ':' . $port);
     }
 }

@@ -82,7 +82,7 @@ class Application implements ApplicationInterface, WritableInterface
     {
         $code = $response->code() . ' ' . $response->reason();
 
-        $headers = $response->headers()->all();
+        $headers = $response->headers();
 
         $version = (string) $response->version();
 
@@ -120,9 +120,9 @@ class Application implements ApplicationInterface, WritableInterface
     {
         list($attributes, $result) = array($request->attributes(), null);
 
-        $resolver = $attributes->get(self::RESOLVER_ATTRIBUTE);
-
-        if ($this->container->has(self::DISPATCHER) === true) {
+        if (isset($attributes[self::RESOLVER_ATTRIBUTE])) {
+            $resolver = $attributes[self::RESOLVER_ATTRIBUTE];
+        } elseif ($this->container->has(self::DISPATCHER) === true) {
             $dispatcher = $this->container->get(self::DISPATCHER);
 
             $path = (string) $request->uri()->path();

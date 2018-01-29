@@ -11,19 +11,19 @@ namespace Zapheus\Http\Message;
 class Request extends Message implements RequestInterface
 {
     /**
-     * @var \Zapheus\Http\Message\Collection
+     * @var array
      */
-    protected $attributes;
+    protected $attributes = array();
 
     /**
-     * @var \Zapheus\Http\Message\Collection
+     * @var array
      */
-    protected $cookies;
+    protected $cookies = array();
 
     /**
-     * @var array|null|object
+     * @var array
      */
-    protected $data;
+    protected $data = array();
 
     /**
      * @var array
@@ -36,14 +36,14 @@ class Request extends Message implements RequestInterface
     protected $method = 'GET';
 
     /**
-     * @var \Zapheus\Http\Message\Collection
+     * @var array
      */
-    protected $query;
+    protected $query = array();
 
     /**
-     * @var \Zapheus\Http\Message\Collection
+     * @var array
      */
-    protected $server;
+    protected $server = array();
 
     /**
      * @var string
@@ -51,27 +51,27 @@ class Request extends Message implements RequestInterface
     protected $target = '/';
 
     /**
-     * @var \Zapheus\Http\Message\Uri
+     * @var \Zapheus\Http\Message\UriInterface
      */
     protected $uri;
 
     /**
      * Initializes the request instance.
      *
-     * @param array             $server
-     * @param array             $cookies
-     * @param array|null|object $data
-     * @param array             $files
-     * @param array             $query
-     * @param array             $attributes
+     * @param array $server
+     * @param array $cookies
+     * @param array $data
+     * @param array $files
+     * @param array $query
+     * @param array $attributes
      */
-    public function __construct(array $server, array $cookies = array(), $data = null, array $files = array(), array $query = array(), array $attributes = array())
+    public function __construct(array $server, array $cookies = array(), array $data = array(), array $files = array(), array $query = array(), array $attributes = array())
     {
         parent::__construct(Message::request($server));
 
-        $this->attributes = new Collection($attributes);
+        $this->attributes = $attributes;
 
-        $this->cookies = new Collection($cookies);
+        $this->cookies = $cookies;
 
         $this->data = $data;
 
@@ -79,9 +79,9 @@ class Request extends Message implements RequestInterface
 
         $this->method = $server['REQUEST_METHOD'];
 
-        $this->query = new Collection($query);
+        $this->query = $query;
 
-        $this->server = new Collection($server);
+        $this->server = $server;
 
         $this->target = $server['REQUEST_URI'];
 
@@ -91,7 +91,7 @@ class Request extends Message implements RequestInterface
     /**
      * Returns an array of attributes derived from the request.
      *
-     * @return \Zapheus\Http\Message\Collection
+     * @return array
      */
     public function attributes()
     {
@@ -106,7 +106,7 @@ class Request extends Message implements RequestInterface
     /**
      * Returns the cookies from the request.
      *
-     * @return \Zapheus\Http\Message\Collection
+     * @return array
      */
     public function cookies()
     {
@@ -119,7 +119,7 @@ class Request extends Message implements RequestInterface
     /**
      * Returns any parameters provided in the request body.
      *
-     * @return array|null|object
+     * @return array
      */
     public function data()
     {
@@ -132,7 +132,7 @@ class Request extends Message implements RequestInterface
     /**
      * Returns normalized file upload data.
      *
-     * @return \Zapheus\Http\Message\UploadedFileInterface[]
+     * @return \Zapheus\Http\Message\UploadedFile[]
      */
     public function files()
     {
@@ -158,7 +158,7 @@ class Request extends Message implements RequestInterface
     /**
      * Returns the query string arguments.
      *
-     * @return \Zapheus\Http\Message\Collection
+     * @return array
      */
     public function query()
     {
@@ -171,7 +171,7 @@ class Request extends Message implements RequestInterface
     /**
      * Returns server parameters.
      *
-     * @return \Zapheus\Http\Message\Collection
+     * @return array
      */
     public function server()
     {
@@ -196,7 +196,7 @@ class Request extends Message implements RequestInterface
     /**
      * Returns the URI instance.
      *
-     * @return \Zapheus\Http\Message\Uri
+     * @return \Zapheus\Http\Message\UriInterface
      */
     public function uri()
     {

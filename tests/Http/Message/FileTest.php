@@ -99,7 +99,7 @@ class FileTest extends \PHPUnit_Framework_TestCase
      */
     public function testStreamMethod()
     {
-        $expected = 'Zapheus\Http\Message\StreamInterface';
+        $expected = 'Zapheus\Http\Message\Stream';
 
         $result = $this->file->stream();
 
@@ -121,10 +121,10 @@ class FileTest extends \PHPUnit_Framework_TestCase
     }
 
     /**
-     * Creates a new \FileInterface instance.
+     * Creates a new \File instance.
      *
      * @param  string $filename
-     * @return \FileInterface
+     * @return \File
      */
     protected function instance($filename)
     {

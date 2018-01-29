@@ -42,15 +42,11 @@ class RouterMiddleware implements MiddlewareInterface
     {
         $path = $request->uri()->path();
 
-        $method = $request->method();
+        $resolver = $this->dispatcher->dispatch($request->method(), $path);
 
-        $resolver = $this->dispatcher->dispatch($method, $path);
+        $attribute = Application::RESOLVER_ATTRIBUTE;
 
-        $attributes = $request->attributes();
-
-        $attributes->set(Application::RESOLVER_ATTRIBUTE, $resolver);
-
-        $request = $request->set('attributes', $attributes);
+        $request = $request->push('attributes', $resolver, $attribute);
 
         return $handler->handle($request);
     }

@@ -79,7 +79,9 @@ class ServerProviderTest extends \PHPUnit_Framework_TestCase
 
         $response = $dispatcher->dispatch($request);
 
-        $result = $response->headers()->get('Content-Type');
+        $headers = $response->headers();
+
+        $result = $headers['Content-Type'];
 
         $this->assertEquals($expected, $result);
     }

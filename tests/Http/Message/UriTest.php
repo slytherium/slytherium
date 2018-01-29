@@ -62,7 +62,7 @@ class UriTest extends \PHPUnit_Framework_TestCase
     {
         $expected = 'test';
 
-        $uri = $this->uri->set('fragment', $expected);
+        $uri = $this->uri->with('fragment', $expected);
 
         $result = $uri->fragment();
 
@@ -78,7 +78,7 @@ class UriTest extends \PHPUnit_Framework_TestCase
     {
         $expected = 'google.com';
 
-        $uri = $this->uri->set('host', $expected);
+        $uri = $this->uri->with('host', $expected);
 
         $result = $uri->host();
 
@@ -94,7 +94,7 @@ class UriTest extends \PHPUnit_Framework_TestCase
     {
         $expected = '/test';
 
-        $uri = $this->uri->set('path', $expected);
+        $uri = $this->uri->with('path', $expected);
 
         $result = $uri->path();
 
@@ -110,7 +110,7 @@ class UriTest extends \PHPUnit_Framework_TestCase
     {
         $expected = 500;
 
-        $uri = $this->uri->set('port', $expected);
+        $uri = $this->uri->with('port', $expected);
 
         $result = $uri->port();
 
@@ -126,7 +126,7 @@ class UriTest extends \PHPUnit_Framework_TestCase
     {
         $expected = 'type=user';
 
-        $uri = $this->uri->set('query', $expected);
+        $uri = $this->uri->with('query', $expected);
 
         $result = $uri->query();
 
@@ -142,7 +142,7 @@ class UriTest extends \PHPUnit_Framework_TestCase
     {
         $expected = 'http';
 
-        $uri = $this->uri->set('scheme', $expected);
+        $uri = $this->uri->with('scheme', $expected);
 
         $result = $uri->scheme();
 
@@ -158,7 +158,7 @@ class UriTest extends \PHPUnit_Framework_TestCase
     {
         $expected = 'username:password';
 
-        $uri = $this->uri->set('user', $expected);
+        $uri = $this->uri->with('user', $expected);
 
         $result = $uri->user();
 

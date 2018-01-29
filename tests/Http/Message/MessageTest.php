@@ -34,11 +34,27 @@ class MessageTest extends \PHPUnit_Framework_TestCase
     {
         $expected = array('names' => array('Rougin', 'Royce'));
 
-        $headers = new Collection($expected);
+        $message = $this->message->with('headers', $expected);
 
-        $message = $this->message->set('headers', $headers);
+        $result = $message->headers();
 
-        $result = $message->headers()->all();
+        $this->assertEquals($expected, $result);
+    }
+
+    /**
+     * Tests MessageInterface::headers with only one per header.
+     *
+     * @return void
+     */
+    public function testHeadersMethodWithOnePerHeader()
+    {
+        $expected = array('names' => array('Rougin', 'Royce'), array('test'));
+
+        $message = $this->message->push('headers', $expected['names'], 'names');
+
+        $message = $message->push('headers', array('test'));
+
+        $result = $message->headers();
 
         $this->assertEquals($expected, $result);
     }
@@ -50,7 +66,7 @@ class MessageTest extends \PHPUnit_Framework_TestCase
      */
     public function testStreamMethod()
     {
-        $expected = 'Zapheus\Http\Message\StreamInterface';
+        $expected = 'Zapheus\Http\Message\Stream';
 
         $result = $this->message->stream();
 
@@ -68,7 +84,7 @@ class MessageTest extends \PHPUnit_Framework_TestCase
 
         $stream->write('Hello, world');
 
-        $message = $this->message->set('stream', $stream);
+        $message = $this->message->with('stream', $stream);
 
         $expected = (string) $stream;
 
@@ -86,7 +102,7 @@ class MessageTest extends \PHPUnit_Framework_TestCase
     {
         $expected = '2.0';
 
-        $message = $this->message->set('version', $expected);
+        $message = $this->message->with('version', $expected);
 
         $result = $message->version();
 

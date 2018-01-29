@@ -127,7 +127,7 @@ class File implements FileInterface
     }
 
     /**
-     * Parses the $_FILES into multiple \FileInterface instances.
+     * Parses the $_FILES into multiple \File instances.
      *
      * @param  array $uploaded
      * @param  array $files
@@ -170,7 +170,7 @@ class File implements FileInterface
     }
 
     /**
-     * Converts the data from $_FILES to multiple \UploadInterface instances.
+     * Converts the specified $_FILES array to a \File instance.
      *
      * @param  array $file
      * @param  array $current

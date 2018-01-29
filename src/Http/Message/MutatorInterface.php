@@ -13,10 +13,9 @@ interface MutatorInterface
     /**
      * Sets a value to a specified property.
      *
-     * @param  string  $name
-     * @param  mixed   $value
-     * @param  boolean $mutable
+     * @param  string $name
+     * @param  mixed  $value
      * @return self
      */
-    public function set($name, $value, $mutable = false);
+    public function set($name, $value);
 }

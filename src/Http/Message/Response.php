@@ -83,23 +83,15 @@ class Response extends Message implements ResponseInterface
     );
 
     /**
-     * @var string
-     */
-    protected $reason = 'OK';
-
-    /**
      * Initializes the response instance.
      *
      * @param integer $code
-     * @param array   $headers
      */
-    public function __construct($code = 200, array $headers = array())
+    public function __construct($code = 200)
     {
-        parent::__construct($headers);
+        parent::__construct();
 
         $this->code = $code;
-
-        $this->reason = $this->reasons[$code];
     }
 
     /**
@@ -122,30 +114,9 @@ class Response extends Message implements ResponseInterface
      */
     public function reason()
     {
-        return $this->reason;
+        return $this->reasons[$this->code];
 
         // getReasonPhrase
         // // withStatus
-    }
-
-    /**
-     * Sets a value to a specified property.
-     *
-     * @param  string  $name
-     * @param  mixed   $value
-     * @param  boolean $mutable
-     * @return self
-     */
-    public function set($name, $value, $mutable = false)
-    {
-        $result = parent::set($name, $value, $mutable);
-
-        if ($name === 'code') {
-            $reason = $result->reasons[$value];
-
-            $result->reason = (string) $reason;
-        }
-
-        return $result;
     }
 }

@@ -34,7 +34,7 @@ class ResponseTest extends \PHPUnit_Framework_TestCase
     {
         $expected = 404;
 
-        $response = $this->response->set('code', $expected);
+        $response = $this->response->with('code', $expected);
 
         $result = $response->code();
 
@@ -50,7 +50,7 @@ class ResponseTest extends \PHPUnit_Framework_TestCase
     {
         $expected = 'Internal Server Error';
 
-        $response = $this->response->set('code', 500);
+        $response = $this->response->with('code', 500);
 
         $result = $response->reason();
 

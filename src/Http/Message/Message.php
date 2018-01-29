@@ -11,12 +11,12 @@ namespace Zapheus\Http\Message;
 class Message extends Mutator implements MessageInterface
 {
     /**
-     * @var \Zapheus\Http\Message\Collection
+     * @var array
      */
-    protected $headers;
+    protected $headers = array();
 
     /**
-     * @var \Zapheus\Http\Message\Stream
+     * @var \Zapheus\Http\Message\StreamInterface
      */
     protected $stream;
 
@@ -32,7 +32,7 @@ class Message extends Mutator implements MessageInterface
      */
     public function __construct(array $headers = array())
     {
-        $this->headers = new Collection($headers);
+        $this->headers = $headers;
 
         $stream = fopen('php://temp', 'r+');
 
@@ -44,7 +44,7 @@ class Message extends Mutator implements MessageInterface
     /**
      * Returns all message header values.
      *
-     * @return \Zapheus\Http\Message\Collection
+     * @return array
      */
     public function headers()
     {

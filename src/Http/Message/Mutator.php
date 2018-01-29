@@ -11,18 +11,54 @@ namespace Zapheus\Http\Message;
 class Mutator implements MutatorInterface
 {
     /**
-     * Sets a value to a specified property.
+     * Pushes a new value into an immutable property.
      *
-     * @param  string  $name
-     * @param  mixed   $value
-     * @param  boolean $mutable
-     * @return self
+     * @param  string      $name
+     * @param  mixed       $value
+     * @param  string|null $key
+     * @return static
      */
-    public function set($name, $value, $mutable = false)
+    public function push($name, $value, $key = null)
     {
         $new = clone $this;
 
-        $mutable || $new = $this;
+        $array = $new->$name;
+
+        if ($key !== null) {
+            $array[$key] = $value;
+        } else {
+            $array[] = $value;
+        }
+
+        $new->$name = $array;
+
+        return $new;
+    }
+
+    /**
+     * Sets a property to a mutable instance.
+     *
+     * @param  string $name
+     * @param  mixed  $value
+     * @return self
+     */
+    public function set($name, $value)
+    {
+        $this->$name = $value;
+
+        return $this;
+    }
+
+    /**
+     * Sets a property to an immutable instance.
+     *
+     * @param  string $name
+     * @param  mixed  $value
+     * @return static
+     */
+    public function with($name, $value)
+    {
+        $new = clone $this;
 
         $new->$name = $value;
 

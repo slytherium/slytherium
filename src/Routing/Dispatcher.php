@@ -37,7 +37,7 @@ class Dispatcher implements DispatcherInterface
     public function dispatch($method, $uri)
     {
         if (($result = $this->match($method, $uri)) !== null) {
-            list($matches, $handler) = $result;
+            list($matches, $handler) = (array) $result;
 
             $filtered = array_filter(array_keys($matches), 'is_string');
 

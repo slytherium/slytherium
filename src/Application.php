@@ -8,6 +8,7 @@ use Zapheus\Container\ContainerInterface;
 use Zapheus\Container\WritableInterface;
 use Zapheus\Http\Message\RequestInterface;
 use Zapheus\Http\Message\ResponseInterface;
+use Zapheus\Provider\ProviderInterface;
 
 /**
  * Application
@@ -61,7 +62,7 @@ class Application implements ApplicationInterface, WritableInterface
      * @param  \Zapheus\Provider\ProviderInterface $provider
      * @return self
      */
-    public function add($provider)
+    public function add(ProviderInterface $provider)
     {
         $container = $this->container;
 

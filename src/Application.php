@@ -130,7 +130,7 @@ class Application implements ApplicationInterface, WritableInterface
             $resolver = $dispatcher->dispatch($method, $path);
         }
 
-        $result = $resolver ? $resolver->resolve($this->container) : null;
+        $result = $resolver ? $resolver->resolve($this) : null;
 
         return $this->response($result);
     }

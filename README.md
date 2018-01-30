@@ -17,8 +17,6 @@ Via Composer
 $ composer require zapheus/zapheus
 ```
 
-Want to use this framework on PHP v5.2.0 and below? Use the [Legacy](https://github.com/zapheus/legacy) package instead.
-
 ## Usage
 
 ### Using `RouterApplication`
@@ -47,6 +45,8 @@ echo $app->run();
 require 'vendor/autoload.php';
 
 use Zapheus\Application\MiddlewareApplication;
+use Zapheus\Routing\Dispatcher;
+use Zapheus\Routing\Router;
 
 // Initializes the middleware application
 $app = new MiddlewareApplication;
@@ -54,14 +54,14 @@ $app = new MiddlewareApplication;
 // Pipes the router middleware into the application
 $app->pipe(function ($request, $next)
 {
-    // Initializes the HTTP router
-    $router = new Zapheus\Routing\Router;
-
     // Creates a HTTP route of GET /
-    $router->get('/', function ()
+    $router = (new Router)->get('/', function ()
     {
         return 'Hello world!';
     });
+
+    // Returns the request attribute value for resolvers
+    $attribute = Zapheus\Application::RESOLVER_ATTRIBUTE;
 
     // Returns the path from the URI instance
     $path = $request->uri()->path();
@@ -69,18 +69,15 @@ $app->pipe(function ($request, $next)
     // Returns the current HTTP method from the $_SERVER
     $method = $request->method();
 
-    // Creates the router dispatcher instance 
-    $dispatcher = new Zapheus\Routing\Dispatcher($router);
-
     // Dispatches the router against the current HTTP method and URI
-    $resolver = $dispatcher->dispatch($method, $path);
+    $resolver = (new Dispatcher($router))->dispatch($method, $path);
 
     // Sets the resolver attribute into the request in order to be
     // called inside the Application instance and return the response.
-    $request = $request->push('attributes', $resolver, 'request-handler');
+    $request = $request->push('attributes', $resolver, $attribute);
 
-    // Go to the next middleware
-    return $next($request);
+    // Go to the next middleware, if there are any
+    return $next->handle($request);
 });
 
 // Handles the server request

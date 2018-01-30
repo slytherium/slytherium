@@ -45,21 +45,22 @@ echo $app->run();
 require 'vendor/autoload.php';
 
 use Zapheus\Application\MiddlewareApplication;
-use Zapheus\Routing\Dispatcher;
-use Zapheus\Routing\Router;
 
 // Initializes the middleware application
 $app = new MiddlewareApplication;
 
-// Pipes the router middleware into the application
-$app->pipe(function ($request, $next)
-{
-    // Creates a HTTP route of GET /
-    $router = (new Router)->get('/', function ()
-    {
-        return 'Hello world!';
-    });
+// Initializes the router instance
+$router = new Zapheus\Routing\Router;
 
+// Creates a HTTP route of GET /
+$router->get('/', function ()
+{
+    return 'Hello world!';
+});
+
+// Pipes the router middleware into the application
+$app->pipe(function ($request, $next) use ($router)
+{
     // Returns the request attribute value for resolvers
     $attribute = Zapheus\Application::RESOLVER_ATTRIBUTE;
 
@@ -69,8 +70,11 @@ $app->pipe(function ($request, $next)
     // Returns the current HTTP method from the $_SERVER
     $method = $request->method();
 
-    // Dispatches the router against the current HTTP method and URI
-    $resolver = (new Dispatcher($router))->dispatch($method, $path);
+    // Creates a new Routing\DispatcherInterface instance
+    $dispatcher = new Zapheus\Routing\Dispatcher($router);
+
+    // Dispatches the router against the current request
+    $resolver = $dispatcher->dispatch($method, $path);
 
     // Sets the resolver attribute into the request in order to be
     // called inside the Application instance and return the response.

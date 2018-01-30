@@ -7,6 +7,7 @@ use Zapheus\Fixture\Http\Controllers\HailController;
 use Zapheus\Fixture\Providers\TestProvider;
 use Zapheus\Http\Message\Response;
 use Zapheus\Routing\Dispatcher;
+use Zapheus\Routing\Route;
 use Zapheus\Routing\Router;
 
 /**
@@ -28,21 +29,21 @@ class ApplicationTest extends AbstractTestCase
 
         $this->app = $this->application();
 
-        $dispatcher = 'Zapheus\Routing\DispatcherInterface';
+        $handle = get_class(new HailController) . '@greet';
 
-        $router = new Router;
+        $route = new Route('GET', '/', $handle);
 
-        $router->get('/', get_class(new HailController) . '@greet');
+        $router = new Router(array($route));
 
-        $this->app->set($dispatcher, new Dispatcher($router));
+        $dispatcher = new Dispatcher($router);
 
-        $interface = 'Zapheus\Http\Message\ResponseInterface';
+        $this->app->set(Application::DISPATCHER, $dispatcher);
 
         $headers = array('X-Framework' => array('Zapheus'));
 
         $response = new Response(200, (array) $headers);
 
-        $this->app->set($interface, $response);
+        $this->app->set(Application::RESPONSE, $response);
     }
 
     /**

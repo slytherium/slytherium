@@ -42,6 +42,21 @@ class Message extends Mutator implements MessageInterface
     }
 
     /**
+     * Returns a message header value by the given case-insensitive name.
+     *
+     * @param  string $name
+     * @return array
+     */
+    public function header($name)
+    {
+        $exists = isset($this->headers[$name]);
+
+        return $exists ? $this->headers[$name] : array();
+
+        // getHeader
+    }
+
+    /**
      * Returns all message header values.
      *
      * @return array
@@ -52,7 +67,6 @@ class Message extends Mutator implements MessageInterface
 
         // getHeaders
         // hasHeader
-        // getHeader
         // getHeaderLine
         // withHeader
         // withAddedHeader

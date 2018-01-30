@@ -142,7 +142,9 @@ class Resolver implements ResolverInterface
 
         $constructor = $reflection->getConstructor();
 
-        if (! $this->container->has($class) && $constructor) {
+        $exists = $this->container->has($class);
+
+        if ($exists === false && $constructor !== null) {
             $arguments = $this->arguments($constructor);
 
             return $reflection->newInstanceArgs($arguments);

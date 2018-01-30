@@ -46,6 +46,22 @@ class RequestTest extends \PHPUnit_Framework_TestCase
     }
 
     /**
+     * Tests RequestInterface::attribute.
+     *
+     * @return void
+     */
+    public function testAttributeMethod()
+    {
+        $expected = array('name' => 'Rougin Royce');
+
+        $request = $this->request->with('attributes', $expected);
+
+        $result = $request->attribute('name');
+
+        $this->assertEquals($expected['name'], $result);
+    }
+
+    /**
      * Tests RequestInterface::attributes.
      *
      * @return void

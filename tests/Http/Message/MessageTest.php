@@ -26,6 +26,22 @@ class MessageTest extends \PHPUnit_Framework_TestCase
     }
 
     /**
+     * Tests MessageInterface::header.
+     *
+     * @return void
+     */
+    public function testHeaderMethod()
+    {
+        $expected = array('names' => array('Rougin', 'Royce'));
+
+        $message = $this->message->with('headers', $expected);
+
+        $result = $message->header('names');
+
+        $this->assertEquals($expected['names'], $result);
+    }
+
+    /**
      * Tests MessageInterface::headers.
      *
      * @return void

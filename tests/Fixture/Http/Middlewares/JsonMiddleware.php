@@ -25,12 +25,12 @@ class JsonMiddleware implements MiddlewareInterface
     {
         $response = $handler->handle($request);
 
-        $original = $response->headers();
+        $content = $response->header('Content-Type');
 
         $value = array('application/json');
 
         $new = $response->push('headers', $value, 'Content-Type');
 
-        return isset($original['Content-Type']) ? $response : $new;
+        return count($content) >= 1 ? $response : $new;
     }
 }

@@ -11,9 +11,17 @@ namespace Zapheus\Http\Message;
 interface MessageInterface extends MutatorInterface
 {
     /**
+     * Returns a message header value by the given case-insensitive name.
+     *
+     * @param  string $name
+     * @return array
+     */
+    public function header($name);
+
+    /**
      * Returns all message header values.
      *
-     * @return \Zapheus\Http\Message\Collection
+     * @return array
      */
     public function headers();
 

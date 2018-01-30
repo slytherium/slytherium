@@ -11,16 +11,24 @@ namespace Zapheus\Http\Message;
 interface RequestInterface extends MessageInterface
 {
     /**
+     * Returns an instance with the specified derived request attribute.
+     *
+     * @param  string $name
+     * @return mixed
+     */
+    public function attribute($name);
+
+    /**
      * Returns an array of attributes derived from the request.
      *
-     * @return \Zapheus\Http\Message\Collection
+     * @return array
      */
     public function attributes();
 
     /**
      * Returns the cookies from the request.
      *
-     * @return \Zapheus\Http\Message\Collection
+     * @return array
      */
     public function cookies();
 
@@ -48,14 +56,14 @@ interface RequestInterface extends MessageInterface
     /**
      * Returns the query string arguments.
      *
-     * @return \Zapheus\Http\Message\Collection
+     * @return array
      */
     public function query();
 
     /**
      * Returns server parameters.
      *
-     * @return \Zapheus\Http\Message\Collection
+     * @return array
      */
     public function server();
 

@@ -86,10 +86,11 @@ class Response extends Message implements ResponseInterface
      * Initializes the response instance.
      *
      * @param integer $code
+     * @param array   $headers
      */
-    public function __construct($code = 200)
+    public function __construct($code = 200, array $headers = array())
     {
-        parent::__construct();
+        parent::__construct($headers);
 
         $this->code = $code;
     }

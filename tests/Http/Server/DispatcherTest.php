@@ -60,9 +60,7 @@ class DispatcherTest extends \PHPUnit_Framework_TestCase
 
         $response = $this->dispatcher->dispatch($this->request);
 
-        $headers = $response->headers();
-
-        $result = $headers['Content-Type'];
+        $result = $response->header('Content-Type');
 
         $this->assertEquals($expected, $result);
     }
@@ -118,9 +116,7 @@ class DispatcherTest extends \PHPUnit_Framework_TestCase
 
         $response = $this->dispatcher->dispatch($this->request);
 
-        $headers = $response->headers();
-
-        $result = $headers['Content-Type'];
+        $result = $response->header('Content-Type');
 
         $this->assertEquals($expected, $result);
     }

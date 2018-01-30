@@ -89,6 +89,21 @@ class Request extends Message implements RequestInterface
     }
 
     /**
+     * Returns an instance with the specified derived request attribute.
+     *
+     * @param  string $name
+     * @return mixed
+     */
+    public function attribute($name)
+    {
+        $exists = isset($this->attributes[$name]);
+
+        return $exists ? $this->attributes[$name] : null;
+
+        // getAttribute
+    }
+
+    /**
      * Returns an array of attributes derived from the request.
      *
      * @return array
@@ -98,7 +113,6 @@ class Request extends Message implements RequestInterface
         return $this->attributes;
 
         // getAttributes
-        // getAttribute
         // withAttribute
         // withoutAttribute
     }

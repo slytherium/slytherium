@@ -118,11 +118,9 @@ class Application implements ApplicationInterface, WritableInterface
      */
     public function handle(RequestInterface $request)
     {
-        list($attributes, $result) = array($request->attributes(), null);
+        $resolver = $request->attribute(self::RESOLVER_ATTRIBUTE);
 
-        if (isset($attributes[self::RESOLVER_ATTRIBUTE])) {
-            $resolver = $attributes[self::RESOLVER_ATTRIBUTE];
-        } elseif ($this->container->has(self::DISPATCHER) === true) {
+        if ($this->container->has(self::DISPATCHER) === true) {
             $dispatcher = $this->container->get(self::DISPATCHER);
 
             $path = (string) $request->uri()->path();
@@ -132,7 +130,7 @@ class Application implements ApplicationInterface, WritableInterface
             $resolver = $dispatcher->dispatch($method, $path);
         }
 
-        $resolver && $result = $resolver->resolve($this->container);
+        $result = $resolver ? $resolver->resolve($this->container) : null;
 
         return $this->response($result);
     }

@@ -38,9 +38,9 @@ class ApplicationTest extends AbstractTestCase
 
         $interface = 'Zapheus\Http\Message\ResponseInterface';
 
-        $headers = array('name' => array('Zapheus'));
+        $headers = array('X-Framework' => array('Zapheus'));
 
-        $response = new Response(200, $headers);
+        $response = new Response(200, (array) $headers);
 
         $this->app->set($interface, $response);
     }

@@ -21,38 +21,21 @@ Want to use this framework on PHP v5.2.0 and below? Use the [Legacy](https://git
 
 ## Usage
 
-**GreetController.php**
-
-``` php
-class GreetController
-{
-    public function greet($name = 'Stranger')
-    {
-        return sprintf('Hello, %s!', $name);
-    }
-}
-```
-
 ### Using `RouterApplication`
-
-**index.php**
 
 ``` php
 require 'vendor/autoload.php';
-require 'GreetController.php';
 
 use Zapheus\Application\RouterApplication;
 
 // Initializes the router application
 $app = new RouterApplication;
 
-$app->set(GreetController::class, new GreetController);
-
 // Creates a HTTP route of GET /
-$app->get('/', 'GreetController@greet');
-
-// Creates a HTTP route of GET /hello/{name}
-$app->get('/hello/{name}', 'GreetController@greet');
+$app->get('/', function ()
+{
+    return 'Hello world!';
+});
 
 // Handles the server request
 echo $app->run();
@@ -60,94 +43,45 @@ echo $app->run();
 
 ### Using `MiddlewareApplication`
 
-**RouterMiddleware.php**
-
-``` php
-use Zapheus\Application;
-use Zapheus\Http\Message\RequestInterface;
-use Zapheus\Http\Server\HandlerInterface;
-use Zapheus\Http\Server\MiddlewareInterface;
-use Zapheus\Routing\Dispatcher;
-
-class RouterMiddleware implements MiddlewareInterface
-{
-    /**
-     * Returns the resolver attribute constant from the Application.
-     *
-     * @var string
-     */
-    protected $attribute = Application::RESOLVER_ATTRIBUTE;
-
-    /**
-     * Processes an incoming server request and return a response.
-     *
-     * @param  \Zapheus\Http\Message\RequestInterface $request
-     * @param  \Zapheus\Http\Server\HandlerInterface  $handler
-     * @return \Zapheus\Http\Message\ResponseInterface
-     */
-    public function process(RequestInterface $request, HandlerInterface $handler)
-    {
-        // Returns the path from the URI instance
-        $path = $request->uri()->path();
-
-        // Returns the current HTTP method from the $_SERVER
-        $method = $request->method();
-
-        // Creates the router dispatcher instance 
-        $dispatcher = new Dispatcher($this->router());
-
-        // Dispatches the router against the current HTTP method and URI
-        $resolver = $dispatcher->dispatch($method, $path);
-
-        // Sets the resolver attribute into the request in order to be
-        // called inside the Application instance and return the response.
-        $attributes = $request->attributes();
-
-        $attributes->set($this->attribute, $resolver);
-
-        $request = $request->set('attributes', $attributes);
-
-        // Handles the next middleware
-        return $handler->handle($request);
-    }
-
-    /**
-     * Returns the \Zapheus\Routing\Router instance.
-     *
-     * @return \Zapheus\Routing\RouterInterface
-     */
-    protected function router()
-    {
-        // Initializes the HTTP router
-        $router = new \Zapheus\Routing\Router;
-
-        // Creates a HTTP route of GET /
-        $router->get('/', 'GreetController@greet');
-
-        // Creates a HTTP route of GET /hello/{name}
-        $router->get('/hello/{name}', 'GreetController@greet');
-
-        return $router;
-    }
-}
-```
-
-**index.php**
-
 ``` php
 require 'vendor/autoload.php';
-require 'GreetController.php';
-require 'RouterMiddleware.php';
 
 use Zapheus\Application\MiddlewareApplication;
 
 // Initializes the middleware application
 $app = new MiddlewareApplication;
 
-$app->set(GreetController::class, new GreetController);
-
 // Pipes the router middleware into the application
-$app->pipe(new RouterMiddleware);
+$app->pipe(function ($request, $next)
+{
+    // Initializes the HTTP router
+    $router = new Zapheus\Routing\Router;
+
+    // Creates a HTTP route of GET /
+    $router->get('/', function ()
+    {
+        return 'Hello world!';
+    });
+
+    // Returns the path from the URI instance
+    $path = $request->uri()->path();
+
+    // Returns the current HTTP method from the $_SERVER
+    $method = $request->method();
+
+    // Creates the router dispatcher instance 
+    $dispatcher = new Zapheus\Routing\Dispatcher($router);
+
+    // Dispatches the router against the current HTTP method and URI
+    $resolver = $dispatcher->dispatch($method, $path);
+
+    // Sets the resolver attribute into the request in order to be
+    // called inside the Application instance and return the response.
+    $request = $request->push('attributes', $resolver, 'request-handler');
+
+    // Go to the next middleware
+    return $next($request);
+});
 
 // Handles the server request
 echo $app->run();

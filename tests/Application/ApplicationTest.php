@@ -29,9 +29,11 @@ class ApplicationTest extends AbstractTestCase
 
         $this->app = $this->application();
 
-        $handle = get_class(new HailController) . '@greet';
+        $controller = $this->define(new HailController);
 
-        $route = new Route('GET', '/', $handle);
+        $handler = (string) $controller . '@greet';
+
+        $route = new Route('GET', '/', $handler);
 
         $router = new Router(array($route));
 

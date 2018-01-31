@@ -23,24 +23,11 @@ class Container implements WritableInterface
     /**
      * Initializes the container instance.
      *
-     * @param \Zapheus\Container\ContainerInterface|null $delegate
+     * @param mixed[] $objects
      */
-    public function __construct(ContainerInterface $delegate = null)
+    public function __construct(array $objects = array())
     {
-        is_null($delegate) || $this->delegate($delegate);
-    }
-
-    /**
-     * Delegates a new container.
-     *
-     * @param  \Zapheus\Container\ContainerInterface $container
-     * @return self
-     */
-    public function delegate(ContainerInterface $container)
-    {
-        $this->delegate = $container;
-
-        return $this;
+        $this->objects = $objects;
     }
 
     /**
@@ -53,9 +40,7 @@ class Container implements WritableInterface
      */
     public function get($id)
     {
-        $this->has($id) ?: $this->depute($id);
-
-        if (isset($this->objects[$id]) === false) {
+        if ($this->has($id) === false) {
             $message = 'Alias (%s) is not being managed by the container';
 
             throw new NotFoundException(sprintf($message, $id));
@@ -97,18 +82,5 @@ class Container implements WritableInterface
         $this->objects[$id] = $concrete;
 
         return $this;
-    }
-
-    /**
-     * Finds the entry from a delegate container if its available.
-     *
-     * @param  string $id
-     * @return boolean
-     */
-    protected function depute($id)
-    {
-        $entry = $this->delegate ? $this->delegate->get($id) : null;
-
-        return ! is_null($entry) && $this->objects[$id] = $entry;
     }
 }

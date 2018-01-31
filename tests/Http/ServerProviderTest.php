@@ -3,7 +3,8 @@
 namespace Zapheus\Http;
 
 use Zapheus\Container\Container;
-use Zapheus\Container\ReflectionContainer;
+use Zapheus\Fixture\Http\Middlewares\JsonMiddleware;
+use Zapheus\Fixture\Http\Middlewares\LastMiddleware;
 use Zapheus\Provider\Configuration;
 
 /**
@@ -31,23 +32,19 @@ class ServerProviderTest extends \PHPUnit_Framework_TestCase
      */
     public function setUp()
     {
-        $container = new Container(new ReflectionContainer);
+        list($config, $container) = array(new Configuration, new Container);
 
-        $config = new Configuration;
-
-        $middlewares = array();
-
-        $middlewares[] = 'Zapheus\Fixture\Http\Middlewares\JsonMiddleware';
-        $middlewares[] = 'Zapheus\Fixture\Http\Middlewares\FinalMiddleware';
+        $middlewares = array(new JsonMiddleware, new LastMiddleware);
 
         $config->set('app.middlewares', $middlewares);
 
-        $server = array();
+        $server = array('SERVER_PORT' => 8000);
 
         $server['REQUEST_METHOD'] = 'GET';
+
         $server['REQUEST_URI'] = '/';
+
         $server['SERVER_NAME'] = 'rougin.github.io';
-        $server['SERVER_PORT'] = 8000;
 
         $config->set('app.http.server', $server);
 

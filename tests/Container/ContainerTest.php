@@ -29,24 +29,6 @@ class ContainerTest extends \PHPUnit_Framework_TestCase
     }
 
     /**
-     * Tests ContainerInterface::delegate method.
-     *
-     * @return void
-     */
-    public function testDelegateMethod()
-    {
-        $hail = new HailController;
-
-        $name = get_class($hail);
-
-        $this->container->delegate(new ReflectionContainer);
-
-        $instance = $this->container->get($name);
-
-        $this->assertInstanceOf($name, $instance);
-    }
-
-    /**
      * Tests ContainerInterface::get method.
      *
      * @return void

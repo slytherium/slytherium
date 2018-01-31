@@ -27,7 +27,9 @@ class MiddlewareApplicationTest extends AbstractTestCase
 
         $this->app = new MiddlewareApplication($this->application());
 
-        $handler = get_class(new HailController) . '@greet';
+        $controller = $this->define(new HailController);
+
+        $handler = (string) $controller . '@greet';
 
         $router = new Router(array(new Route('GET', '/hi', $handler)));
 

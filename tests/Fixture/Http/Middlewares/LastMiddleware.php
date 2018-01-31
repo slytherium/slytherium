@@ -8,12 +8,12 @@ use Zapheus\Http\Server\HandlerInterface;
 use Zapheus\Http\Server\MiddlewareInterface;
 
 /**
- * Final Middleware
+ * Last Middleware
  *
  * @package Zapheus
  * @author  Rougin Royce Gutib <rougingutib@gmail.com>
  */
-class FinalMiddleware implements MiddlewareInterface
+class LastMiddleware implements MiddlewareInterface
 {
     /**
      * Processes an incoming request and return a response.

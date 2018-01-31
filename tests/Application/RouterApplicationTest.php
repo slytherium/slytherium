@@ -24,17 +24,28 @@ class RouterApplicationTest extends AbstractTestCase
 
         $this->app = new RouterApplication($this->application());
 
-        $instance = get_class(new LaudController(new HailController));
+        $this->define(new HailController);
+
+        $instance = 'Zapheus\Fixture\Http\Controllers\LaudController';
 
         $this->app->connect('/greet', $instance . '@greet');
+
         $this->app->delete('/greet', $instance . '@greet');
+
         $this->app->get('/greet', $instance . '@greet');
+
         $this->app->head('/greet', $instance . '@greet');
+
         $this->app->options('/greet', $instance . '@greet');
+
         $this->app->patch('/greet', $instance . '@greet');
+
         $this->app->post('/greet', $instance . '@greet');
+
         $this->app->purge('/greet', $instance . '@greet');
+
         $this->app->put('/greet', $instance . '@greet');
+
         $this->app->trace('/greet', $instance . '@greet');
     }
 

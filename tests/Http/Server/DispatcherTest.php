@@ -2,7 +2,7 @@
 
 namespace Zapheus\Http\Server;
 
-use Zapheus\Fixture\Http\Middlewares\FinalMiddleware;
+use Zapheus\Fixture\Http\Middlewares\LastMiddleware;
 use Zapheus\Fixture\Http\Middlewares\JsonMiddleware;
 use Zapheus\Http\Message\Request;
 use Zapheus\Http\Message\Stream;
@@ -54,7 +54,7 @@ class DispatcherTest extends \PHPUnit_Framework_TestCase
      */
     public function testDispatchMethod()
     {
-        $this->dispatcher->pipe(new FinalMiddleware);
+        $this->dispatcher->pipe(new LastMiddleware);
 
         $expected = array('application/json');
 
@@ -92,7 +92,7 @@ class DispatcherTest extends \PHPUnit_Framework_TestCase
             return $response;
         });
 
-        $this->dispatcher->pipe(new FinalMiddleware);
+        $this->dispatcher->pipe(new LastMiddleware);
 
         $expected = 'Hello world';
 
@@ -110,7 +110,7 @@ class DispatcherTest extends \PHPUnit_Framework_TestCase
      */
     public function testDispatchMethodWithString()
     {
-        $this->dispatcher->pipe('Zapheus\Fixture\Http\Middlewares\FinalMiddleware');
+        $this->dispatcher->pipe('Zapheus\Fixture\Http\Middlewares\LastMiddleware');
 
         $expected = array('application/json');
 

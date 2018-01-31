@@ -37,15 +37,28 @@ abstract class AbstractTestCase extends \PHPUnit_Framework_TestCase
     /**
      * Returns an application instance.
      *
-     * @return \Zapheus\Application
+     * @return \Zapheus\Application\ApplicationInterface
      */
     protected function application()
     {
         $container = new \Zapheus\Container\Container;
 
-        $container->delegate(new ReflectionContainer);
-
         return new \Zapheus\Application($container);
+    }
+
+    /**
+     * Defines the instance to the application.
+     *
+     * @param  mixed $instance
+     * @return string
+     */
+    protected function define($instance)
+    {
+        $class = get_class($instance);
+
+        $this->app->set($class, $instance);
+
+        return (string) $class;
     }
 
     /**

@@ -38,7 +38,7 @@ class RendererTest extends \PHPUnit_Framework_TestCase
     {
         $expected = 'Lorem ipsum dolor sit amet';
 
-        $result = $this->renderer->render('LoremIpsum');
+        $result = $this->renderer->render('loremipsum');
 
         $this->assertEquals($expected, $result);
     }

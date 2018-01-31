@@ -11,11 +11,13 @@ namespace Zapheus\Renderer;
 interface RendererInterface
 {
     /**
-     * Renders a template.
+     * Renders a file from a specified template.
      *
      * @param  string $template
      * @param  array  $data
      * @return string
+     *
+     * @throws \InvalidArgumentException
      */
     public function render($template, array $data = array());
 }

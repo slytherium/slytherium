@@ -11,11 +11,13 @@ namespace Zapheus\Renderer;
 class Renderer implements RendererInterface
 {
     /**
-     * @var array
+     * @var string[]
      */
     protected $paths = array();
 
     /**
+     * Initializes the renderer instance.
+     *
      * @param array|string $paths
      */
     public function __construct($paths)
@@ -24,22 +26,67 @@ class Renderer implements RendererInterface
     }
 
     /**
-     * Renders a template.
+     * Renders a file from a specified template.
      *
      * @param  string $template
      * @param  array  $data
      * @return string
+     *
+     * @throws \InvalidArgumentException
      */
     public function render($template, array $data = array())
     {
-        $file = $this->find(str_replace('.', '/', $template) . '.php');
+        $name = (string) str_replace('.', '/', $template);
 
-        // Extracts the specific parameters to the template.
+        if (($file = $this->find($name . '.php')) === null) {
+            $message = 'Template file "%s" not found.';
+
+            $message = sprintf($message, $template);
+
+            throw new \InvalidArgumentException($message);
+        }
+
+        return $this->extract($file, $data);
+    }
+
+    /**
+     * Checks if the specified file exists.
+     *
+     * @param  array          $files
+     * @param  string         $path
+     * @param  string|integer $source
+     * @param  string         $template
+     * @return string|null
+     */
+    protected function check(array $files, $path, $source, $template)
+    {
+        foreach ((array) $files as $key => $value) {
+            $filepath = str_replace($path, $source, $value);
+
+            $filepath = str_replace('\\', '/', (string) $filepath);
+
+            $filepath = preg_replace('/^\d\//i', '', $filepath);
+
+            strtolower($filepath) === $template && $file = $value;
+        }
+
+        return isset($file) === true ? $file : null;
+    }
+
+    /**
+     * Extracts the contents of the specified file.
+     *
+     * @param  string $filepath
+     * @param  array  $data
+     * @return string
+     */
+    protected function extract($filepath, array $data)
+    {
         extract($data);
 
         ob_start();
-        
-        include $file;
+
+        include $filepath;
 
         $contents = ob_get_contents();
 
@@ -49,31 +96,38 @@ class Renderer implements RendererInterface
     }
 
     /**
+     * Returns an array of filepaths from a specified directory.
+     *
+     * @param  string $path
+     * @return string[]
+     */
+    protected function files($path)
+    {
+        $directory = new \RecursiveDirectoryIterator($path);
+
+        $iterator = new \RecursiveIteratorIterator($directory);
+
+        $regex = new \RegexIterator($iterator, '/^.+\.php$/i', 1);
+
+        return (array) array_keys(iterator_to_array($regex));
+    }
+
+    /**
      * Finds the specified template from the list of paths.
      *
      * @param  string $template
-     * @return string
-     *
-     * @throws \InvalidArgumentException
+     * @return string|null
      */
     protected function find($template)
     {
-        $file = null;
+        foreach ((array) $this->paths as $key => $path) {
+            $files = (array) $this->files($path);
 
-        foreach ((array) $this->paths as $path) {
-            $files = glob($path . '/' . $template);
+            $item = $this->check($files, $path, $key, $template);
 
-            empty($files) || $file = $files[0];
+            $item !== null && $file = $item;
         }
 
-        if (is_null($file) === true) {
-            $message = 'Template (%s) file not found.';
-
-            $message = sprintf($message, $template);
-
-            throw new \InvalidArgumentException($message);
-        }
-
-        return $file;
+        return isset($file) ? $file : null;
     }
 }

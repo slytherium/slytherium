@@ -40,9 +40,11 @@ class RouterMiddleware implements MiddlewareInterface
      */
     public function process(RequestInterface $request, HandlerInterface $handler)
     {
-        $path = $request->uri()->path();
+        $method = $request->method();
 
-        $resolver = $this->dispatcher->dispatch($request->method(), $path);
+        $target = $request->target();
+
+        $resolver = $this->dispatcher->dispatch($method, $target);
 
         $attribute = Application::RESOLVER_ATTRIBUTE;
 

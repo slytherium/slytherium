@@ -51,11 +51,6 @@ class Request extends Message implements RequestInterface
     protected $target = '/';
 
     /**
-     * @var \Zapheus\Http\Message\UriInterface
-     */
-    protected $uri;
-
-    /**
      * Initializes the request instance.
      *
      * @param array $server
@@ -84,8 +79,6 @@ class Request extends Message implements RequestInterface
         $this->server = $server;
 
         $this->target = $server['REQUEST_URI'];
-
-        $this->uri = Uri::instance($server);
     }
 
     /**
@@ -205,18 +198,5 @@ class Request extends Message implements RequestInterface
 
         // getRequestTarget
         // withRequestTarget
-    }
-
-    /**
-     * Returns the URI instance.
-     *
-     * @return \Zapheus\Http\Message\UriInterface
-     */
-    public function uri()
-    {
-        return $this->uri;
-
-        // getUri
-        // withUri
     }
 }

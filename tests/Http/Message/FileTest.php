@@ -130,12 +130,8 @@ class FileTest extends \PHPUnit_Framework_TestCase
     {
         file_put_contents($filename, 'Hello world');
 
-        $size = filesize($filename);
-
         $name = basename($filename);
 
-        $type = mime_content_type($filename);
-
-        return new File($filename, $size, UPLOAD_ERR_OK, $name, $type);
+        return new File($filename, $name, UPLOAD_ERR_OK);
     }
 }

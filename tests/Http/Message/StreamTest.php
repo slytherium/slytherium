@@ -30,41 +30,15 @@ class StreamTest extends \PHPUnit_Framework_TestCase
     }
 
     /**
-     * Tests StreamInterface::contents with \RuntimeException.
+     * Tests StreamInterface::__construct.
      *
-     * @return void
+     * @return [type] [description]
      */
-    public function testContentsMethodWithRuntimeException()
+    public function testConstructMethodWithInvalidArgumentException()
     {
-        $this->setExpectedException('RuntimeException');
+        $this->setExpectedException('InvalidArgumentException');
 
-        $file = __DIR__ . '/../../Fixture/Views/HelloWorld.php';
-
-        $resource = fopen($file, 'w');
-
-        $stream = new Stream($resource);
-
-        $stream->contents();
-    }
-
-    /**
-     * Tests StreamInterface::eof.
-     *
-     * @return void
-     */
-    public function testEofMethod()
-    {
-        $file = __DIR__ . '/../../Fixture/Views/HelloWorld.php';
-
-        $resource = fopen($file, 'w');
-
-        $stream = new Stream($resource);
-
-        $expected = false;
-
-        $result = $stream->eof();
-
-        $this->assertEquals($expected, $result);
+        $this->stream = new Stream;
     }
 
     /**
@@ -84,100 +58,6 @@ class StreamTest extends \PHPUnit_Framework_TestCase
     }
 
     /**
-     * Tests StreamInterface::read with \RuntimeException.
-     *
-     * @return void
-     */
-    public function testReadMethodWithRuntimeException()
-    {
-        $this->setExpectedException('RuntimeException');
-
-        $file = __DIR__ . '/../../Fixture/Views/HelloWorld.php';
-
-        $resource = fopen($file, 'w');
-
-        $stream = new Stream($resource);
-
-        $stream->read(4);
-    }
-
-    /**
-     * Tests StreamInterface::seek and StreamInterface::detach.
-     *
-     * @return void
-     */
-    public function testSeekMethodAndDetachMethod()
-    {
-        $this->setExpectedException('RuntimeException');
-
-        $file = __DIR__ . '/../../Fixture/Views/HelloWorld.php';
-
-        $resource = fopen($file, 'w');
-
-        $stream = new Stream($resource);
-
-        $stream->detach();
-
-        $stream->seek(2);
-    }
-
-    /**
-     * Tests StreamInterface::seek and StreamInterface::tell.
-     *
-     * @return void
-     */
-    public function testSeekMethodAndTellMethod()
-    {
-        $expected = 2;
-
-        $file = __DIR__ . '/../../Fixture/Views/HelloWorld.php';
-
-        $resource = fopen($file, 'w');
-
-        $stream = new Stream($resource);
-
-        $stream->seek($expected);
-
-        $result = $stream->tell();
-
-        $this->assertEquals($expected, $result);
-    }
-
-    /**
-     * Tests StreamInterface::size.
-     *
-     * @return void
-     */
-    public function testSizeMethod()
-    {
-        $expected = 26;
-
-        $result = $this->stream->size();
-
-        $this->assertEquals($expected, $result);
-    }
-
-    /**
-     * Tests StreamInterface::tell and StreamInterface::detach.
-     *
-     * @return void
-     */
-    public function testTellMethodAndDetachMethod()
-    {
-        $this->setExpectedException('RuntimeException');
-
-        $file = __DIR__ . '/../../Fixture/Views/HelloWorld.php';
-
-        $resource = fopen($file, 'w');
-
-        $stream = new Stream($resource);
-
-        $stream->detach();
-
-        $stream->tell();
-    }
-
-    /**
      * Tests StreamInterface::__toString.
      *
      * @return void
@@ -191,23 +71,5 @@ class StreamTest extends \PHPUnit_Framework_TestCase
         $this->stream->close();
 
         $this->assertEquals($expected, $result);
-    }
-
-    /**
-     * Tests StreamInterface::write with \RuntimeException.
-     *
-     * @return void
-     */
-    public function testWriteMethodWithRuntimeException()
-    {
-        $this->setExpectedException('RuntimeException');
-
-        $file = __DIR__ . '/../../Fixture/Views/LoremIpsum.php';
-
-        $resource = fopen($file, 'r');
-
-        $stream = new Stream($resource);
-
-        $stream->write('Hello world');
     }
 }

@@ -34,13 +34,11 @@ class RequestTest extends \PHPUnit_Framework_TestCase
 
         $_FILES['file']['error'] = array(0);
 
-        $_FILES['file']['name'] = array('test.txt');
+        $file = __DIR__ . '/../../Fixture/Views/LoremIpsum.php';
 
-        $_FILES['file']['size'] = array(100);
+        $_FILES['file']['name'] = array(basename($file));
 
-        $_FILES['file']['tmp_name'] = array('/tmp/test.txt');
-
-        $_FILES['file']['type'] = array('text/plain');
+        $_FILES['file']['tmp_name'] = array($file);
 
         $this->request = new Request($_SERVER, array(), array(), $_FILES);
     }
@@ -116,7 +114,9 @@ class RequestTest extends \PHPUnit_Framework_TestCase
      */
     public function testFilesMethod()
     {
-        $file = new File('/test.txt', 0, 0, 'test.txt', 'text/plain');
+        $fixtures = __DIR__ . '/../../Fixture';
+
+        $file = new File($fixtures . '/Views/LoremIpsum.php', 'LoremIpsum.php');
 
         $expected = array($file);
 
@@ -185,22 +185,6 @@ class RequestTest extends \PHPUnit_Framework_TestCase
         $request = $this->request->with('target', $expected);
 
         $result = $request->target();
-
-        $this->assertEquals($expected, $result);
-    }
-
-    /**
-     * Tests RequestInterface::uri.
-     *
-     * @return void
-     */
-    public function testUriMethod()
-    {
-        $expected = new Uri('https://rougin.github.io');
-
-        $request = $this->request->with('uri', $expected);
-
-        $result = $request->uri();
 
         $this->assertEquals($expected, $result);
     }

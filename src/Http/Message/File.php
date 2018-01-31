@@ -38,13 +38,11 @@ class File implements FileInterface
     /**
      * Initializes the uploaded file instance.
      *
-     * @param string       $file
-     * @param integer|null $size
-     * @param integer      $error
-     * @param string|null  $name
-     * @param string|null  $type
+     * @param string  $file
+     * @param string  $name
+     * @param integer $error
      */
-    public function __construct($file, $size = null, $error = UPLOAD_ERR_OK, $name = null, $type = null)
+    public function __construct($file, $name, $error = UPLOAD_ERR_OK)
     {
         $this->error = $error;
 
@@ -52,9 +50,9 @@ class File implements FileInterface
 
         $this->name = $name;
 
-        $this->size = $size;
+        $this->size = filesize($file);
 
-        $this->type = $type;
+        $this->type = mime_content_type($file);
     }
 
     /**
@@ -136,64 +134,23 @@ class File implements FileInterface
     public static function normalize(array $uploaded, $files = array())
     {
         foreach ((array) $uploaded as $name => $file) {
-            $files[$name] = array();
+            list($files[$name], $items) = array($file, array());
 
-            $array = self::arrayify($file);
+            if (is_array($file['name']) === true) {
+                foreach ($file['name'] as $key => $value) {
+                    $tmp = $file['tmp_name'][$key];
 
-            isset($file[0]) || $file = self::convert($file, $array);
+                    $text = $file['name'][$key];
 
-            $files[$name] = $file;
+                    $error = $file['error'][$key];
+
+                    $items[] = new File($tmp, $text, $error);
+                }
+
+                $files[$name] = $items;
+            }
         }
 
         return $files;
-    }
-
-    /**
-     * Converts each value as array.
-     *
-     * @param  array $item
-     * @return array
-     */
-    protected static function arrayify(array $item)
-    {
-        $array = array();
-
-        foreach ($item as $key => $value) {
-            $new = (array) array($value);
-
-            isset($item['name']) && $value = $new;
-
-            $array[$key] = $value;
-        }
-
-        return $array;
-    }
-
-    /**
-     * Converts the specified $_FILES array to a \File instance.
-     *
-     * @param  array $file
-     * @param  array $current
-     * @return array
-     */
-    protected static function convert($file, $current)
-    {
-        list($count, $items) = array(count($file['name']), array());
-
-        for ($i = 0; $i < (integer) $count; $i++) {
-            foreach (array_keys($current) as $key) {
-                $file[$i][$key] = $current[$key][$i];
-            }
-
-            $error = $file[$i]['error'];
-            $original = $file[$i]['name'];
-            $size = $file[$i]['size'];
-            $tmp = $file[$i]['tmp_name'];
-            $type = $file[$i]['type'];
-
-            $items[$i] = new File($tmp, $size, $error, $original, $type);
-        }
-
-        return $items;
     }
 }

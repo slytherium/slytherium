@@ -66,22 +66,26 @@ class Configuration implements ConfigurationInterface
         list($data, $items) = array(array(), array($path));
 
         if (substr($path, -4) !== '.php') {
-            $folder = new \RecursiveDirectoryIterator($path);
+            $directory = new \RecursiveDirectoryIterator($path);
 
-            $items = new \RecursiveIteratorIterator($folder);
+            $iterator = new \RecursiveIteratorIterator($directory);
 
-            $items = new \RegexIterator($items, '/^.+\.php$/i', 1);
+            $regex = new \RegexIterator($iterator, '/^.+\.php$/i', 1);
+
+            $items = (array) array_keys(iterator_to_array($regex));
         }
 
-        foreach ($items as $item) {
-            $item = is_array($item) ? $item[0] : $item;
+        foreach ((array) $items as $item) {
+            $name = str_replace($path, '', $item);
 
-            $name = basename((string) $item, '.php');
+            $data = require $item;
 
-            $data[strtolower($name)] = require $item;
+            $name = str_replace(array('\\', '/'), '.', $name);
+
+            $name = strtolower(preg_replace('/^./i', '', $name));
+
+            $this->offsetSet(basename($name, '.php'), $data);
         }
-
-        $this->data = array_merge($this->data, $data);
     }
 
     /**

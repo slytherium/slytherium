@@ -240,16 +240,16 @@ class Request extends Message implements RequestInterface
         // withRequestTarget
     }
 
-    /**        
-     * Returns the URI instance.      
-     *        
-     * @return \Zapheus\Http\Message\UriInterface     
-     */       
-    public function uri()     
-    {     
-        return $this->uri;        
-      
-        // getUri     
-        // withUri        
+    /**
+     * Returns the URI instance.
+     *
+     * @return \Zapheus\Http\Message\UriInterface
+     */
+    public function uri()
+    {
+        return $this->uri;
+
+        // getUri
+        // withUri
     }
 }

@@ -36,6 +36,10 @@ class Dispatcher implements DispatcherInterface
      */
     public function dispatch($method, $uri)
     {
+        $position = strpos($uri, '?');
+
+        $position !== false && $uri = substr($uri, 0, $position);
+
         if (($result = $this->match($method, $uri)) !== null) {
             list($matches, $handler) = (array) $result;
 

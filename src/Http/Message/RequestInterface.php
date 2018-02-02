@@ -90,4 +90,11 @@ interface RequestInterface extends MessageInterface
      * @return string
      */
     public function target();
+
+    /**     
+     * Returns the URI instance.      
+     *        
+     * @return \Zapheus\Http\Message\Uri      
+     */       
+    public function uri();
 }

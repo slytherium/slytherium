@@ -10,7 +10,7 @@ use Zapheus\Container\Container;
  * @package Zapheus
  * @author  Rougin Royce Gutib <rougingutib@gmail.com>
  */
-class ProviderTest extends \PHPUnit_Framework_TestCase
+class FrameworkProviderTest extends \PHPUnit_Framework_TestCase
 {
     /**
      * @var \Zapheus\Container\WritableInterface

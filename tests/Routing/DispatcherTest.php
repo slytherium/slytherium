@@ -38,9 +38,9 @@ class DispatcherTest extends \PHPUnit_Framework_TestCase
         $router->get('/greeeeet', get_class($hail) . '@greet');
 
         $router->get('/helloo/{name}', function ($name = 'Doe') {
-            $message = sprintf('Hello, my name is %s', $name);
+            $message = (string) sprintf('my name is %s', $name);
 
-            return $message . ' and this is the Slytherin test.';
+            return 'Hello, ' . $message . ' and this is a test.';
         });
 
         $this->dispatcher = new Dispatcher($router);
@@ -71,9 +71,9 @@ class DispatcherTest extends \PHPUnit_Framework_TestCase
      */
     public function testDispatchMethodWithClosureAsHandler()
     {
-        $expected = 'Hello, my name is Royce and this is the Slytherin test.';
+        $expected = 'Hello, my name is Royce and this is a test.';
 
-        $resolver = $this->dispatcher->dispatch('GET', '/helloo/Royce');
+        $resolver = $this->dispatcher->dispatch('GET', 'helloo/Royce');
 
         $result = $resolver->resolve(new ReflectionContainer);
 

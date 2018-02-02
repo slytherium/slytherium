@@ -124,11 +124,11 @@ class Application implements ApplicationInterface, WritableInterface
         if ($this->container->has(self::DISPATCHER) === true) {
             $dispatcher = $this->container->get(self::DISPATCHER);
 
+            $path = (string) $request->uri()->path();
+
             $method = (string) $request->method();
 
-            $target = (string) $request->target();
-
-            $resolver = $dispatcher->dispatch($method, $target);
+            $resolver = $dispatcher->dispatch($method, $path);
         }
 
         $result = $resolver ? $resolver->resolve($this) : null;

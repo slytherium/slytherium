@@ -32,7 +32,7 @@ class StreamTest extends \PHPUnit_Framework_TestCase
     /**
      * Tests StreamInterface::__construct.
      *
-     * @return [type] [description]
+     * @return void
      */
     public function testConstructMethodWithInvalidArgumentException()
     {

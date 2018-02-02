@@ -36,16 +36,16 @@ class Dispatcher implements DispatcherInterface
      */
     public function dispatch($method, $uri)
     {
-        $position = strpos($uri, '?');
-
-        $position !== false && $uri = substr($uri, 0, $position);
+        $uri = $uri[0] !== '/' ? '/' . $uri : $uri;
 
         if (($result = $this->match($method, $uri)) !== null) {
             list($matches, $handler) = (array) $result;
 
             $filtered = array_filter(array_keys($matches), 'is_string');
 
-            $values = array_intersect_key($matches, array_flip($filtered));
+            $flipped = (array) array_flip($filtered);
+
+            $values = array_intersect_key($matches, $flipped);
 
             return new Resolver($handler, $values);
         }

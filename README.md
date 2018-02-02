@@ -64,8 +64,8 @@ $app->pipe(function ($request, $next) use ($router)
     // Returns the request attribute value for resolvers
     $attribute = Zapheus\Application::RESOLVER_ATTRIBUTE;
 
-    // Returns the $_SERVER['REQUEST_URI']
-    $target = $request->target();
+    // Returns the path from the URI instance
+    $path = $request->uri()->path();
 
     // Returns the current HTTP method from the $_SERVER
     $method = $request->method();
@@ -74,7 +74,7 @@ $app->pipe(function ($request, $next) use ($router)
     $dispatcher = new Zapheus\Routing\Dispatcher($router);
 
     // Dispatches the router against the current request
-    $resolver = $dispatcher->dispatch($method, $target);
+    $resolver = $dispatcher->dispatch($method, $path);
 
     // Sets the resolver attribute into the request in order to be
     // called inside the Application instance and return the response.

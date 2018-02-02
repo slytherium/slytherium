@@ -65,9 +65,11 @@ class Dispatcher implements DispatcherInterface
         foreach ((array) $this->router->routes() as $route) {
             $exists = preg_match($route->uri(true), $uri, $matches);
 
-            $matched = $exists && $route->method() === $method;
+            if ($exists === 1 && $route->method() === $method) {
+                $result = array($matches, $route->handler());
 
-            $matched && $result = array($matches, $route->handler());
+                break; // Break because the needed route was found
+            }
         }
 
         return $result;

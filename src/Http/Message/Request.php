@@ -38,7 +38,7 @@ class Request extends Message implements RequestInterface
     /**
      * @var array
      */
-    protected $query = array();
+    protected $queries = array();
 
     /**
      * @var array
@@ -57,10 +57,10 @@ class Request extends Message implements RequestInterface
      * @param array $cookies
      * @param array $data
      * @param array $files
-     * @param array $query
+     * @param array $queries
      * @param array $attributes
      */
-    public function __construct(array $server, array $cookies = array(), array $data = array(), array $files = array(), array $query = array(), array $attributes = array())
+    public function __construct(array $server, array $cookies = array(), array $data = array(), array $files = array(), array $queries = array(), array $attributes = array())
     {
         parent::__construct(Message::request($server));
 
@@ -74,7 +74,7 @@ class Request extends Message implements RequestInterface
 
         $this->method = $server['REQUEST_METHOD'];
 
-        $this->query = $query;
+        $this->queries = $queries;
 
         $this->server = $server;
 
@@ -108,6 +108,19 @@ class Request extends Message implements RequestInterface
         // getAttributes
         // withAttribute
         // withoutAttribute
+    }
+
+    /**
+     * Returns the specified cookie from request.
+     *
+     * @param  string $name
+     * @return array
+     */
+    public function cookie($name)
+    {
+        $exists = isset($this->cookies[$name]);
+
+        return $exists ? $this->cookies[$name] : null;
     }
 
     /**
@@ -167,22 +180,42 @@ class Request extends Message implements RequestInterface
      *
      * @return array
      */
-    public function query()
+    public function queries()
     {
-        return $this->query;
+        return $this->queries;
 
         // getQueryParams
         // withQueryParams
     }
 
     /**
-     * Returns server parameters.
+     * Returns the specified query string argument.
      *
+     * @param  string $name
      * @return array
      */
-    public function server()
+    public function query($name)
     {
-        return $this->server;
+        $exists = isset($this->queries[$name]);
+
+        return $exists ? $this->queries[$name] : null;
+    }
+
+    /**
+     * Returns the server parameter/s.
+     *
+     * @param  string|null $name
+     * @return array
+     */
+    public function server($name = null)
+    {
+        $value = $name === null ? $this->server : null;
+
+        $server = (array) $this->server;
+
+        isset($server[$name]) && $value = $server[$name];
+
+        return $value;
 
         // getServerParams
     }

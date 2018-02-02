@@ -26,6 +26,14 @@ interface RequestInterface extends MessageInterface
     public function attributes();
 
     /**
+     * Returns the specified cookie from request.
+     *
+     * @param  string $name
+     * @return array
+     */
+    public function cookie($name);
+
+    /**
      * Returns the cookies from the request.
      *
      * @return array
@@ -58,14 +66,23 @@ interface RequestInterface extends MessageInterface
      *
      * @return array
      */
-    public function query();
+    public function queries();
 
     /**
-     * Returns server parameters.
+     * Returns the specified query string argument.
      *
+     * @param  string $name
      * @return array
      */
-    public function server();
+    public function query($name);
+
+    /**
+     * Returns the server parameter/s.
+     *
+     * @param  string|null $name
+     * @return array
+     */
+    public function server($name = null);
 
     /**
      * Returns the message's request target.

@@ -76,6 +76,24 @@ class RequestTest extends \PHPUnit_Framework_TestCase
     }
 
     /**
+     * Tests RequestInterface::cookie.
+     *
+     * @return void
+     */
+    public function testCookieMethod()
+    {
+        $expected = 'Tomorrowland';
+
+        $cookies = array('name' => 'Rougin', 'address' => 'Tomorrowland');
+
+        $request = $this->request->with('cookies', $cookies);
+
+        $result = $request->cookie('address');
+
+        $this->assertEquals($expected, $result);
+    }
+
+    /**
      * Tests RequestInterface::cookies.
      *
      * @return void
@@ -144,17 +162,35 @@ class RequestTest extends \PHPUnit_Framework_TestCase
     }
 
     /**
+     * Tests RequestInterface::queries.
+     *
+     * @return void
+     */
+    public function testQueriesMethod()
+    {
+        $expected = array('name' => 'Rougin Royce', 'age' => 20);
+
+        $request = $this->request->with('queries', $expected);
+
+        $result = $request->queries();
+
+        $this->assertEquals($expected, $result);
+    }
+
+    /**
      * Tests RequestInterface::query.
      *
      * @return void
      */
     public function testQueryMethod()
     {
-        $expected = array('name' => 'Rougin Royce', 'age' => 20);
+        $expected = 'Rougin Royce';
 
-        $request = $this->request->with('query', $expected);
+        $queries = array('name' => 'Rougin Royce', 'age' => 20);
 
-        $result = $request->query();
+        $request = $this->request->with('queries', $queries);
+
+        $result = $request->query('name');
 
         $this->assertEquals($expected, $result);
     }
@@ -169,6 +205,20 @@ class RequestTest extends \PHPUnit_Framework_TestCase
         $result = $this->request->server();
 
         $expected = $_SERVER;
+
+        $this->assertEquals($expected, $result);
+    }
+
+    /**
+     * Tests RequestInterface::server with a specified name.
+     *
+     * @return void
+     */
+    public function testServerMethodWithSpecifiedName()
+    {
+        $expected = (string) 'rougin.github.io';
+
+        $result = $this->request->server('SERVER_NAME');
 
         $this->assertEquals($expected, $result);
     }

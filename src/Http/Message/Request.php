@@ -50,9 +50,9 @@ class Request extends Message implements RequestInterface
      */
     protected $target = '/';
 
-    /**        
-     * @var \Zapheus\Http\Message\UriInterface        
-     */       
+    /**
+     * @var \Zapheus\Http\Message\UriInterface
+     */
     protected $uri;
 
     /**

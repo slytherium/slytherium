@@ -107,6 +107,7 @@ class Route
         $uri = $this->capture($uri, '/{(' . self::ALLOWED_REGEX . ')}/');
 
         // Add start and end matching
-        return '@^' . $uri . '$@D';
+        // return '@^' . $uri . '$@D';
+        return '@^' . $uri . '@D';
     }
 }

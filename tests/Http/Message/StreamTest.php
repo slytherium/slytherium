@@ -11,6 +11,11 @@ namespace Zapheus\Http\Message;
 class StreamTest extends \PHPUnit_Framework_TestCase
 {
     /**
+     * @var resource
+     */
+    protected $resource;
+
+    /**
      * @var \Zapheus\Http\Message\StreamInterface
      */
     protected $stream;
@@ -22,11 +27,15 @@ class StreamTest extends \PHPUnit_Framework_TestCase
      */
     public function setUp()
     {
-        $file = __DIR__ . '/../../Fixture/Views/LoremIpsum.php';
+        $search = 'Http' . DIRECTORY_SEPARATOR . 'Message';
 
-        $resource = fopen($file, 'r');
+        $root = str_replace($search, 'Fixture', __DIR__);
 
-        $this->stream = new Stream($resource);
+        $file = (string) $root . '/Views/LoremIpsum.php';
+
+        $this->resource = $resource = fopen($file, 'r');
+
+        $this->stream = new Stream($this->resource);
     }
 
     /**
@@ -39,6 +48,15 @@ class StreamTest extends \PHPUnit_Framework_TestCase
         $this->setExpectedException('InvalidArgumentException');
 
         $this->stream = new Stream;
+    }
+
+    public function testResourceMethod()
+    {
+        $expected = $this->resource;
+
+        $result = $this->stream->resource();
+
+        $this->assertEquals($expected, $result);
     }
 
     /**

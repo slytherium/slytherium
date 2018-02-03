@@ -8,7 +8,7 @@ namespace Zapheus\Provider;
  * @package Zapheus
  * @author  Rougin Royce Gutib <rougingutib@gmail.com>
  */
-interface ConfigurationInterface extends \ArrayAccess
+interface ConfigurationInterface
 {
     /**
      * Returns all the stored configurations.

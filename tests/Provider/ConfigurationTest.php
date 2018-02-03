@@ -106,6 +106,24 @@ class ConfigurationTest extends \PHPUnit_Framework_TestCase
     }
 
     /**
+     * Tests ConfigurationInterface::load with recursive access.
+     *
+     * @return void
+     */
+    public function testLoadMethodWithRecursiveAccess()
+    {
+        $expected = 'An independent and framework-friendly framework.';
+
+        $path = str_replace('Provider', 'Fixture', __DIR__) . '/Config';
+
+        $this->config->load($path);
+
+        $result = $this->config->get('test.settings.description');
+
+        $this->assertEquals($expected, $result);
+    }
+
+    /**
      * Tests ConfigurationInterface::set.
      *
      * @return void
@@ -119,31 +137,5 @@ class ConfigurationTest extends \PHPUnit_Framework_TestCase
         $result = $this->config->get('user.name');
 
         $this->assertEquals($expected, $result);
-    }
-
-    /**
-     * Tests ConfigurationInterface::offsetExists.
-     *
-     * @return void
-     */
-    public function testOffsetExistsMethod()
-    {
-        $exists = isset($this->config['user.name']);
-
-        $this->assertTrue($exists);
-    }
-
-    /**
-     * Tests ConfigurationInterface::offsetUnset.
-     *
-     * @return void
-     */
-    public function testOffsetUnsetMethod()
-    {
-        unset($this->config['user.name']);
-
-        $exists = isset($this->config['user.name']);
-
-        $this->assertFalse($exists);
     }
 }

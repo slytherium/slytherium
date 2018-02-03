@@ -37,6 +37,31 @@ class Configuration implements ConfigurationInterface
     }
 
     /**
+     * Converts the data into dot notation values.
+     *
+     * @param  array  $data
+     * @param  array  $result
+     * @param  string $key
+     * @return array
+     */
+    public function dotify(array $data, $result = array(), $key = '')
+    {
+        foreach ((array) $data as $name => $value) {
+            if (is_array($value) && empty($value) === false) {
+                $new = (string) $key . $name . '.';
+
+                $array = $this->dotify($value, $result, $new);
+
+                $result = array_merge($result, $array);
+            }
+
+            is_array($value) || $result[$key . $name] = $value;
+        }
+
+        return $result;
+    }
+
+    /**
      * Returns the value from the specified key.
      *
      * @param  string     $key
@@ -46,9 +71,17 @@ class Configuration implements ConfigurationInterface
      */
     public function get($key, $default = null, $dotify = false)
     {
-        $result = $this->offsetGet($key);
+        $keys = array_filter(explode('.', $key));
 
-        $items = $result !== null ? $result : $default;
+        list($items, $length) = array($this->data, count($keys));
+
+        for ($i = 0; $i < $length; $i++) {
+            $index = $keys[$i];
+
+            $items = &$items[$index];
+        }
+
+        $items = $items !== null ? $items : $default;
 
         $exists = is_array($items) && $dotify === true;
 
@@ -65,88 +98,23 @@ class Configuration implements ConfigurationInterface
     {
         list($data, $items) = array(array(), array($path));
 
-        if (substr($path, -4) !== '.php') {
+        if (substr((string) $path, -4) !== '.php') {
             $directory = new \RecursiveDirectoryIterator($path);
 
             $iterator = new \RecursiveIteratorIterator($directory);
 
             $regex = new \RegexIterator($iterator, '/^.+\.php$/i', 1);
 
-            $items = (array) array_keys(iterator_to_array($regex));
+            $items = array_keys(iterator_to_array($regex));
         }
 
         foreach ((array) $items as $item) {
-            $name = str_replace($path, '', $item);
+            $name = $this->rename($item, $path);
 
             $data = require $item;
 
-            $name = str_replace(array('\\', '/'), '.', $name);
-
-            $name = strtolower(preg_replace('/^./i', '', $name));
-
-            $this->offsetSet(basename($name, '.php'), $data);
+            $this->set((string) $name, $data);
         }
-    }
-
-    /**
-     * Checks whether an offset exists.
-     *
-     * @param  mixed $offset
-     * @return boolean
-     */
-    public function offsetExists($offset)
-    {
-        return $this->offsetGet($offset) !== null;
-    }
-
-    /**
-     * Returns the value at specified offset.
-     *
-     * @param  mixed $offset
-     * @return mixed
-     */
-    public function offsetGet($offset)
-    {
-        $keys = array_filter(explode('.', $offset));
-
-        $length = count($keys);
-
-        $data = $this->data;
-
-        for ($i = 0; $i < $length; $i++) {
-            $index = $keys[$i];
-
-            $data = &$data[$index];
-        }
-
-        return $data;
-    }
-
-    /**
-     * Assigns a value to the specified offset.
-     *
-     * @param  mixed $offset
-     * @param  mixed $value
-     * @return void
-     */
-    public function offsetSet($offset, $value)
-    {
-        $keys = array_filter(explode('.', $offset));
-
-        $this->save($keys, $this->data, $value);
-    }
-
-    /**
-     * Unsets an offset.
-     *
-     * @param  mixed $offset
-     * @return void
-     */
-    public function offsetUnset($offset)
-    {
-        $keys = array_filter(explode('.', $offset));
-
-        unset($this->data[$keys[0]]);
     }
 
     /**
@@ -158,36 +126,29 @@ class Configuration implements ConfigurationInterface
      */
     public function set($key, $value)
     {
-        $this->offsetSet($key, $value);
+        $keys = array_filter(explode('.', $key));
+
+        $this->save($keys, $this->data, $value);
 
         return $this;
     }
 
     /**
-     * Converts the data into dot notation values.
+     * Renames the item into a dot notation one.
      *
-     * @param  array  $data
-     * @param  array  $result
-     * @param  string $key
-     * @return array
+     * @param  string $item
+     * @param  string $path
+     * @return string
      */
-    protected function dotify(array $data, array $result = array(), $key = '')
+    protected function rename($item, $path)
     {
-        foreach ((array) $data as $name => $value) {
-            if (is_array($value) && empty($value) === false) {
-                $new = $key . $name . '.';
+        $name = (string) str_replace($path, '', $item);
 
-                $array = $this->dotify($value, $result, $new);
+        $name = str_replace(array('\\', '/'), '.', $name);
 
-                $result = array_merge($result, $array);
+        $regex = preg_replace('/^./i', '', $name);
 
-                continue;
-            }
-
-            $result[$key . $name] = $value;
-        }
-
-        return $result;
+        return basename(strtolower($regex), '.php');
     }
 
     /**

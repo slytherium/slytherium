@@ -49,122 +49,22 @@ class RouterApplication extends AbstractApplication
     }
 
     /**
-     * Adds a new route instance in CONNECT HTTP method.
+     * Calls methods from the Application instance.
      *
-     * @param  string          $uri
-     * @param  string|callable $handler
-     * @return self
+     * @param  string $method
+     * @param  mixed  $parameters
+     * @return mixed
+     *
+     * @throws \BadMethodCallException
      */
-    public function connect($uri, $handler)
+    public function __call($method, $parameters)
     {
-        return $this->router->connect($uri, $handler);
-    }
+        if (method_exists($this->router, $method) === true) {
+            $class = array($this->router, $method);
+            
+            return call_user_func_array($class, $parameters);
+        }
 
-    /**
-     * Adds a new route instance in DELETE HTTP method.
-     *
-     * @param  string          $uri
-     * @param  string|callable $handler
-     * @return self
-     */
-    public function delete($uri, $handler)
-    {
-        return $this->router->delete($uri, $handler);
-    }
-
-    /**
-     * Adds a new route instance in GET HTTP method.
-     *
-     * @param  string          $uri
-     * @param  string|callable $handler
-     * @return self
-     */
-    public function get($uri, $handler)
-    {
-        return $this->router->get($uri, $handler);
-    }
-
-    /**
-     * Adds a new route instance in HEAD HTTP method.
-     *
-     * @param  string          $uri
-     * @param  string|callable $handler
-     * @return self
-     */
-    public function head($uri, $handler)
-    {
-        return $this->router->head($uri, $handler);
-    }
-
-    /**
-     * Adds a new route instance in OPTIONS HTTP method.
-     *
-     * @param  string          $uri
-     * @param  string|callable $handler
-     * @return self
-     */
-    public function options($uri, $handler)
-    {
-        return $this->router->options($uri, $handler);
-    }
-
-    /**
-     * Adds a new route instance in PATCH HTTP method.
-     *
-     * @param  string          $uri
-     * @param  string|callable $handler
-     * @return self
-     */
-    public function patch($uri, $handler)
-    {
-        return $this->router->patch($uri, $handler);
-    }
-
-    /**
-     * Adds a new route instance in POST HTTP method.
-     *
-     * @param  string          $uri
-     * @param  string|callable $handler
-     * @return self
-     */
-    public function post($uri, $handler)
-    {
-        return $this->router->post($uri, $handler);
-    }
-
-    /**
-     * Adds a new route instance in PURGE HTTP method.
-     *
-     * @param  string          $uri
-     * @param  string|callable $handler
-     * @return self
-     */
-    public function purge($uri, $handler)
-    {
-        return $this->router->purge($uri, $handler);
-    }
-
-    /**
-     * Adds a new route instance in PUT HTTP method.
-     *
-     * @param  string          $uri
-     * @param  string|callable $handler
-     * @return self
-     */
-    public function put($uri, $handler)
-    {
-        return $this->router->put($uri, $handler);
-    }
-
-    /**
-     * Adds a new route instance in TRACE HTTP method.
-     *
-     * @param  string          $uri
-     * @param  string|callable $handler
-     * @return self
-     */
-    public function trace($uri, $handler)
-    {
-        return $this->router->trace($uri, $handler);
+        return parent::__call($method, $parameters);
     }
 }

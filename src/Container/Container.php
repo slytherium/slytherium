@@ -11,11 +11,6 @@ namespace Zapheus\Container;
 class Container implements WritableInterface
 {
     /**
-     * @var \Zapheus\Container\ContainerInterface|null
-     */
-    protected $delegate = null;
-
-    /**
      * @var array
      */
     protected $objects = array();
@@ -41,9 +36,11 @@ class Container implements WritableInterface
     public function get($id)
     {
         if ($this->has($id) === false) {
-            $message = 'Alias (%s) is not being managed by the container';
+            $message = 'Alias (%s) is not defined';
 
-            throw new NotFoundException(sprintf($message, $id));
+            $message = sprintf($message, $id);
+
+            throw new NotFoundException($message);
         }
 
         return $this->objects[$id];
@@ -66,19 +63,9 @@ class Container implements WritableInterface
      * @param  string $id
      * @param  mixed  $concrete
      * @return self
-     *
-     * @throws \Zapheus\Container\ContainerException
      */
     public function set($id, $concrete)
     {
-        if (is_object($concrete) === false) {
-            $message = 'Alias (%s) is not an object';
-
-            $message = sprintf($message, $id);
-
-            throw new ContainerException($message);
-        }
-
         $this->objects[$id] = $concrete;
 
         return $this;

@@ -33,13 +33,6 @@ interface StreamInterface
     public function read($length);
 
     /**
-     * Returns the resource stream.
-     *
-     * @return resource
-     */
-    public function resource();
-
-    /**
      * Seeks to the beginning of the stream.
      *
      * @throws \RuntimeException

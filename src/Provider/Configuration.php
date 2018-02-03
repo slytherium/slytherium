@@ -37,31 +37,6 @@ class Configuration implements ConfigurationInterface
     }
 
     /**
-     * Converts the data into dot notation values.
-     *
-     * @param  array  $data
-     * @param  array  $result
-     * @param  string $key
-     * @return array
-     */
-    public function dotify(array $data, $result = array(), $key = '')
-    {
-        foreach ((array) $data as $name => $value) {
-            if (is_array($value) && empty($value) === false) {
-                $new = (string) $key . $name . '.';
-
-                $array = $this->dotify($value, $result, $new);
-
-                $result = array_merge($result, $array);
-            }
-
-            is_array($value) || $result[$key . $name] = $value;
-        }
-
-        return $result;
-    }
-
-    /**
      * Returns the value from the specified key.
      *
      * @param  string     $key
@@ -83,9 +58,7 @@ class Configuration implements ConfigurationInterface
 
         $items = $items !== null ? $items : $default;
 
-        $exists = is_array($items) && $dotify === true;
-
-        return $exists ? $this->dotify($items) : $items;
+        return $dotify ? $this->dotify((array) $items) : $items;
     }
 
     /**
@@ -115,6 +88,31 @@ class Configuration implements ConfigurationInterface
 
             $this->set((string) $name, $data);
         }
+    }
+
+    /**
+     * Converts the data into dot notation values.
+     *
+     * @param  array  $data
+     * @param  array  $result
+     * @param  string $key
+     * @return array
+     */
+    protected function dotify(array $data, $result = array(), $key = '')
+    {
+        foreach ((array) $data as $name => $value) {
+            if (is_array($value) === true) {
+                $new = (string) $key . $name . '.';
+
+                $array = $this->dotify($value, $result, $new);
+
+                $result = array_merge($result, $array);
+            }
+
+            is_array($value) || $result[$key . $name] = $value;
+        }
+
+        return $result;
     }
 
     /**

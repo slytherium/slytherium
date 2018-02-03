@@ -71,18 +71,4 @@ class ContainerTest extends \PHPUnit_Framework_TestCase
 
         $this->assertTrue($this->container->has('hail'));
     }
-
-    /**
-     * Tests ContainerInterface::set method with ContainerException.
-     *
-     * @return void
-     */
-    public function testSetMethodWithContainerException()
-    {
-        $exception = 'Zapheus\Container\ContainerException';
-
-        $this->setExpectedException($exception);
-
-        $this->container->set('boolean', true);
-    }
 }

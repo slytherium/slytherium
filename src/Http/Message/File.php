@@ -136,7 +136,7 @@ class File implements FileInterface
         foreach ((array) $uploaded as $name => $file) {
             list($files[$name], $items) = array($file, array());
 
-            if (isset($file['name']) && is_array($file['name'])) {
+            if (isset($file['name']) === true) {
                 foreach ($file['name'] as $key => $value) {
                     $tmp = $file['tmp_name'][$key];
 

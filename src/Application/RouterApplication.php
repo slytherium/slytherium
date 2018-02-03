@@ -19,7 +19,7 @@ class RouterApplication extends AbstractApplication
     /**
      * @var \Zapheus\Routing\Router
      */
-    protected $router;
+    protected $original;
 
     /**
      * Initializes the application instance.
@@ -30,7 +30,7 @@ class RouterApplication extends AbstractApplication
     {
         parent::__construct($application);
 
-        $this->router = new Router;
+        $this->original = new Router;
     }
 
     /**
@@ -41,30 +41,10 @@ class RouterApplication extends AbstractApplication
      */
     public function handle(RequestInterface $request)
     {
-        $dispatcher = new Dispatcher($this->router);
+        $dispatcher = new Dispatcher($this->original);
 
         $this->application->set(Application::DISPATCHER, $dispatcher);
 
         return $this->application->handle($request);
-    }
-
-    /**
-     * Calls methods from the Application instance.
-     *
-     * @param  string $method
-     * @param  mixed  $parameters
-     * @return mixed
-     *
-     * @throws \BadMethodCallException
-     */
-    public function __call($method, $parameters)
-    {
-        if (method_exists($this->router, $method) === true) {
-            $class = array($this->router, $method);
-            
-            return call_user_func_array($class, $parameters);
-        }
-
-        return parent::__call($method, $parameters);
     }
 }

@@ -19,7 +19,7 @@ class MiddlewareApplication extends AbstractApplication
     /**
      * @var \Zapheus\Http\Server\DispatcherInterface
      */
-    protected $dispatcher;
+    protected $original;
 
     /**
      * Initializes the application instance.
@@ -30,7 +30,7 @@ class MiddlewareApplication extends AbstractApplication
     {
         parent::__construct($application);
 
-        $this->dispatcher = new Dispatcher;
+        $this->original = new Dispatcher;
     }
 
     /**
@@ -43,17 +43,6 @@ class MiddlewareApplication extends AbstractApplication
     {
         $handler = new ApplicationHandler($this->application);
 
-        return $this->dispatcher->process($request, $handler);
-    }
-
-    /**
-     * Adds a new middleware to the stack.
-     *
-     * @param  mixed $middleware
-     * @return self
-     */
-    public function pipe($middleware)
-    {
-        return $this->dispatcher->pipe($middleware);
+        return $this->original->process($request, $handler);
     }
 }

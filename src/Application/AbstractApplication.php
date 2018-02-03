@@ -14,6 +14,11 @@ use Zapheus\Http\MessageProvider;
 abstract class AbstractApplication implements ApplicationInterface
 {
     /**
+     * @var object
+     */
+    protected $original;
+
+    /**
      * @var \Zapheus\Application
      */
     protected $application;
@@ -57,7 +62,11 @@ abstract class AbstractApplication implements ApplicationInterface
      */
     public function __call($method, $parameters)
     {
-        if (method_exists($this->application, $method)) {
+        if (method_exists($this->original, $method) === true) {
+            $class = array($this->original, $method);
+            
+            return call_user_func_array($class, $parameters);
+        } elseif (method_exists($this->application, $method)) {
             $class = array($this->application, $method);
             
             return call_user_func_array($class, $parameters);

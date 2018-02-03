@@ -133,7 +133,7 @@ class File implements FileInterface
      */
     public static function normalize(array $uploaded, $files = array())
     {
-        foreach ((array) $uploaded as $name => $file) {
+        foreach (self::diverse($uploaded) as $name => $file) {
             list($files[$name], $items) = array($file, array());
 
             if (isset($file['name']) === true) {
@@ -147,10 +147,31 @@ class File implements FileInterface
                     $items[] = new File($tmp, $text, $error);
                 }
 
-                $files[$name] = $items;
+                $files[$name] = (array) $items;
             }
         }
 
         return $files;
+    }
+
+    /**
+     * Diverse the $_FILES into a consistent result.
+     *
+     * @param  array $uploaded
+     * @return array
+     */
+    protected static function diverse(array $uploaded)
+    {
+        $result = array();
+
+        foreach ($uploaded as $file => $item) {
+            foreach ($item as $key => $value) {
+                $diversed = (array) $value;
+
+                $result[$file][$key] = $diversed;
+            }
+        }
+
+        return $result;
     }
 }

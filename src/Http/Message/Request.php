@@ -75,7 +75,7 @@ class Request extends Message implements RequestInterface
 
         $this->data = $data;
 
-        $this->files = File::normalize($files);
+        $this->files = isset($files[0]) ? $files : File::normalize($files);
 
         $this->method = $server['REQUEST_METHOD'];
 

@@ -32,13 +32,13 @@ class RequestTest extends \PHPUnit_Framework_TestCase
 
         $_SERVER['HTTPS'] = 'off';
 
-        $_FILES['file']['error'] = array(0);
+        $_FILES['file']['error'] = 0;
 
         $file = __DIR__ . '/../../Fixture/Views/LoremIpsum.php';
 
-        $_FILES['file']['name'] = array(basename($file));
+        $_FILES['file']['name'] = basename($file);
 
-        $_FILES['file']['tmp_name'] = array($file);
+        $_FILES['file']['tmp_name'] = (string) $file;
 
         $this->request = new Request($_SERVER, array(), array(), $_FILES);
     }

@@ -38,10 +38,18 @@ class Renderer implements RendererInterface
     {
         $name = (string) str_replace('.', '/', $template);
 
-        if (($file = $this->find($name . '.php')) === null) {
+        foreach ((array) $this->paths as $key => $path) {
+            $files = (array) $this->files($path);
+
+            $item = $this->check($files, $path, $key, $name . '.php');
+
+            $item !== null && $file = $item;
+        }
+
+        if (isset($file) === false) {
             $message = 'Template file "%s" not found.';
 
-            $message = sprintf($message, $template);
+            $message = sprintf($message, $name);
 
             throw new \InvalidArgumentException($message);
         }
@@ -110,24 +118,5 @@ class Renderer implements RendererInterface
         $regex = new \RegexIterator($iterator, '/^.+\.php$/i', 1);
 
         return (array) array_keys(iterator_to_array($regex));
-    }
-
-    /**
-     * Finds the specified template from the list of paths.
-     *
-     * @param  string $template
-     * @return string|null
-     */
-    protected function find($template)
-    {
-        foreach ((array) $this->paths as $key => $path) {
-            $files = (array) $this->files($path);
-
-            $item = $this->check($files, $path, $key, $template);
-
-            $item !== null && $file = $item;
-        }
-
-        return isset($file) ? $file : null;
     }
 }

@@ -67,7 +67,7 @@ class Dispatcher implements DispatcherInterface
         $result = null;
 
         foreach ((array) $this->router->routes() as $route) {
-            $exists = preg_match($route->uri(true), $uri, $matches);
+            $exists = preg_match($route->regex(), $uri, $matches);
 
             if ($exists === 1 && $route->method() === $method) {
                 $result = array($matches, $route->handler());

@@ -54,13 +54,13 @@ class Route
     }
 
     /**
-     * Returns the parsed/unparsed URI.
+     * Returns the URI.
      *
      * @return string
      */
-    public function uri($parsed = false)
+    public function uri()
     {
-        return $parsed ? $this->parse($this->uri) : $this->uri;
+        return $this->uri;
     }
 
     /**
@@ -71,6 +71,28 @@ class Route
     public function handler()
     {
         return $this->handler;
+    }
+
+    /**
+     * Returns a regular expression pattern from the given URI.
+     *
+     * @link https://stackoverflow.com/q/30130913
+     *
+     * @return string
+     */
+    public function regex()
+    {
+        // Turn "(/)" into "/?"
+        $uri = preg_replace('#\(/\)#', '/?', (string) $this->uri);
+
+        // Create capture group for ":parameter", replaces ":parameter"
+        $uri = $this->capture($uri, '/:(' . self::ALLOWED_REGEX . ')/');
+
+        // Create capture group for '{parameter}', replaces "{parameter}"
+        $uri = $this->capture($uri, '/{(' . self::ALLOWED_REGEX . ')}/');
+
+        // Add start and end matching
+        return '@^' . $uri . '$@D';
     }
 
     /**
@@ -85,28 +107,5 @@ class Route
         $replace = '(?<$1>' . self::ALLOWED_REGEX . ')';
 
         return preg_replace($search, $replace, $pattern);
-    }
-
-    /**
-     * Generates a regular expression pattern from the given URI.
-     *
-     * @link https://stackoverflow.com/q/30130913
-     *
-     * @param  string $uri
-     * @return string
-     */
-    protected function parse($uri)
-    {
-        // Turn "(/)" into "/?"
-        $uri = preg_replace('#\(/\)#', '/?', $uri);
-
-        // Create capture group for ":parameter", replaces ":parameter"
-        $uri = $this->capture($uri, '/:(' . self::ALLOWED_REGEX . ')/');
-
-        // Create capture group for '{parameter}', replaces "{parameter}"
-        $uri = $this->capture($uri, '/{(' . self::ALLOWED_REGEX . ')}/');
-
-        // Add start and end matching
-        return '@^' . $uri . '$@D';
     }
 }

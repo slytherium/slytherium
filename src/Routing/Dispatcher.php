@@ -39,7 +39,7 @@ class Dispatcher implements DispatcherInterface
         $uri = $uri[0] !== '/' ? '/' . $uri : $uri;
 
         if (($result = $this->match($method, $uri)) !== null) {
-            list($matches, $handler) = (array) $result;
+            list($matches, $route) = (array) $result;
 
             $filtered = array_filter(array_keys($matches), 'is_string');
 
@@ -47,7 +47,7 @@ class Dispatcher implements DispatcherInterface
 
             $values = array_intersect_key($matches, $flipped);
 
-            return new Resolver($handler, $values);
+            return new Resolver($route, $values);
         }
 
         $error = sprintf('Route "%s %s" not found', $method, $uri);
@@ -69,11 +69,9 @@ class Dispatcher implements DispatcherInterface
         foreach ((array) $this->router->routes() as $route) {
             $exists = preg_match($route->regex(), $uri, $matches);
 
-            if ($exists === 1 && $route->method() === $method) {
-                $result = array($matches, $route->handler());
+            $exact = $exists === 1 && $route->method() === $method;
 
-                break; // Break because the needed route was found
-            }
+            $exact === true && $result = array($matches, $route);
         }
 
         return $result;

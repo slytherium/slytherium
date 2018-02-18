@@ -46,37 +46,40 @@ class Router implements RouterInterface
     /**
      * Adds a new route instance in CONNECT HTTP method.
      *
-     * @param  string          $uri
-     * @param  callable|string $handler
+     * @param  string                $uri
+     * @param  callable|string       $handler
+     * @param  array|callable|string $middlewares
      * @return self
      */
-    public function connect($uri, $handler)
+    public function connect($uri, $handler, $middlewares = array())
     {
-        return $this->add($this->route('CONNECT', $uri, $handler));
+        return $this->add($this->route('CONNECT', $uri, $handler, $middlewares));
     }
 
     /**
      * Adds a new route instance in DELETE HTTP method.
      *
-     * @param  string          $uri
-     * @param  callable|string $handler
+     * @param  string                $uri
+     * @param  callable|string       $handler
+     * @param  array|callable|string $middlewares
      * @return self
      */
-    public function delete($uri, $handler)
+    public function delete($uri, $handler, $middlewares = array())
     {
-        return $this->add($this->route('DELETE', $uri, $handler));
+        return $this->add($this->route('DELETE', $uri, $handler, $middlewares));
     }
 
     /**
      * Adds a new route instance in GET HTTP method.
      *
-     * @param  string          $uri
-     * @param  callable|string $handler
+     * @param  string                $uri
+     * @param  callable|string       $handler
+     * @param  array|callable|string $middlewares
      * @return self
      */
-    public function get($uri, $handler)
+    public function get($uri, $handler, $middlewares = array())
     {
-        return $this->add($this->route('GET', $uri, $handler));
+        return $this->add($this->route('GET', $uri, $handler, $middlewares));
     }
 
     /**
@@ -93,73 +96,79 @@ class Router implements RouterInterface
     /**
      * Adds a new route instance in HEAD HTTP method.
      *
-     * @param  string          $uri
-     * @param  callable|string $handler
+     * @param  string                $uri
+     * @param  callable|string       $handler
+     * @param  array|callable|string $middlewares
      * @return self
      */
-    public function head($uri, $handler)
+    public function head($uri, $handler, $middlewares = array())
     {
-        return $this->add($this->route('HEAD', $uri, $handler));
+        return $this->add($this->route('HEAD', $uri, $handler, $middlewares));
     }
 
     /**
      * Adds a new route instance in OPTIONS HTTP method.
      *
-     * @param  string          $uri
-     * @param  callable|string $handler
+     * @param  string                $uri
+     * @param  callable|string       $handler
+     * @param  array|callable|string $middlewares
      * @return self
      */
-    public function options($uri, $handler)
+    public function options($uri, $handler, $middlewares = array())
     {
-        return $this->add($this->route('OPTIONS', $uri, $handler));
+        return $this->add($this->route('OPTIONS', $uri, $handler, $middlewares));
     }
 
     /**
      * Adds a new route instance in PATCH HTTP method.
      *
-     * @param  string          $uri
-     * @param  callable|string $handler
+     * @param  string                $uri
+     * @param  callable|string       $handler
+     * @param  array|callable|string $middlewares
      * @return self
      */
-    public function patch($uri, $handler)
+    public function patch($uri, $handler, $middlewares = array())
     {
-        return $this->add($this->route('PATCH', $uri, $handler));
+        return $this->add($this->route('PATCH', $uri, $handler, $middlewares));
     }
 
     /**
      * Adds a new route instance in POST HTTP method.
      *
-     * @param  string          $uri
-     * @param  callable|string $handler
+     * @param  string                $uri
+     * @param  callable|string       $handler
+     * @param  array|callable|string $middlewares
      * @return self
      */
-    public function post($uri, $handler)
+    public function post($uri, $handler, $middlewares = array())
     {
-        return $this->add($this->route('POST', $uri, $handler));
+        return $this->add($this->route('POST', $uri, $handler, $middlewares));
     }
 
     /**
      * Adds a new route instance in PURGE HTTP method.
      *
-     * @param  string          $uri
-     * @param  callable|string $handler
+     * @param  string                $uri
+     * @param  callable|string       $handler
+     * @param  array|callable|string $middlewares
      * @return self
      */
-    public function purge($uri, $handler)
+    public function purge($uri, $handler, $middlewares = array())
     {
-        return $this->add($this->route('PURGE', $uri, $handler));
+        return $this->add($this->route('PURGE', $uri, $handler, $middlewares));
     }
 
     /**
      * Adds a new route instance in PUT HTTP method.
      *
-     * @param  string          $uri
-     * @param  callable|string $handler
+     * @param  string                $uri
+     * @param  callable|string       $handler
+     * @param  array|callable|string $middlewares
      * @return self
      */
-    public function put($uri, $handler)
+    public function put($uri, $handler, $middlewares = array())
     {
-        return $this->add($this->route('PUT', $uri, $handler));
+        return $this->add($this->route('PUT', $uri, $handler, $middlewares));
     }
 
     /**
@@ -175,24 +184,26 @@ class Router implements RouterInterface
     /**
      * Adds a new route instance in TRACE HTTP method.
      *
-     * @param  string          $uri
-     * @param  callable|string $handler
+     * @param  string                $uri
+     * @param  callable|string       $handler
+     * @param  array|callable|string $middlewares
      * @return self
      */
-    public function trace($uri, $handler)
+    public function trace($uri, $handler, $middlewares = array())
     {
-        return $this->add($this->route('TRACE', $uri, $handler));
+        return $this->add($this->route('TRACE', $uri, $handler, $middlewares));
     }
 
     /**
      * Prepares a new route instance.
      *
-     * @param  string          $method
-     * @param  string          $uri
-     * @param  callable|string $handler
+     * @param  string                $method
+     * @param  string                $uri
+     * @param  callable|string       $handler
+     * @param  array|callable|string $middlewares
      * @return \Zapheus\Routing\Route
      */
-    protected function route($method, $uri, $handler)
+    protected function route($method, $uri, $handler, $middlewares)
     {
         if (is_string($handler) === true) {
             $namespace = $this->namespace;
@@ -202,6 +213,6 @@ class Router implements RouterInterface
             $handler = $namespace . $handler;
         }
 
-        return new Route($method, $uri, $handler);
+        return new Route($method, $uri, $handler, $middlewares);
     }
 }

@@ -37,6 +37,8 @@ class DispatcherTest extends \PHPUnit_Framework_TestCase
 
         $router->get('/greeeeet', get_class($hail) . '@greet');
 
+        $router->get('/wow', array(get_class($hail), 'greet'));
+
         $router->get('/helloo/{name}', function ($name = 'Doe') {
             $message = (string) sprintf('my name is %s', $name);
 
@@ -55,7 +57,7 @@ class DispatcherTest extends \PHPUnit_Framework_TestCase
     {
         $hail = get_class(new HailController);
 
-        $expected = array($hail . '@greet', array());
+        $expected = array(array($hail, 'greet'), array());
 
         $resolver = $this->dispatcher->dispatch('GET', '/greeeeet');
 
@@ -74,6 +76,22 @@ class DispatcherTest extends \PHPUnit_Framework_TestCase
         $expected = 'Hello, my name is Royce and this is a test.';
 
         $resolver = $this->dispatcher->dispatch('GET', 'helloo/Royce');
+
+        $result = $resolver->resolve(new ReflectionContainer);
+
+        $this->assertEquals($expected, $result);
+    }
+
+    /**
+     * Tests DispatcherInterface::dispatch with handler as an array.
+     *
+     * @return void
+     */
+    public function testDispatchMethodWithHandlerAsArray()
+    {
+        $expected = (string) 'Hello, world';
+
+        $resolver = $this->dispatcher->dispatch('GET', 'wow');
 
         $result = $resolver->resolve(new ReflectionContainer);
 

@@ -13,9 +13,19 @@ class Route
     const ALLOWED_REGEX = '[a-zA-Z0-9\_\-]+';
 
     /**
+     * @var array|callable|string
+     */
+    protected $handler;
+
+    /**
      * @var string
      */
     protected $method;
+
+    /**
+     * @var array
+     */
+    protected $middlewares = array();
 
     /**
      * @var string
@@ -23,24 +33,34 @@ class Route
     protected $uri;
 
     /**
-     * @var callable|string
-     */
-    protected $handler;
-
-    /**
      * Initializes the route instance.
      *
-     * @param string          $method
-     * @param string          $uri
-     * @param callable|string $handler
+     * @param string                $method
+     * @param string                $uri
+     * @param array|callable|string $handler
+     * @param array|callable|string $middlewares
      */
-    public function __construct($method, $uri, $handler)
+    public function __construct($method, $uri, $handler, $middlewares = array())
     {
-        $this->method = $method;
-
-        $this->uri = $uri[0] !== '/' ? '/' . $uri : $uri;
+        is_array($middlewares) || $middlewares = array($middlewares);
 
         $this->handler = $handler;
+
+        $this->method = $method;
+
+        $this->middlewares = $middlewares;
+
+        $this->uri = $uri[0] !== '/' ? '/' . $uri : $uri;
+    }
+
+    /**
+     * Returns the handler.
+     *
+     * @return array|callable|string
+     */
+    public function handler()
+    {
+        return $this->handler;
     }
 
     /**
@@ -54,23 +74,13 @@ class Route
     }
 
     /**
-     * Returns the URI.
+     * Returns an array of middlewares.
      *
-     * @return string
+     * @return array
      */
-    public function uri()
+    public function middlewares()
     {
-        return $this->uri;
-    }
-
-    /**
-     * Returns the handler.
-     *
-     * @return callable|string
-     */
-    public function handler()
-    {
-        return $this->handler;
+        return $this->middlewares;
     }
 
     /**
@@ -93,6 +103,16 @@ class Route
 
         // Add start and end matching
         return '@^' . $uri . '$@D';
+    }
+
+    /**
+     * Returns the URI.
+     *
+     * @return string
+     */
+    public function uri()
+    {
+        return $this->uri;
     }
 
     /**

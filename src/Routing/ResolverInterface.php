@@ -19,11 +19,4 @@ interface ResolverInterface
      * @return mixed
      */
     public function resolve(ContainerInterface $container);
-
-    /**
-     * Returns the dispatched result.
-     *
-     * @return array
-     */
-    public function result();
 }

@@ -25,17 +25,28 @@ class Resolver implements ResolverInterface
     /**
      * @var array
      */
+    protected $middlewares = array();
+
+    /**
+     * @var array
+     */
     protected $parameters = array();
 
     /**
      * Initializes the resolver instance.
      *
-     * @param callable|string $handler
-     * @param array           $parameters
+     * @param \Zapheus\Routing\Route $route
+     * @param array                  $parameters
      */
-    public function __construct($handler, $parameters)
+    public function __construct(Route $route, $parameters)
     {
+        $handler = $route->handler();
+
+        is_string($handler) && $handler = explode('@', $handler);
+
         $this->handler = $handler;
+
+        $this->middlewares = $route->middlewares();
 
         $this->parameters = $parameters;
     }
@@ -50,8 +61,8 @@ class Resolver implements ResolverInterface
     {
         $this->container = $container;
 
-        if (is_string($this->handler) === true) {
-            list($class, $method) = explode('@', $this->handler);
+        if (is_array($this->handler) === true) {
+            list($class, $method) = $this->handler;
 
             $reflection = new \ReflectionMethod($class, $method);
 

@@ -31,12 +31,12 @@ class Router implements RouterInterface
     }
 
     /**
-     * Adds a new route instance to the collection.
+     * Adds a new RouteInterface to the collection.
      *
-     * @param  \Zapheus\Routing\Route $route
+     * @param  \Zapheus\Routing\RouteInterface $route
      * @return self
      */
-    public function add(Route $route)
+    public function add(RouteInterface $route)
     {
         $this->routes[] = $route;
 

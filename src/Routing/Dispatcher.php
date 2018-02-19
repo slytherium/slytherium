@@ -30,7 +30,7 @@ class Dispatcher implements DispatcherInterface
      *
      * @param  string $method
      * @param  string $uri
-     * @return \Zapheus\Routing\ResolverInterface
+     * @return \Zapheus\Routing\RouteInterface
      *
      * @throws \UnexpectedValueException
      */
@@ -47,7 +47,7 @@ class Dispatcher implements DispatcherInterface
 
             $values = array_intersect_key($matches, $flipped);
 
-            return new Resolver($route, $values);
+            return Route::result($route, $values);
         }
 
         $error = sprintf('Route "%s %s" not found', $method, $uri);

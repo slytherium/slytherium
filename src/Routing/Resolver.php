@@ -18,74 +18,29 @@ class Resolver implements ResolverInterface
     protected $container;
 
     /**
-     * @var array|callable|string
-     */
-    protected $handler;
-
-    /**
-     * @var array
-     */
-    protected $middlewares = array();
-
-    /**
-     * @var array
-     */
-    protected $parameters = array();
-
-    /**
-     * Initializes the resolver instance.
+     * Resolves the specified handler against a container instance.
      *
-     * @param \Zapheus\Routing\Route $route
-     * @param array                  $parameters
+     * @param  \Zapheus\Container\ContainerInterface $container
+     * @param  \Zapheus\Routing\RouteInterface       $route
+     * @return mixed
      */
-    public function __construct(Route $route, $parameters)
+    public function resolve(ContainerInterface $container, RouteInterface $route)
     {
+        $this->container = $container;
+
         $handler = $route->handler();
 
         is_string($handler) && $handler = explode('@', $handler);
 
-        $this->handler = $handler;
+        $middlewares = $route->middlewares();
 
-        $this->middlewares = $route->middlewares();
+        $parameters = $route->parameters();
 
-        $this->parameters = $parameters;
-    }
+        list($handler, $reflection) = $this->reflection($handler);
 
-    /**
-     * Resolves the specified handler against a container instance.
-     *
-     * @param  \Zapheus\Container\ContainerInterface $container
-     * @return mixed
-     */
-    public function resolve(ContainerInterface $container)
-    {
-        $this->container = $container;
+        $parameters = $this->arguments($reflection, $parameters);
 
-        if (is_array($this->handler) === true) {
-            list($class, $method) = $this->handler;
-
-            $reflection = new \ReflectionMethod($class, $method);
-
-            $instance = $this->instance($class);
-
-            $this->handler = array($instance, $method);
-
-            return $this->execute($reflection);
-        }
-
-        $reflection = new \ReflectionFunction($this->handler);
-
-        return $this->execute($reflection);
-    }
-
-    /**
-     * Returns the dispatched result.
-     *
-     * @return array
-     */
-    public function result()
-    {
-        return array($this->handler, $this->parameters);
+        return call_user_func_array($handler, $parameters);
     }
 
     /**
@@ -129,19 +84,6 @@ class Resolver implements ResolverInterface
     }
 
     /**
-     * Executes the specified handler with its required reflection.
-     *
-     * @param  \ReflectionFunctionAbstract $reflection
-     * @return mixed
-     */
-    protected function execute(\ReflectionFunctionAbstract $reflection)
-    {
-        $parameters = $this->arguments($reflection, $this->parameters);
-
-        return call_user_func_array($this->handler, $parameters);
-    }
-
-    /**
      * Returns the instance of the identifier from the container.
      *
      * @param  string $class
@@ -162,5 +104,28 @@ class Resolver implements ResolverInterface
         }
 
         return $this->container->get($class);
+    }
+
+    /**
+     * Returns a ReflectionFunctionAbstract instance.
+     *
+     * @param  array|callable $handler
+     * @return \ReflectionFunctionAbstract
+     */
+    protected function reflection($handler)
+    {
+        if (is_array($handler) === true) {
+            list($class, $method) = (array) $handler;
+
+            $reflection = new \ReflectionMethod($class, $method);
+
+            $handler = array($this->instance($class), $method);
+
+            return array((array) $handler, $reflection);
+        }
+
+        $reflection = new \ReflectionFunction($handler);
+
+        return array($handler, $reflection);
     }
 }

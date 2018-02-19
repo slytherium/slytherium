@@ -8,10 +8,8 @@ namespace Zapheus\Routing;
  * @package Zapheus
  * @author  Rougin Royce Gutib <rougingutib@gmail.com>
  */
-class Route
+class Route implements RouteInterface
 {
-    const ALLOWED_REGEX = '[a-zA-Z0-9\_\-]+';
-
     /**
      * @var array|callable|string
      */
@@ -28,6 +26,11 @@ class Route
     protected $middlewares = array();
 
     /**
+     * @var array
+     */
+    protected $parameters = array();
+
+    /**
      * @var string
      */
     protected $uri;
@@ -39,8 +42,9 @@ class Route
      * @param string                $uri
      * @param array|callable|string $handler
      * @param array|callable|string $middlewares
+     * @param array                 $parameters
      */
-    public function __construct($method, $uri, $handler, $middlewares = array())
+    public function __construct($method, $uri, $handler, $middlewares = array(), $parameters = array())
     {
         is_array($middlewares) || $middlewares = array($middlewares);
 
@@ -49,6 +53,8 @@ class Route
         $this->method = $method;
 
         $this->middlewares = $middlewares;
+
+        $this->parameters = $parameters;
 
         $this->uri = $uri[0] !== '/' ? '/' . $uri : $uri;
     }
@@ -84,6 +90,16 @@ class Route
     }
 
     /**
+     * Returns the parameters if any.
+     *
+     * @return array
+     */
+    public function parameters()
+    {
+        return $this->parameters;
+    }
+
+    /**
      * Returns a regular expression pattern from the given URI.
      *
      * @link https://stackoverflow.com/q/30130913
@@ -113,6 +129,26 @@ class Route
     public function uri()
     {
         return $this->uri;
+    }
+
+    /**
+     * Returns a new RouteInterface with parameters.
+     *
+     * @param  \Zapheus\Routing\RouteInterface $route
+     * @param  array                           $parameters
+     * @return \Zapheus\Routing\RouteInterface
+     */
+    public static function result(RouteInterface $route, $parameters)
+    {
+        $method = (string) $route->method();
+
+        $middlewares = $route->middlewares();
+
+        $uri = (string) $route->uri();
+
+        $handler = $route->handler();
+
+        return new Route($method, $uri, $handler, $middlewares, $parameters);
     }
 
     /**

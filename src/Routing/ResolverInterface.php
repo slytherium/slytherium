@@ -16,7 +16,8 @@ interface ResolverInterface
      * Resolves the specified handler against a container instance.
      *
      * @param  \Zapheus\Container\ContainerInterface $container
+     * @param  \Zapheus\Routing\RouteInterface       $route
      * @return mixed
      */
-    public function resolve(ContainerInterface $container);
+    public function resolve(ContainerInterface $container, RouteInterface $route);
 }

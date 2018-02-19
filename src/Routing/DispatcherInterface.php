@@ -15,7 +15,7 @@ interface DispatcherInterface
      *
      * @param  string $method
      * @param  string $uri
-     * @return \Zapheus\Routing\ResolverInterface
+     * @return \Zapheus\Routing\RouteInterface
      *
      * @throws \UnexpectedValueException
      */

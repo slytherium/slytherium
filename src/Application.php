@@ -24,9 +24,11 @@ class Application implements ApplicationInterface, WritableInterface
 
     const REQUEST = 'Zapheus\Http\Message\RequestInterface';
 
-    const RESOLVER_ATTRIBUTE = 'request-handler';
+    const RESOLVER = 'Zapheus\Routing\ResolverInterface';
 
     const RESPONSE = 'Zapheus\Http\Message\ResponseInterface';
+
+    const ROUTE_ATTRIBUTE = 'zapheus-route';
 
     /**
      * @var \Zapheus\Container\WritableInterface
@@ -51,6 +53,12 @@ class Application implements ApplicationInterface, WritableInterface
             $configuration = new Provider\Configuration;
 
             $container->set(self::CONFIGURATION, $configuration);
+        }
+
+        if ($container->has(self::RESOLVER) === false) {
+            $resolver = new Routing\Resolver;
+
+            $container->set(self::RESOLVER, $resolver);
         }
 
         $this->container = $container;
@@ -119,7 +127,7 @@ class Application implements ApplicationInterface, WritableInterface
      */
     public function handle(RequestInterface $request)
     {
-        $resolver = $request->attribute(self::RESOLVER_ATTRIBUTE);
+        $route = $request->attribute(self::ROUTE_ATTRIBUTE);
 
         if ($this->container->has(self::DISPATCHER) === true) {
             $dispatcher = $this->container->get(self::DISPATCHER);
@@ -128,10 +136,12 @@ class Application implements ApplicationInterface, WritableInterface
 
             $method = (string) $request->method();
 
-            $resolver = $dispatcher->dispatch($method, $path);
+            $route = $dispatcher->dispatch($method, $path);
         }
 
-        $result = $resolver ? $resolver->resolve($this) : null;
+        $resolver = $this->container->get(self::RESOLVER);
+
+        $result = $route ? $resolver->resolve($this, $route) : null;
 
         return $this->response($result);
     }
@@ -188,7 +198,7 @@ class Application implements ApplicationInterface, WritableInterface
     }
 
     /**
-     * Converts the given result into a response instance.
+     * Converts the given result into a ResponseInterface.
      *
      * @param  mixed $result
      * @return \Zapheus\Http\Message\ResponseInterface

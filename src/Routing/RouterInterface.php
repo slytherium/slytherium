@@ -11,12 +11,12 @@ namespace Zapheus\Routing;
 interface RouterInterface
 {
     /**
-     * Adds a new Route instance to the collection.
+     * Adds a new RouteInterface to the collection.
      *
-     * @param  \Zapheus\Routing\Route $route
+     * @param  \Zapheus\Routing\RouteInterface $route
      * @return self
      */
-    public function add(Route $route);
+    public function add(RouteInterface $route);
 
     /**
      * Returns an array of routes.

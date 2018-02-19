@@ -55,13 +55,15 @@ class DispatcherTest extends \PHPUnit_Framework_TestCase
      */
     public function testDispatchMethod()
     {
-        $hail = get_class(new HailController);
+        $expected = (string) 'Hello, world';
 
-        $expected = array(array($hail, 'greet'), array());
+        $route = $this->dispatcher->dispatch('GET', '/greeeeet');
 
-        $resolver = $this->dispatcher->dispatch('GET', '/greeeeet');
+        $container = new ReflectionContainer;
 
-        $result = $resolver->result();
+        $resolver = new Resolver;
+
+        $result = $resolver->resolve($container, $route);
 
         $this->assertEquals($expected, $result);
     }
@@ -75,9 +77,13 @@ class DispatcherTest extends \PHPUnit_Framework_TestCase
     {
         $expected = 'Hello, my name is Royce and this is a test.';
 
-        $resolver = $this->dispatcher->dispatch('GET', 'helloo/Royce');
+        $route = $this->dispatcher->dispatch('GET', 'helloo/Royce');
 
-        $result = $resolver->resolve(new ReflectionContainer);
+        $container = new ReflectionContainer;
+
+        $resolver = new Resolver;
+
+        $result = $resolver->resolve($container, $route);
 
         $this->assertEquals($expected, $result);
     }
@@ -91,9 +97,13 @@ class DispatcherTest extends \PHPUnit_Framework_TestCase
     {
         $expected = (string) 'Hello, world';
 
-        $resolver = $this->dispatcher->dispatch('GET', 'wow');
+        $route = $this->dispatcher->dispatch('GET', 'wow');
 
-        $result = $resolver->resolve(new ReflectionContainer);
+        $container = new ReflectionContainer;
+
+        $resolver = new Resolver;
+
+        $result = $resolver->resolve($container, $route);
 
         $this->assertEquals($expected, $result);
     }

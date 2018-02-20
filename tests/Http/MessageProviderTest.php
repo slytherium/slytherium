@@ -57,7 +57,7 @@ class MessageProviderTest extends \PHPUnit_Framework_TestCase
     {
         $container = $this->provider->register($this->container);
 
-        $request = $container->get(MessageProvider::SERVER_REQUEST);
+        $request = $container->get(MessageProvider::REQUEST);
 
         $expected = 'rougin.github.io';
 

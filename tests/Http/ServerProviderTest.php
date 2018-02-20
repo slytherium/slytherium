@@ -70,7 +70,7 @@ class ServerProviderTest extends \PHPUnit_Framework_TestCase
 
         $dispatcher = $container->get(ServerProvider::DISPATCHER);
 
-        $request = $container->get(MessageProvider::SERVER_REQUEST);
+        $request = $container->get(MessageProvider::REQUEST);
 
         $expected = array('application/json');
 

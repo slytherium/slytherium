@@ -15,7 +15,7 @@ use Zapheus\Provider\ProviderInterface;
  */
 class MessageProvider implements ProviderInterface
 {
-    const SERVER_REQUEST = 'Zapheus\Http\Message\RequestInterface';
+    const REQUEST = 'Zapheus\Http\Message\RequestInterface';
 
     const RESPONSE = 'Zapheus\Http\Message\ResponseInterface';
 
@@ -43,6 +43,6 @@ class MessageProvider implements ProviderInterface
 
         $container->set(self::RESPONSE, new Response);
 
-        return $container->set(self::SERVER_REQUEST, $request);
+        return $container->set(self::REQUEST, $request);
     }
 }

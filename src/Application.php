@@ -9,6 +9,7 @@ use Zapheus\Container\WritableInterface;
 use Zapheus\Http\Message\RequestInterface;
 use Zapheus\Http\Message\ResponseInterface;
 use Zapheus\Provider\ProviderInterface;
+use Zapheus\Routing\RouteInterface;
 
 /**
  * Application
@@ -53,12 +54,6 @@ class Application implements ApplicationInterface, WritableInterface
             $configuration = new Provider\Configuration;
 
             $container->set(self::CONFIGURATION, $configuration);
-        }
-
-        if ($container->has(self::RESOLVER) === false) {
-            $resolver = new Routing\Resolver;
-
-            $container->set(self::RESOLVER, $resolver);
         }
 
         $this->container = $container;
@@ -139,9 +134,7 @@ class Application implements ApplicationInterface, WritableInterface
             $route = $dispatcher->dispatch($method, $path);
         }
 
-        $resolver = $this->container->get(self::RESOLVER);
-
-        $result = $route ? $resolver->resolve($this, $route) : null;
+        $result = $route ? $this->resolve($route) : null;
 
         return $this->response($result);
     }
@@ -195,6 +188,25 @@ class Application implements ApplicationInterface, WritableInterface
         $this->container->set($id, $concrete);
 
         return $this;
+    }
+
+    /**
+     * Gets the resolver and resolve it against the route instance.
+     *
+     * @param  \Zapheus\Routing\RouteInterface $route
+     * @return mixed
+     */
+    protected function resolve(RouteInterface $route)
+    {
+        if ($this->has(self::RESOLVER) === false) {
+            $resolver = new Routing\Resolver($this);
+
+            return $resolver->resolve($route);
+        }
+
+        $resolver = $this->container->get(self::RESOLVER);
+
+        return $resolver->resolve($route);
     }
 
     /**

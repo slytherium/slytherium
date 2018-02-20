@@ -18,23 +18,28 @@ class Resolver implements ResolverInterface
     protected $container;
 
     /**
-     * Resolves the specified handler against a container instance.
+     * Initializes the resolver instance.
      *
-     * @param  \Zapheus\Container\ContainerInterface $container
-     * @param  \Zapheus\Routing\RouteInterface       $route
-     * @return mixed
+     * @param \Zapheus\Container\ContainerInterface $container
      */
-    public function resolve(ContainerInterface $container, RouteInterface $route)
+    public function __construct(ContainerInterface $container)
     {
         $this->container = $container;
+    }
 
+    /**
+     * Resolves the specified route instance.
+     *
+     * @param  \Zapheus\Routing\RouteInterface $route
+     * @return mixed
+     */
+    public function resolve(RouteInterface $route)
+    {
         $handler = $route->handler();
 
         is_string($handler) && $handler = explode('@', $handler);
 
-        $middlewares = $route->middlewares();
-
-        $parameters = $route->parameters();
+        $parameters = (array) $route->parameters();
 
         list($handler, $reflection) = $this->reflection($handler);
 
@@ -64,6 +69,7 @@ class Resolver implements ResolverInterface
      * Resolves the specified parameters from a container.
      *
      * @param  \ReflectionFunctionAbstract $reflection
+     * @param  array                       $parameters
      * @return array
      */
     protected function arguments(\ReflectionFunctionAbstract $reflection, $parameters = array())
@@ -117,15 +123,15 @@ class Resolver implements ResolverInterface
         if (is_array($handler) === true) {
             list($class, $method) = (array) $handler;
 
-            $reflection = new \ReflectionMethod($class, $method);
+            $instance = new \ReflectionMethod($class, $method);
 
             $handler = array($this->instance($class), $method);
 
-            return array((array) $handler, $reflection);
+            return array((array) $handler, $instance);
         }
 
-        $reflection = new \ReflectionFunction($handler);
+        $instance = new \ReflectionFunction($handler);
 
-        return array($handler, $reflection);
+        return array($handler, $instance);
     }
 }

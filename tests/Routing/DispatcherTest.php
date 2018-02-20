@@ -59,11 +59,9 @@ class DispatcherTest extends \PHPUnit_Framework_TestCase
 
         $route = $this->dispatcher->dispatch('GET', '/greeeeet');
 
-        $container = new ReflectionContainer;
+        $resolver = new Resolver(new ReflectionContainer);
 
-        $resolver = new Resolver;
-
-        $result = $resolver->resolve($container, $route);
+        $result = $resolver->resolve($route);
 
         $this->assertEquals($expected, $result);
     }
@@ -79,11 +77,9 @@ class DispatcherTest extends \PHPUnit_Framework_TestCase
 
         $route = $this->dispatcher->dispatch('GET', 'helloo/Royce');
 
-        $container = new ReflectionContainer;
+        $resolver = new Resolver(new ReflectionContainer);
 
-        $resolver = new Resolver;
-
-        $result = $resolver->resolve($container, $route);
+        $result = $resolver->resolve($route);
 
         $this->assertEquals($expected, $result);
     }
@@ -99,11 +95,9 @@ class DispatcherTest extends \PHPUnit_Framework_TestCase
 
         $route = $this->dispatcher->dispatch('GET', 'wow');
 
-        $container = new ReflectionContainer;
+        $resolver = new Resolver(new ReflectionContainer);
 
-        $resolver = new Resolver;
-
-        $result = $resolver->resolve($container, $route);
+        $result = $resolver->resolve($route);
 
         $this->assertEquals($expected, $result);
     }

@@ -2,8 +2,6 @@
 
 namespace Zapheus\Routing;
 
-use Zapheus\Container\ContainerInterface;
-
 /**
  * Resolver Interface
  *
@@ -13,11 +11,10 @@ use Zapheus\Container\ContainerInterface;
 interface ResolverInterface
 {
     /**
-     * Resolves the specified handler against a container instance.
+     * Resolves the specified route instance.
      *
-     * @param  \Zapheus\Container\ContainerInterface $container
-     * @param  \Zapheus\Routing\RouteInterface       $route
+     * @param  \Zapheus\Routing\RouteInterface $route
      * @return mixed
      */
-    public function resolve(ContainerInterface $container, RouteInterface $route);
+    public function resolve(RouteInterface $route);
 }

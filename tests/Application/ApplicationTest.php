@@ -7,6 +7,7 @@ use Zapheus\Fixture\Http\Controllers\HailController;
 use Zapheus\Fixture\Providers\TestProvider;
 use Zapheus\Http\Message\Response;
 use Zapheus\Routing\Dispatcher;
+use Zapheus\Routing\Resolver;
 use Zapheus\Routing\Route;
 use Zapheus\Routing\Router;
 
@@ -84,6 +85,26 @@ class ApplicationTest extends AbstractTestCase
     public function testRunMethod()
     {
         $app = $this->request('GET', '/');
+
+        $expected = 'Hello, world';
+
+        $result = (string) $app->run();
+
+        $this->assertEquals($expected, $result);
+    }
+
+    /**
+     * Tests AbstractApplication::run with another resolver.
+     *
+     * @return void
+     */
+    public function testRunMethodWithResolver()
+    {
+        $app = $this->request('GET', '/');
+
+        $resolver = new Resolver($app);
+
+        $app->set(Application::RESOLVER, $resolver);
 
         $expected = 'Hello, world';
 

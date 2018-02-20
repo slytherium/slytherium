@@ -61,8 +61,8 @@ $router->get('/', function ()
 // Pipes the router middleware into the application
 $app->pipe(function ($request, $next) use ($router)
 {
-    // Returns the request attribute value for resolvers
-    $attribute = Zapheus\Application::RESOLVER_ATTRIBUTE;
+    // Returns the request attribute value for a route
+    $attribute = Zapheus\Application::ROUTE_ATTRIBUTE;
 
     // Returns the path from the URI instance
     $path = $request->uri()->path();
@@ -74,11 +74,11 @@ $app->pipe(function ($request, $next) use ($router)
     $dispatcher = new Zapheus\Routing\Dispatcher($router);
 
     // Dispatches the router against the current request
-    $resolver = $dispatcher->dispatch($method, $path);
+    $route = $dispatcher->dispatch($method, $path);
 
-    // Sets the resolver attribute into the request in order to be
+    // Sets the route attribute into the request in order to be
     // called inside the Application instance and return the response.
-    $request = $request->push('attributes', $resolver, $attribute);
+    $request = $request->push('attributes', $route, $attribute);
 
     // Go to the next middleware, if there are any
     return $next->handle($request);

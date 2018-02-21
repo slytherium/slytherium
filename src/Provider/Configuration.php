@@ -144,6 +144,8 @@ class Configuration implements ConfigurationInterface
 
         $name = str_replace(array('\\', '/'), '.', $name);
 
+        $name === '' && $name = (string) $item;
+
         $regex = preg_replace('/^./i', '', $name);
 
         return basename(strtolower($regex), '.php');

@@ -37,12 +37,16 @@ class DispatcherTest extends \PHPUnit_Framework_TestCase
 
         $router->get('/greeeeet', get_class($hail) . '@greet');
 
-        $router->get('/wow', array(get_class($hail), 'greet'));
+        $router->get('/test/wow', array(get_class($hail), 'greet'));
 
         $router->get('/helloo/{name}', function ($name = 'Doe') {
             $message = (string) sprintf('my name is %s', $name);
 
             return 'Hello, ' . $message . ' and this is a test.';
+        });
+
+        $router->get('/test/{name}', function ($name) {
+            return 'Hello everyone! I am ' . $name;
         });
 
         $this->dispatcher = new Dispatcher($router);
@@ -93,7 +97,25 @@ class DispatcherTest extends \PHPUnit_Framework_TestCase
     {
         $expected = (string) 'Hello, world';
 
-        $route = $this->dispatcher->dispatch('GET', 'wow');
+        $route = $this->dispatcher->dispatch('GET', 'test/wow');
+
+        $resolver = new Resolver(new ReflectionContainer);
+
+        $result = $resolver->resolve($route);
+
+        $this->assertEquals($expected, $result);
+    }
+
+    /**
+     * Tests DispatcherInterface::dispatch with similar routes.
+     *
+     * @return void
+     */
+    public function testDispatchMethodWithSimilarRoutes()
+    {
+        $expected = (string) 'Hello everyone! I am Royce';
+
+        $route = $this->dispatcher->dispatch('GET', 'test/Royce');
 
         $resolver = new Resolver(new ReflectionContainer);
 

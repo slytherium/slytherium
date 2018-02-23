@@ -69,13 +69,17 @@ class Renderer implements RendererInterface
     protected function check(array $files, $path, $source, $template)
     {
         foreach ((array) $files as $key => $value) {
-            $filepath = str_replace($path, $source, $value);
+            $filepath = (string) str_replace($path, $source, $value);
 
             $filepath = str_replace('\\', '/', (string) $filepath);
 
-            $filepath = preg_replace('/^\d\//i', '', $filepath);
+            $filepath = (string) preg_replace('/^\d\//i', '', $filepath);
 
-            strtolower($filepath) === $template && $file = $value;
+            $exists = (string) $filepath === $template;
+
+            $lowercase = strtolower($filepath) === $template;
+
+            ($exists || $lowercase) && $file = $value;
         }
 
         return isset($file) === true ? $file : null;

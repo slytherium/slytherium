@@ -112,7 +112,7 @@ class Application implements ApplicationInterface, WritableInterface
     {
         $route = $request->attribute(self::ROUTE_ATTRIBUTE);
 
-        if ($this->container->has(self::DISPATCHER) === true) {
+        if ($this->has(self::DISPATCHER) && $route === null) {
             $dispatcher = $this->container->get(self::DISPATCHER);
 
             $path = (string) $request->uri()->path();
@@ -179,7 +179,7 @@ class Application implements ApplicationInterface, WritableInterface
     }
 
     /**
-     * Gets the resolver and resolve it against the route instance.
+     * Resolves the route instance using a resolver.
      *
      * @param  \Zapheus\Routing\RouteInterface $route
      * @return mixed

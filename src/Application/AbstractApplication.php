@@ -2,7 +2,6 @@
 
 namespace Zapheus\Application;
 
-use Zapheus\Application;
 use Zapheus\Http\MessageProvider;
 
 /**
@@ -26,11 +25,11 @@ abstract class AbstractApplication implements ApplicationInterface
     /**
      * Initializes the application instance.
      *
-     * @param \Zapheus\Application|null $application
+     * @param \Zapheus\Application\ApplicationInterface|null $application
      */
-    public function __construct(Application $application = null)
+    public function __construct(ApplicationInterface $application = null)
     {
-        $this->application = $application ?: new Application;
+        $this->application = $application ?: new \Zapheus\Application;
 
         $this->application->add(new MessageProvider);
     }
@@ -42,7 +41,9 @@ abstract class AbstractApplication implements ApplicationInterface
      */
     public function run()
     {
-        $request = $this->application->get(Application::REQUEST);
+        $interface = ApplicationInterface::REQUEST;
+
+        $request = $this->application->get($interface);
 
         $response = $this->handle($request);
 
@@ -64,16 +65,16 @@ abstract class AbstractApplication implements ApplicationInterface
     {
         if (method_exists($this->original, $method) === true) {
             $class = array($this->original, $method);
-            
+
             return call_user_func_array($class, $parameters);
         } elseif (method_exists($this->application, $method)) {
             $class = array($this->application, $method);
-            
+
             return call_user_func_array($class, $parameters);
         }
 
         $message = 'Method "' . $method . '" is undefined!';
 
-        throw new \BadMethodCallException($message);
+        throw new \BadMethodCallException((string) $message);
     }
 }

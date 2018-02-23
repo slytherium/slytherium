@@ -2,10 +2,8 @@
 
 namespace Zapheus\Application;
 
-use Zapheus\Application;
 use Zapheus\Http\Message\RequestInterface;
 use Zapheus\Routing\Dispatcher;
-use Zapheus\Routing\Route;
 use Zapheus\Routing\Router;
 
 /**
@@ -17,16 +15,16 @@ use Zapheus\Routing\Router;
 class RouterApplication extends AbstractApplication
 {
     /**
-     * @var \Zapheus\Routing\Router
+     * @var \Zapheus\Routing\RouterInterface
      */
     protected $original;
 
     /**
      * Initializes the application instance.
      *
-     * @param \Zapheus\Application|null $application
+     * @param \Zapheus\Application\ApplicationInterface|null $application
      */
-    public function __construct(Application $application = null)
+    public function __construct(ApplicationInterface $application = null)
     {
         parent::__construct($application);
 
@@ -41,9 +39,11 @@ class RouterApplication extends AbstractApplication
      */
     public function handle(RequestInterface $request)
     {
+        $interface = ApplicationInterface::DISPATCHER;
+
         $dispatcher = new Dispatcher($this->original);
 
-        $this->application->set(Application::DISPATCHER, $dispatcher);
+        $this->application->set($interface, $dispatcher);
 
         return $this->application->handle($request);
     }

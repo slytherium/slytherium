@@ -2,11 +2,9 @@
 
 namespace Zapheus\Application;
 
-use Zapheus\Application;
 use Zapheus\Http\Message\RequestInterface;
 use Zapheus\Http\Server\ApplicationHandler;
 use Zapheus\Http\Server\Dispatcher;
-use Zapheus\Http\Server\MiddlewareInterface;
 
 /**
  * Middleware Application
@@ -24,9 +22,9 @@ class MiddlewareApplication extends AbstractApplication
     /**
      * Initializes the application instance.
      *
-     * @param \Zapheus\Application|null $application
+     * @param \Zapheus\Application\ApplicationInterface|null $application
      */
-    public function __construct(Application $application = null)
+    public function __construct(ApplicationInterface $application = null)
     {
         parent::__construct($application);
 

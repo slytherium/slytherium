@@ -19,18 +19,6 @@ use Zapheus\Routing\RouteInterface;
  */
 class Application implements ApplicationInterface, WritableInterface
 {
-    const CONFIGURATION = 'Zapheus\Provider\ConfigurationInterface';
-
-    const DISPATCHER = 'Zapheus\Routing\DispatcherInterface';
-
-    const REQUEST = 'Zapheus\Http\Message\RequestInterface';
-
-    const RESOLVER = 'Zapheus\Routing\ResolverInterface';
-
-    const RESPONSE = 'Zapheus\Http\Message\ResponseInterface';
-
-    const ROUTE_ATTRIBUTE = 'zapheus-route';
-
     /**
      * @var \Zapheus\Container\WritableInterface
      */
@@ -50,10 +38,10 @@ class Application implements ApplicationInterface, WritableInterface
     {
         $container = $container === null ? new Container : $container;
 
-        if ($container->has(self::CONFIGURATION) === false) {
+        if ($container->has(ProviderInterface::CONFIG) === false) {
             $configuration = new Provider\Configuration;
 
-            $container->set(self::CONFIGURATION, $configuration);
+            $container->set(ProviderInterface::CONFIG, $configuration);
         }
 
         $this->container = $container;

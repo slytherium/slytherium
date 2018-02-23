@@ -12,6 +12,16 @@ use Zapheus\Http\Message\RequestInterface;
  */
 interface ApplicationInterface
 {
+    const DISPATCHER = 'Zapheus\Routing\DispatcherInterface';
+
+    const REQUEST = 'Zapheus\Http\Message\RequestInterface';
+
+    const RESOLVER = 'Zapheus\Routing\ResolverInterface';
+
+    const RESPONSE = 'Zapheus\Http\Message\ResponseInterface';
+
+    const ROUTE_ATTRIBUTE = 'zapheus-route';
+
     /**
      * Handles the Request to convert it to a Response.
      *

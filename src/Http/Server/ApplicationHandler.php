@@ -2,7 +2,7 @@
 
 namespace Zapheus\Http\Server;
 
-use Zapheus\Application;
+use Zapheus\Application\ApplicationInterface;
 use Zapheus\Http\Message\RequestInterface;
 
 /**
@@ -14,16 +14,16 @@ use Zapheus\Http\Message\RequestInterface;
 class ApplicationHandler implements HandlerInterface
 {
     /**
-     * @var \Zapheus\Application
+     * @var \Zapheus\Application\ApplicationInterface
      */
     protected $application;
 
     /**
      * Initializes the handler instance.
      *
-     * @param \Zapheus\Application $application
+     * @param \Zapheus\Application\ApplicationInterface $application
      */
-    public function __construct(Application $application)
+    public function __construct(ApplicationInterface $application)
     {
         $this->application = $application;
     }

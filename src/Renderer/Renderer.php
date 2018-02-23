@@ -68,6 +68,8 @@ class Renderer implements RendererInterface
      */
     protected function check(array $files, $path, $source, $template)
     {
+        $file = null;
+
         foreach ((array) $files as $key => $value) {
             $filepath = (string) str_replace($path, $source, $value);
 
@@ -82,7 +84,7 @@ class Renderer implements RendererInterface
             ($exists || $lowercase) && $file = $value;
         }
 
-        return isset($file) === true ? $file : null;
+        return $file;
     }
 
     /**

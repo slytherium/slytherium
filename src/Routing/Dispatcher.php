@@ -70,7 +70,9 @@ class Dispatcher implements DispatcherInterface
             $matched = preg_match($route->regex(), $uri, $matches);
 
             if ($matched === 1 && $route->method() === $method) {
-                ! $result && $result = array($matches, $route);
+                $result = array($matches, $route);
+
+                break; // Done searching the route
             }
         }
 

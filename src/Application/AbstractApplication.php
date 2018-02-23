@@ -2,6 +2,7 @@
 
 namespace Zapheus\Application;
 
+use Zapheus\Application;
 use Zapheus\Http\MessageProvider;
 
 /**
@@ -29,9 +30,11 @@ abstract class AbstractApplication implements ApplicationInterface
      */
     public function __construct(ApplicationInterface $application = null)
     {
-        $this->application = $application ?: new \Zapheus\Application;
+        $this->application = $application ?: new Application;
 
-        $this->application->add(new MessageProvider);
+        $exists = method_exists($this->application, 'add');
+
+        $exists && $this->application->add(new MessageProvider);
     }
 
     /**

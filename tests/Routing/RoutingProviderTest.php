@@ -1,17 +1,18 @@
 <?php
 
-namespace Zapheus\Renderer;
+namespace Zapheus\Routing;
 
+use Zapheus\Application\ApplicationInterface;
 use Zapheus\Container\Container;
 use Zapheus\Provider\Configuration;
 
 /**
- * Renderer Provider Test
+ * Routing Provider Test
  *
  * @package Zapheus
  * @author  Rougin Royce Gutib <rougingutib@gmail.com>
  */
-class RendererProviderTest extends \PHPUnit_Framework_TestCase
+class RoutingProviderTest extends \PHPUnit_Framework_TestCase
 {
     /**
      * @var \Zapheus\Container\WritableInterface
@@ -32,11 +33,13 @@ class RendererProviderTest extends \PHPUnit_Framework_TestCase
     {
         list($config, $container) = array(new Configuration, new Container);
 
-        $config->set('app.views', __DIR__ . '/../Fixture/Views');
+        $route = new Route('GET', '/', 'HailController@index');
 
-        $this->container = $container->set(RendererProvider::CONFIG, $config);
+        $config->set('app.router', new Router(array($route)));
 
-        $this->provider = new RendererProvider;
+        $this->container = $container->set(RoutingProvider::CONFIG, $config);
+
+        $this->provider = new RoutingProvider;
     }
 
     /**
@@ -46,13 +49,15 @@ class RendererProviderTest extends \PHPUnit_Framework_TestCase
      */
     public function testRegisterMethod()
     {
+        $expected = new Route('GET', '/', 'HailController@index');
+
+        $dispatcher = ApplicationInterface::DISPATCHER;
+
         $container = $this->provider->register($this->container);
 
-        $renderer = $container->get(RendererProvider::RENDERER);
+        $dispatcher = $container->get($dispatcher);
 
-        $expected = 'Lorem ipsum dolor sit amet';
-
-        $result = $renderer->render('loremipsum');
+        $result = $dispatcher->dispatch('GET', '/');
 
         $this->assertEquals($expected, $result);
     }

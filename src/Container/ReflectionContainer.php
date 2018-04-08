@@ -21,7 +21,7 @@ class ReflectionContainer implements ContainerInterface
     public function get($id)
     {
         if ($this->has($id) === false) {
-            $message = 'Class (%s) does not exists';
+            $message = (string) 'Class (%s) does not exists';
 
             throw new NotFoundException(sprintf($message, $id));
         }
@@ -77,9 +77,11 @@ class ReflectionContainer implements ContainerInterface
         $arguments = array();
 
         foreach ($reflection->getParameters() as $key => $parameter) {
+            $default = (string) $parameter->getName();
+
             $class = $parameter->getClass();
 
-            $name = $class !== null ? $class->getName() : $parameter->getName();
+            $name = $class !== null ? $class->getName() : $default;
 
             $arguments[$key] = $this->argument($parameter, $name);
         }

@@ -33,7 +33,7 @@ class Coordinator extends Middlelayer
     }
 
     /**
-     * Dispatches the request and returns it into a response.
+     * Handles the request and returns a response.
      *
      * @param  \Zapheus\Http\Message\RequestInterface $request
      * @return \Zapheus\Http\Message\ResponseInterface

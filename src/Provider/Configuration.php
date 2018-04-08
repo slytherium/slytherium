@@ -46,7 +46,7 @@ class Configuration implements ConfigurationInterface
      */
     public function get($key, $default = null, $dotify = false)
     {
-        $keys = array_filter(explode('.', $key));
+        $keys = (array) array_filter(explode('.', $key));
 
         list($items, $length) = array($this->data, count($keys));
 
@@ -62,7 +62,7 @@ class Configuration implements ConfigurationInterface
     }
 
     /**
-     * Loads the configuration from a specified file or directory.
+     * Loads an array of values from a specified file or directory.
      *
      * @param  string $path
      * @return void
@@ -78,7 +78,7 @@ class Configuration implements ConfigurationInterface
 
             $regex = new \RegexIterator($iterator, '/^.+\.php$/i', 1);
 
-            $items = array_keys(iterator_to_array($regex));
+            $items = (array) array_keys(iterator_to_array($regex));
         }
 
         foreach ((array) $items as $item) {

@@ -11,7 +11,7 @@ namespace Zapheus\Container;
 class CompositeContainer implements ContainerInterface
 {
     /**
-     * @var array
+     * @var \Zapheus\Container\ContainerInterface[]
      */
     protected $containers = array();
 
@@ -38,7 +38,7 @@ class CompositeContainer implements ContainerInterface
         $entry = null;
 
         foreach ($this->containers as $container) {
-            $exists = $container->has($id);
+            $exists = $container->has($id) === true;
 
             $exists && $entry = $container->get($id);
         }
@@ -46,7 +46,7 @@ class CompositeContainer implements ContainerInterface
         if ($entry === null) {
             $message = 'Alias (%s) is not being managed by the container';
 
-            throw new NotFoundException(sprintf($message, $id));
+            throw new NotFoundException((string) sprintf($message, $id));
         }
 
         return $entry;
@@ -63,9 +63,9 @@ class CompositeContainer implements ContainerInterface
         $result = false;
 
         foreach ($this->containers as $container) {
-            $contains = $container->has($id);
+            $contains = $container->has($id) === true;
 
-            $contains === true && $result = true;
+            $contains && ! $result && $result = true;
         }
 
         return $result;

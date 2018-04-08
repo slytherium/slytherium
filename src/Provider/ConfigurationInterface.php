@@ -29,7 +29,7 @@ interface ConfigurationInterface
     public function get($key, $default = null, $dotify = false);
 
     /**
-     * Loads the configuration from a specified file or directory.
+     * Loads an array of values from a specified file or directory.
      *
      * @param  string $path
      * @return void

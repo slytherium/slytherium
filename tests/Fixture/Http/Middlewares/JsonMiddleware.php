@@ -15,7 +15,7 @@ use Zapheus\Http\Server\MiddlewareInterface;
 class JsonMiddleware implements MiddlewareInterface
 {
     /**
-     * Processes an incoming request and return a response.
+     * Processes an incoming request and returns a response.
      *
      * @param  \Zapheus\Http\Message\RequestInterface $request
      * @param  \Zapheus\Http\Server\HandlerInterface  $handler

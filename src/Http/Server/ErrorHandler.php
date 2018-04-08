@@ -38,7 +38,7 @@ class ErrorHandler implements HandlerInterface
     }
 
     /**
-     * Dispatch the next available middleware and return the response.
+     * Handles the request and returns a response.
      *
      * @param  \Zapheus\Http\Message\RequestInterface $request
      * @return \Zapheus\Http\Message\ResponseInterface

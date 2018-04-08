@@ -4,8 +4,8 @@ namespace Zapheus;
 
 use Zapheus\Http\Message\RequestInterface;
 use Zapheus\Http\MessageProvider;
-use Zapheus\Http\Server\ApplicationHandler;
 use Zapheus\Http\Server\Dispatcher;
+use Zapheus\Http\Server\HandlerInterface;
 
 /**
  * Middlelayer
@@ -13,7 +13,7 @@ use Zapheus\Http\Server\Dispatcher;
  * @package Zapheus
  * @author  Rougin Royce Gutib <rougingutib@gmail.com>
  */
-class Middlelayer
+class Middlelayer implements HandlerInterface
 {
     /**
      * @var \Zapheus\Http\Server\DispatcherInterface
@@ -32,15 +32,17 @@ class Middlelayer
      */
     public function __construct(Application $application = null)
     {
+        $application = $application ?: new Application;
+
+        $this->original = new Dispatcher;
+
         $this->application = $application;
 
         $this->application->add(new MessageProvider);
-
-        $this->original = new Dispatcher;
     }
 
     /**
-     * Dispatches the request and returns it into a response.
+     * Handles the request and returns a response.
      *
      * @param  \Zapheus\Http\Message\RequestInterface $request
      * @return \Zapheus\Http\Message\ResponseInterface

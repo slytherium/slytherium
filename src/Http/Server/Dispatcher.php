@@ -68,7 +68,7 @@ class Dispatcher implements DispatcherInterface
     }
 
     /**
-     * Processes an incoming request and return a response.
+     * Processes an incoming request and returns a response.
      *
      * @param  \Zapheus\Http\Message\RequestInterface $request
      * @param  \Zapheus\Http\Server\HandlerInterface  $handler
@@ -107,9 +107,11 @@ class Dispatcher implements DispatcherInterface
     protected function transform($middleware)
     {
         if (is_string($middleware) === true) {
-            $middleware = $this->container->get($middleware);
-        } elseif (is_callable($middleware) === true) {
-            $middleware = new ClosureMiddleware($middleware);
+            return $this->container->get($middleware);
+        }
+
+        if (is_callable($middleware) === true) {
+            return new ClosureMiddleware($middleware);
         }
 
         return $middleware;

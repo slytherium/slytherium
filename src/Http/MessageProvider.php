@@ -27,7 +27,7 @@ class MessageProvider implements ProviderInterface
      */
     public function register(WritableInterface $container)
     {
-        $config = $container->get(self::CONFIG);
+        $config = $container->get(ProviderInterface::CONFIG);
 
         $cookies = $config->get('app.http.cookies', $_COOKIE);
 

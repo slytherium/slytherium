@@ -24,7 +24,7 @@ class ServerProvider implements ProviderInterface
      */
     public function register(WritableInterface $container)
     {
-        $config = $container->get(self::CONFIG);
+        $config = $container->get(ProviderInterface::CONFIG);
 
         $middlewares = $config->get('app.middlewares', array());
 

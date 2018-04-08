@@ -2,7 +2,7 @@
 
 namespace Zapheus\Routing;
 
-use Zapheus\Application\ApplicationInterface;
+use Zapheus\Application;
 use Zapheus\Container\WritableInterface;
 use Zapheus\Provider\ProviderInterface;
 
@@ -30,7 +30,7 @@ class RoutingProvider implements ProviderInterface
 
         $dispatcher = new Dispatcher($router);
 
-        $interface = ApplicationInterface::DISPATCHER;
+        $interface = Application::DISPATCHER;
 
         return $container->set($interface, $dispatcher);
     }

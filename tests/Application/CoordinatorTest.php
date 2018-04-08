@@ -2,16 +2,17 @@
 
 namespace Zapheus\Application;
 
+use Zapheus\Coordinator;
 use Zapheus\Fixture\Http\Controllers\HailController;
 use Zapheus\Fixture\Http\Controllers\LaudController;
 
 /**
- * Router Application Test
+ * Coordinator Test
  *
  * @package Zapheus
  * @author  Rougin Royce Gutib <rougingutib@gmail.com>
  */
-class RouterApplicationTest extends AbstractTestCase
+class CoordinatorTest extends AbstractTestCase
 {
     /**
      * Sets up the application instance.
@@ -22,7 +23,7 @@ class RouterApplicationTest extends AbstractTestCase
     {
         parent::setUp();
 
-        $this->app = new RouterApplication($this->application());
+        $this->app = new Coordinator($this->application());
 
         $this->define(new HailController);
 

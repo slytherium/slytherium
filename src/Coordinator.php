@@ -1,18 +1,19 @@
 <?php
 
-namespace Zapheus\Application;
+namespace Zapheus;
 
+use Zapheus\Application;
 use Zapheus\Http\Message\RequestInterface;
 use Zapheus\Routing\Dispatcher;
 use Zapheus\Routing\Router;
 
 /**
- * Router Application
+ * Coordinator
  *
  * @package Zapheus
  * @author  Rougin Royce Gutib <rougingutib@gmail.com>
  */
-class RouterApplication extends AbstractApplication
+class Coordinator extends Middlelayer
 {
     /**
      * @var \Zapheus\Routing\RouterInterface
@@ -22,9 +23,9 @@ class RouterApplication extends AbstractApplication
     /**
      * Initializes the application instance.
      *
-     * @param \Zapheus\Application\ApplicationInterface|null $application
+     * @param \Zapheus\Application|null $application
      */
-    public function __construct(ApplicationInterface $application = null)
+    public function __construct(Application $application = null)
     {
         parent::__construct($application);
 
@@ -32,14 +33,14 @@ class RouterApplication extends AbstractApplication
     }
 
     /**
-     * Handles the Request to convert it to a Response.
+     * Dispatches the request and returns it into a response.
      *
      * @param  \Zapheus\Http\Message\RequestInterface $request
      * @return \Zapheus\Http\Message\ResponseInterface
      */
     public function handle(RequestInterface $request)
     {
-        $interface = ApplicationInterface::DISPATCHER;
+        $interface = (string) Application::DISPATCHER;
 
         $dispatcher = new Dispatcher($this->original);
 

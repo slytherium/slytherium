@@ -2,12 +2,12 @@
 
 namespace Zapheus;
 
-use Zapheus\Application\ApplicationInterface;
 use Zapheus\Container\Container;
 use Zapheus\Container\ContainerInterface;
 use Zapheus\Container\WritableInterface;
 use Zapheus\Http\Message\RequestInterface;
 use Zapheus\Http\Message\ResponseInterface;
+use Zapheus\Http\Server\HandlerInterface;
 use Zapheus\Provider\ProviderInterface;
 use Zapheus\Routing\RouteInterface;
 
@@ -17,8 +17,18 @@ use Zapheus\Routing\RouteInterface;
  * @package Zapheus
  * @author  Rougin Royce Gutib <rougingutib@gmail.com>
  */
-class Application implements ApplicationInterface, WritableInterface
+class Application implements HandlerInterface, WritableInterface
 {
+    const DISPATCHER = 'Zapheus\Routing\DispatcherInterface';
+
+    const REQUEST = 'Zapheus\Http\Message\RequestInterface';
+
+    const RESOLVER = 'Zapheus\Routing\ResolverInterface';
+
+    const RESPONSE = 'Zapheus\Http\Message\ResponseInterface';
+
+    const ROUTE_ATTRIBUTE = 'zapheus-route';
+
     /**
      * @var \Zapheus\Container\WritableInterface
      */
@@ -102,8 +112,8 @@ class Application implements ApplicationInterface, WritableInterface
         return $this->container->get($id);
     }
 
-    /**
-     * Handles the ServerRequest to convert it to a Response.
+   /**
+     * Dispatches the request and returns into a response.
      *
      * @param  \Zapheus\Http\Message\RequestInterface $request
      * @return \Zapheus\Http\Message\ResponseInterface

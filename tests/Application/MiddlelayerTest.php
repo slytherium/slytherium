@@ -2,6 +2,7 @@
 
 namespace Zapheus\Application;
 
+use Zapheus\Middlelayer;
 use Zapheus\Fixture\Http\Controllers\HailController;
 use Zapheus\Fixture\Http\Middlewares\RouterMiddleware;
 use Zapheus\Routing\Dispatcher;
@@ -9,12 +10,12 @@ use Zapheus\Routing\Route;
 use Zapheus\Routing\Router;
 
 /**
- * Middleware Application Test
+ * Middlelayer Test
  *
  * @package Zapheus
  * @author  Rougin Royce Gutib <rougingutib@gmail.com>
  */
-class MiddlewareApplicationTest extends AbstractTestCase
+class MiddlelayerTest extends AbstractTestCase
 {
     /**
      * Sets up the application instance.
@@ -25,7 +26,7 @@ class MiddlewareApplicationTest extends AbstractTestCase
     {
         parent::setUp();
 
-        $this->app = new MiddlewareApplication($this->application());
+        $this->app = new Middlelayer($this->application());
 
         $controller = $this->define(new HailController);
 

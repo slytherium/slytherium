@@ -19,15 +19,13 @@ $ composer require zapheus/zapheus
 
 ## Usage
 
-### Using `RouterApplication`
+### Using `Coordinator`
 
 ``` php
 require 'vendor/autoload.php';
 
-use Zapheus\Application\RouterApplication;
-
 // Initializes the router application
-$app = new RouterApplication;
+$app = new Zapheus\Coordinator;
 
 // Creates a HTTP route of GET /
 $app->get('/', function ()
@@ -39,15 +37,13 @@ $app->get('/', function ()
 echo $app->run();
 ```
 
-### Using `MiddlewareApplication`
+### Using `Middlelayer`
 
 ``` php
 require 'vendor/autoload.php';
 
-use Zapheus\Application\MiddlewareApplication;
-
 // Initializes the middleware application
-$app = new MiddlewareApplication;
+$app = new Zapheus\Middlelayer;
 
 // Initializes the router instance
 $router = new Zapheus\Routing\Router;

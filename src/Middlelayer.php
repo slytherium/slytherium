@@ -1,20 +1,22 @@
 <?php
 
-namespace Zapheus\Application;
+namespace Zapheus;
 
-use Zapheus\Application;
+use Zapheus\Http\Message\RequestInterface;
 use Zapheus\Http\MessageProvider;
+use Zapheus\Http\Server\ApplicationHandler;
+use Zapheus\Http\Server\Dispatcher;
 
 /**
- * Application Interface
+ * Middlelayer
  *
  * @package Zapheus
  * @author  Rougin Royce Gutib <rougingutib@gmail.com>
  */
-abstract class AbstractApplication implements ApplicationInterface
+class Middlelayer
 {
     /**
-     * @var object
+     * @var \Zapheus\Http\Server\DispatcherInterface
      */
     protected $original;
 
@@ -26,15 +28,26 @@ abstract class AbstractApplication implements ApplicationInterface
     /**
      * Initializes the application instance.
      *
-     * @param \Zapheus\Application\ApplicationInterface|null $application
+     * @param \Zapheus\Application|null $application
      */
-    public function __construct(ApplicationInterface $application = null)
+    public function __construct(Application $application = null)
     {
-        $this->application = $application ?: new Application;
+        $this->application = $application;
 
-        $exists = method_exists($this->application, 'add');
+        $this->application->add(new MessageProvider);
 
-        $exists && $this->application->add(new MessageProvider);
+        $this->original = new Dispatcher;
+    }
+
+    /**
+     * Dispatches the request and returns it into a response.
+     *
+     * @param  \Zapheus\Http\Message\RequestInterface $request
+     * @return \Zapheus\Http\Message\ResponseInterface
+     */
+    public function handle(RequestInterface $request)
+    {
+        return $this->original->process($request, $this->application);
     }
 
     /**
@@ -44,7 +57,7 @@ abstract class AbstractApplication implements ApplicationInterface
      */
     public function run()
     {
-        $interface = ApplicationInterface::REQUEST;
+        $interface = Application::REQUEST;
 
         $request = $this->application->get($interface);
 
@@ -70,7 +83,9 @@ abstract class AbstractApplication implements ApplicationInterface
             $class = array($this->original, $method);
 
             return call_user_func_array($class, $parameters);
-        } elseif (method_exists($this->application, $method)) {
+        }
+
+        if (method_exists($this->application, $method)) {
             $class = array($this->application, $method);
 
             return call_user_func_array($class, $parameters);

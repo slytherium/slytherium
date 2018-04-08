@@ -2,7 +2,7 @@
 
 namespace Zapheus\Fixture\Http\Middlewares;
 
-use Zapheus\Application\ApplicationInterface;
+use Zapheus\Application;
 use Zapheus\Http\Message\RequestInterface;
 use Zapheus\Http\Server\HandlerInterface;
 use Zapheus\Http\Server\MiddlewareInterface;
@@ -40,7 +40,7 @@ class RouterMiddleware implements MiddlewareInterface
      */
     public function process(RequestInterface $request, HandlerInterface $handler)
     {
-        $attribute = ApplicationInterface::ROUTE_ATTRIBUTE;
+        $attribute = (string) Application::ROUTE_ATTRIBUTE;
 
         $path = (string) $request->uri()->path();
 

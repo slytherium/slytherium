@@ -2,7 +2,7 @@
 
 namespace Zapheus\Routing;
 
-use Zapheus\Application\ApplicationInterface;
+use Zapheus\Application;
 use Zapheus\Container\Container;
 use Zapheus\Provider\Configuration;
 
@@ -51,7 +51,7 @@ class RoutingProviderTest extends \PHPUnit_Framework_TestCase
     {
         $expected = new Route('GET', '/', 'HailController@index');
 
-        $dispatcher = ApplicationInterface::DISPATCHER;
+        $dispatcher = Application::DISPATCHER;
 
         $container = $this->provider->register($this->container);
 

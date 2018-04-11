@@ -2,8 +2,8 @@
 
 namespace Zapheus\Routing;
 
-use Zapheus\Application;
 use Zapheus\Container\WritableInterface;
+use Zapheus\Http\Server\RoutingHandler;
 use Zapheus\Provider\ProviderInterface;
 
 /**
@@ -40,7 +40,7 @@ class RoutingProvider implements ProviderInterface
     {
         $config = $container->get(ProviderInterface::CONFIG);
 
-        $interface = Application::DISPATCHER;
+        $interface = RoutingHandler::DISPATCHER;
 
         if ($container->has(self::ROUTER) === false) {
             $router = $config->get('app.router', $this->router);

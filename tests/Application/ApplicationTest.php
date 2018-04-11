@@ -2,10 +2,10 @@
 
 namespace Zapheus\Application;
 
-use Zapheus\Application;
 use Zapheus\Fixture\Http\Controllers\HailController;
 use Zapheus\Fixture\Providers\TestProvider;
 use Zapheus\Http\Message\Response;
+use Zapheus\Http\Server\RoutingHandler;
 use Zapheus\Routing\Dispatcher;
 use Zapheus\Routing\Resolver;
 use Zapheus\Routing\Route;
@@ -40,13 +40,13 @@ class ApplicationTest extends AbstractTestCase
 
         $dispatcher = new Dispatcher($router);
 
-        $this->app->set(Application::DISPATCHER, $dispatcher);
+        $this->app->set(RoutingHandler::DISPATCHER, $dispatcher);
 
         $headers = array('X-Framework' => array('Zapheus'));
 
         $response = new Response(200, (array) $headers);
 
-        $this->app->set(Application::RESPONSE, $response);
+        $this->app->set(RoutingHandler::RESPONSE, $response);
     }
 
     /**
@@ -104,7 +104,7 @@ class ApplicationTest extends AbstractTestCase
 
         $resolver = new Resolver($app);
 
-        $app->set(Application::RESOLVER, $resolver);
+        $app->set(RoutingHandler::RESOLVER, $resolver);
 
         $expected = 'Hello, world';
 

@@ -4,6 +4,7 @@ namespace Zapheus;
 
 use Zapheus\Application;
 use Zapheus\Http\Message\RequestInterface;
+use Zapheus\Http\Server\RoutingHandler;
 use Zapheus\Routing\Dispatcher;
 use Zapheus\Routing\Router;
 
@@ -40,7 +41,7 @@ class Coordinator extends Middlelayer
      */
     public function handle(RequestInterface $request)
     {
-        $interface = (string) Application::DISPATCHER;
+        $interface = (string) RoutingHandler::DISPATCHER;
 
         $dispatcher = new Dispatcher($this->original);
 

@@ -3,13 +3,12 @@
 namespace Zapheus;
 
 use Zapheus\Container\Container;
-use Zapheus\Container\ContainerInterface;
 use Zapheus\Container\WritableInterface;
 use Zapheus\Http\Message\RequestInterface;
 use Zapheus\Http\Message\ResponseInterface;
 use Zapheus\Http\Server\HandlerInterface;
+use Zapheus\Http\Server\RoutingHandler;
 use Zapheus\Provider\ProviderInterface;
-use Zapheus\Routing\RouteInterface;
 
 /**
  * Application
@@ -19,19 +18,9 @@ use Zapheus\Routing\RouteInterface;
  */
 class Application implements HandlerInterface, WritableInterface
 {
-    const DISPATCHER = 'Zapheus\Routing\DispatcherInterface';
-
-    const PSR_BRIDGE = 'Zapheus\Bridge\Psr\Zapheus\Response';
-
-    const PSR_RESPONSE = 'Psr\Http\Message\ResponseInterface';
+    const MIDDLEWARE = 'Zapheus\Http\Server\DispatcherInterface';
 
     const REQUEST = 'Zapheus\Http\Message\RequestInterface';
-
-    const RESOLVER = 'Zapheus\Routing\ResolverInterface';
-
-    const RESPONSE = 'Zapheus\Http\Message\ResponseInterface';
-
-    const ROUTE_ATTRIBUTE = 'zapheus-route';
 
     /**
      * @var \Zapheus\Container\WritableInterface
@@ -116,7 +105,7 @@ class Application implements HandlerInterface, WritableInterface
         return $this->container->get($id);
     }
 
-    /**
+   /**
      * Dispatches the request and returns into a response.
      *
      * @param  \Zapheus\Http\Message\RequestInterface $request
@@ -124,21 +113,15 @@ class Application implements HandlerInterface, WritableInterface
      */
     public function handle(RequestInterface $request)
     {
-        $route = $request->attribute(self::ROUTE_ATTRIBUTE);
+        $handler = new RoutingHandler($this->container);
 
-        if ($this->has(self::DISPATCHER) && $route === null) {
-            $dispatcher = $this->container->get(self::DISPATCHER);
+        if ($this->has(self::MIDDLEWARE) === true) {
+            $dispatcher = $this->get(self::MIDDLEWARE);
 
-            $path = (string) $request->uri()->path();
-
-            $method = (string) $request->method();
-
-            $route = $dispatcher->dispatch($method, $path);
+            return $dispatcher->process($request, $handler);
         }
 
-        $result = $route ? $this->resolve($route) : null;
-
-        return $this->response($result);
+        return $handler->handle($request);
     }
 
     /**
@@ -190,49 +173,5 @@ class Application implements HandlerInterface, WritableInterface
         $this->container->set($id, $concrete);
 
         return $this;
-    }
-
-    /**
-     * Resolves the route instance using a resolver.
-     *
-     * @param  \Zapheus\Routing\RouteInterface $route
-     * @return mixed
-     */
-    protected function resolve(RouteInterface $route)
-    {
-        if ($this->has(self::RESOLVER) === false) {
-            $resolver = new Routing\Resolver($this);
-
-            return $resolver->resolve($route);
-        }
-
-        $resolver = $this->container->get(self::RESOLVER);
-
-        return $resolver->resolve($route);
-    }
-
-    /**
-     * Converts the given result into a ResponseInterface.
-     *
-     * @param  mixed $result
-     * @return \Zapheus\Http\Message\ResponseInterface
-     */
-    protected function response($result)
-    {
-        if (is_a($result, self::PSR_RESPONSE) === true) {
-            $reflection = new \ReflectionClass(self::PSR_BRIDGE);
-
-            $arguments = array('response' => $result);
-
-            $result = $reflection->newInstanceArgs($arguments);
-        }
-
-        $instanceof = $result instanceof ResponseInterface;
-
-        $response = $this->container->get(self::RESPONSE);
-
-        $instanceof || $response->stream()->write($result);
-
-        return $instanceof ? $result : $response;
     }
 }

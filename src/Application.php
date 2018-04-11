@@ -116,7 +116,7 @@ class Application implements HandlerInterface, WritableInterface
         return $this->container->get($id);
     }
 
-   /**
+    /**
      * Dispatches the request and returns into a response.
      *
      * @param  \Zapheus\Http\Message\RequestInterface $request

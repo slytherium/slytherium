@@ -21,6 +21,10 @@ class Application implements HandlerInterface, WritableInterface
 {
     const DISPATCHER = 'Zapheus\Routing\DispatcherInterface';
 
+    const PSR_BRIDGE = 'Zapheus\Bridge\Psr\Zapheus\Response';
+
+    const PSR_RESPONSE = 'Psr\Http\Message\ResponseInterface';
+
     const REQUEST = 'Zapheus\Http\Message\RequestInterface';
 
     const RESOLVER = 'Zapheus\Routing\ResolverInterface';
@@ -215,6 +219,14 @@ class Application implements HandlerInterface, WritableInterface
      */
     protected function response($result)
     {
+        if (is_a($result, self::PSR_RESPONSE) === true) {
+            $reflection = new \ReflectionClass(self::PSR_BRIDGE);
+
+            $arguments = array('response' => $result);
+
+            $result = $reflection->newInstanceArgs($arguments);
+        }
+
         $instanceof = $result instanceof ResponseInterface;
 
         $response = $this->container->get(self::RESPONSE);

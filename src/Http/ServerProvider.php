@@ -17,6 +17,21 @@ class ServerProvider implements ProviderInterface
     const DISPATCHER = 'Zapheus\Http\Server\DispatcherInterface';
 
     /**
+     * @var \Zapheus\Http\Server\MiddlewareInterface[]
+     */
+    protected $middlewares = array();
+
+    /**
+     * Initializes the middleware instance.
+     *
+     * @param \Zapheus\Http\Server\MiddlewareInterface[] $middlewares
+     */
+    public function __construct(array $middlewares = array())
+    {
+        $this->middlewares = $middlewares;
+    }
+
+    /**
      * Registers the bindings in the container.
      *
      * @param  \Zapheus\Container\WritableInterface $container
@@ -26,7 +41,7 @@ class ServerProvider implements ProviderInterface
     {
         $config = $container->get(ProviderInterface::CONFIG);
 
-        $middlewares = $config->get('app.middlewares', array());
+        $middlewares = $config->get('app.middlewares', $this->middlewares);
 
         $dispatcher = new Dispatcher($middlewares, $container);
 

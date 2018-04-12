@@ -6,6 +6,7 @@ use Zapheus\Fixture\Http\Controllers\HailController;
 use Zapheus\Fixture\Providers\TestProvider;
 use Zapheus\Http\Message\Response;
 use Zapheus\Http\Server\RoutingHandler;
+use Zapheus\Http\ServerProvider;
 use Zapheus\Routing\Dispatcher;
 use Zapheus\Routing\Resolver;
 use Zapheus\Routing\Route;
@@ -47,6 +48,24 @@ class ApplicationTest extends AbstractTestCase
         $response = new Response(200, (array) $headers);
 
         $this->app->set(RoutingHandler::RESPONSE, $response);
+    }
+
+    /**
+     * Tests Application::has.
+     *
+     * @return void
+     */
+    public function testHandleMethodWithMiddleware()
+    {
+        $this->app->add(new ServerProvider);
+
+        $app = $this->request('GET', '/');
+
+        $expected = 'Hello, world';
+
+        $result = (string) $app->run();
+
+        $this->assertEquals($expected, $result);
     }
 
     /**

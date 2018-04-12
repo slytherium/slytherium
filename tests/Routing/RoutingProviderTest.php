@@ -25,6 +25,11 @@ class RoutingProviderTest extends \PHPUnit_Framework_TestCase
     protected $provider;
 
     /**
+     * @var \Zapheus\Routing\RouterInterface
+     */
+    protected $router;
+
+    /**
      * Sets up the provider instance.
      *
      * @return void
@@ -35,7 +40,7 @@ class RoutingProviderTest extends \PHPUnit_Framework_TestCase
 
         $route = new Route('GET', '/', 'HailController@index');
 
-        $config->set('app.router', new Router(array($route)));
+        $config->set('app.router', $this->router = new Router(array($route)));
 
         $this->container = $container->set(RoutingProvider::CONFIG, $config);
 
@@ -54,6 +59,30 @@ class RoutingProviderTest extends \PHPUnit_Framework_TestCase
         $dispatcher = RoutingHandler::DISPATCHER;
 
         $container = $this->provider->register($this->container);
+
+        $dispatcher = $container->get($dispatcher);
+
+        $result = $dispatcher->dispatch('GET', '/');
+
+        $this->assertEquals($expected, $result);
+    }
+
+    /**
+     * Tests ProviderInterface::register with a router from container.
+     *
+     * @return void
+     */
+    public function testRegisterMethodWithRouterFromContainer()
+    {
+        $provider = new RoutingProvider;
+
+        $this->container->set(RoutingProvider::ROUTER, $this->router);
+
+        $expected = new Route('GET', '/', 'HailController@index');
+
+        $dispatcher = RoutingHandler::DISPATCHER;
+
+        $container = $provider->register($this->container);
 
         $dispatcher = $container->get($dispatcher);
 

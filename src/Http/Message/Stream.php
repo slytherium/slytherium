@@ -66,16 +66,6 @@ class Stream implements StreamInterface
     }
 
     /**
-     * Returns the resource stream.
-     *
-     * @return resource
-     */
-    public function resource()
-    {
-        return $this->stream;
-    }
-
-    /**
      * Reads data from the stream.
      *
      * @param  integer $length

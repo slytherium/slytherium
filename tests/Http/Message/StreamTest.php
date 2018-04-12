@@ -50,15 +50,6 @@ class StreamTest extends \PHPUnit_Framework_TestCase
         $this->stream = new Stream;
     }
 
-    public function testResourceMethod()
-    {
-        $expected = $this->resource;
-
-        $result = $this->stream->resource();
-
-        $this->assertEquals($expected, $result);
-    }
-
     /**
      * Tests StreamInterface::read.
      *

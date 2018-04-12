@@ -134,7 +134,7 @@ class RoutingHandler implements HandlerInterface
             return $dispatcher->dispatch($method, $path);
         }
 
-        return null;
+        return $route;
     }
 
     /**

@@ -5,7 +5,6 @@ namespace Zapheus\Http\Server;
 use Zapheus\Container\ContainerInterface;
 use Zapheus\Http\Message\RequestInterface;
 use Zapheus\Http\Message\ResponseInterface;
-use Zapheus\Routing\DispatcherInterface;
 use Zapheus\Routing\Resolver;
 use Zapheus\Routing\RouteInterface;
 

@@ -98,9 +98,9 @@ class RoutingHandler implements HandlerInterface
     /**
      * Converts the specified instance into a bridge and vice versa.
      *
-     * @param  \Zapheus\Http\Message\MessageInterface $object
-     * @param  string                                 $interface
-     * @return \Psr\Http\Message\MessageInterface
+     * @param  mixed  $object
+     * @param  string $interface
+     * @return mixed
      */
     protected function bridge($object, $interface)
     {
@@ -118,15 +118,13 @@ class RoutingHandler implements HandlerInterface
      *
      * @param  string $method
      * @param  string $uri
-     * @return \Zapheus\Routing\RouteInterface
-     *
-     * @throws \UnexpectedValueException
+     * @return \Zapheus\Routing\RouteInterface|null
      */
     protected function dispatch(RequestInterface $request)
     {
         $route = $request->attribute(self::ROUTE_ATTRIBUTE);
 
-        if ($route === null) {
+        if ($route instanceof RouteInterface === false) {
             $dispatcher = $this->container->get(self::DISPATCHER);
 
             $path = (string) $request->uri()->path();
@@ -136,7 +134,7 @@ class RoutingHandler implements HandlerInterface
             return $dispatcher->dispatch($method, $path);
         }
 
-        return $route;
+        return null;
     }
 
     /**

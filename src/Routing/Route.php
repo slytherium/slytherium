@@ -46,7 +46,7 @@ class Route implements RouteInterface
      */
     public function __construct($method, $uri, $handler, $middlewares = array(), $parameters = array())
     {
-        is_array($middlewares) || $middlewares = array($middlewares);
+        is_string($middlewares) && $middlewares = array($middlewares);
 
         $this->handler = $handler;
 

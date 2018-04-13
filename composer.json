@@ -2,7 +2,7 @@
     "name": "zapheus/zapheus",
     "description": "An independent and framework-friendly PHP micro-framework.",
     "keywords": ["interoperable", "php framework", "php library", "zapheus"],
-    "homepage": "https://github.com/zapheus/zapheus",
+    "homepage": "https://zapheus.github.io",
     "license": "MIT",
     "authors": [
         {

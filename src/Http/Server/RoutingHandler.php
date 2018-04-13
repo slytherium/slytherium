@@ -5,6 +5,7 @@ namespace Zapheus\Http\Server;
 use Zapheus\Container\WritableInterface;
 use Zapheus\Http\Message\RequestInterface;
 use Zapheus\Http\Message\ResponseInterface;
+use Zapheus\Ropebridge;
 use Zapheus\Routing\Resolver;
 use Zapheus\Routing\RouteInterface;
 
@@ -16,13 +17,7 @@ use Zapheus\Routing\RouteInterface;
  */
 class RoutingHandler implements HandlerInterface
 {
-    const BRIDGE_REQUEST = 'Zapheus\Bridge\Psr\Interop\ServerRequest';
-
     const DISPATCHER = 'Zapheus\Routing\DispatcherInterface';
-
-    const PSR_REQUEST = 'Psr\Http\Message\ServerRequestInterface';
-
-    const PSR_RESPONSE = 'Psr\Http\Message\ResponseInterface';
 
     const REQUEST = 'Zapheus\Http\Message\RequestInterface';
 
@@ -31,11 +26,6 @@ class RoutingHandler implements HandlerInterface
     const RESPONSE = 'Zapheus\Http\Message\ResponseInterface';
 
     const ROUTE_ATTRIBUTE = 'zapheus-route';
-
-    /**
-     * @var array
-     */
-    protected $bridges = array();
 
     /**
      * @var \Zapheus\Container\WritableInterface
@@ -50,20 +40,6 @@ class RoutingHandler implements HandlerInterface
     public function __construct(WritableInterface $container)
     {
         $this->container = $container;
-
-        $psrs = array('Psr\Http\Message\ResponseInterface');
-
-        $psrs[] = 'Psr\Http\Message\ServerRequestInterface';
-        $psrs[] = 'Zapheus\Http\Message\RequestInterface';
-        $psrs[] = 'Zapheus\Http\Message\ResponseInterface';
-
-        $bridges = array('Zapheus\Bridge\Psr\Zapheus\Response');
-
-        $bridges[] = 'Zapheus\Bridge\Psr\Zapheus\Request';
-        $bridges[] = 'Zapheus\Bridge\Psr\Interop\ServerRequest';
-        $bridges[] = 'Zapheus\Bridge\Psr\Interop\Response';
-
-        $this->bridges = array_combine($psrs, $bridges);
     }
 
     /**
@@ -74,18 +50,18 @@ class RoutingHandler implements HandlerInterface
      */
     public function handle(RequestInterface $request)
     {
-        if (class_exists(self::BRIDGE_REQUEST) === true) {
-            $psr = $this->bridge($request, self::REQUEST);
+        if (class_exists(Ropebridge::BRIDGE_REQUEST) === true) {
+            $psr = Ropebridge::make($request, self::REQUEST);
 
-            $this->container->set(self::PSR_REQUEST, $psr);
+            $this->container->set(Ropebridge::PSR_REQUEST, $psr);
         }
 
         if ($this->container->has(self::RESPONSE) === true) {
             $response = $this->container->get(self::RESPONSE);
 
-            $psr = $this->bridge($response, self::RESPONSE);
+            $psr = Ropebridge::make($response, self::RESPONSE);
 
-            $this->container->set(self::PSR_RESPONSE, $psr);
+            $this->container->set(Ropebridge::PSR_RESPONSE, $psr);
         }
 
         $route = $this->dispatch($request);
@@ -93,24 +69,6 @@ class RoutingHandler implements HandlerInterface
         $result = $route ? $this->resolve($route) : null;
 
         return $this->response($result);
-    }
-
-    /**
-     * Converts the specified instance into a bridge and vice versa.
-     *
-     * @param  mixed  $object
-     * @param  string $interface
-     * @return mixed
-     */
-    protected function bridge($object, $interface)
-    {
-        $exists = class_exists($this->bridges[$interface]);
-
-        $bridge = $this->bridges[(string) $interface];
-
-        $instanceof = is_a($object, (string) $interface);
-
-        return $exists && $instanceof ? new $bridge($object) : $object;
     }
 
     /**
@@ -145,13 +103,13 @@ class RoutingHandler implements HandlerInterface
      */
     protected function resolve(RouteInterface $route)
     {
-        if ($this->container->has(self::RESOLVER) === false) {
-            $resolver = new Resolver($this->container);
+        if ($this->container->has(self::RESOLVER)) {
+            $result = $this->container->get(self::RESOLVER);
 
-            return $resolver->resolve($route);
+            return $result->resolve($route);
         }
 
-        $resolver = $this->container->get(self::RESOLVER);
+        $resolver = new Resolver($this->container);
 
         return $resolver->resolve($route);
     }
@@ -164,7 +122,7 @@ class RoutingHandler implements HandlerInterface
      */
     protected function response($result)
     {
-        $result = $this->bridge($result, self::PSR_RESPONSE);
+        $result = Ropebridge::make($result, Ropebridge::PSR_RESPONSE);
 
         $instanceof = $result instanceof ResponseInterface;
 
@@ -172,6 +130,6 @@ class RoutingHandler implements HandlerInterface
 
         $instanceof || $response->stream()->write($result);
 
-        return $instanceof ? $result : $response;
+        return $instanceof === true ? $result : $response;
     }
 }

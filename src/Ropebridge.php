@@ -64,15 +64,7 @@ class Ropebridge
 
         $instanceof = is_a($this->object, $interface);
 
-        if ($exists && $instanceof === true) {
-            $reflection = new \ReflectionClass($bridge);
-
-            $items = (array) array($this->object);
-
-            return $reflection->newInstanceArgs($items);
-        }
-
-        return $this->object;
+        return $exists && $instanceof ? new $bridge($this->object) : $this->object;
     }
 
     /**

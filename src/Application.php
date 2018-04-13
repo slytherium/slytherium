@@ -68,6 +68,23 @@ class Application implements HandlerInterface, WritableInterface
     }
 
     /**
+     * Creates a new configuration based on given data.
+     *
+     * @param  array|string $data
+     * @return self
+     */
+    public function config($data)
+    {
+        $items = is_array($data) ? $data : array();
+
+        $config = new Provider\Configuration($items);
+
+        is_string($data) && $config->load($data);
+
+        return $this->set(ProviderInterface::CONFIG, $config);
+    }
+
+    /**
      * Emits the headers from the response instance.
      *
      * @param  \Zapheus\Http\Message\ResponseInterface $response

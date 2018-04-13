@@ -131,4 +131,44 @@ class ApplicationTest extends AbstractTestCase
 
         $this->assertEquals($expected, $result);
     }
+
+    /**
+     * Tests Application::config with string data.
+     *
+     * @return void
+     */
+    public function testConfigMethodWithStringData()
+    {
+        $application = $this->application();
+
+        $application->config(__DIR__ . '/../Fixture/Config');
+
+        $config = $application->get(ServerProvider::CONFIG);
+
+        $expected = 'Zapheus Framework';
+
+        $result = $config->get('test.settings.app_name');
+
+        $this->assertEquals($expected, $result);
+    }
+
+    /**
+     * Tests Application::config with array data.
+     *
+     * @return void
+     */
+    public function testConfigMethodWithArrayData()
+    {
+        $application = $this->application();
+
+        $application->config(array('framework' => 'Zapheus'));
+
+        $config = $application->get(ServerProvider::CONFIG);
+
+        $expected = (string) 'Zapheus';
+
+        $result = (string) $config->get('framework');
+
+        $this->assertEquals($expected, $result);
+    }
 }

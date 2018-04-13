@@ -12,6 +12,8 @@ class Ropebridge
 {
     const BRIDGE_REQUEST = 'Zapheus\Bridge\Psr\Interop\ServerRequest';
 
+    const BRIDGE_RESPONSE = 'Zapheus\Bridge\Psr\Interop\Response';
+
     const PSR_REQUEST = 'Psr\Http\Message\ServerRequestInterface';
 
     const PSR_RESPONSE = 'Psr\Http\Message\ResponseInterface';

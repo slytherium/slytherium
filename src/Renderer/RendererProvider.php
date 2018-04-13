@@ -16,6 +16,21 @@ class RendererProvider implements ProviderInterface
     const RENDERER = 'Zapheus\Renderer\RendererInterface';
 
     /**
+     * @var string[]
+     */
+    protected $paths = array();
+
+    /**
+     * Initializes the renderer instance.
+     *
+     * @param array|string $paths
+     */
+    public function __construct($paths = array())
+    {
+        $this->paths = (array) $paths;
+    }
+
+    /**
      * Registers the bindings in the container.
      *
      * @param  \Zapheus\Container\WritableInterface $container
@@ -25,7 +40,9 @@ class RendererProvider implements ProviderInterface
     {
         $config = $container->get(ProviderInterface::CONFIG);
 
-        $renderer = new Renderer($config->get('app.views', ''));
+        $paths = $config->get('app.views', $this->paths);
+
+        $renderer = new Renderer($paths);
 
         return $container->set(self::RENDERER, $renderer);
     }

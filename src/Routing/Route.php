@@ -41,7 +41,7 @@ class Route implements RouteInterface
      * @param string                $method
      * @param string                $uri
      * @param array|callable|string $handler
-     * @param array|string          $middlewares
+     * @param array|callable|string $middlewares
      * @param array                 $parameters
      */
     public function __construct($method, $uri, $handler, $middlewares = array(), $parameters = array())

@@ -18,9 +18,19 @@ use Zapheus\Provider\ProviderInterface;
  */
 class Application implements HandlerInterface, WritableInterface
 {
+    const DISPATCHER = 'Zapheus\Routing\DispatcherInterface';
+
     const MIDDLEWARE = 'Zapheus\Http\Server\DispatcherInterface';
 
     const REQUEST = 'Zapheus\Http\Message\RequestInterface';
+
+    const RESOLVER = 'Zapheus\Routing\ResolverInterface';
+
+    const RESPONSE = 'Zapheus\Http\Message\ResponseInterface';
+
+    const ROUTE_ATTRIBUTE = 'zapheus-route';
+
+    const ROUTER = 'Zapheus\Routing\RouterInterface';
 
     /**
      * @var \Zapheus\Container\WritableInterface

@@ -2,6 +2,7 @@
 
 namespace Zapheus\Http\Server;
 
+use Zapheus\Application;
 use Zapheus\Container\WritableInterface;
 use Zapheus\Http\Message\RequestInterface;
 use Zapheus\Http\Message\ResponseInterface;
@@ -17,16 +18,6 @@ use Zapheus\Routing\RouteInterface;
  */
 class RoutingHandler implements HandlerInterface
 {
-    const DISPATCHER = 'Zapheus\Routing\DispatcherInterface';
-
-    const REQUEST = 'Zapheus\Http\Message\RequestInterface';
-
-    const RESOLVER = 'Zapheus\Routing\ResolverInterface';
-
-    const RESPONSE = 'Zapheus\Http\Message\ResponseInterface';
-
-    const ROUTE_ATTRIBUTE = 'zapheus-route';
-
     /**
      * @var \Zapheus\Container\WritableInterface
      */
@@ -39,12 +30,12 @@ class RoutingHandler implements HandlerInterface
      */
     public function __construct(WritableInterface $container)
     {
-        $exists = $container->has(self::RESPONSE);
+        $exists = $container->has(Application::RESPONSE);
 
         if (class_exists(Ropebridge::BRIDGE_RESPONSE) && $exists) {
-            $response = $container->get(self::RESPONSE);
+            $response = $container->get(Application::RESPONSE);
 
-            $psr = Ropebridge::make($response, self::RESPONSE);
+            $psr = Ropebridge::make($response, Application::RESPONSE);
 
             $container->set(Ropebridge::PSR_RESPONSE, $psr);
         }
@@ -61,16 +52,24 @@ class RoutingHandler implements HandlerInterface
     public function handle(RequestInterface $request)
     {
         if (class_exists(Ropebridge::BRIDGE_REQUEST) === true) {
-            $psr = Ropebridge::make($request, self::REQUEST);
+            $psr = Ropebridge::make($request, Application::REQUEST);
 
             $this->container->set(Ropebridge::PSR_REQUEST, $psr);
         }
 
         $route = $this->dispatch($request);
 
-        $result = $route ? $this->resolve($route) : null;
+        $handler = new ResolverHandler($this->container, $route);
 
-        return $this->response($result);
+        if (count($route->middlewares()) > 0) {
+            $middlewares = (array) $route->middlewares();
+
+            $dispatcher = new Dispatcher($middlewares, $this->container);
+
+            return $dispatcher->process($request, $handler);
+        }
+
+        return $handler->handle($request);
     }
 
     /**
@@ -78,60 +77,22 @@ class RoutingHandler implements HandlerInterface
      *
      * @param  string $method
      * @param  string $uri
-     * @return \Zapheus\Routing\RouteInterface|null
+     * @return \Zapheus\Routing\RouteInterface
      */
     protected function dispatch(RequestInterface $request)
     {
-        $route = $request->attribute(self::ROUTE_ATTRIBUTE);
+        $route = $request->attribute(Application::ROUTE_ATTRIBUTE);
 
         if ($route instanceof RouteInterface === false) {
-            $dispatcher = $this->container->get(self::DISPATCHER);
+            $dispatcher = $this->container->get(Application::DISPATCHER);
 
             $path = (string) $request->uri()->path();
 
             $method = (string) $request->method();
 
-            return $dispatcher->dispatch($method, $path);
+            return $dispatcher->dispatch($method, (string) $path);
         }
 
         return $route;
-    }
-
-    /**
-     * Resolves the route instance using a resolver.
-     *
-     * @param  \Zapheus\Routing\RouteInterface $route
-     * @return mixed
-     */
-    protected function resolve(RouteInterface $route)
-    {
-        if ($this->container->has(self::RESOLVER)) {
-            $result = $this->container->get(self::RESOLVER);
-
-            return $result->resolve($route);
-        }
-
-        $resolver = new Resolver($this->container);
-
-        return $resolver->resolve($route);
-    }
-
-    /**
-     * Converts the given result into a ResponseInterface.
-     *
-     * @param  mixed $result
-     * @return \Zapheus\Http\Message\ResponseInterface
-     */
-    protected function response($result)
-    {
-        $result = Ropebridge::make($result, Ropebridge::PSR_RESPONSE);
-
-        $instanceof = $result instanceof ResponseInterface;
-
-        $response = $this->container->get(self::RESPONSE);
-
-        $instanceof || $response->stream()->write($result);
-
-        return $instanceof === true ? $result : $response;
     }
 }

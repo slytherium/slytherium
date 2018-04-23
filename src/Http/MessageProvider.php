@@ -2,6 +2,7 @@
 
 namespace Zapheus\Http;
 
+use Zapheus\Application;
 use Zapheus\Container\WritableInterface;
 use Zapheus\Http\Message\Request;
 use Zapheus\Http\Message\Response;
@@ -15,10 +16,6 @@ use Zapheus\Provider\ProviderInterface;
  */
 class MessageProvider implements ProviderInterface
 {
-    const REQUEST = 'Zapheus\Http\Message\RequestInterface';
-
-    const RESPONSE = 'Zapheus\Http\Message\ResponseInterface';
-
     /**
      * Registers the bindings in the container.
      *
@@ -41,8 +38,8 @@ class MessageProvider implements ProviderInterface
 
         $request = new Request($server, $cookies, $data, $files, $query);
 
-        $container->set(self::RESPONSE, new Response);
+        $container->set(Application::RESPONSE, new Response);
 
-        return $container->set(self::REQUEST, $request);
+        return $container->set(Application::REQUEST, $request);
     }
 }

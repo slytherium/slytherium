@@ -27,7 +27,7 @@ class Dispatcher implements DispatcherInterface
     /**
      * Initializes the dispatcher instance.
      *
-     * @param array                                      $stack
+     * @param \Zapheus\Http\Server\MiddlewareInterface[] $stack
      * @param \Zapheus\Container\ContainerInterface|null $container
      */
     public function __construct(array $stack = array(), ContainerInterface $container = null)
@@ -37,7 +37,7 @@ class Dispatcher implements DispatcherInterface
         foreach ((array) $stack as $key => $item) {
             $middleware = $this->transform($item);
 
-            $this->stack[] = $middleware;
+            array_push($this->stack, $middleware);
         }
     }
 
@@ -106,13 +106,9 @@ class Dispatcher implements DispatcherInterface
      */
     protected function transform($middleware)
     {
-        if (is_string($middleware) === true) {
-            return $this->container->get($middleware);
-        }
+        is_string($middleware) && $middleware = $this->container->get($middleware);
 
-        if (is_callable($middleware) === true) {
-            return new ClosureMiddleware($middleware);
-        }
+        is_callable($middleware) && $middleware = new ClosureMiddleware($middleware);
 
         return $middleware;
     }
@@ -128,7 +124,7 @@ class Dispatcher implements DispatcherInterface
         if (isset($this->stack[$index]) === true) {
             $next = $this->resolve($index + 1);
 
-            $item = $this->stack[$index];
+            $item = $this->stack[(integer) $index];
 
             return new NextHandler($item, $next);
         }

@@ -2,6 +2,7 @@
 
 namespace Zapheus\Http;
 
+use Zapheus\Application;
 use Zapheus\Container\Container;
 use Zapheus\Fixture\Http\Middlewares\JsonMiddleware;
 use Zapheus\Fixture\Http\Middlewares\LastMiddleware;
@@ -68,9 +69,9 @@ class ServerProviderTest extends \PHPUnit_Framework_TestCase
 
         $container = $this->provider->register($container);
 
-        $dispatcher = $container->get(ServerProvider::DISPATCHER);
+        $dispatcher = $container->get(Application::MIDDLEWARE);
 
-        $request = $container->get(MessageProvider::REQUEST);
+        $request = $container->get(Application::REQUEST);
 
         $expected = array('application/json');
 

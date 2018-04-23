@@ -2,6 +2,7 @@
 
 namespace Zapheus\Http;
 
+use Zapheus\Application;
 use Zapheus\Container\Container;
 use Zapheus\Provider\Configuration;
 
@@ -57,7 +58,7 @@ class MessageProviderTest extends \PHPUnit_Framework_TestCase
     {
         $container = $this->provider->register($this->container);
 
-        $request = $container->get(MessageProvider::REQUEST);
+        $request = $container->get(Application::REQUEST);
 
         $expected = 'rougin.github.io';
 

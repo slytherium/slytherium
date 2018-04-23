@@ -2,10 +2,11 @@
 
 namespace Zapheus\Application;
 
+use Zapheus\Application;
 use Zapheus\Fixture\Http\Controllers\HailController;
+use Zapheus\Fixture\Http\Middlewares\JsonMiddleware;
 use Zapheus\Fixture\Providers\TestProvider;
 use Zapheus\Http\Message\Response;
-use Zapheus\Http\Server\RoutingHandler;
 use Zapheus\Http\ServerProvider;
 use Zapheus\Routing\Dispatcher;
 use Zapheus\Routing\Resolver;
@@ -37,21 +38,23 @@ class ApplicationTest extends AbstractTestCase
 
         $route = new Route('GET', '/', $handler);
 
-        $router = new Router(array($route));
+        $json = new Route('POST', '/json', $handler, new JsonMiddleware);
+
+        $router = new Router(array($route, $json));
 
         $dispatcher = new Dispatcher($router);
 
-        $this->app->set(RoutingHandler::DISPATCHER, $dispatcher);
+        $this->app->set(Application::DISPATCHER, $dispatcher);
 
         $headers = array('X-Framework' => array('Zapheus'));
 
         $response = new Response(200, (array) $headers);
 
-        $this->app->set(RoutingHandler::RESPONSE, $response);
+        $this->app->set(Application::RESPONSE, $response);
     }
 
     /**
-     * Tests Application::has.
+     * Tests Application::handle with middleware.
      *
      * @return void
      */
@@ -64,6 +67,28 @@ class ApplicationTest extends AbstractTestCase
         $expected = 'Hello, world';
 
         $result = (string) $app->run();
+
+        $this->assertEquals($expected, $result);
+    }
+
+    /**
+     * Tests Application::handle with middleware inside a route.
+     *
+     * @return void
+     */
+    public function testHandleMethodWithMiddlewareInsideRoute()
+    {
+        $interface = 'Zapheus\Http\Message\RequestInterface';
+
+        $this->app->add(new ServerProvider);
+
+        $app = $this->request('POST', '/json');
+
+        $request = $app->get($interface);
+
+        $expected = array('application/json');
+
+        $result = $app->handle($request)->header('Content-Type');
 
         $this->assertEquals($expected, $result);
     }
@@ -123,7 +148,7 @@ class ApplicationTest extends AbstractTestCase
 
         $resolver = new Resolver($app);
 
-        $app->set(RoutingHandler::RESOLVER, $resolver);
+        $app->set(Application::RESOLVER, $resolver);
 
         $expected = 'Hello, world';
 

@@ -2,6 +2,7 @@
 
 namespace Zapheus\Http;
 
+use Zapheus\Application;
 use Zapheus\Container\WritableInterface;
 use Zapheus\Http\Server\Dispatcher;
 use Zapheus\Provider\ProviderInterface;
@@ -14,8 +15,6 @@ use Zapheus\Provider\ProviderInterface;
  */
 class ServerProvider implements ProviderInterface
 {
-    const DISPATCHER = 'Zapheus\Http\Server\DispatcherInterface';
-
     /**
      * @var \Zapheus\Http\Server\MiddlewareInterface[]
      */
@@ -45,6 +44,6 @@ class ServerProvider implements ProviderInterface
 
         $dispatcher = new Dispatcher($middlewares, $container);
 
-        return $container->set(self::DISPATCHER, $dispatcher);
+        return $container->set(Application::MIDDLEWARE, $dispatcher);
     }
 }

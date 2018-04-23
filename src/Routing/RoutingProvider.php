@@ -2,8 +2,8 @@
 
 namespace Zapheus\Routing;
 
+use Zapheus\Application;
 use Zapheus\Container\WritableInterface;
-use Zapheus\Http\Server\RoutingHandler;
 use Zapheus\Provider\ProviderInterface;
 
 /**
@@ -14,8 +14,6 @@ use Zapheus\Provider\ProviderInterface;
  */
 class RoutingProvider implements ProviderInterface
 {
-    const ROUTER = 'Zapheus\Routing\RouterInterface';
-
     /**
      * @var \Zapheus\Routing\RouterInterface
      */
@@ -38,22 +36,20 @@ class RoutingProvider implements ProviderInterface
      */
     public function register(WritableInterface $container)
     {
-        $config = $container->get(ProviderInterface::CONFIG);
+        if ($container->has(Application::ROUTER) === false) {
+            $config = $container->get((string) ProviderInterface::CONFIG);
 
-        $interface = RoutingHandler::DISPATCHER;
-
-        if ($container->has(self::ROUTER) === false) {
             $router = $config->get('app.router', $this->router);
 
-            $router = is_string($router) ? $container->get($router) : $router;
+            is_string($router) && $router = $container->get($router);
 
             $dispatcher = new Dispatcher($router);
 
-            return $container->set($interface, $dispatcher);
+            return $container->set(Application::DISPATCHER, $dispatcher);
         }
 
-        $dispatcher = new Dispatcher($container->get(self::ROUTER));
+        $dispatcher = new Dispatcher($container->get(Application::ROUTER));
 
-        return $container->set($interface, $dispatcher);
+        return $container->set(Application::DISPATCHER, $dispatcher);
     }
 }

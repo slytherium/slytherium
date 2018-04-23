@@ -2,8 +2,8 @@
 
 namespace Zapheus\Routing;
 
+use Zapheus\Application;
 use Zapheus\Container\Container;
-use Zapheus\Http\Server\RoutingHandler;
 use Zapheus\Provider\Configuration;
 
 /**
@@ -56,7 +56,7 @@ class RoutingProviderTest extends \PHPUnit_Framework_TestCase
     {
         $expected = new Route('GET', '/', 'HailController@index');
 
-        $dispatcher = RoutingHandler::DISPATCHER;
+        $dispatcher = Application::DISPATCHER;
 
         $container = $this->provider->register($this->container);
 
@@ -76,11 +76,11 @@ class RoutingProviderTest extends \PHPUnit_Framework_TestCase
     {
         $provider = new RoutingProvider;
 
-        $this->container->set(RoutingProvider::ROUTER, $this->router);
+        $this->container->set(Application::ROUTER, $this->router);
 
         $expected = new Route('GET', '/', 'HailController@index');
 
-        $dispatcher = RoutingHandler::DISPATCHER;
+        $dispatcher = Application::DISPATCHER;
 
         $container = $provider->register($this->container);
 

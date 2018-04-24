@@ -104,7 +104,7 @@ class Application implements HandlerInterface, WritableInterface
     {
         $code = $response->code() . ' ' . $response->reason();
 
-        $headers = $response->headers();
+        $headers = (array) $response->headers();
 
         $version = (string) $response->version();
 

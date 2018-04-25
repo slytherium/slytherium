@@ -3,7 +3,7 @@
 namespace Zapheus\Http\Server;
 
 use Zapheus\Application;
-use Zapheus\Container\WritableInterface;
+use Zapheus\Container\ContainerInterface;
 use Zapheus\Http\Message\RequestInterface;
 use Zapheus\Http\Message\ResponseInterface;
 use Zapheus\Ropebridge;
@@ -19,7 +19,7 @@ use Zapheus\Routing\RouteInterface;
 class ResolverHandler implements HandlerInterface
 {
     /**
-     * @var \Zapheus\Container\WritableInterface
+     * @var \Zapheus\Container\ContainerInterface
      */
     protected $container;
 
@@ -31,10 +31,10 @@ class ResolverHandler implements HandlerInterface
     /**
      * Initializes the handler instance.
      *
-     * @param \Zapheus\Container\WritableInterface $resolver
-     * @param \Zapheus\Routing\RouteInterface      $route
+     * @param \Zapheus\Container\ContainerInterface $container
+     * @param \Zapheus\Routing\RouteInterface       $route
      */
-    public function __construct(WritableInterface $container, RouteInterface $route)
+    public function __construct(ContainerInterface $container, RouteInterface $route)
     {
         $this->container = $container;
 
@@ -57,9 +57,7 @@ class ResolverHandler implements HandlerInterface
 
         $resolver = new Resolver($this->container);
 
-        $result = $resolver->resolve($this->route);
-
-        return $this->response($result);
+        return $this->response($resolver->resolve($this->route));
     }
 
     /**
@@ -72,11 +70,11 @@ class ResolverHandler implements HandlerInterface
     {
         $result = Ropebridge::make($result, Ropebridge::PSR_RESPONSE);
 
-        $instanceof = $result instanceof ResponseInterface;
+        $instanceof = $result instanceof ResponseInterface === true;
 
         $response = $this->container->get(Application::RESPONSE);
 
-        $instanceof || $response->stream()->write($result);
+        $instanceof === false && $response->stream()->write($result);
 
         return $instanceof === true ? $result : $response;
     }

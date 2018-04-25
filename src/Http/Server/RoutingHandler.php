@@ -30,7 +30,7 @@ class RoutingHandler implements HandlerInterface
      */
     public function __construct(WritableInterface $container)
     {
-        $exists = $container->has(Application::RESPONSE);
+        $exists = $container->has(Application::RESPONSE) === true;
 
         if (class_exists(Ropebridge::BRIDGE_RESPONSE) && $exists) {
             $response = $container->get(Application::RESPONSE);

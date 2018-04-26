@@ -88,6 +88,22 @@ class ConfigurationTest extends \PHPUnit_Framework_TestCase
     }
 
     /**
+     * Tests ConfigurationInterface::get with an empty array and dotified.
+     *
+     * @return void
+     */
+    public function testGetMethodWithEmptyArrayAndDotified()
+    {
+        $expected = array('user.paths' => array());
+
+        $this->config->set('app.user.paths', array());
+
+        $result = $this->config->get('app', array(), true);
+
+        $this->assertEquals($expected, $result);
+    }
+
+    /**
      * Tests ConfigurationInterface::load.
      *
      * @return void

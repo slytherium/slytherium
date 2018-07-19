@@ -58,13 +58,11 @@ class Resolver implements ResolverInterface
      */
     protected function argument(\ReflectionParameter $parameter, $name, $value)
     {
-        $default = $parameter->isDefaultValueAvailable() && $value === null;
+        $exists = class_exists($name) || interface_exists($name);
 
-        $default === true && $value = $parameter->getDefaultValue();
+        $default = $this->default($parameter, $value);
 
-        $exists = class_exists($name) === true || interface_exists($name);
-
-        return $value === null && $exists ? $this->instance($name) : $value;
+        return ! $value && $exists ? $this->instance($name) : $value;
     }
 
     /**
@@ -89,6 +87,20 @@ class Resolver implements ResolverInterface
         }
 
         return $arguments;
+    }
+
+    /**
+     * Returns the default value of a specified parameter.
+     *
+     * @param  \ReflectionParameter $parameter
+     * @param  mixed                $value
+     * @return mixed
+     */
+    protected function default(\ReflectionParameter $parameter, $value)
+    {
+        $default = $parameter->isDefaultValueAvailable() && $value === null;
+
+        return $default === true ? $parameter->getDefaultValue() : $value;
     }
 
     /**

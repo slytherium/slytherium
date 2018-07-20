@@ -60,7 +60,7 @@ class Resolver implements ResolverInterface
     {
         $exists = class_exists($name) || interface_exists($name);
 
-        $default = $this->default($parameter, $value);
+        $default = $this->value($parameter, $value);
 
         return ! $value && $exists ? $this->instance($name) : $value;
     }
@@ -87,20 +87,6 @@ class Resolver implements ResolverInterface
         }
 
         return $arguments;
-    }
-
-    /**
-     * Returns the default value of a specified parameter.
-     *
-     * @param  \ReflectionParameter $parameter
-     * @param  mixed                $value
-     * @return mixed
-     */
-    protected function default(\ReflectionParameter $parameter, $value)
-    {
-        $default = $parameter->isDefaultValueAvailable() && $value === null;
-
-        return $default === true ? $parameter->getDefaultValue() : $value;
     }
 
     /**
@@ -147,5 +133,19 @@ class Resolver implements ResolverInterface
         $instance = new \ReflectionFunction($handler);
 
         return array($handler, $instance);
+    }
+
+    /**
+     * Returns the default value of a specified parameter.
+     *
+     * @param  \ReflectionParameter $parameter
+     * @param  mixed                $value
+     * @return mixed
+     */
+    protected function value(\ReflectionParameter $parameter, $value)
+    {
+        $default = $parameter->isDefaultValueAvailable() && $value === null;
+
+        return $default === true ? $parameter->getDefaultValue() : $value;
     }
 }

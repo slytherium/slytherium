@@ -37,11 +37,11 @@ class Ropebridge
     {
         $this->object = $object;
 
-        $psrs = array('Psr\Http\Message\ResponseInterface');
+        $bases = array('Psr\Http\Message\ResponseInterface');
 
-        $psrs[] = 'Psr\Http\Message\ServerRequestInterface';
-        $psrs[] = 'Zapheus\Http\Message\RequestInterface';
-        $psrs[] = 'Zapheus\Http\Message\ResponseInterface';
+        $bases[] = 'Psr\Http\Message\ServerRequestInterface';
+        $bases[] = 'Zapheus\Http\Message\RequestInterface';
+        $bases[] = 'Zapheus\Http\Message\ResponseInterface';
 
         $bridges = array('Zapheus\Bridge\Psr\Zapheus\Response');
 
@@ -49,7 +49,7 @@ class Ropebridge
         $bridges[] = 'Zapheus\Bridge\Psr\Interop\ServerRequest';
         $bridges[] = 'Zapheus\Bridge\Psr\Interop\Response';
 
-        $this->bridges = array_combine($psrs, $bridges);
+        $this->bridges = array_combine($bases, $bridges);
     }
 
     /**

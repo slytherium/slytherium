@@ -60,7 +60,7 @@ class Resolver implements ResolverInterface
     {
         $exists = class_exists($name) || interface_exists($name);
 
-        $default = $this->value($parameter, $value);
+        $value = $this->value($parameter, $value);
 
         return ! $value && $exists ? $this->instance($name) : $value;
     }

@@ -37,7 +37,7 @@ class RoutingProvider implements ProviderInterface
     public function register(WritableInterface $container)
     {
         if ($container->has(Application::ROUTER) === false) {
-            $config = $container->get((string) ProviderInterface::CONFIG);
+            $config = $container->get(ProviderInterface::CONFIG);
 
             $router = $config->get('app.router', $this->router);
 

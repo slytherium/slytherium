@@ -1,7 +1,7 @@
 # Zapheus
 
 [![Latest Version on Packagist][ico-version]][link-packagist]
-[![Software License][ico-license]](LICENSE.md)
+[![Software License][ico-license]][link-license]
 [![Build Status][ico-travis]][link-travis]
 [![Coverage Status][ico-scrutinizer]][link-scrutinizer]
 [![Quality Score][ico-code-quality]][link-code-quality]
@@ -9,15 +9,15 @@
 
 Inspired from PHP frameworks of all shape and sizes, Zapheus is a web application framework with a goal to be easy to use, educational, and fully extensible to the core. Whether a simple API project or a full enterprise application, Zapheus will try to adapt it according to developer's needs.
 
-## Install
+## Installation
 
-Via Composer
+Install `Zapheus` via [Composer](https://getcomposer.org/):
 
 ``` bash
 $ composer require zapheus/zapheus
 ```
 
-## Usage
+## Basic Usage
 
 ### Using `Coordinator`
 
@@ -92,9 +92,9 @@ $ php -S localhost:8000
 
 Open your web browser and go to [http://localhost:8000](http://localhost:8000).
 
-## Change log
+## Changelog
 
-Please see [CHANGELOG](CHANGELOG.md) for more information what has changed recently.
+Please see [CHANGELOG][link-changelog] for more information what has changed recently.
 
 ## Testing
 
@@ -102,30 +102,26 @@ Please see [CHANGELOG](CHANGELOG.md) for more information what has changed recen
 $ composer test
 ```
 
-## Security
-
-If you discover any security related issues, please email rougingutib@gmail.com instead of using the issue tracker.
-
 ## Credits
 
-- [Rougin Royce Gutib][link-author]
-- [All Contributors][link-contributors]
+- [All contributors][link-contributors]
 
 ## License
 
-The MIT License (MIT). Please see [LICENSE.md](LICENSE.md) for more information.
+The MIT License (MIT). Please see [LICENSE][link-license] for more information.
 
-[ico-version]: https://img.shields.io/packagist/v/zapheus/zapheus.svg?style=flat-square
+[ico-code-quality]: https://img.shields.io/scrutinizer/g/zapheus/framework.svg?style=flat-square
+[ico-downloads]: https://img.shields.io/packagist/dt/zapheus/framework.svg?style=flat-square
 [ico-license]: https://img.shields.io/badge/license-MIT-brightgreen.svg?style=flat-square
-[ico-travis]: https://img.shields.io/travis/zapheus/zapheus/master.svg?style=flat-square
-[ico-scrutinizer]: https://img.shields.io/scrutinizer/coverage/g/zapheus/zapheus.svg?style=flat-square
-[ico-code-quality]: https://img.shields.io/scrutinizer/g/zapheus/zapheus.svg?style=flat-square
-[ico-downloads]: https://img.shields.io/packagist/dt/zapheus/zapheus.svg?style=flat-square
+[ico-scrutinizer]: https://img.shields.io/scrutinizer/coverage/g/zapheus/framework.svg?style=flat-square
+[ico-travis]: https://img.shields.io/travis/zapheus/framework/master.svg?style=flat-square
+[ico-version]: https://img.shields.io/packagist/v/zapheus/framework.svg?style=flat-square
 
-[link-packagist]: https://packagist.org/packages/zapheus/zapheus
-[link-travis]: https://travis-ci.org/zapheus/zapheus
-[link-scrutinizer]: https://scrutinizer-ci.com/g/zapheus/zapheus/code-structure
-[link-code-quality]: https://scrutinizer-ci.com/g/zapheus/zapheus
-[link-downloads]: https://packagist.org/packages/zapheus/zapheus
-[link-author]: https://github.com/rougin
-[link-contributors]: ../../contributors
+[link-changelog]: https://github.com/zapheus/framework/blob/master/CHANGELOG.md
+[link-code-quality]: https://scrutinizer-ci.com/g/zapheus/framework
+[link-contributors]: https://github.com/zapheus/framework/contributors
+[link-downloads]: https://packagist.org/packages/zapheus/framework
+[link-license]: https://github.com/zapheus/framework/blob/master/LICENSE.md
+[link-packagist]: https://packagist.org/packages/zapheus/framework
+[link-scrutinizer]: https://scrutinizer-ci.com/g/zapheus/framework/code-structure
+[link-travis]: https://travis-ci.org/zapheus/framework

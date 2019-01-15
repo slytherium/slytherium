@@ -10,7 +10,7 @@ use Zapheus\Provider\Configuration;
  * Message Provider Test
  *
  * @package Zapheus
- * @author  Rougin Royce Gutib <rougingutib@gmail.com>
+ * @author  Rougin Gutib <rougingutib@gmail.com>
  */
 class MessageProviderTest extends \PHPUnit_Framework_TestCase
 {

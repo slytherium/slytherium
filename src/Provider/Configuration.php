@@ -6,7 +6,7 @@ namespace Zapheus\Provider;
  * Configuration
  *
  * @package Zapheus
- * @author  Rougin Royce Gutib <rougingutib@gmail.com>
+ * @author  Rougin Gutib <rougingutib@gmail.com>
  */
 class Configuration implements ConfigurationInterface
 {
@@ -46,19 +46,30 @@ class Configuration implements ConfigurationInterface
      */
     public function get($key, $default = null, $dotify = false)
     {
-        $keys = (array) array_filter(explode('.', $key));
+        $items = $this->data;
 
-        list($items, $length) = array($this->data, count($keys));
+        $keys = array_filter(explode('.', $key));
 
-        for ($i = 0; $i < $length; $i++) {
-            $index = $keys[$i];
+        $length = count($keys);
+
+        for ($i = 0; $i < $length; $i++)
+        {
+            $index = $keys[(int) $i];
 
             $items = &$items[$index];
         }
 
-        $items = $items !== null ? $items : $default;
+        if ($items === null)
+        {
+            $items = $default;
+        }
 
-        return $dotify ? $this->dotify((array) $items) : $items;
+        if ($dotify)
+        {
+            return $this->dotify($items);
+        }
+
+        return $items;
     }
 
     /**
@@ -71,7 +82,8 @@ class Configuration implements ConfigurationInterface
     {
         list($data, $items) = array(array(), array($path));
 
-        if (substr((string) $path, -4) !== '.php') {
+        if (substr((string) $path, -4) !== '.php')
+        {
             $directory = new \RecursiveDirectoryIterator($path);
 
             $iterator = new \RecursiveIteratorIterator($directory);
@@ -81,7 +93,8 @@ class Configuration implements ConfigurationInterface
             $items = (array) array_keys(iterator_to_array($regex));
         }
 
-        foreach ((array) $items as $item) {
+        foreach ((array) $items as $item)
+        {
             $name = $this->rename($item, $path);
 
             $data = require $item;
@@ -100,13 +113,15 @@ class Configuration implements ConfigurationInterface
      */
     protected function dotify(array $data, $result = array(), $key = '')
     {
-        foreach ((array) $data as $name => $value) {
-            if (is_array($value) && empty($value) === false) {
-                $text = (string) $key . (string) $name . '.';
+        foreach ((array) $data as $name => $value)
+        {
+            if (is_array($value) && empty($value) === false)
+            {
+                $text = (string) $key . $name . '.';
 
                 $item = $this->dotify($value, $result, $text);
 
-                $result = array_merge($result, (array) $item);
+                $result = array_merge($result, $item);
 
                 continue;
             }
@@ -142,11 +157,14 @@ class Configuration implements ConfigurationInterface
      */
     protected function rename($item, $path)
     {
-        $name = (string) str_replace($path, '', $item);
+        $name = str_replace($path, '', $item);
 
         $name = str_replace(array('\\', '/'), '.', $name);
 
-        $name === '' && $name = (string) $item;
+        if ($name === '')
+        {
+            $name = $item;
+        }
 
         $regex = preg_replace('/^./i', '', $name);
 
@@ -165,8 +183,12 @@ class Configuration implements ConfigurationInterface
     {
         $key = array_shift($keys);
 
-        if (empty($keys) === false) {
-            ! isset($data[$key]) && $data[$key] = array();
+        if (empty($keys) === false)
+        {
+            if (! isset($data[$key]))
+            {
+                $data[$key] = array();
+            }
 
             return $this->save($keys, $data[$key], $value);
         }

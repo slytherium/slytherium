@@ -6,7 +6,7 @@ namespace Zapheus\Renderer;
  * Renderer
  *
  * @package Zapheus
- * @author  Rougin Royce Gutib <rougingutib@gmail.com>
+ * @author  Rougin Gutib <rougingutib@gmail.com>
  */
 class Renderer implements RendererInterface
 {
@@ -36,17 +36,22 @@ class Renderer implements RendererInterface
      */
     public function render($template, array $data = array())
     {
-        $name = (string) str_replace('.', '/', $template);
+        $name = str_replace('.', '/', $template);
 
-        foreach ((array) $this->paths as $key => $path) {
-            $files = (array) $this->files($path);
+        foreach ($this->paths as $key => $path)
+        {
+            $files = $this->files($path);
 
-            $item = $this->check($files, $path, $key, $name . '.php');
+            $item = $this->check($files, $path, $key, "$name.php");
 
-            $item !== null && $file = $item;
+            if ($item !== null)
+            {
+                return $this->extract($item, $data);
+            }
         }
 
-        if (isset($file) === false) {
+        if (isset($file) === false)
+        {
             $message = 'Template file "%s" not found.';
 
             $message = sprintf($message, $name);
@@ -70,18 +75,20 @@ class Renderer implements RendererInterface
     {
         $file = null;
 
-        foreach ((array) $files as $key => $value) {
-            $filepath = (string) str_replace($path, $source, $value);
+        foreach ((array) $files as $key => $value)
+        {
+            $filepath = str_replace($path, $source, $value);
 
-            $filepath = str_replace('\\', '/', (string) $filepath);
+            $filepath = str_replace('\\', '/', $filepath);
 
-            $filepath = (string) preg_replace('/^\d\//i', '', $filepath);
-
-            $exists = (string) $filepath === $template;
+            $filepath = preg_replace('/^\d\//i', '', $filepath);
 
             $lowercase = strtolower($filepath) === $template;
 
-            ($exists || $lowercase) && $file = $value;
+            if ($filepath === $template || $lowercase)
+            {
+                return $value;
+            }
         }
 
         return $file;

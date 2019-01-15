@@ -12,7 +12,7 @@ use Zapheus\Http\Server\Dispatcher;
  * Dispatcher Test
  *
  * @package Zapheus
- * @author  Rougin Royce Gutib <rougingutib@gmail.com>
+ * @author  Rougin Gutib <rougingutib@gmail.com>
  */
 class DispatcherTest extends \PHPUnit_Framework_TestCase
 {
@@ -72,19 +72,19 @@ class DispatcherTest extends \PHPUnit_Framework_TestCase
      */
     public function testDispatchMethodWithClosures()
     {
-        $this->dispatcher->pipe(function ($request, $next) {
+        $this->dispatcher->pipe(function ($request, $next)
+        {
             $response = $next($request);
 
             $stream = new Stream(fopen('php://temp', 'r+'));
 
-            $text = (string) $response->stream();
-
-            $stream->write($text . ' world');
+            $stream->write($response->stream() . ' world');
 
             return $response->set('stream', $stream);
         });
 
-        $this->dispatcher->pipe(function ($request, $next) {
+        $this->dispatcher->pipe(function ($request, $next)
+        {
             $response = $next($request);
 
             $response->stream()->write('Hello');

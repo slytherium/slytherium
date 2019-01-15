@@ -6,7 +6,7 @@ namespace Zapheus\Routing;
  * Route Dispatcher
  *
  * @package Zapheus
- * @author  Rougin Royce Gutib <rougingutib@gmail.com>
+ * @author  Rougin Gutib <rougingutib@gmail.com>
  */
 class Dispatcher implements DispatcherInterface
 {
@@ -38,7 +38,8 @@ class Dispatcher implements DispatcherInterface
     {
         $uri = $uri[0] !== '/' ? '/' . $uri : $uri;
 
-        if (($result = $this->match($method, $uri)) !== null) {
+        if (($result = $this->match($method, $uri)) !== null)
+        {
             list($matches, $route) = (array) $result;
 
             $filtered = array_filter(array_keys($matches), 'is_string');
@@ -66,13 +67,13 @@ class Dispatcher implements DispatcherInterface
     {
         $result = null;
 
-        foreach ((array) $this->router->routes() as $route) {
+        foreach ((array) $this->router->routes() as $route)
+        {
             $matched = preg_match($route->regex(), $uri, $matches);
 
-            if ($matched === 1 && $route->method() === $method) {
-                $result = array($matches, $route);
-
-                break; // Done searching the route
+            if ($matched && $route->method() === $method)
+            {
+                return array($matches, $route);
             }
         }
 

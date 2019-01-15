@@ -6,7 +6,7 @@ namespace Zapheus\Http\Message;
  * File
  *
  * @package Zapheus
- * @author  Rougin Royce Gutib <rougingutib@gmail.com>
+ * @author  Rougin Gutib <rougingutib@gmail.com>
  */
 class File implements FileInterface
 {
@@ -133,11 +133,14 @@ class File implements FileInterface
      */
     public static function normalize(array $uploaded, $files = array())
     {
-        foreach (self::diverse($uploaded) as $name => $file) {
+        foreach (self::diverse($uploaded) as $name => $file)
+        {
             list($files[$name], $items) = array($file, array());
 
-            if (isset($file['name']) === true) {
-                foreach ($file['name'] as $key => $value) {
+            if (isset($file['name']) === true)
+            {
+                foreach ($file['name'] as $key => $value)
+                {
                     $tmp = $file['tmp_name'][$key];
 
                     $text = $file['name'][$key];
@@ -164,8 +167,10 @@ class File implements FileInterface
     {
         $result = array();
 
-        foreach ($uploaded as $file => $item) {
-            foreach ($item as $key => $value) {
+        foreach ($uploaded as $file => $item)
+        {
+            foreach ($item as $key => $value)
+            {
                 $diversed = (array) $value;
 
                 $result[$file][$key] = $diversed;

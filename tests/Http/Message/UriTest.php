@@ -6,7 +6,7 @@ namespace Zapheus\Http\Message;
  * URI Test
  *
  * @package Zapheus
- * @author  Rougin Royce Gutib <rougingutib@gmail.com>
+ * @author  Rougin Gutib <rougingutib@gmail.com>
  */
 class UriTest extends \PHPUnit_Framework_TestCase
 {

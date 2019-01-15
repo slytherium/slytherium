@@ -6,7 +6,7 @@ namespace Zapheus\Container;
  * Container
  *
  * @package Zapheus
- * @author  Rougin Royce Gutib <rougingutib@gmail.com>
+ * @author  Rougin Gutib <rougingutib@gmail.com>
  */
 class Container implements WritableInterface
 {
@@ -35,7 +35,8 @@ class Container implements WritableInterface
      */
     public function get($id)
     {
-        if ($this->has($id) === false) {
+        if ($this->has($id) === false)
+        {
             $message = 'Alias (%s) is not defined';
 
             $message = sprintf($message, $id);

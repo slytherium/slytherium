@@ -2,19 +2,19 @@
 
 namespace Zapheus\Application;
 
-use Zapheus\Container\ReflectionContainer;
+use Zapheus\Application;
 use Zapheus\Http\Message\Request;
 
 /**
  * Abstract Test Case
  *
  * @package Zapheus
- * @author  Rougin Royce Gutib <rougingutib@gmail.com>
+ * @author  Rougin Gutib <rougingutib@gmail.com>
  */
 abstract class AbstractTestCase extends \PHPUnit_Framework_TestCase
 {
     /**
-     * @var \Zapheus\Application\ApplicationInterface
+     * @var \Zapheus\Application
      */
     protected $app;
 
@@ -37,13 +37,11 @@ abstract class AbstractTestCase extends \PHPUnit_Framework_TestCase
     /**
      * Returns an application instance.
      *
-     * @return \Zapheus\Application\ApplicationInterface
+     * @return \Zapheus\Application
      */
     protected function application()
     {
-        $container = new \Zapheus\Container\Container;
-
-        return new \Zapheus\Application($container);
+        return new Application;
     }
 
     /**
@@ -66,7 +64,7 @@ abstract class AbstractTestCase extends \PHPUnit_Framework_TestCase
      *
      * @param  string $method
      * @param  string $uri
-     * @return \Zapheus\Application\ApplicationInterface
+     * @return \Zapheus\Application
      */
     protected function request($method, $uri)
     {

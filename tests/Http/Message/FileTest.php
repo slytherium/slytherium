@@ -6,7 +6,7 @@ namespace Zapheus\Http\Message;
  * File Test
  *
  * @package Zapheus
- * @author  Rougin Royce Gutib <rougingutib@gmail.com>
+ * @author  Rougin Gutib <rougingutib@gmail.com>
  */
 class FileTest extends \PHPUnit_Framework_TestCase
 {

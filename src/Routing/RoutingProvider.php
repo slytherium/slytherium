@@ -14,6 +14,10 @@ use Zapheus\Provider\ProviderInterface;
  */
 class RoutingProvider implements ProviderInterface
 {
+    const DISPATCHER = Application::DISPATCHER;
+
+    const ROUTER = Application::ROUTER;
+
     /**
      * @var \Zapheus\Routing\RouterInterface
      */
@@ -36,20 +40,26 @@ class RoutingProvider implements ProviderInterface
      */
     public function register(WritableInterface $container)
     {
-        if ($container->has(Application::ROUTER) === false) {
-            $config = $container->get(ProviderInterface::CONFIG);
-
-            $router = $config->get('app.router', $this->router);
-
-            is_string($router) && $router = $container->get($router);
+        if ($container->has(self::ROUTER))
+        {
+            $router = $container->get(self::ROUTER);
 
             $dispatcher = new Dispatcher($router);
 
-            return $container->set(Application::DISPATCHER, $dispatcher);
+            return $container->set(self::DISPATCHER, $dispatcher);
         }
 
-        $dispatcher = new Dispatcher($container->get(Application::ROUTER));
+        $config = $container->get(self::CONFIG);
 
-        return $container->set(Application::DISPATCHER, $dispatcher);
+        $router = $config->get('app.router', $this->router);
+
+        if (is_string($router))
+        {
+            $router = $container->get($router);
+        }
+
+        $dispatcher = new Dispatcher($router);
+
+        return $container->set(self::DISPATCHER, $dispatcher);
     }
 }

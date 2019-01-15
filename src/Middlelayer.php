@@ -11,19 +11,19 @@ use Zapheus\Http\Server\HandlerInterface;
  * Middlelayer
  *
  * @package Zapheus
- * @author  Rougin Royce Gutib <rougingutib@gmail.com>
+ * @author  Rougin Gutib <rougingutib@gmail.com>
  */
 class Middlelayer implements HandlerInterface
 {
     /**
-     * @var \Zapheus\Http\Server\DispatcherInterface
-     */
-    protected $original;
-
-    /**
      * @var \Zapheus\Application
      */
     protected $application;
+
+    /**
+     * @var \Zapheus\Http\Server\DispatcherInterface
+     */
+    protected $original;
 
     /**
      * Initializes the application instance.
@@ -81,13 +81,15 @@ class Middlelayer implements HandlerInterface
      */
     public function __call($method, $parameters)
     {
-        if (method_exists($this->original, $method) === true) {
+        if (method_exists($this->original, $method) === true)
+        {
             $class = array($this->original, $method);
 
             return call_user_func_array($class, $parameters);
         }
 
-        if (method_exists($this->application, $method)) {
+        if (method_exists($this->application, $method))
+        {
             $class = array($this->application, $method);
 
             return call_user_func_array($class, $parameters);

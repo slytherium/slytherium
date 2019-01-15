@@ -6,7 +6,7 @@ namespace Zapheus\Routing;
  * Route
  *
  * @package Zapheus
- * @author  Rougin Royce Gutib <rougingutib@gmail.com>
+ * @author  Rougin Gutib <rougingutib@gmail.com>
  */
 class Route implements RouteInterface
 {
@@ -46,7 +46,10 @@ class Route implements RouteInterface
      */
     public function __construct($method, $uri, $handler, $middlewares = array(), $parameters = array())
     {
-        is_array($middlewares) || $middlewares = array($middlewares);
+        if (! is_array($middlewares))
+        {
+            $middlewares = array($middlewares);
+        }
 
         $this->handler = $handler;
 
@@ -109,7 +112,7 @@ class Route implements RouteInterface
     public function regex()
     {
         // Turn "(/)" into "/?"
-        $uri = preg_replace('#\(/\)#', '/?', (string) $this->uri);
+        $uri = preg_replace('#\(/\)#', '/?', $this->uri);
 
         // Create capture group for ":parameter", replaces ":parameter"
         $uri = $this->capture($uri, '/:(' . self::ALLOWED_REGEX . ')/');
@@ -118,7 +121,7 @@ class Route implements RouteInterface
         $uri = $this->capture($uri, '/{(' . self::ALLOWED_REGEX . ')}/');
 
         // Add start and end matching
-        return '@^' . $uri . '$@D';
+        return (string) '@^' . $uri . '$@D';
     }
 
     /**

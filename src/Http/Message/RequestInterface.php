@@ -6,7 +6,7 @@ namespace Zapheus\Http\Message;
  * Request Interface
  *
  * @package Zapheus
- * @author  Rougin Royce Gutib <rougingutib@gmail.com>
+ * @author  Rougin Gutib <rougingutib@gmail.com>
  */
 interface RequestInterface extends MessageInterface
 {

@@ -6,7 +6,7 @@ namespace Zapheus\Http\Message;
  * URI
  *
  * @package Zapheus
- * @author  Rougin Royce Gutib <rougingutib@gmail.com>
+ * @author  Rougin Gutib <rougingutib@gmail.com>
  */
 class Uri extends Mutator implements UriInterface
 {
@@ -59,7 +59,8 @@ class Uri extends Mutator implements UriInterface
     {
         $parts = parse_url($uri) ?: array();
 
-        foreach ($parts as $key => $value) {
+        foreach ($parts as $key => $value)
+        {
             $key === 'user' && $this->user = $value;
 
             $this->$key = (string) $value;
@@ -87,7 +88,8 @@ class Uri extends Mutator implements UriInterface
     {
         $authority = $this->host;
 
-        if ($this->host !== '' && $this->user !== null) {
+        if ($this->host !== '' && $this->user !== null)
+        {
             $authority = $this->user . '@' . $authority;
 
             $authority = $authority . ':' . $this->port;
@@ -197,9 +199,12 @@ class Uri extends Mutator implements UriInterface
      */
     public static function instance(array $server)
     {
-        isset($server['HTTPS']) || $server['HTTPS'] = (string) 'off';
+        $http = 'https://';
 
-        $http = ($server['HTTPS'] === 'off' ? 'http' : 'https') . '://';
+        if (isset($server['HTTPS']) && $server['HTTPS'] === 'off')
+        {
+            $http = 'http://';
+        }
 
         $port = $server['SERVER_PORT'] . $server['REQUEST_URI'];
 

@@ -11,7 +11,7 @@ use Zapheus\Provider\ProviderInterface;
  * Server Provider
  *
  * @package Zapheus
- * @author  Rougin Royce Gutib <rougingutib@gmail.com>
+ * @author  Rougin Gutib <rougingutib@gmail.com>
  */
 class ServerProvider implements ProviderInterface
 {
@@ -38,12 +38,16 @@ class ServerProvider implements ProviderInterface
      */
     public function register(WritableInterface $container)
     {
+        $interface = Application::MIDDLEWARE;
+
         $config = $container->get(ProviderInterface::CONFIG);
 
-        $middlewares = $config->get('app.middlewares', $this->middlewares);
+        $items = (array) $this->middlewares;
+
+        $middlewares = $config->get('app.middlewares', $items);
 
         $dispatcher = new Dispatcher($middlewares, $container);
 
-        return $container->set(Application::MIDDLEWARE, $dispatcher);
+        return $container->set($interface, $dispatcher);
     }
 }

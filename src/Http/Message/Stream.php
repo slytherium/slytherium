@@ -6,7 +6,7 @@ namespace Zapheus\Http\Message;
  * Stream
  *
  * @package Zapheus
- * @author  Rougin Royce Gutib <rougingutib@gmail.com>
+ * @author  Rougin Gutib <rougingutib@gmail.com>
  */
 class Stream implements StreamInterface
 {
@@ -24,7 +24,8 @@ class Stream implements StreamInterface
      */
     public function __construct($stream = null)
     {
-        if ($stream === null) {
+        if ($stream === null)
+        {
             $message = 'Stream is not a valid resource';
 
             throw new \InvalidArgumentException($message);

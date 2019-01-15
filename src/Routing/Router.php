@@ -6,7 +6,7 @@ namespace Zapheus\Routing;
  * Router
  *
  * @package Zapheus
- * @author  Rougin Royce Gutib <rougingutib@gmail.com>
+ * @author  Rougin Gutib <rougingutib@gmail.com>
  */
 class Router implements RouterInterface
 {
@@ -205,7 +205,8 @@ class Router implements RouterInterface
      */
     protected function route($method, $uri, $handler, $middlewares)
     {
-        if (is_string($handler) === true) {
+        if (is_string($handler) === true)
+        {
             $namespace = $this->namespace;
 
             $namespace !== '' && $namespace .= '\\';

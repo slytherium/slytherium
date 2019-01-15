@@ -6,7 +6,7 @@ namespace Zapheus\Http\Message;
  * Mutator
  *
  * @package Zapheus
- * @author  Rougin Royce Gutib <rougingutib@gmail.com>
+ * @author  Rougin Gutib <rougingutib@gmail.com>
  */
 class Mutator implements MutatorInterface
 {
@@ -24,9 +24,12 @@ class Mutator implements MutatorInterface
 
         $array = $new->$name;
 
-        if ($key !== null) {
+        if ($key !== null)
+        {
             $array[$key] = $value;
-        } else {
+        }
+        else
+        {
             $array[] = $value;
         }
 

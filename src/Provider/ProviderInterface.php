@@ -8,7 +8,7 @@ use Zapheus\Container\WritableInterface;
  * Provider Interface
  *
  * @package Zapheus
- * @author  Rougin Royce Gutib <rougingutib@gmail.com>
+ * @author  Rougin Gutib <rougingutib@gmail.com>
  */
 interface ProviderInterface
 {

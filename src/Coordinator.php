@@ -2,7 +2,6 @@
 
 namespace Zapheus;
 
-use Zapheus\Application;
 use Zapheus\Http\Message\RequestInterface;
 use Zapheus\Routing\Dispatcher;
 use Zapheus\Routing\Router;
@@ -11,7 +10,7 @@ use Zapheus\Routing\Router;
  * Coordinator
  *
  * @package Zapheus
- * @author  Rougin Royce Gutib <rougingutib@gmail.com>
+ * @author  Rougin Gutib <rougingutib@gmail.com>
  */
 class Coordinator extends Middlelayer
 {

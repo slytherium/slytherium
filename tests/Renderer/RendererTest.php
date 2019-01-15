@@ -8,7 +8,7 @@ use Zapheus\Renderer\Renderer;
  * Renderer Test
  *
  * @package Zapheus
- * @author  Rougin Royce Gutib <rougingutib@gmail.com>
+ * @author  Rougin Gutib <rougingutib@gmail.com>
  */
 class RendererTest extends \PHPUnit_Framework_TestCase
 {

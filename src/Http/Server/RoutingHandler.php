@@ -14,7 +14,7 @@ use Zapheus\Routing\RouteInterface;
  * Routing Handler
  *
  * @package Zapheus
- * @author  Rougin Royce Gutib <rougingutib@gmail.com>
+ * @author  Rougin Gutib <rougingutib@gmail.com>
  */
 class RoutingHandler implements HandlerInterface
 {
@@ -32,7 +32,8 @@ class RoutingHandler implements HandlerInterface
     {
         $exists = $container->has(Application::RESPONSE) === true;
 
-        if (class_exists(Ropebridge::BRIDGE_RESPONSE) && $exists) {
+        if (class_exists(Ropebridge::BRIDGE_RESPONSE) && $exists)
+        {
             $response = $container->get(Application::RESPONSE);
 
             $psr = Ropebridge::make($response, Application::RESPONSE);
@@ -51,7 +52,8 @@ class RoutingHandler implements HandlerInterface
      */
     public function handle(RequestInterface $request)
     {
-        if (class_exists(Ropebridge::BRIDGE_REQUEST) === true) {
+        if (class_exists(Ropebridge::BRIDGE_REQUEST) === true)
+        {
             $psr = Ropebridge::make($request, Application::REQUEST);
 
             $this->container->set(Ropebridge::PSR_REQUEST, $psr);
@@ -61,7 +63,8 @@ class RoutingHandler implements HandlerInterface
 
         $handler = new ResolverHandler($this->container, $route);
 
-        if (count($route->middlewares()) > 0) {
+        if (count($route->middlewares()) > 0)
+        {
             $middlewares = (array) $route->middlewares();
 
             $dispatcher = new Dispatcher($middlewares, $this->container);
@@ -83,16 +86,15 @@ class RoutingHandler implements HandlerInterface
     {
         $route = $request->attribute(Application::ROUTE_ATTRIBUTE);
 
-        if ($route instanceof RouteInterface === false) {
-            $dispatcher = $this->container->get(Application::DISPATCHER);
-
-            $path = (string) $request->uri()->path();
-
-            $method = (string) $request->method();
-
-            return $dispatcher->dispatch($method, (string) $path);
+        if ($route instanceof RouteInterface)
+        {
+            return $route;
         }
 
-        return $route;
+        $dispatcher = $this->container->get(Application::DISPATCHER);
+
+        $path = $request->uri()->path();
+
+        return $dispatcher->dispatch($request->method(), $path);
     }
 }

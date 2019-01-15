@@ -11,7 +11,7 @@ use Zapheus\Http\Server\MiddlewareInterface;
  * Last Middleware
  *
  * @package Zapheus
- * @author  Rougin Royce Gutib <rougingutib@gmail.com>
+ * @author  Rougin Gutib <rougingutib@gmail.com>
  */
 class LastMiddleware implements MiddlewareInterface
 {

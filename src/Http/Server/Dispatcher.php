@@ -10,7 +10,7 @@ use Zapheus\Http\Message\RequestInterface;
  * Middleware Dispatcher
  *
  * @package Zapheus
- * @author  Rougin Royce Gutib <rougingutib@gmail.com>
+ * @author  Rougin Gutib <rougingutib@gmail.com>
  */
 class Dispatcher implements DispatcherInterface
 {
@@ -34,7 +34,8 @@ class Dispatcher implements DispatcherInterface
     {
         $this->container($container ?: new ReflectionContainer);
 
-        foreach ((array) $stack as $key => $item) {
+        foreach ((array) $stack as $key => $item)
+        {
             $middleware = $this->transform($item);
 
             array_push($this->stack, $middleware);
@@ -106,9 +107,15 @@ class Dispatcher implements DispatcherInterface
      */
     protected function transform($middleware)
     {
-        is_string($middleware) && $middleware = $this->container->get($middleware);
+        if (is_string($middleware))
+        {
+            return $this->container->get($middleware);
+        }
 
-        is_callable($middleware) && $middleware = new ClosureMiddleware($middleware);
+        if (is_callable($middleware))
+        {
+            return new ClosureMiddleware($middleware);
+        }
 
         return $middleware;
     }
@@ -121,14 +128,15 @@ class Dispatcher implements DispatcherInterface
      */
     protected function resolve($index)
     {
-        if (isset($this->stack[$index]) === true) {
-            $next = $this->resolve($index + 1);
-
-            $item = $this->stack[(integer) $index];
-
-            return new NextHandler($item, $next);
+        if (! isset($this->stack[$index]))
+        {
+            return new ErrorHandler;
         }
 
-        return new ErrorHandler;
+        $next = $this->resolve($index + 1);
+
+        $item = $this->stack[(integer) $index];
+
+        return new NextHandler($item, $next);
     }
 }

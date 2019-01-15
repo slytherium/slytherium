@@ -8,7 +8,7 @@ use Zapheus\Container\ContainerInterface;
  * Resolver
  *
  * @package Zapheus
- * @author  Rougin Royce Gutib <rougingutib@gmail.com>
+ * @author  Rougin Gutib <rougingutib@gmail.com>
  */
 class Resolver implements ResolverInterface
 {
@@ -49,23 +49,6 @@ class Resolver implements ResolverInterface
     }
 
     /**
-     * Returns an argument based on the given parameter.
-     *
-     * @param  \ReflectionParameter $parameter
-     * @param  string               $name
-     * @param  mixed                $value
-     * @return mixed|null
-     */
-    protected function argument(\ReflectionParameter $parameter, $name, $value)
-    {
-        $exists = class_exists($name) || interface_exists($name);
-
-        $value = $this->value($parameter, $value);
-
-        return ! $value && $exists ? $this->instance($name) : $value;
-    }
-
-    /**
      * Resolves the specified parameters from a container.
      *
      * @param  \ReflectionFunctionAbstract $reflection
@@ -76,14 +59,29 @@ class Resolver implements ResolverInterface
     {
         $arguments = array();
 
-        foreach ($reflection->getParameters() as $key => $parameter) {
+        foreach ($reflection->getParameters() as $key => $parameter)
+        {
             $class = $parameter->getClass();
 
-            $name = $class !== null ? $class->getName() : $parameter->getName();
+            $name = $parameter->getName();
 
-            $default = isset($parameters[$name]) ? $parameters[$name] : null;
+            if ($class)
+            {
+                $name = $class->getName();
+            }
 
-            $arguments[$name] = $this->argument($parameter, $name, $default);
+            if (isset($parameters[$name]))
+            {
+                $value = $parameters[$name];
+
+                $default = $this->default($parameter, $value);
+
+                $arguments[$name] = $default;
+
+                continue;
+            }
+
+            $arguments[$name] = $this->instance($name);
         }
 
         return $arguments;
@@ -103,7 +101,8 @@ class Resolver implements ResolverInterface
 
         $exists = $this->container->has($class);
 
-        if ($exists === false && $constructor !== null) {
+        if ($exists === false && $constructor !== null)
+        {
             $arguments = $this->arguments($constructor);
 
             return $reflection->newInstanceArgs($arguments);
@@ -120,7 +119,8 @@ class Resolver implements ResolverInterface
      */
     protected function reflection($handler)
     {
-        if (is_array($handler) === true) {
+        if (is_array($handler) === true)
+        {
             list($class, $method) = (array) $handler;
 
             $instance = new \ReflectionMethod($class, $method);
@@ -142,10 +142,15 @@ class Resolver implements ResolverInterface
      * @param  mixed                $value
      * @return mixed
      */
-    protected function value(\ReflectionParameter $parameter, $value)
+    protected function default(\ReflectionParameter $parameter, $value)
     {
-        $default = $parameter->isDefaultValueAvailable() && $value === null;
+        $available = $parameter->isDefaultValueAvailable();
 
-        return $default === true ? $parameter->getDefaultValue() : $value;
+        if (! $available || $value !== null)
+        {
+            return $value;
+        }
+
+        return $parameter->getDefaultValue();
     }
 }

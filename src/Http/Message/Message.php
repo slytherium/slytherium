@@ -6,7 +6,7 @@ namespace Zapheus\Http\Message;
  * Message
  *
  * @package Zapheus
- * @author  Rougin Royce Gutib <rougingutib@gmail.com>
+ * @author  Rougin Gutib <rougingutib@gmail.com>
  */
 class Message extends Mutator implements MessageInterface
 {
@@ -32,9 +32,9 @@ class Message extends Mutator implements MessageInterface
      */
     public function __construct(array $headers = array())
     {
-        $this->headers = $headers;
-
         $stream = fopen('php://temp', 'r+');
+
+        $this->headers = (array) $headers;
 
         $stream = $stream === false ? null : $stream;
 
@@ -109,7 +109,8 @@ class Message extends Mutator implements MessageInterface
     {
         $headers = array();
 
-        foreach ((array) $server as $key => $value) {
+        foreach ((array) $server as $key => $value)
+        {
             $http = strpos($key, 'HTTP_') === 0;
 
             $string = strtolower(substr($key, 5));

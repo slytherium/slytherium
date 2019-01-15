@@ -6,7 +6,7 @@ namespace Zapheus\Container;
  * Reflection Container
  *
  * @package Zapheus
- * @author  Rougin Royce Gutib <rougingutib@gmail.com>
+ * @author  Rougin Gutib <rougingutib@gmail.com>
  */
 class ReflectionContainer implements ContainerInterface
 {
@@ -20,7 +20,8 @@ class ReflectionContainer implements ContainerInterface
      */
     public function get($id)
     {
-        if ($this->has($id) === false) {
+        if ($this->has($id) === false)
+        {
             $message = (string) 'Class (%s) does not exists';
 
             throw new NotFoundException(sprintf($message, $id));
@@ -28,7 +29,8 @@ class ReflectionContainer implements ContainerInterface
 
         $reflection = new \ReflectionClass($id);
 
-        if ($constructor = $reflection->getConstructor()) {
+        if ($constructor = $reflection->getConstructor())
+        {
             $arguments = $this->arguments($constructor);
 
             return $reflection->newInstanceArgs($arguments);
@@ -57,9 +59,12 @@ class ReflectionContainer implements ContainerInterface
      */
     protected function argument(\ReflectionParameter $parameter, $name)
     {
-        try {
+        try
+        {
             $argument = $parameter->getDefaultValue();
-        } catch (\ReflectionException $exception) {
+        }
+        catch (\ReflectionException $exception)
+        {
             $argument = $this->get($name);
         }
 
@@ -76,14 +81,18 @@ class ReflectionContainer implements ContainerInterface
     {
         $arguments = array();
 
-        foreach ($reflection->getParameters() as $key => $parameter) {
-            $default = (string) $parameter->getName();
+        foreach ($reflection->getParameters() as $key => $parameter)
+        {
+            $name = (string) $parameter->getName();
 
-            $class = $parameter->getClass();
+            if ($class = $parameter->getClass())
+            {
+                $name = (string) $class->getName();
+            }
 
-            $name = $class !== null ? $class->getName() : $default;
+            $argument = $this->argument($parameter, $name);
 
-            $arguments[$key] = $this->argument($parameter, $name);
+            $arguments[$key] = $argument;
         }
 
         return $arguments;

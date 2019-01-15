@@ -9,7 +9,7 @@ use Zapheus\Provider\ProviderInterface;
  * Renderer Provider
  *
  * @package App
- * @author  Rougin Royce Gutib <rougingutib@gmail.com>
+ * @author  Rougin Gutib <rougingutib@gmail.com>
  */
 class RendererProvider implements ProviderInterface
 {
@@ -38,11 +38,11 @@ class RendererProvider implements ProviderInterface
      */
     public function register(WritableInterface $container)
     {
-        $config = $container->get(ProviderInterface::CONFIG);
+        $config = $container->get(self::CONFIG);
 
         $paths = $config->get('app.views', $this->paths);
 
-        $renderer = new Renderer($paths);
+        $renderer = new Renderer((array) $paths);
 
         return $container->set(self::RENDERER, $renderer);
     }

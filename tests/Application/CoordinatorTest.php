@@ -10,7 +10,7 @@ use Zapheus\Fixture\Http\Controllers\LaudController;
  * Coordinator Test
  *
  * @package Zapheus
- * @author  Rougin Royce Gutib <rougingutib@gmail.com>
+ * @author  Rougin Gutib <rougingutib@gmail.com>
  */
 class CoordinatorTest extends AbstractTestCase
 {

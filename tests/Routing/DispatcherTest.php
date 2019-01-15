@@ -13,7 +13,7 @@ use Zapheus\Routing\Router;
  * Dispatcher Test
  *
  * @package Zapheus
- * @author  Rougin Royce Gutib <rougingutib@gmail.com>
+ * @author  Rougin Gutib <rougingutib@gmail.com>
  */
 class DispatcherTest extends \PHPUnit_Framework_TestCase
 {
@@ -39,13 +39,15 @@ class DispatcherTest extends \PHPUnit_Framework_TestCase
 
         $router->get('/test/wow', array(get_class($hail), 'greet'));
 
-        $router->get('/helloo/{name}', function ($name = 'Doe') {
+        $router->get('/helloo/{name}', function ($name = 'Doe')
+        {
             $message = (string) sprintf('my name is %s', $name);
 
             return 'Hello, ' . $message . ' and this is a test.';
         });
 
-        $router->get('/test/{name}', function ($name) {
+        $router->get('/test/{name}', function ($name)
+        {
             return 'Hello everyone! I am ' . $name;
         });
 

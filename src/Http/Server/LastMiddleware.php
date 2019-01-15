@@ -8,7 +8,7 @@ use Zapheus\Http\Message\RequestInterface;
  * Last Middleware
  *
  * @package Zapheus
- * @author  Rougin Royce Gutib <rougingutib@gmail.com>
+ * @author  Rougin Gutib <rougingutib@gmail.com>
  */
 class LastMiddleware implements MiddlewareInterface
 {

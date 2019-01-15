@@ -17,7 +17,7 @@ use Zapheus\Routing\Router;
  * Application Test
  *
  * @package Zapheus
- * @author  Rougin Royce Gutib <rougingutib@gmail.com>
+ * @author  Rougin Gutib <rougingutib@gmail.com>
  */
 class ApplicationTest extends AbstractTestCase
 {
@@ -64,7 +64,7 @@ class ApplicationTest extends AbstractTestCase
 
         $app = $this->request('GET', '/');
 
-        $expected = 'Hello, world';
+        $expected = (string) 'Hello, world';
 
         $result = (string) $app->run();
 

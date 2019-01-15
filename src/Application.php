@@ -14,7 +14,7 @@ use Zapheus\Provider\ProviderInterface;
  * Application
  *
  * @package Zapheus
- * @author  Rougin Royce Gutib <rougingutib@gmail.com>
+ * @author  Rougin Gutib <rougingutib@gmail.com>
  */
 class Application implements HandlerInterface, WritableInterface
 {
@@ -51,7 +51,8 @@ class Application implements HandlerInterface, WritableInterface
     {
         $container = $container === null ? new Container : $container;
 
-        if ($container->has(ProviderInterface::CONFIG) === false) {
+        if (! $container->has(ProviderInterface::CONFIG))
+        {
             $configuration = new Provider\Configuration;
 
             $container->set(ProviderInterface::CONFIG, $configuration);
@@ -87,11 +88,16 @@ class Application implements HandlerInterface, WritableInterface
     {
         $items = is_array($data) ? $data : array();
 
+        $interface = ProviderInterface::CONFIG;
+
         $config = new Provider\Configuration($items);
 
-        is_string($data) && $config->load($data);
+        if (is_string($data))
+        {
+            $config->load($data);
+        }
 
-        return $this->set(ProviderInterface::CONFIG, $config);
+        return $this->set($interface, $config);
     }
 
     /**
@@ -108,7 +114,8 @@ class Application implements HandlerInterface, WritableInterface
 
         $version = (string) $response->version();
 
-        foreach ($headers as $name => $values) {
+        foreach ($headers as $name => $values)
+        {
             $value = implode(',', $values);
 
             header($name . ': ' . $value);
@@ -142,7 +149,8 @@ class Application implements HandlerInterface, WritableInterface
     {
         $handler = new RoutingHandler($this->container);
 
-        if ($this->has(self::MIDDLEWARE) === true) {
+        if ($this->has(Application::MIDDLEWARE) === true)
+        {
             $dispatcher = $this->get(self::MIDDLEWARE);
 
             return $dispatcher->process($request, $handler);

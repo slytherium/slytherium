@@ -14,7 +14,7 @@ use Zapheus\Routing\RouteInterface;
  * Resolver Handler
  *
  * @package Zapheus
- * @author  Rougin Royce Gutib <rougingutib@gmail.com>
+ * @author  Rougin Gutib <rougingutib@gmail.com>
  */
 class ResolverHandler implements HandlerInterface
 {
@@ -49,7 +49,8 @@ class ResolverHandler implements HandlerInterface
      */
     public function handle(RequestInterface $request)
     {
-        if ($this->container->has(Application::RESOLVER) === true) {
+        if ($this->container->has(Application::RESOLVER) === true)
+        {
             $resolver = $this->container->get(Application::RESOLVER);
 
             return $this->response($resolver->resolve($this->route));
@@ -70,12 +71,15 @@ class ResolverHandler implements HandlerInterface
     {
         $result = Ropebridge::make($result, Ropebridge::PSR_RESPONSE);
 
-        $instanceof = $result instanceof ResponseInterface === true;
-
         $response = $this->container->get(Application::RESPONSE);
 
-        $instanceof === false && $response->stream()->write($result);
+        if ($result instanceof ResponseInterface)
+        {
+            return $result;
+        }
 
-        return $instanceof === true ? $result : $response;
+        $response->stream()->write($result);
+
+        return $response;
     }
 }

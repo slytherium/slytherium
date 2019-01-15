@@ -6,7 +6,7 @@ namespace Zapheus\Renderer;
  * Renderer Interface
  *
  * @package Zapheus
- * @author  Rougin Royce Gutib <rougingutib@gmail.com>
+ * @author  Rougin Gutib <rougingutib@gmail.com>
  */
 interface RendererInterface
 {

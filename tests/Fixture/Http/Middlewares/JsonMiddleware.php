@@ -10,7 +10,7 @@ use Zapheus\Http\Server\MiddlewareInterface;
  * JSON Middleware
  *
  * @package Zapheus
- * @author  Rougin Royce Gutib <rougingutib@gmail.com>
+ * @author  Rougin Gutib <rougingutib@gmail.com>
  */
 class JsonMiddleware implements MiddlewareInterface
 {

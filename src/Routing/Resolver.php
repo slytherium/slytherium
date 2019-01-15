@@ -74,7 +74,7 @@ class Resolver implements ResolverInterface
             {
                 $value = $parameters[$name];
 
-                $default = $this->default($parameter, $value);
+                $default = $this->value($parameter, $value);
 
                 $arguments[$name] = $default;
 
@@ -142,7 +142,7 @@ class Resolver implements ResolverInterface
      * @param  mixed                $value
      * @return mixed
      */
-    protected function default(\ReflectionParameter $parameter, $value)
+    protected function value(\ReflectionParameter $parameter, $value)
     {
         $available = $parameter->isDefaultValueAvailable();
 

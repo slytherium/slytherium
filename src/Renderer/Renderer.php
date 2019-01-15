@@ -40,7 +40,7 @@ class Renderer implements RendererInterface
 
         foreach ($this->paths as $key => $path)
         {
-            $files = $this->files($path);
+            $files = $this->files((string) $path);
 
             $item = $this->check($files, $path, $key, "$name.php");
 
@@ -50,16 +50,9 @@ class Renderer implements RendererInterface
             }
         }
 
-        if (isset($file) === false)
-        {
-            $message = 'Template file "%s" not found.';
+        $message = "Template file \"$name\" not found.";
 
-            $message = sprintf($message, $name);
-
-            throw new \InvalidArgumentException($message);
-        }
-
-        return $this->extract($file, $data);
+        throw new \InvalidArgumentException($message);
     }
 
     /**

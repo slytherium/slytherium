@@ -21,7 +21,7 @@ class Request extends Message implements RequestInterface
     protected $cookies = array();
 
     /**
-     * @var array
+     * @var array|null|object
      */
     protected $data = array();
 
@@ -152,7 +152,7 @@ class Request extends Message implements RequestInterface
     /**
      * Returns any parameters provided in the request body.
      *
-     * @return array
+     * @return array|null|object
      */
     public function data()
     {

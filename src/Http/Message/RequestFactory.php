@@ -15,7 +15,7 @@ class RequestFactory extends MessageFactory
     protected $cookies = array();
 
     /**
-     * @var array
+     * @var array|null|object
      */
     protected $data = array();
 

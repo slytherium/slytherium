@@ -73,12 +73,9 @@ class Resolver implements ResolverInterface
 
             if (isset($parameters[$name]))
             {
-                try
+                if ($parameter->isDefaultValueAvailable())
                 {
                     $arguments[$name] = $parameter->getDefaultValue();
-                }
-                catch (\ReflectionException $exception)
-                {
                 }
 
                 if ($parameters[$name])

@@ -76,6 +76,8 @@ class MessageFactory
     {
         $resource = fopen('php://temp', 'r+');
 
+        ! $resource && $resource = null;
+
         $stream = new Stream($resource);
 
         $stream->write((string) $output);

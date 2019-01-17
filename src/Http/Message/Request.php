@@ -62,7 +62,7 @@ class Request extends Message implements RequestInterface
      * @param string                                     $target
      * @param array                                      $server
      * @param array                                      $cookies
-     * @param array                                      $data
+     * @param array|null|object                          $data
      * @param \Zapheus\Http\Message\FileInterface[]      $files
      * @param array                                      $queries
      * @param array                                      $attributes
@@ -105,8 +105,6 @@ class Request extends Message implements RequestInterface
         $exists = isset($this->attributes[$name]);
 
         return $exists ? $this->attributes[$name] : null;
-
-        // getAttribute
     }
 
     /**

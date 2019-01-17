@@ -26,7 +26,7 @@ class MessageFactory
 
     public function header($name, $value)
     {
-        $this->headers[$name] = $value;
+        $this->headers[$name] = (array) $value;
 
         return $this;
     }

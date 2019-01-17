@@ -2,7 +2,7 @@
 
 namespace Zapheus\Fixture\Http\Middlewares;
 
-use Zapheus\Http\Message\Response;
+use Zapheus\Http\Message\ResponseFactory;
 use Zapheus\Http\Message\RequestInterface;
 use Zapheus\Http\Server\HandlerInterface;
 use Zapheus\Http\Server\MiddlewareInterface;
@@ -24,6 +24,8 @@ class LastMiddleware implements MiddlewareInterface
      */
     public function process(RequestInterface $request, HandlerInterface $handler)
     {
-        return new Response;
+        $factory = new ResponseFactory;
+
+        return $factory->make();
     }
 }

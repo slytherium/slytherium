@@ -11,18 +11,18 @@ namespace Zapheus\Http\Message;
 class MessageTest extends \PHPUnit_Framework_TestCase
 {
     /**
-     * @var \Zapheus\Http\Message\MessageInterface
+     * @var \Zapheus\Http\Message\MessageFactory
      */
-    protected $message;
+    protected $factory;
 
     /**
-     * Sets up the message instance.
+     * Sets up the factory instance.
      *
      * @return void
      */
     public function setUp()
     {
-        $this->message = new Message;
+        $this->factory = new MessageFactory;
     }
 
     /**
@@ -32,13 +32,15 @@ class MessageTest extends \PHPUnit_Framework_TestCase
      */
     public function testHeaderMethod()
     {
-        $expected = array('names' => array('Rougin', 'Royce'));
+        $expected = array('Rougin', 'Royce');
 
-        $message = $this->message->with('headers', $expected);
+        $this->factory->header('names', $expected);
+
+        $message = $this->factory->make();
 
         $result = $message->header('names');
 
-        $this->assertEquals($expected['names'], $result);
+        $this->assertEquals($expected, $result);
     }
 
     /**
@@ -50,27 +52,9 @@ class MessageTest extends \PHPUnit_Framework_TestCase
     {
         $expected = array('names' => array('Rougin', 'Royce'));
 
-        $message = $this->message->with('headers', $expected);
+        $this->factory->headers($expected);
 
-        $result = $message->headers();
-
-        $this->assertEquals($expected, $result);
-    }
-
-    /**
-     * Tests MessageInterface::headers with only one per header.
-     *
-     * @return void
-     */
-    public function testHeadersMethodWithOnePerHeader()
-    {
-        $expected = array('names' => array('Rougin', 'Royce'), array('test'));
-
-        $message = $this->message->push('headers', $expected['names'], 'names');
-
-        $message = $message->push('headers', array('test'));
-
-        $result = $message->headers();
+        $result = $this->factory->make()->headers();
 
         $this->assertEquals($expected, $result);
     }
@@ -84,7 +68,7 @@ class MessageTest extends \PHPUnit_Framework_TestCase
     {
         $expected = 'Zapheus\Http\Message\Stream';
 
-        $result = $this->message->stream();
+        $result = $this->factory->make()->stream();
 
         $this->assertInstanceOf($expected, $result);
     }
@@ -100,11 +84,11 @@ class MessageTest extends \PHPUnit_Framework_TestCase
 
         $stream->write('Hello, world');
 
-        $message = $this->message->with('stream', $stream);
+        $this->factory->stream($stream);
 
-        $expected = (string) $stream;
+        $expected = $stream;
 
-        $result = (string) $message->stream();
+        $result = $this->factory->make()->stream();
 
         $this->assertEquals($expected, $result);
     }
@@ -116,11 +100,9 @@ class MessageTest extends \PHPUnit_Framework_TestCase
      */
     public function testVersionMethod()
     {
-        $expected = '2.0';
+        $this->factory->version($expected = '2.0');
 
-        $message = $this->message->with('version', $expected);
-
-        $result = $message->version();
+        $result = $this->factory->make()->version();
 
         $this->assertEquals($expected, $result);
     }

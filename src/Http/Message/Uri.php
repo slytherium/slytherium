@@ -3,12 +3,12 @@
 namespace Zapheus\Http\Message;
 
 /**
- * URI
+ * Uniform Resource Identifier (URI)
  *
  * @package Zapheus
  * @author  Rougin Gutib <rougingutib@gmail.com>
  */
-class Uri extends Mutator implements UriInterface
+class Uri implements UriInterface
 {
     /**
      * @var string
@@ -19,6 +19,11 @@ class Uri extends Mutator implements UriInterface
      * @var string
      */
     protected $host = '';
+
+    /**
+     * @var string
+     */
+    protected $pass = null;
 
     /**
      * @var string
@@ -61,8 +66,6 @@ class Uri extends Mutator implements UriInterface
 
         foreach ($parts as $key => $value)
         {
-            $key === 'user' && $this->user = $value;
-
             $this->$key = (string) $value;
         }
 
@@ -185,29 +188,14 @@ class Uri extends Mutator implements UriInterface
      */
     public function user()
     {
+        if ($this->pass)
+        {
+            return $this->user . ':' . $this->pass;
+        }
+
         return $this->user;
 
         // getUserInfo
         // withUserInfo
-    }
-
-    /**
-     * Returns an URI instance based from the server parameters.
-     *
-     * @param  array $server
-     * @return self
-     */
-    public static function instance(array $server)
-    {
-        $http = 'https://';
-
-        if (isset($server['HTTPS']) && $server['HTTPS'] === 'off')
-        {
-            $http = 'http://';
-        }
-
-        $port = $server['SERVER_PORT'] . $server['REQUEST_URI'];
-
-        return new Uri($http . $server['SERVER_NAME'] . ':' . $port);
     }
 }

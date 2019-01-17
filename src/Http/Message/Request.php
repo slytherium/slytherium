@@ -58,16 +58,22 @@ class Request extends Message implements RequestInterface
     /**
      * Initializes the request instance.
      *
-     * @param array $server
-     * @param array $cookies
-     * @param array $data
-     * @param array $files
-     * @param array $queries
-     * @param array $attributes
+     * @param string                                     $method
+     * @param string                                     $target
+     * @param array                                      $server
+     * @param array                                      $cookies
+     * @param array                                      $data
+     * @param \Zapheus\Http\Message\FileInterface[]      $files
+     * @param array                                      $queries
+     * @param array                                      $attributes
+     * @param \Zapheus\Http\Message\UriInterface|null    $uri
+     * @param array                                      $headers
+     * @param \Zapheus\Http\Message\StreamInterface|null $stream
+     * @param string                                     $version
      */
-    public function __construct(array $server, array $cookies = array(), array $data = array(), array $files = array(), array $queries = array(), array $attributes = array())
+    public function __construct($method, $target, array $server = array(), array $cookies = array(), array $data = array(), array $files = array(), array $queries = array(), array $attributes = array(), UriInterface $uri = null, array $headers = array(), StreamInterface $stream = null, $version = '1.1')
     {
-        parent::__construct(Message::request($server));
+        parent::__construct($headers, $stream, $version);
 
         $this->attributes = $attributes;
 
@@ -75,17 +81,17 @@ class Request extends Message implements RequestInterface
 
         $this->data = $data;
 
-        $this->files = File::normalize($files);
+        $this->files = $files;
 
-        $this->method = $server['REQUEST_METHOD'];
+        $this->method = $method;
 
         $this->queries = $queries;
 
         $this->server = $server;
 
-        $this->target = $server['REQUEST_URI'];
+        $this->target = $target;
 
-        $this->uri = Uri::instance($server);
+        $this->uri = $uri;
     }
 
     /**

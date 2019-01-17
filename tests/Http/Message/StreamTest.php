@@ -39,18 +39,6 @@ class StreamTest extends \PHPUnit_Framework_TestCase
     }
 
     /**
-     * Tests StreamInterface::__construct.
-     *
-     * @return void
-     */
-    public function testConstructMethodWithInvalidArgumentException()
-    {
-        $this->setExpectedException('InvalidArgumentException');
-
-        $this->stream = new Stream;
-    }
-
-    /**
      * Tests StreamInterface::read.
      *
      * @return void

@@ -3,7 +3,7 @@
 namespace Zapheus\Application;
 
 use Zapheus\Application;
-use Zapheus\Http\Message\Request;
+use Zapheus\Http\Message\RequestFactory;
 
 /**
  * Abstract Test Case
@@ -78,7 +78,11 @@ abstract class AbstractTestCase extends \PHPUnit_Framework_TestCase
 
         $_SERVER['SERVER_PORT'] = 8000;
 
-        $request = new Request($_SERVER);
+        $factory = new RequestFactory;
+
+        $factory->server($_SERVER);
+
+        $request = $factory->make();
 
         $this->app->set($interface, $request);
 

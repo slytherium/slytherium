@@ -7,6 +7,7 @@ use Zapheus\Fixture\Http\Controllers\HailController;
 use Zapheus\Fixture\Http\Middlewares\JsonMiddleware;
 use Zapheus\Fixture\Providers\TestProvider;
 use Zapheus\Http\Message\Response;
+use Zapheus\Http\Message\ResponseFactory;
 use Zapheus\Http\ServerProvider;
 use Zapheus\Routing\Dispatcher;
 use Zapheus\Routing\Resolver;
@@ -40,7 +41,16 @@ class ApplicationTest extends AbstractTestCase
 
         $json = new Route('POST', '/json', $handler, new JsonMiddleware);
 
-        $router = new Router(array($route, $json));
+        $test = new Route('GET', '/test', function ()
+        {
+            $factory = new ResponseFactory;
+
+            $factory->write('Hello, Zapheus');
+
+            return $factory->make();
+        });
+
+        $router = new Router(array($route, $json, $test));
 
         $dispatcher = new Dispatcher($router);
 
@@ -151,6 +161,26 @@ class ApplicationTest extends AbstractTestCase
         $app->set(Application::RESOLVER, $resolver);
 
         $expected = 'Hello, world';
+
+        $result = (string) $app->run();
+
+        $this->assertEquals($expected, $result);
+    }
+
+    /**
+     * Tests AbstractApplication::run with another response.
+     *
+     * @return void
+     */
+    public function testRunMethodWithResponse()
+    {
+        $app = $this->request('GET', '/test');
+
+        $resolver = new Resolver($app);
+
+        $app->set(Application::RESOLVER, $resolver);
+
+        $expected = 'Hello, Zapheus';
 
         $result = (string) $app->run();
 

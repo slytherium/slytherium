@@ -8,7 +8,7 @@ namespace Zapheus\Http\Message;
  * @package Zapheus
  * @author  Rougin Gutib <rougingutib@gmail.com>
  */
-interface UriInterface extends MutatorInterface
+interface UriInterface
 {
     /**
      * Returns the authority component of the URI.

@@ -8,7 +8,7 @@ namespace Zapheus\Http\Message;
  * @package Zapheus
  * @author  Rougin Gutib <rougingutib@gmail.com>
  */
-class Message extends Mutator implements MessageInterface
+class Message implements MessageInterface
 {
     /**
      * @var array
@@ -28,17 +28,26 @@ class Message extends Mutator implements MessageInterface
     /**
      * Initializes the message instance.
      *
-     * @param array $headers
+     * @param array                                      $headers
+     * @param \Zapheus\Http\Message\StreamInterface|null $stream
+     * @param string                                     $version
      */
-    public function __construct(array $headers = array())
+    public function __construct(array $headers = array(), StreamInterface $stream = null, $version = '1.1')
     {
-        $stream = fopen('php://temp', 'r+');
-
         $this->headers = (array) $headers;
 
-        $stream = $stream === false ? null : $stream;
+        if ($stream === null)
+        {
+            $stream = fopen('php://temp', 'r+');
 
-        $this->stream = new Stream($stream);
+            $stream = $stream === false ? null : $stream;
+
+            $stream = new Stream($stream);
+        }
+
+        $this->stream = $stream;
+
+        $this->version = $version;
     }
 
     /**
@@ -97,29 +106,5 @@ class Message extends Mutator implements MessageInterface
 
         // getProtocolVersion
         // withProtocolVersion
-    }
-
-    /**
-     * Returns header values from $_SERVER parameters.
-     *
-     * @param  array $server
-     * @return array
-     */
-    public static function request(array $server)
-    {
-        $headers = array();
-
-        foreach ((array) $server as $key => $value)
-        {
-            $http = strpos($key, 'HTTP_') === 0;
-
-            $string = strtolower(substr($key, 5));
-
-            $key = str_replace('_', '-', $string);
-
-            $http && $headers[$key] = $value;
-        }
-
-        return $headers;
     }
 }

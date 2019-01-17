@@ -3,6 +3,7 @@
 namespace Zapheus\Fixture\Http\Middlewares;
 
 use Zapheus\Application;
+use Zapheus\Http\Message\RequestFactory;
 use Zapheus\Http\Message\RequestInterface;
 use Zapheus\Http\Server\HandlerInterface;
 use Zapheus\Http\Server\MiddlewareInterface;
@@ -48,8 +49,10 @@ class RouterMiddleware implements MiddlewareInterface
 
         $route = $this->dispatcher->dispatch($method, $path);
 
-        $request = $request->push('attributes', $route, $attribute);
+        $factory = new RequestFactory($request);
 
-        return $handler->handle($request);
+        $factory->attribute($attribute, $route);
+
+        return $handler->handle($factory->make());
     }
 }

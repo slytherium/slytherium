@@ -85,14 +85,16 @@ class Response extends Message implements ResponseInterface
     /**
      * Initializes the response instance.
      *
-     * @param integer $code
-     * @param array   $headers
+     * @param integer                                    $code
+     * @param array                                      $headers
+     * @param \Zapheus\Http\Message\StreamInterface|null $stream
+     * @param string                                     $version
      */
-    public function __construct($code = 200, array $headers = array())
+    public function __construct($code = 200, array $headers = array(), StreamInterface $stream = null, $version = '1.1')
     {
-        parent::__construct($headers);
+        parent::__construct($headers, $stream, $version);
 
-        $this->code = $code;
+        $this->code = (integer) $code;
     }
 
     /**

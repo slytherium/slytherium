@@ -35,11 +35,12 @@ class Resolver implements ResolverInterface
      */
     public function resolve(RouteInterface $route)
     {
-        $handler = $route->handler();
+        if (is_string($handler = $route->handler()))
+        {
+            $handler = explode('@', $handler);
+        }
 
-        is_string($handler) && $handler = explode('@', $handler);
-
-        $parameters = (array) $route->parameters();
+        $parameters = $route->parameters();
 
         list($handler, $reflection) = $this->reflection($handler);
 
@@ -72,11 +73,18 @@ class Resolver implements ResolverInterface
 
             if (isset($parameters[$name]))
             {
-                $value = $parameters[$name];
+                try
+                {
+                    $arguments[$name] = $parameter->getDefaultValue();
+                }
+                catch (\ReflectionException $exception)
+                {
+                }
 
-                $default = $this->value($parameter, $value);
-
-                $arguments[$name] = $default;
+                if ($parameters[$name])
+                {
+                    $arguments[$name] = $parameters[$name];
+                }
 
                 continue;
             }
@@ -119,38 +127,19 @@ class Resolver implements ResolverInterface
      */
     protected function reflection($handler)
     {
-        if (is_array($handler) === true)
+        if (! is_array($handler))
         {
-            list($class, $method) = (array) $handler;
+            $instance = new \ReflectionFunction($handler);
 
-            $instance = new \ReflectionMethod($class, $method);
-
-            $handler = array($this->instance($class), $method);
-
-            return array((array) $handler, $instance);
+            return array($handler, $instance);
         }
 
-        $instance = new \ReflectionFunction($handler);
+        list($class, $method) = (array) $handler;
 
-        return array($handler, $instance);
-    }
+        $instance = new \ReflectionMethod($class, $method);
 
-    /**
-     * Returns the default value of a specified parameter.
-     *
-     * @param  \ReflectionParameter $parameter
-     * @param  mixed                $value
-     * @return mixed
-     */
-    protected function value(\ReflectionParameter $parameter, $value)
-    {
-        $available = $parameter->isDefaultValueAvailable();
+        $handler = array($this->instance($class), $method);
 
-        if (! $available || $value !== null)
-        {
-            return $value;
-        }
-
-        return $parameter->getDefaultValue();
+        return array((array) $handler, $instance);
     }
 }

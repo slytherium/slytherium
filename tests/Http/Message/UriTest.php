@@ -11,9 +11,9 @@ namespace Zapheus\Http\Message;
 class UriTest extends \PHPUnit_Framework_TestCase
 {
     /**
-     * @var \Zapheus\Http\Message\UriInterface
+     * @var \Zapheus\Http\Message\UriFactory
      */
-    protected $uri;
+    protected $factory;
 
     /**
      * Sets up the URI instance.
@@ -22,9 +22,11 @@ class UriTest extends \PHPUnit_Framework_TestCase
      */
     public function setUp()
     {
+        $this->factory = new UriFactory; // to pass null
+
         $url = 'https://me@rougin.github.io:400/about';
 
-        $this->uri = new Uri($url);
+        $this->factory = new UriFactory(new Uri($url));
     }
 
     /**
@@ -36,7 +38,9 @@ class UriTest extends \PHPUnit_Framework_TestCase
     {
         $expected = 'https://me@rougin.github.io:400/about';
 
-        $this->assertEquals($expected, (string) $this->uri);
+        $result = (string) $this->factory->make();
+
+        $this->assertEquals($expected, $result);
     }
 
     /**
@@ -48,7 +52,7 @@ class UriTest extends \PHPUnit_Framework_TestCase
     {
         $expected = 'me@rougin.github.io:400';
 
-        $result = $this->uri->authority();
+        $result = $this->factory->make()->authority();
 
         $this->assertEquals($expected, $result);
     }
@@ -60,11 +64,9 @@ class UriTest extends \PHPUnit_Framework_TestCase
      */
     public function testFragmentMethod()
     {
-        $expected = 'test';
+        $this->factory->fragment($expected = 'test');
 
-        $uri = $this->uri->with('fragment', $expected);
-
-        $result = $uri->fragment();
+        $result = $this->factory->make()->fragment();
 
         $this->assertEquals($expected, $result);
     }
@@ -78,9 +80,9 @@ class UriTest extends \PHPUnit_Framework_TestCase
     {
         $expected = 'google.com';
 
-        $uri = $this->uri->with('host', $expected);
+        $this->factory->host((string) $expected);
 
-        $result = $uri->host();
+        $result = $this->factory->make()->host();
 
         $this->assertEquals($expected, $result);
     }
@@ -94,9 +96,9 @@ class UriTest extends \PHPUnit_Framework_TestCase
     {
         $expected = '/test';
 
-        $uri = $this->uri->with('path', $expected);
+        $this->factory->path((string) $expected);
 
-        $result = $uri->path();
+        $result = $this->factory->make()->path();
 
         $this->assertEquals($expected, $result);
     }
@@ -110,9 +112,9 @@ class UriTest extends \PHPUnit_Framework_TestCase
     {
         $expected = 500;
 
-        $uri = $this->uri->with('port', $expected);
+        $this->factory->port($expected = 500);
 
-        $result = $uri->port();
+        $result = $this->factory->make()->port();
 
         $this->assertEquals($expected, $result);
     }
@@ -126,9 +128,9 @@ class UriTest extends \PHPUnit_Framework_TestCase
     {
         $expected = 'type=user';
 
-        $uri = $this->uri->with('query', $expected);
+        $this->factory->query((string) $expected);
 
-        $result = $uri->query();
+        $result = $this->factory->make()->query();
 
         $this->assertEquals($expected, $result);
     }
@@ -140,11 +142,9 @@ class UriTest extends \PHPUnit_Framework_TestCase
      */
     public function testSchemeMethod()
     {
-        $expected = 'http';
+        $this->factory->scheme($expected = 'http');
 
-        $uri = $this->uri->with('scheme', $expected);
-
-        $result = $uri->scheme();
+        $result = $this->factory->make()->scheme();
 
         $this->assertEquals('http', $result);
     }
@@ -156,11 +156,27 @@ class UriTest extends \PHPUnit_Framework_TestCase
      */
     public function testUserMethod()
     {
+        $expected = 'username';
+
+        $this->factory->user($expected);
+
+        $result = $this->factory->make()->user();
+
+        $this->assertEquals($expected, $result);
+    }
+
+    /**
+     * Tests UriInterface::user with a password.
+     *
+     * @return void
+     */
+    public function testUserMethodWithPassword()
+    {
         $expected = 'username:password';
 
-        $uri = $this->uri->with('user', $expected);
+        $this->factory->user('username', 'password');
 
-        $result = $uri->user();
+        $result = $this->factory->make()->user();
 
         $this->assertEquals($expected, $result);
     }

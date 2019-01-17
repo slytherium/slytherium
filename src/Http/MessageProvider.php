@@ -4,7 +4,7 @@ namespace Zapheus\Http;
 
 use Zapheus\Application;
 use Zapheus\Container\WritableInterface;
-use Zapheus\Http\Message\Request;
+use Zapheus\Http\Message\RequestFactory;
 use Zapheus\Http\Message\Response;
 use Zapheus\Provider\ProviderInterface;
 
@@ -16,6 +16,10 @@ use Zapheus\Provider\ProviderInterface;
  */
 class MessageProvider implements ProviderInterface
 {
+    const REQUEST = Application::REQUEST;
+
+    const RESPONSE = Application::RESPONSE;
+
     /**
      * Registers the bindings in the container.
      *
@@ -24,22 +28,24 @@ class MessageProvider implements ProviderInterface
      */
     public function register(WritableInterface $container)
     {
-        $config = $container->get(ProviderInterface::CONFIG);
+        $response = new Response;
 
-        $cookies = $config->get('app.http.cookies', $_COOKIE);
+        $config = $container->get(self::CONFIG);
 
-        $data = $config->get('app.http.post', $_POST);
+        $factory = new RequestFactory;
 
-        $files = $config->get('app.http.uploaded', $_FILES);
+        $factory->cookies($config->get('app.http.cookies', $_COOKIE));
 
-        $query = $config->get('app.http.get', $_GET);
+        $factory->data($config->get('app.http.post', $_POST));
 
-        $server = $config->get('app.http.server', $_SERVER);
+        $factory->files($config->get('app.http.uploaded', $_FILES));
 
-        $request = new Request($server, $cookies, $data, $files, $query);
+        $factory->queries($config->get('app.http.get', $_GET));
 
-        $container->set(Application::RESPONSE, new Response);
+        $factory->server($config->get('app.http.server', $_SERVER));
 
-        return $container->set(Application::REQUEST, $request);
+        $container->set(self::REQUEST, $factory->make());
+
+        return $container->set(self::RESPONSE, $response);
     }
 }

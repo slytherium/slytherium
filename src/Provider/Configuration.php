@@ -157,14 +157,9 @@ class Configuration implements ConfigurationInterface
      */
     protected function rename($item, $path)
     {
-        $name = str_replace($path, '', $item);
+        $name = str_replace($path, '', (string) $item);
 
         $name = str_replace(array('\\', '/'), '.', $name);
-
-        if ($name === '')
-        {
-            $name = $item;
-        }
 
         $regex = preg_replace('/^./i', '', $name);
 
@@ -183,16 +178,16 @@ class Configuration implements ConfigurationInterface
     {
         $key = array_shift($keys);
 
-        if (empty($keys) === false)
+        if (! isset($data[$key]))
         {
-            if (! isset($data[$key]))
-            {
-                $data[$key] = array();
-            }
-
-            return $this->save($keys, $data[$key], $value);
+            $data[$key] = array();
         }
 
-        return $data[$key] = $value;
+        if (empty($keys))
+        {
+            return $data[$key] = $value;
+        }
+
+        return $this->save($keys, $data[$key], $value);
     }
 }

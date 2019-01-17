@@ -4,7 +4,8 @@ namespace Zapheus\Http\Server;
 
 use Zapheus\Fixture\Http\Middlewares\LastMiddleware;
 use Zapheus\Fixture\Http\Middlewares\JsonMiddleware;
-use Zapheus\Http\Message\Request;
+use Zapheus\Http\Message\RequestFactory;
+use Zapheus\Http\Message\ResponseFactory;
 use Zapheus\Http\Message\Stream;
 use Zapheus\Http\Server\Dispatcher;
 
@@ -44,7 +45,11 @@ class DispatcherTest extends \PHPUnit_Framework_TestCase
         $server['SERVER_NAME'] = 'rougin.github.io';
         $server['SERVER_PORT'] = 8000;
 
-        $this->request = new Request($server);
+        $factory = new RequestFactory;
+
+        $factory->server($server);
+
+        $this->request = $factory->make();
     }
 
     /**
@@ -80,7 +85,9 @@ class DispatcherTest extends \PHPUnit_Framework_TestCase
 
             $stream->write($response->stream() . ' world');
 
-            return $response->set('stream', $stream);
+            $factory = new ResponseFactory($response);
+
+            return $factory->stream($stream)->make();
         });
 
         $this->dispatcher->pipe(function ($request, $next)

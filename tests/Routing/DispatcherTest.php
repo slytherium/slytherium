@@ -79,6 +79,24 @@ class DispatcherTest extends \PHPUnit_Framework_TestCase
      */
     public function testDispatchMethodWithClosureAsHandler()
     {
+        $expected = 'Hello everyone! I am Royce';
+
+        $route = $this->dispatcher->dispatch('GET', 'test/Royce');
+
+        $resolver = new Resolver(new ReflectionContainer);
+
+        $result = $resolver->resolve($route);
+
+        $this->assertEquals($expected, $result);
+    }
+
+    /**
+     * Tests DispatcherInterface::dispatch with closure as handler with a default value.
+     *
+     * @return void
+     */
+    public function testDispatchMethodWithClosureAsHandlerWithDefaultValue()
+    {
         $expected = 'Hello, my name is Royce and this is a test.';
 
         $route = $this->dispatcher->dispatch('GET', 'helloo/Royce');

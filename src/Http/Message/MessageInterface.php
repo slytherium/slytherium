@@ -8,7 +8,7 @@ namespace Zapheus\Http\Message;
  * @package Zapheus
  * @author  Rougin Gutib <rougingutib@gmail.com>
  */
-interface MessageInterface extends MutatorInterface
+interface MessageInterface
 {
     /**
      * Returns a message header value by the given case-insensitive name.

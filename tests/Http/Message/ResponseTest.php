@@ -11,18 +11,18 @@ namespace Zapheus\Http\Message;
 class ResponseTest extends \PHPUnit_Framework_TestCase
 {
     /**
-     * @var \Zapheus\Http\Message\ResponseInterface
+     * @var \Zapheus\Http\Message\ResponseFactory
      */
-    protected $response;
+    protected $factory;
 
     /**
-     * Sets up the response instance.
+     * Sets up the factory instance.
      *
      * @return void
      */
     public function setUp()
     {
-        $this->response = new Response;
+        $this->factory = new ResponseFactory(new Response);
     }
 
     /**
@@ -32,11 +32,9 @@ class ResponseTest extends \PHPUnit_Framework_TestCase
      */
     public function testCodeMethod()
     {
-        $expected = 404;
+        $this->factory->code($expected = 404);
 
-        $response = $this->response->with('code', $expected);
-
-        $result = $response->code();
+        $result = $this->factory->make()->code();
 
         $this->assertEquals($expected, $result);
     }
@@ -50,9 +48,9 @@ class ResponseTest extends \PHPUnit_Framework_TestCase
     {
         $expected = 'Internal Server Error';
 
-        $response = $this->response->with('code', 500);
+        $this->factory->code(500);
 
-        $result = $response->reason();
+        $result = $this->factory->make()->reason();
 
         $this->assertEquals($expected, $result);
     }

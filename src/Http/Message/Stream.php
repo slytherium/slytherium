@@ -18,19 +18,10 @@ class Stream implements StreamInterface
     /**
      * Initializes the stream instance.
      *
-     * @param resource|null $stream
-     *
-     * @throws \InvalidArgumentException
+     * @param resource $stream
      */
-    public function __construct($stream = null)
+    public function __construct($stream)
     {
-        if ($stream === null)
-        {
-            $message = 'Stream is not a valid resource';
-
-            throw new \InvalidArgumentException($message);
-        }
-
         $this->stream = $stream;
     }
 

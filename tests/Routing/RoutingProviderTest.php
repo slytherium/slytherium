@@ -40,7 +40,11 @@ class RoutingProviderTest extends \PHPUnit_Framework_TestCase
 
         $route = new Route('GET', '/', 'HailController@index');
 
-        $config->set('app.router', $this->router = new Router(array($route)));
+        $this->router = new Router(array($route));
+
+        $container->set(get_class($this->router), $this->router);
+
+        $config->set('app.router', 'Zapheus\Routing\Router');
 
         $this->container = $container->set(RoutingProvider::CONFIG, $config);
 

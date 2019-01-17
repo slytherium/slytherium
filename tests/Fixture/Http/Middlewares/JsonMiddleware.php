@@ -3,6 +3,7 @@
 namespace Zapheus\Fixture\Http\Middlewares;
 
 use Zapheus\Http\Message\RequestInterface;
+use Zapheus\Http\Message\ResponseFactory;
 use Zapheus\Http\Server\HandlerInterface;
 use Zapheus\Http\Server\MiddlewareInterface;
 
@@ -29,8 +30,10 @@ class JsonMiddleware implements MiddlewareInterface
 
         $value = array('application/json');
 
-        $new = $response->push('headers', $value, 'Content-Type');
+        $factory = new ResponseFactory($response);
 
-        return count($content) >= 1 ? $response : $new;
+        $factory->header('Content-Type', $value);
+
+        return count($content) >= 1 ? $response : $factory->make();
     }
 }

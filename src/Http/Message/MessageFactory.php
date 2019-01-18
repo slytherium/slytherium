@@ -2,14 +2,34 @@
 
 namespace Zapheus\Http\Message;
 
+/**
+ * Message Factory
+ *
+ * @package Zapheus
+ * @author  Rougin Gutib <rougingutib@gmail.com>
+ */
 class MessageFactory
 {
+    /**
+     * @var array
+     */
     protected $headers = array();
 
-    protected $stream = null;
+    /**
+     * @var \Zapheus\Http\Message\StreamInterface
+     */
+    protected $stream;
 
+    /**
+     * @var string
+     */
     protected $version = '1.1';
 
+    /**
+     * Initializes the message instance.
+     *
+     * @param \Zapheus\Http\Message\MessageInterface|null $message
+     */
     public function __construct(MessageInterface $message = null)
     {
         if ($message === null)
@@ -24,6 +44,13 @@ class MessageFactory
         $this->version = $message->version();
     }
 
+    /**
+     * Sets a message header value.
+     *
+     * @param  string $name
+     * @param  mixed  $value
+     * @return self
+     */
     public function header($name, $value)
     {
         $this->headers[$name] = (array) $value;
@@ -31,6 +58,13 @@ class MessageFactory
         return $this;
     }
 
+    /**
+     * Sets the message header values.
+     *
+     * @param  string $name
+     * @param  mixed  $value
+     * @return self
+     */
     public function headers(array $headers)
     {
         $this->headers = $headers;
@@ -38,11 +72,22 @@ class MessageFactory
         return $this;
     }
 
+    /**
+     * Creates the message instance.
+     *
+     * @return \Zapheus\Http\Message\MessageInterface
+     */
     public function make()
     {
         return new Message($this->headers, $this->stream, $this->version);
     }
 
+    /**
+     * Sets the server parameters ($_SERVER).
+     *
+     * @param  array $server
+     * @return self
+     */
     public function server(array $server)
     {
         foreach ((array) $server as $key => $value)
@@ -58,6 +103,12 @@ class MessageFactory
         }
     }
 
+    /**
+     * Sets the stream instance.
+     *
+     * @param  \Zapheus\Http\Message\StreamInterface $stream
+     * @return self
+     */
     public function stream(StreamInterface $stream)
     {
         $this->stream = $stream;
@@ -65,6 +116,12 @@ class MessageFactory
         return $this;
     }
 
+    /**
+     * Sets the protocol version.
+     *
+     * @param  string $version
+     * @return self
+     */
     public function version($version)
     {
         $this->version = $version;
@@ -72,6 +129,12 @@ class MessageFactory
         return $this;
     }
 
+    /**
+     * Writes data directly to the stream.
+     *
+     * @param  string $output
+     * @return self
+     */
     public function write($output)
     {
         $resource = fopen('php://temp', 'r+');

@@ -40,7 +40,7 @@ class Resolver implements ResolverInterface
             $handler = explode('@', $handler);
         }
 
-        $parameters = $route->parameters();
+        $parameters = (array) $route->parameters();
 
         list($handler, $reflection) = $this->reflection($handler);
 
@@ -106,14 +106,14 @@ class Resolver implements ResolverInterface
 
         $exists = $this->container->has($class);
 
-        if ($exists === false && $constructor !== null)
+        if ($exists && $constructor === null)
         {
-            $arguments = $this->arguments($constructor);
-
-            return $reflection->newInstanceArgs($arguments);
+            return $this->container->get($class);
         }
 
-        return $this->container->get($class);
+        $arguments = $this->arguments($constructor);
+
+        return $reflection->newInstanceArgs($arguments);
     }
 
     /**

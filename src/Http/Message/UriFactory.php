@@ -2,6 +2,12 @@
 
 namespace Zapheus\Http\Message;
 
+/**
+ * URI Factory
+ *
+ * @package Zapheus
+ * @author  Rougin Gutib <rougingutib@gmail.com>
+ */
 class UriFactory
 {
     /**
@@ -49,6 +55,11 @@ class UriFactory
      */
     protected $user = '';
 
+    /**
+     * Initializes the URI instance.
+     *
+     * @param \Zapheus\Http\Message\UriInterface|null $uri
+     */
     public function __construct(UriInterface $uri = null)
     {
         if ($uri === null)
@@ -71,6 +82,12 @@ class UriFactory
         $this->user = $uri->user();
     }
 
+    /**
+     * Sets the fragment component.
+     *
+     * @param  string $fragment
+     * @return self
+     */
     public function fragment($fragment)
     {
         $this->fragment = $fragment;
@@ -78,6 +95,12 @@ class UriFactory
         return $this;
     }
 
+    /**
+     * Sets the host component.
+     *
+     * @param  string $host
+     * @return self
+     */
     public function host($host)
     {
         $this->host = $host;
@@ -85,6 +108,11 @@ class UriFactory
         return $this;
     }
 
+    /**
+     * Creates the URI instance.
+     *
+     * @return \Zapheus\Http\Message\UriInterface
+     */
     public function make()
     {
         $authority = $this->host;
@@ -120,6 +148,12 @@ class UriFactory
         return new Uri($this->scheme . '://' . $authority . $this->path . $query . $fragment);
     }
 
+    /**
+     * Sets the path component.
+     *
+     * @param  string $path
+     * @return self
+     */
     public function path($path)
     {
         $this->path = $path;
@@ -127,6 +161,12 @@ class UriFactory
         return $this;
     }
 
+    /**
+     * Sets the port component.
+     *
+     * @param  string $port
+     * @return self
+     */
     public function port($port)
     {
         $this->port = $port;
@@ -134,6 +174,12 @@ class UriFactory
         return $this;
     }
 
+    /**
+     * Sets the query component.
+     *
+     * @param  string $query
+     * @return self
+     */
     public function query($query)
     {
         $this->query = $query;
@@ -141,6 +187,12 @@ class UriFactory
         return $this;
     }
 
+    /**
+     * Sets the scheme component.
+     *
+     * @param  string $scheme
+     * @return self
+     */
     public function scheme($scheme)
     {
         $this->scheme = $scheme;
@@ -148,6 +200,12 @@ class UriFactory
         return $this;
     }
 
+    /**
+     * Sets the user component.
+     *
+     * @param  string $user
+     * @return self
+     */
     public function user($user, $pass = null)
     {
         if ($pass)

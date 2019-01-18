@@ -2,6 +2,12 @@
 
 namespace Zapheus\Http\Message;
 
+/**
+ * Response Factory
+ *
+ * @package Zapheus
+ * @author  Rougin Gutib <rougingutib@gmail.com>
+ */
 class ResponseFactory extends MessageFactory
 {
     /**
@@ -9,6 +15,11 @@ class ResponseFactory extends MessageFactory
      */
     protected $code = 200;
 
+    /**
+     * Initializes the response instance.
+     *
+     * @param \Zapheus\Http\Message\ResponseInterface|null $response
+     */
     public function __construct(ResponseInterface $response = null)
     {
         parent::__construct($response);
@@ -21,6 +32,12 @@ class ResponseFactory extends MessageFactory
         $this->code = $response->code();
     }
 
+    /**
+     * Sets the HTTP code.
+     *
+     * @param  integer $code
+     * @return self
+     */
     public function code($code)
     {
         $this->code = $code;
@@ -28,6 +45,11 @@ class ResponseFactory extends MessageFactory
         return $this;
     }
 
+    /**
+     * Creates the response instance.
+     *
+     * @return \Zapheus\Http\Message\ResponseInterface
+     */
     public function make()
     {
         return new Response($this->code, $this->headers, $this->stream, $this->version);

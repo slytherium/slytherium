@@ -51,27 +51,6 @@ class ReflectionContainer implements ContainerInterface
     }
 
     /**
-     * Returns an argument based on the given parameter.
-     *
-     * @param  \ReflectionParameter $parameter
-     * @param  string               $name
-     * @return mixed|null
-     */
-    protected function argument(\ReflectionParameter $parameter, $name)
-    {
-        try
-        {
-            $argument = $parameter->getDefaultValue();
-        }
-        catch (\ReflectionException $exception)
-        {
-            $argument = $this->get($name);
-        }
-
-        return $argument;
-    }
-
-    /**
      * Resolves the specified parameters from a container.
      *
      * @param  \ReflectionFunctionAbstract $reflection
@@ -83,16 +62,21 @@ class ReflectionContainer implements ContainerInterface
 
         foreach ($reflection->getParameters() as $key => $parameter)
         {
-            $name = (string) $parameter->getName();
+            $name = $parameter->getName();
 
             if ($class = $parameter->getClass())
             {
-                $name = (string) $class->getName();
+                $name = $class->getName();
             }
 
-            $argument = $this->argument($parameter, $name);
-
-            $arguments[$key] = $argument;
+            try
+            {
+                $arguments[$key] = $parameter->getDefaultValue();
+            }
+            catch (\ReflectionException $exception)
+            {
+                $arguments[$key] = $this->get((string) $name);
+            }
         }
 
         return $arguments;

@@ -8,6 +8,7 @@ use Zapheus\Http\Message\RequestInterface;
 use Zapheus\Http\Message\ResponseInterface;
 use Zapheus\Http\Server\HandlerInterface;
 use Zapheus\Http\Server\RoutingHandler;
+use Zapheus\Provider\Configuration;
 use Zapheus\Provider\ProviderInterface;
 
 /**
@@ -49,13 +50,14 @@ class Application implements HandlerInterface, WritableInterface
      */
     public function __construct(WritableInterface $container = null)
     {
-        $container = $container === null ? new Container : $container;
+        if ($container === null)
+        {
+            $container = new Container;
+        }
 
         if (! $container->has(ProviderInterface::CONFIG))
         {
-            $configuration = new Provider\Configuration;
-
-            $container->set(ProviderInterface::CONFIG, $configuration);
+            $container->set(ProviderInterface::CONFIG, new Configuration);
         }
 
         $this->container = $container;
@@ -110,15 +112,13 @@ class Application implements HandlerInterface, WritableInterface
     {
         $code = $response->code() . ' ' . $response->reason();
 
-        $headers = (array) $response->headers();
+        $headers = $response->headers();
 
-        $version = (string) $response->version();
+        $version = $response->version();
 
         foreach ($headers as $name => $values)
         {
-            $value = implode(',', $values);
-
-            header($name . ': ' . $value);
+            header($name . ': ' . implode(',', $values));
         }
 
         header(sprintf('HTTP/%s %s', $version, $code));
@@ -149,14 +149,14 @@ class Application implements HandlerInterface, WritableInterface
     {
         $handler = new RoutingHandler($this->container);
 
-        if ($this->has(Application::MIDDLEWARE) === true)
+        if (! $this->has(self::MIDDLEWARE))
         {
-            $dispatcher = $this->get(self::MIDDLEWARE);
-
-            return $dispatcher->process($request, $handler);
+            return $handler->handle($request);
         }
 
-        return $handler->handle($request);
+        $dispatcher = $this->get(self::MIDDLEWARE);
+
+        return $dispatcher->process($request, $handler);
     }
 
     /**

@@ -2,14 +2,35 @@
 
 namespace Zapheus\Http\Message;
 
+/**
+ * File Factory
+ *
+ * @package Zapheus
+ * @author  Rougin Gutib <rougingutib@gmail.com>
+ */
 class FileFactory
 {
+    /**
+     * @var integer
+     */
     protected $error = UPLOAD_ERR_OK;
 
+    /**
+     * @var string
+     */
     protected $file = '';
 
+    /**
+     * @var string
+     */
     protected $name = '';
 
+    /**
+     * Sets the error associated with the uploaded file.
+     *
+     * @param  $error integer
+     * @return void
+     */
     public function error($error)
     {
         $this->error = $error;
@@ -17,6 +38,12 @@ class FileFactory
         return $this;
     }
 
+    /**
+     * Sets the filename of the uploaded file.
+     *
+     * @param  string $file
+     * @return self
+     */
     public function file($file)
     {
         $this->file = $file;
@@ -24,11 +51,22 @@ class FileFactory
         return $this;
     }
 
+    /**
+     * Creates the uploaded file instance.
+     *
+     * @return \Zapheus\Http\Message\FileInterface
+     */
     public function make()
     {
         return new File($this->file, $this->name, $this->error);
     }
 
+    /**
+     * Sets the name of the uploaded file.
+     *
+     * @param  string $name
+     * @return self
+     */
     public function name($name)
     {
         $this->name = $name;

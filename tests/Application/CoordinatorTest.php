@@ -27,27 +27,31 @@ class CoordinatorTest extends AbstractTestCase
 
         $this->define(new HailController);
 
-        $instance = 'Zapheus\Fixture\Http\Controllers\LaudController';
+        $hail = 'Zapheus\Fixture\Http\Controllers\HailController';
 
-        $this->app->connect('/greet', $instance . '@greet');
+        $laud = 'Zapheus\Fixture\Http\Controllers\LaudController';
 
-        $this->app->delete('/greet', $instance . '@greet');
+        $this->app->connect('/greet', $laud . '@greet');
 
-        $this->app->get('/greet', $instance . '@greet');
+        $this->app->delete('/greet', $laud . '@greet');
 
-        $this->app->head('/greet', $instance . '@greet');
+        $this->app->get('/greet', $laud . '@greet');
 
-        $this->app->options('/greet', $instance . '@greet');
+        $this->app->get('/hello', $hail . '@greet');
 
-        $this->app->patch('/greet', $instance . '@greet');
+        $this->app->head('/greet', $laud . '@greet');
 
-        $this->app->post('/greet', $instance . '@greet');
+        $this->app->options('/greet', $laud . '@greet');
 
-        $this->app->purge('/greet', $instance . '@greet');
+        $this->app->patch('/greet', $laud . '@greet');
 
-        $this->app->put('/greet', $instance . '@greet');
+        $this->app->post('/greet', $laud . '@greet');
 
-        $this->app->trace('/greet', $instance . '@greet');
+        $this->app->purge('/greet', $laud . '@greet');
+
+        $this->app->put('/greet', $laud . '@greet');
+
+        $this->app->trace('/greet', $laud . '@greet');
     }
 
     /**
@@ -60,6 +64,22 @@ class CoordinatorTest extends AbstractTestCase
         $app = $this->request('GET', '/greet');
 
         $expected = 'Hello, world and people';
+
+        $result = (string) $app->run();
+
+        $this->assertEquals($expected, $result);
+    }
+
+    /**
+     * Tests AbstractApplication::run without dependencies.
+     *
+     * @return void
+     */
+    public function testRunMethodWithoutDependencies()
+    {
+        $app = $this->request('GET', '/hello');
+
+        $expected = 'Hello, world';
 
         $result = (string) $app->run();
 

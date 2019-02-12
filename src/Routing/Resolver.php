@@ -108,13 +108,20 @@ class Resolver implements ResolverInterface
 
         $arguments = array();
 
-        if ($exists && $constructor === null)
+        if ($exists || $constructor === null)
         {
             return $this->container->get($class);
         }
 
         if ($constructor !== null)
         {
+            $class = $constructor->getDeclaringClass()->getName();
+
+            if ($this->container->has($class))
+            {
+                return $this->instance($class);
+            }
+
             $arguments = $this->arguments($constructor);
         }
 

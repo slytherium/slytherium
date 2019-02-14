@@ -90,14 +90,14 @@ class Application implements HandlerInterface, WritableInterface
     {
         $items = is_array($data) ? $data : array();
 
-        $interface = ProviderInterface::CONFIG;
-
         $config = new Provider\Configuration($items);
 
         if (is_string($data))
         {
             $config->load($data);
         }
+
+        $interface = ProviderInterface::CONFIG;
 
         return $this->set($interface, $config);
     }
@@ -149,12 +149,12 @@ class Application implements HandlerInterface, WritableInterface
     {
         $handler = new RoutingHandler($this->container);
 
-        if (! $this->has(self::MIDDLEWARE))
+        if (! $this->has(Application::MIDDLEWARE))
         {
             return $handler->handle($request);
         }
 
-        $dispatcher = $this->get(self::MIDDLEWARE);
+        $dispatcher = $this->get(Application::MIDDLEWARE);
 
         return $dispatcher->process($request, $handler);
     }

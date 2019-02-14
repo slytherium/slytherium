@@ -135,26 +135,6 @@ class Route implements RouteInterface
     }
 
     /**
-     * Returns a new RouteInterface with parameters.
-     *
-     * @param  \Zapheus\Routing\RouteInterface $route
-     * @param  array                           $parameters
-     * @return \Zapheus\Routing\RouteInterface
-     */
-    public static function result(RouteInterface $route, $parameters)
-    {
-        $method = (string) $route->method();
-
-        $middlewares = $route->middlewares();
-
-        $uri = (string) $route->uri();
-
-        $handler = $route->handler();
-
-        return new Route($method, $uri, $handler, $middlewares, $parameters);
-    }
-
-    /**
      * Capture the specified regular expressions.
      *
      * @param  string $pattern

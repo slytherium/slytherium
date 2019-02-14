@@ -48,7 +48,9 @@ class Dispatcher implements DispatcherInterface
 
             $values = array_intersect_key($matches, $flipped);
 
-            return Route::result($route, $values);
+            $factory = new RouteFactory($route);
+
+            return $factory->parameters($values)->make();
         }
 
         $error = sprintf('Route "%s %s" not found', $method, $uri);

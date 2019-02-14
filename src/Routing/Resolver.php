@@ -115,13 +115,6 @@ class Resolver implements ResolverInterface
 
         if ($constructor !== null)
         {
-            $class = $constructor->getDeclaringClass()->getName();
-
-            if ($this->container->has($class))
-            {
-                return $this->instance($class);
-            }
-
             $arguments = $this->arguments($constructor);
         }
 

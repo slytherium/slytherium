@@ -10,7 +10,7 @@ use Zapheus\Provider\ProviderInterface;
  * Routing Provider
  *
  * @package App
- * @author  Rougin Royce Gutib <rougingutib@gmail.com>
+ * @author  Rougin Gutib <rougingutib@gmail.com>
  */
 class RoutingProvider implements ProviderInterface
 {
@@ -32,6 +32,7 @@ class RoutingProvider implements ProviderInterface
     {
         $this->router = $router === null ? new Router : $router;
     }
+
     /**
      * Registers the bindings in the container.
      *

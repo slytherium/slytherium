@@ -69,8 +69,6 @@ class ResolverHandler implements HandlerInterface
      */
     protected function response($result)
     {
-        $result = Ropebridge::make($result, Ropebridge::PSR_RESPONSE);
-
         $response = $this->container->get(Application::RESPONSE);
 
         if ($result instanceof ResponseInterface)

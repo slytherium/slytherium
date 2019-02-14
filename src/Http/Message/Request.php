@@ -71,7 +71,7 @@ class Request extends Message implements RequestInterface
      * @param \Zapheus\Http\Message\StreamInterface|null $stream
      * @param string                                     $version
      */
-    public function __construct($method, $target, array $server = array(), array $cookies = array(), array $data = array(), array $files = array(), array $queries = array(), array $attributes = array(), UriInterface $uri = null, array $headers = array(), StreamInterface $stream = null, $version = '1.1')
+    public function __construct($method, $target, array $server = array(), array $cookies = array(), $data = null, array $files = array(), array $queries = array(), array $attributes = array(), UriInterface $uri = null, array $headers = array(), StreamInterface $stream = null, $version = '1.1')
     {
         parent::__construct($headers, $stream, $version);
 

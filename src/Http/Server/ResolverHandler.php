@@ -6,7 +6,6 @@ use Zapheus\Application;
 use Zapheus\Container\ContainerInterface;
 use Zapheus\Http\Message\RequestInterface;
 use Zapheus\Http\Message\ResponseInterface;
-use Zapheus\Ropebridge;
 use Zapheus\Routing\Resolver;
 use Zapheus\Routing\RouteInterface;
 

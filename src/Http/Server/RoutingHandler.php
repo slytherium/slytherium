@@ -6,7 +6,6 @@ use Zapheus\Application;
 use Zapheus\Container\WritableInterface;
 use Zapheus\Http\Message\RequestInterface;
 use Zapheus\Http\Message\ResponseInterface;
-use Zapheus\Ropebridge;
 use Zapheus\Routing\Resolver;
 use Zapheus\Routing\RouteInterface;
 
@@ -30,8 +29,6 @@ class RoutingHandler implements HandlerInterface
      */
     public function __construct(WritableInterface $container)
     {
-        $exists = $container->has(Application::RESPONSE) === true;
-
         $this->container = $container;
     }
 

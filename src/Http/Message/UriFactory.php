@@ -164,7 +164,7 @@ class UriFactory
     /**
      * Sets the port component.
      *
-     * @param  string $port
+     * @param  integer $port
      * @return self
      */
     public function port($port)

@@ -32,15 +32,6 @@ class RoutingHandler implements HandlerInterface
     {
         $exists = $container->has(Application::RESPONSE) === true;
 
-        if (class_exists(Ropebridge::BRIDGE_RESPONSE) && $exists)
-        {
-            $response = $container->get(Application::RESPONSE);
-
-            $psr = Ropebridge::make($response, Application::RESPONSE);
-
-            $container->set(Ropebridge::PSR_RESPONSE, $psr);
-        }
-
         $this->container = $container;
     }
 
@@ -52,13 +43,6 @@ class RoutingHandler implements HandlerInterface
      */
     public function handle(RequestInterface $request)
     {
-        if (class_exists(Ropebridge::BRIDGE_REQUEST) === true)
-        {
-            $psr = Ropebridge::make($request, Application::REQUEST);
-
-            $this->container->set(Ropebridge::PSR_REQUEST, $psr);
-        }
-
         $route = $this->dispatch($request);
 
         $handler = new ResolverHandler($this->container, $route);

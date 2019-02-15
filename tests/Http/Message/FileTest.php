@@ -49,6 +49,20 @@ class FileTest extends \PHPUnit_Framework_TestCase
     }
 
     /**
+     * Tests FileInterface::file.
+     *
+     * @return void
+     */
+    public function testFileMethod()
+    {
+        $expected = $this->filename;
+
+        $result = $this->file->file();
+
+        $this->assertEquals($expected, $result);
+    }
+
+    /**
      * Tests FileInterface::move.
      *
      * @return void

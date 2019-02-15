@@ -66,6 +66,16 @@ class File implements FileInterface
     }
 
     /**
+     * Returns the filepath of the uploaded file.
+     *
+     * @return string
+     */
+    public function file()
+    {
+        return $this->file;
+    }
+
+    /**
      * Move the uploaded file to a new location.
      *
      * @param string $target

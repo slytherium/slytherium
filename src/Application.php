@@ -19,6 +19,8 @@ use Zapheus\Provider\ProviderInterface;
  */
 class Application implements HandlerInterface, WritableInterface
 {
+    const CONFIG = 'Zapheus\Provider\ConfigurationInterface';
+
     const DISPATCHER = 'Zapheus\Routing\DispatcherInterface';
 
     const MIDDLEWARE = 'Zapheus\Http\Server\DispatcherInterface';

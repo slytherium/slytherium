@@ -4,6 +4,7 @@ namespace Zapheus\Http;
 
 use Zapheus\Application;
 use Zapheus\Container\WritableInterface;
+use Zapheus\Http\Message\FileFactory;
 use Zapheus\Http\Message\RequestFactory;
 use Zapheus\Http\Message\Response;
 use Zapheus\Provider\ProviderInterface;
@@ -28,17 +29,19 @@ class MessageProvider implements ProviderInterface
      */
     public function register(WritableInterface $container)
     {
-        $response = new Response;
-
-        $config = $container->get(self::CONFIG);
-
         $factory = new RequestFactory;
+
+        list($file, $response) = array(new FileFactory, new Response);
+
+        $config = $container->get(Application::CONFIG);
+
+        $files = $config->get('app.http.uploaded', (array) $_FILES);
 
         $factory->cookies($config->get('app.http.cookies', $_COOKIE));
 
         $factory->data($config->get('app.http.post', $_POST));
 
-        $factory->files($config->get('app.http.uploaded', $_FILES));
+        $factory->files($file->normalize((array) $files));
 
         $factory->queries($config->get('app.http.get', $_GET));
 
@@ -46,6 +49,6 @@ class MessageProvider implements ProviderInterface
 
         $container->set(self::REQUEST, $factory->make());
 
-        return $container->set(self::RESPONSE, $response);
+        return $container->set(Application::RESPONSE, $response);
     }
 }

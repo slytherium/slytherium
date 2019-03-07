@@ -3,7 +3,7 @@
 namespace Zapheus\Http\Server;
 
 use Zapheus\Application;
-use Zapheus\Container\ContainerInterface;
+use Zapheus\Container\WritableInterface;
 use Zapheus\Http\Message\RequestInterface;
 use Zapheus\Http\Message\ResponseInterface;
 use Zapheus\Routing\Resolver;
@@ -18,7 +18,7 @@ use Zapheus\Routing\RouteInterface;
 class ResolverHandler implements HandlerInterface
 {
     /**
-     * @var \Zapheus\Container\ContainerInterface
+     * @var \Zapheus\Container\WritableInterface
      */
     protected $container;
 
@@ -30,10 +30,10 @@ class ResolverHandler implements HandlerInterface
     /**
      * Initializes the handler instance.
      *
-     * @param \Zapheus\Container\ContainerInterface $container
+     * @param \Zapheus\Container\WritableInterface $container
      * @param \Zapheus\Routing\RouteInterface       $route
      */
-    public function __construct(ContainerInterface $container, RouteInterface $route)
+    public function __construct(WritableInterface $container, RouteInterface $route)
     {
         $this->container = $container;
 
@@ -54,6 +54,8 @@ class ResolverHandler implements HandlerInterface
 
             return $this->response($resolver->resolve($this->route));
         }
+
+        $this->container->set(Application::REQUEST, $request);
 
         $resolver = new Resolver($this->container);
 

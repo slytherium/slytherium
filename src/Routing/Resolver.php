@@ -62,11 +62,9 @@ class Resolver implements ResolverInterface
 
         foreach ($reflection->getParameters() as $key => $parameter)
         {
-            $class = $parameter->getClass();
-
             $name = $parameter->getName();
 
-            if ($class)
+            if ($class = $parameter->getClass())
             {
                 $name = $class->getName();
             }
@@ -102,13 +100,11 @@ class Resolver implements ResolverInterface
     {
         $reflection = new \ReflectionClass($class);
 
-        $constructor = $reflection->getConstructor();
-
-        $exists = $this->container->has($class);
-
         $arguments = array();
 
-        if ($exists || $constructor === null)
+        $constructor = $reflection->getConstructor();
+
+        if ($this->container->has($class))
         {
             return $this->container->get($class);
         }

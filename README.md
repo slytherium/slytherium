@@ -110,18 +110,18 @@ $ composer test
 
 The MIT License (MIT). Please see [LICENSE][link-license] for more information.
 
-[ico-code-quality]: https://img.shields.io/scrutinizer/g/zapheus/framework.svg?style=flat-square
-[ico-downloads]: https://img.shields.io/packagist/dt/zapheus/framework.svg?style=flat-square
+[ico-code-quality]: https://img.shields.io/scrutinizer/g/zapheus/zapheus.svg?style=flat-square
+[ico-downloads]: https://img.shields.io/packagist/dt/zapheus/zapheus.svg?style=flat-square
 [ico-license]: https://img.shields.io/badge/license-MIT-brightgreen.svg?style=flat-square
-[ico-scrutinizer]: https://img.shields.io/scrutinizer/coverage/g/zapheus/framework.svg?style=flat-square
-[ico-travis]: https://img.shields.io/travis/zapheus/framework/master.svg?style=flat-square
-[ico-version]: https://img.shields.io/packagist/v/zapheus/framework.svg?style=flat-square
+[ico-scrutinizer]: https://img.shields.io/scrutinizer/coverage/g/zapheus/zapheus.svg?style=flat-square
+[ico-travis]: https://img.shields.io/travis/zapheus/zapheus/master.svg?style=flat-square
+[ico-version]: https://img.shields.io/packagist/v/zapheus/zapheus.svg?style=flat-square
 
-[link-changelog]: https://github.com/zapheus/framework/blob/master/CHANGELOG.md
-[link-code-quality]: https://scrutinizer-ci.com/g/zapheus/framework
-[link-contributors]: https://github.com/zapheus/framework/contributors
-[link-downloads]: https://packagist.org/packages/zapheus/framework
-[link-license]: https://github.com/zapheus/framework/blob/master/LICENSE.md
-[link-packagist]: https://packagist.org/packages/zapheus/framework
-[link-scrutinizer]: https://scrutinizer-ci.com/g/zapheus/framework/code-structure
-[link-travis]: https://travis-ci.org/zapheus/framework
+[link-changelog]: https://github.com/zapheus/zapheus/blob/master/CHANGELOG.md
+[link-code-quality]: https://scrutinizer-ci.com/g/zapheus/zapheus
+[link-contributors]: https://github.com/zapheus/zapheus/contributors
+[link-downloads]: https://packagist.org/packages/zapheus/zapheus
+[link-license]: https://github.com/zapheus/zapheus/blob/master/LICENSE.md
+[link-packagist]: https://packagist.org/packages/zapheus/zapheus
+[link-scrutinizer]: https://scrutinizer-ci.com/g/zapheus/zapheus/code-structure
+[link-travis]: https://travis-ci.org/zapheus/zapheus

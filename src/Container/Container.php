@@ -37,11 +37,7 @@ class Container implements WritableInterface
     {
         if ($this->has($id) === false)
         {
-            $message = 'Alias (%s) is not defined';
-
-            $message = sprintf($message, $id);
-
-            throw new NotFoundException($message);
+            throw new NotFoundException("Alias ($id) is not defined");
         }
 
         return $this->objects[$id];

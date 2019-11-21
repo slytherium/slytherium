@@ -22,9 +22,7 @@ class ReflectionContainer implements ContainerInterface
     {
         if ($this->has($id) === false)
         {
-            $message = (string) 'Class (%s) does not exists';
-
-            throw new NotFoundException(sprintf($message, $id));
+            throw new NotFoundException("Class ($id) does not exists");
         }
 
         $reflection = new \ReflectionClass($id);

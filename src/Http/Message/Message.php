@@ -40,7 +40,7 @@ class Message implements MessageInterface
         {
             $stream = fopen('php://temp', 'r+');
 
-            $stream = $stream === false ? null : $stream;
+            ! $stream && $stream = null;
 
             $stream = new Stream($stream);
         }
@@ -58,9 +58,12 @@ class Message implements MessageInterface
      */
     public function header($name)
     {
-        $exists = isset($this->headers[$name]);
+        if (! isset($this->headers[$name]))
+        {
+            return array();
+        }
 
-        return $exists ? $this->headers[$name] : array();
+        return $this->headers[$name];
 
         // getHeader
     }

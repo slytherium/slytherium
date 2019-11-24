@@ -102,9 +102,12 @@ class Request extends Message implements RequestInterface
      */
     public function attribute($name)
     {
-        $exists = isset($this->attributes[$name]);
+        if (! isset($this->attributes[$name]))
+        {
+            return null;
+        }
 
-        return $exists ? $this->attributes[$name] : null;
+        return $this->attributes[$name];
     }
 
     /**
@@ -129,9 +132,12 @@ class Request extends Message implements RequestInterface
      */
     public function cookie($name)
     {
-        $exists = isset($this->cookies[$name]);
+        if (! isset($this->cookies[$name]))
+        {
+            return null;
+        }
 
-        return $exists ? $this->cookies[$name] : null;
+        return $this->cookies[$name];
     }
 
     /**
@@ -207,9 +213,12 @@ class Request extends Message implements RequestInterface
      */
     public function query($name)
     {
-        $exists = isset($this->queries[$name]);
+        if (! isset($this->queries[$name]))
+        {
+            return null;
+        }
 
-        return $exists ? $this->queries[$name] : null;
+        return (array) $this->queries[$name];
     }
 
     /**
@@ -220,11 +229,19 @@ class Request extends Message implements RequestInterface
      */
     public function server($name = null)
     {
-        $value = $name === null ? $this->server : null;
+        $value = null;
 
-        $server = (array) $this->server;
+        if ($name === null)
+        {
+            $value = $this->server;
+        }
 
-        isset($server[$name]) && $value = $server[$name];
+        $server = $this->server;
+
+        if (isset($server[$name]))
+        {
+            $value = $server[$name];
+        }
 
         return $value;
 

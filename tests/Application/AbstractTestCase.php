@@ -29,7 +29,7 @@ abstract class AbstractTestCase extends \PHPUnit_Framework_TestCase
 
         $_SERVER['REQUEST_URI'] = '/';
 
-        $_SERVER['SERVER_NAME'] = 'rougin.github.io';
+        $_SERVER['SERVER_NAME'] = 'roug.in';
 
         $_SERVER['SERVER_PORT'] = 8000;
     }
@@ -74,7 +74,7 @@ abstract class AbstractTestCase extends \PHPUnit_Framework_TestCase
 
         $_SERVER['REQUEST_URI'] = $uri;
 
-        $_SERVER['SERVER_NAME'] = 'rougin.github.io';
+        $_SERVER['SERVER_NAME'] = 'roug.in';
 
         $_SERVER['SERVER_PORT'] = 8000;
 

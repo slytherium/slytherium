@@ -24,7 +24,7 @@ class UriTest extends \PHPUnit_Framework_TestCase
     {
         $this->factory = new UriFactory; // to pass null
 
-        $url = 'https://me@rougin.github.io:400/about';
+        $url = 'https://me@roug.in:400/about';
 
         $this->factory = new UriFactory(new Uri($url));
     }
@@ -36,7 +36,7 @@ class UriTest extends \PHPUnit_Framework_TestCase
      */
     public function testToStringMagicMethod()
     {
-        $expected = 'https://me@rougin.github.io:400/about';
+        $expected = 'https://me@roug.in:400/about';
 
         $result = (string) $this->factory->make();
 
@@ -50,7 +50,7 @@ class UriTest extends \PHPUnit_Framework_TestCase
      */
     public function testAuthorityMethod()
     {
-        $expected = 'me@rougin.github.io:400';
+        $expected = 'me@roug.in:400';
 
         $result = $this->factory->make()->authority();
 

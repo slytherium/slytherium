@@ -42,7 +42,7 @@ class DispatcherTest extends \PHPUnit_Framework_TestCase
 
         $server['REQUEST_METHOD'] = 'GET';
         $server['REQUEST_URI'] = '/';
-        $server['SERVER_NAME'] = 'rougin.github.io';
+        $server['SERVER_NAME'] = 'roug.in';
         $server['SERVER_PORT'] = 8000;
 
         $factory = new RequestFactory;

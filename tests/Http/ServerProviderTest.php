@@ -45,7 +45,7 @@ class ServerProviderTest extends \PHPUnit_Framework_TestCase
 
         $server['REQUEST_URI'] = '/';
 
-        $server['SERVER_NAME'] = 'rougin.github.io';
+        $server['SERVER_NAME'] = 'roug.in';
 
         $config->set('app.http.server', $server);
 

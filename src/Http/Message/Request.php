@@ -209,7 +209,7 @@ class Request extends Message implements RequestInterface
      * Returns the specified query string argument.
      *
      * @param  string $name
-     * @return array
+     * @return mixed
      */
     public function query($name)
     {
@@ -218,7 +218,7 @@ class Request extends Message implements RequestInterface
             return null;
         }
 
-        return (array) $this->queries[$name];
+        return $this->queries[$name];
     }
 
     /**

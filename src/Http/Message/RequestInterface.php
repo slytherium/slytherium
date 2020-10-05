@@ -72,7 +72,7 @@ interface RequestInterface extends MessageInterface
      * Returns the specified query string argument.
      *
      * @param  string $name
-     * @return array
+     * @return mixed
      */
     public function query($name);
 
